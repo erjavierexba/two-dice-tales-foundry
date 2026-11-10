@@ -36,5 +36,14 @@ export function drivingFeat(actor, category) {
     const name = item.name.toLocaleLowerCase("es");
     return name === prefix || (name.includes(prefix) && (normalized === "vehículo" || name.includes(normalized) || normalized.split("/").some(part => name.includes(part.trim()))));
   });
-  return { trained: matches("conducir"), kansei: matches("kansei dorifto") };
+  // A loaded Conducir chip grants the feat for its category (empty category: any vehicle).
+  const chip = actor.items.some(item => item.type === "gear" && item.system.category === "skillChip" && item.system.loaded && item.system.chipTarget === "driving" && chipCovers(item.system.chipVehicle, normalized));
+  return { trained: matches("conducir") || chip, kansei: matches("kansei dorifto") };
+}
+
+function chipCovers(chipCategory, normalized) {
+  const wanted = String(chipCategory ?? "").trim().toLocaleLowerCase("es");
+  if (!wanted || normalized === "vehículo") return true;
+  const parts = value => value.split("/").map(part => part.trim()).filter(Boolean);
+  return parts(wanted).some(part => normalized.includes(part)) || parts(normalized).some(part => wanted.includes(part));
 }

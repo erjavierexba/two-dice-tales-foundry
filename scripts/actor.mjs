@@ -2,7 +2,7 @@ import { TDT } from "./config.mjs";
 import { chooseAutomaticBonus, dieScore, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepRolledDie } from "./dice.mjs";
 import { collectModifiers, hasItemNamed, itemNameSet, modifierValue } from "./modifiers.mjs";
 import { moduleActive, rule } from "./settings.mjs";
-import { finalDamage, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
+import { automaticDifficultyText, warnIfAllImmune, finalDamage, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
 import { esc, payload, requestDamage } from "./chat.mjs";
 import * as Fantasy from "./modules/fantasy.mjs";
 import * as Mecha from "./modules/mecha.mjs";
@@ -493,6 +493,7 @@ export class TDTActor extends Actor {
     if (profile.penalty) extraRules.push({ type: "penalty", value: profile.penalty, label: `${item.name}: penalizador del arma` });
     if (profile.powerDifficulty) extraRules.push({ type: "difficulty", value: -profile.powerDifficulty, label: `Potencia insuficiente (d${profile.props.powerRequired})` });
     if (skill?.chipBonus) extraRules.push({ type: "bonus", value: 1, label: "Chip de habilidad (d12)" });
+    if (!options.preset && warnIfAllImmune(currentTargets(), item.system.defense || "evasion")) return null;
     const terror = options.preset ? 0 : await this._terrorCheck();
     if (terror === false) return null;
     if (terror) extraRules.push({ type: "penalty", value: terror, label: "Terror" });
@@ -518,7 +519,7 @@ export class TDTActor extends Actor {
       first: { label: attribute?.label ?? "Característica", faces: attribute?.value ?? 4 },
       second: { label: skill?.label ?? "Habilidad", faces: secondFaces },
       difficulty: singleDefense ?? 0,
-      automaticDifficulty: targets.length === 1 ? (singleDefense === null ? `${targets[0].name}: tirada enfrentada` : `${targets[0].name}: ${TDT.attackDefenses[defenseKey] ?? defenseKey} ${singleDefense}`) : null,
+      automaticDifficulty: automaticDifficultyText(targets, defenseKey),
       extraRules,
       extraFields,
       readExtra: (form, data) => ({ attacks: Number(data.get("attacks") || 1), pointBlank: Boolean(data.get("pointBlank")), area: Boolean(data.get("area")) })
@@ -735,7 +736,8 @@ export class TDTActor extends Actor {
       }
     }
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} recibe el golpe</header><p>${lines.join("<br>")}</p></div>` });
-    if (damage > 0) await this.applyDamage(damage, { raw: true });
+    if (damage > 0) await this.applyDamage(damage, { raw: true, fumble: result.isFumble });
+    else if (result.isFumble && this.type === "mecha") await this._mechaDamageCheck(0, { fumble: true });
   }
 
   /* -------------------------------------------- */
@@ -773,7 +775,7 @@ export class TDTActor extends Actor {
     const health = Math.max(0, before - damage);
     await this.update({ "system.health.value": health });
     if (notes.length) ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)}</header><p>${notes.map(esc).join("<br>")}</p></div>`, whisper: ChatMessage.getWhisperRecipients("GM") });
-    if (this.type === "mecha") await this._mechaDamageCheck(damage);
+    if (this.type === "mecha") await this._mechaDamageCheck(damage, { fumble: Boolean(options.fumble) });
     if (this.type === "character" && health === 0 && damage > 0) await this._fallDown(damage - before, options);
     return damage;
   }

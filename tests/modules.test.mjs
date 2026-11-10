@@ -125,3 +125,25 @@ console.log("Pruebas de módulos superadas.");
   assert.equal(targetDefense(zombie, "evasion"), 3);
   assert.equal(targetImmune({ type: "character", system: {} }, "will"), false);
 }
+
+/* A loaded Conducir chip grants the feat for its category */
+{
+  const chip = (chipVehicle, loaded = true) => ({ type: "gear", name: "Chip", system: { category: "skillChip", loaded, chipTarget: "driving", chipVehicle } });
+  const actor = items => ({ items });
+  assert.equal(Vehicle.drivingFeat(actor([chip("Moto")]), "Moto").trained, true, "chip de moto sirve para motos");
+  assert.equal(Vehicle.drivingFeat(actor([chip("Moto")]), "Coche/furgoneta").trained, false, "chip de moto no sirve para coches");
+  assert.equal(Vehicle.drivingFeat(actor([chip("coche")]), "Coche/furgoneta").trained, true);
+  assert.equal(Vehicle.drivingFeat(actor([chip("")]), "Camión").trained, true, "sin categoría vale para cualquiera");
+  assert.equal(Vehicle.drivingFeat(actor([chip("Moto", false)]), "Moto").trained, false, "descargado no cuenta");
+}
+
+/* Immune targets: no opposed roll in the dialog hint */
+{
+  globalThis.ui ??= { notifications: { warn: () => {} } };
+  const { automaticDifficultyText, warnIfAllImmune } = await import("../scripts/attack.mjs");
+  const drone = { type: "npc", name: "Dron", system: { npcStats: { evasion: 6, fortitude: 6, will: 0, perception: 8 } } };
+  assert.match(automaticDifficultyText([drone], "will"), /inmune/);
+  assert.equal(automaticDifficultyText([drone], "evasion"), "Dron: Esquiva 6");
+  assert.equal(warnIfAllImmune([drone], "will"), true);
+  assert.equal(warnIfAllImmune([drone], "evasion"), false);
+}

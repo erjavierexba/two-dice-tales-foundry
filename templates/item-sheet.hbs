@@ -87,12 +87,14 @@
           <label>Categoría <select name="system.category">{{selectOptions config.gearCategories selected=system.category}}</select></label>
           {{#if (eq system.category "skillChip")}}
           <label>Habilidad o defensa <select name="system.chipTarget">{{selectOptions config.chipTargets selected=system.chipTarget}}</select></label>
+          {{#if (eq system.chipTarget "driving")}}
+          <label title="Cargado, da la dote Conducir para esta categoría. Vacío: cualquier vehículo.">Categoría de Conducir <input name="system.chipVehicle" value="{{system.chipVehicle}}" placeholder="Coche/furgoneta"></label>
+          {{/if}}
           <label>Cargado <input type="checkbox" name="system.loaded" {{checked system.loaded}}></label>
           {{/if}}
           {{#if (eq system.category "vehicle")}}
           <fieldset class="wide"><legend>Vehículo</legend>
             <label>Categoría de Conducir <input name="system.vehicle.category" value="{{vehicle.category}}" placeholder="Coche/furgoneta"></label>
-            <label>Característica <select name="system.vehicle.attribute">{{selectOptions config.attributeChoices selected=vehicle.attribute}}</select></label>
             <label>Pasajeros <input type="number" min="0" name="system.vehicle.passengers" value="{{vehicle.passengers}}"></label>
             <label>Modificador de conducción <input type="number" name="system.vehicle.modifier" value="{{vehicle.modifier}}"></label>
             <label>PV <span><input type="number" min="0" name="system.vehicle.health.value" value="{{vehicle.health.value}}"> / <input type="number" min="0" name="system.vehicle.health.max" value="{{vehicle.health.max}}"></span></label>

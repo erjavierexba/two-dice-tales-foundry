@@ -230,6 +230,29 @@ export function targetDefense(actor, defense = "evasion") {
   return null;
 }
 
+/** Every target is immune to this defense: there is nothing to roll. */
+export function allTargetsImmune(targets, defense = "evasion") {
+  return targets.length > 0 && targets.every(target => targetImmune(target, defense));
+}
+
+/** Warns and returns true when every target is immune, so the caller can stop before rolling. */
+export function warnIfAllImmune(targets, defense = "evasion") {
+  if (!allTargetsImmune(targets, defense)) return false;
+  const label = TDT.hackDefenses[defense] ?? TDT.attackDefenses[defense] ?? defense;
+  ui.notifications.warn(`${targets.map(target => target.name).join(", ")}: ${label} «-», ${targets.length > 1 ? "son inmunes" : "es inmune"}. No hay nada que tirar.`);
+  return true;
+}
+
+/** Hint shown in the roll dialog for a single target: its fixed defense, an opposed roll, or immunity. */
+export function automaticDifficultyText(targets, defense = "evasion") {
+  if (targets.length !== 1) return null;
+  const [target] = targets;
+  const label = TDT.hackDefenses[defense] ?? TDT.attackDefenses[defense] ?? defense;
+  if (targetImmune(target, defense)) return `${target.name}: inmune (${label} «-»)`;
+  const value = targetDefense(target, defense);
+  return value === null ? `${target.name}: tirada enfrentada` : `${target.name}: ${label} ${value}`;
+}
+
 /** Endurance of a target against a given kind of attack. */
 export function targetEndurance(actor, { hack = false, shot = false, ignoreHuman = false, machineZero = false } = {}) {
   if (!actor) return 0;

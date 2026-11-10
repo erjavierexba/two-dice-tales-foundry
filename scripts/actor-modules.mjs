@@ -2,7 +2,7 @@ import { TDT } from "./config.mjs";
 import { DIE_SIZES, dieScore, normalizeDie, perfectSuccess, stepDie } from "./dice.mjs";
 import { itemNameSet } from "./modifiers.mjs";
 import { currencySettings, moduleActive, rule } from "./settings.mjs";
-import { parseWeaponProperties, targetDefense, targetEndurance } from "./attack.mjs";
+import { automaticDifficultyText, warnIfAllImmune, parseWeaponProperties, targetDefense, targetEndurance } from "./attack.mjs";
 import { esc, payload, requestDamage } from "./chat.mjs";
 import { TDTActor, choiceDialog, currentTargets, numberDialog } from "./actor.mjs";
 import * as Fantasy from "./modules/fantasy.mjs";
@@ -35,6 +35,16 @@ const methods = {
   /*  Vehicles                                     */
   /* -------------------------------------------- */
 
+  /** Driving uses Destreza or Mente, chosen by the player (no question when both dice are equal). */
+  async _drivingAttribute(options = {}) {
+    if (options.attribute && this.system.attributes[options.attribute]) return options.attribute;
+    const dexterity = this.system.attributes.dexterity;
+    const mind = this.system.attributes.mind;
+    if (Number(dexterity.value) === Number(mind.value)) return "dexterity";
+    const order = Number(mind.value) > Number(dexterity.value) ? ["mind", "dexterity"] : ["dexterity", "mind"];
+    return choiceDialog("Conducir", "¿Con qué característica conduces?", order.map(key => ({ id: key, label: `${this.system.attributes[key].label} (d${this.system.attributes[key].value})` })));
+  },
+
   async driveVehicle(itemRef, options = {}) {
     const item = getItem(this, itemRef);
     if (!item || item.type !== "gear" || item.system.category !== "vehicle") return null;
@@ -44,7 +54,9 @@ const methods = {
       return say(this, `Piloto automático: ${item.name}`, `<p>El vehículo realiza la maniobra con un valor fijo de <strong>${vehicle.autopilot}</strong>.</p>`);
     }
     if (!feat.trained) return ui.notifications.warn(`Necesitas la dote Conducir (${vehicle.category}) para manejar ${item.name}.`);
-    const attribute = this.system.attributes[vehicle.attribute] ?? this.system.attributes.dexterity;
+    const attributeKey = await this._drivingAttribute(options);
+    if (!attributeKey) return null;
+    const attribute = this.system.attributes[attributeKey];
     const extraRules = [];
     if (vehicle.modifier > 0) extraRules.push({ type: "bonus", value: vehicle.modifier, label: item.name });
     if (vehicle.modifier < 0) extraRules.push({ type: "penalty", value: -vehicle.modifier, label: item.name });
@@ -53,14 +65,14 @@ const methods = {
       kind: "vehicle",
       label: `Conducir: ${item.name}`,
       subtitle: `${vehicle.category} · ${vehicle.passengers} pasajeros · PV ${vehicle.health.value}/${vehicle.health.max} · Aguante ${vehicle.endurance}`,
-      scopes: ["vehicle", "driving", vehicle.attribute],
-      primaryScope: vehicle.attribute,
+      scopes: ["vehicle", "driving", attributeKey],
+      primaryScope: attributeKey,
       secondaryScope: "driving",
       first: { label: attribute.label, faces: attribute.value },
       second: { label: feat.kansei ? "Kansei Dorifto" : "Conducir", faces: feat.kansei ? 8 : 4 },
       difficulty: options.difficulty ?? 0,
       extraRules,
-      reroll: { method: "driveVehicle", args: [item.id, {}] }
+      reroll: { method: "driveVehicle", args: [item.id, { attribute: attributeKey }] }
     }, options.preset);
   },
 
@@ -73,8 +85,11 @@ const methods = {
     const targets = currentTargets();
     if (!targets.length) return ui.notifications.warn("Marca un objetivo antes de embestir.");
     const defenseKey = "evasion";
+    if (!options.preset && warnIfAllImmune(targets, defenseKey)) return null;
     const single = targets.length === 1 ? targetDefense(targets[0], defenseKey) : null;
-    const attribute = this.system.attributes[vehicle.attribute] ?? this.system.attributes.dexterity;
+    const attributeKey = await this._drivingAttribute(options);
+    if (!attributeKey) return null;
+    const attribute = this.system.attributes[attributeKey];
     const extraRules = [];
     if (vehicle.modifier > 0) extraRules.push({ type: "bonus", value: vehicle.modifier, label: item.name });
     if (vehicle.modifier < 0) extraRules.push({ type: "penalty", value: -vehicle.modifier, label: item.name });
@@ -83,15 +98,15 @@ const methods = {
       kind: "vehicleAttack",
       label: `Embestida: ${item.name}`,
       subtitle: `Daño ${vehicle.crashDamage} · objetivo ${targets.map(target => target.name).join(", ")}`,
-      scopes: ["vehicle", "driving", "attack", "melee-attack", vehicle.attribute],
-      primaryScope: vehicle.attribute,
+      scopes: ["vehicle", "driving", "attack", "melee-attack", attributeKey],
+      primaryScope: attributeKey,
       secondaryScope: "driving",
       first: { label: attribute.label, faces: attribute.value },
       second: { label: feat.kansei ? "Kansei Dorifto" : "Conducir", faces: feat.kansei ? 8 : 4 },
       difficulty: single ?? 0,
-      automaticDifficulty: targets.length === 1 ? (single === null ? `${targets[0].name}: tirada enfrentada` : `${targets[0].name}: Esquiva ${single}`) : null,
+      automaticDifficulty: automaticDifficultyText(targets, defenseKey),
       extraRules,
-      reroll: { method: "ramVehicle", args: [item.id, {}] },
+      reroll: { method: "ramVehicle", args: [item.id, { attribute: attributeKey }] },
       after: outcome => ({ html: `<div class="tdt-roll-weapon"><strong>Daño:</strong> ${vehicle.crashDamage} · Embestida</div>${targetLines(this, outcome, targets, { defenseKey, damage: vehicle.crashDamage }).map(line => line.html).join("")}` })
     }, options.preset);
   },
@@ -135,6 +150,7 @@ const methods = {
     const attack = feat.system.attack ?? {};
     const targets = attack.enabled ? currentTargets() : [];
     const defenseKey = attack.defense || "evasion";
+    if (!options.preset && warnIfAllImmune(targets, defenseKey)) return null;
     const extraFields = [
       canFlow ? `<div class="form-group"><label>Flujo mágico (Daño +2, Incremental +1)</label><input type="checkbox" name="flow"></div>` : "",
       canRange ? `<div class="form-group"><label>Aumento de alcance (siguiente distancia, Incremental +1)</label><input type="checkbox" name="range"></div>` : "",
@@ -209,6 +225,7 @@ const methods = {
     const skill = this.system.skills[skillKey];
     const targets = spell.system.attack?.enabled ? currentTargets() : [];
     const defenseKey = spell.system.attack?.defense || "evasion";
+    if (!options.preset && warnIfAllImmune(targets, defenseKey)) return null;
     return this.rollCheck({
       kind: "circle",
       label: `Círculo: ${spell.name}`,
@@ -288,6 +305,7 @@ const methods = {
     const attribute = this.system.attributes[attributeKey];
     const targets = currentTargets();
     const defenseKey = system.attack.defense || "evasion";
+    if (!options.preset && warnIfAllImmune(targets, defenseKey)) return null;
     const damage = Number(system.attack.damage || 0) + (system.attack.overloadDamage ? overload : 0);
     return this.rollCheck({
       kind: "power",
@@ -298,7 +316,7 @@ const methods = {
       first: { label: attribute.label, faces: attribute.value },
       second: { label: skill.label, faces: skill.value },
       difficulty: targets.length === 1 ? targetDefense(targets[0], defenseKey) ?? 0 : 0,
-      automaticDifficulty: targets.length === 1 ? (targetDefense(targets[0], defenseKey) === null ? `${targets[0].name}: tirada enfrentada` : `${targets[0].name}: ${TDT.attackDefenses[defenseKey] ?? defenseKey} ${targetDefense(targets[0], defenseKey)}`) : null,
+      automaticDifficulty: automaticDifficultyText(targets, defenseKey),
       reroll: { method: "usePower", args: [power.id, {}] },
       after: async outcome => {
         await payCost();
@@ -557,6 +575,7 @@ const methods = {
     if (defense === "none") await spendUse();
     if (defense === "none") return say(this, `Hack: ${hack.name}`, `<p>No hace falta tirar.</p><div class="tdt-item-message">${esc(system.description)}</div>`);
     const targets = currentTargets();
+    if (!options.preset && warnIfAllImmune(targets, defense)) return null;
     const extraRules = [];
     if (stats.hackPenalty) extraRules.push({ type: "penalty", value: stats.hackPenalty, label: "Terminal externo" });
     if (stats.wiredCapable) extraRules.push({ type: "difficulty", value: 2, label: "Conexión por cable", optional: !system.wired });
@@ -574,7 +593,7 @@ const methods = {
       first: { label: attribute.label, faces: attribute.value },
       second: { label: skill.label, faces: skill.value },
       difficulty: single ?? 0,
-      automaticDifficulty: targets.length === 1 ? (single === null ? `${targets[0].name}: tirada enfrentada` : `${targets[0].name}: ${TDT.hackDefenses[defense] ?? defense} ${single}`) : null,
+      automaticDifficulty: automaticDifficultyText(targets, defense),
       extraRules,
       extraFields: targets.length ? `<p class="hint">Objetivos: ${targets.map(target => esc(target.name)).join(", ")}.</p>` : "",
       reroll: { method: "castHack", args: [hack.id, {}] },
@@ -637,7 +656,7 @@ const methods = {
     const stats = this.system.cyberStats ?? {};
     const loading = !(item.system.loaded);
     if (loading && stats.usedSlots >= stats.slots) return ui.notifications.warn(`No quedan ranuras libres (${stats.usedSlots}/${stats.slots}).`);
-    if (loading && item.type === "gear" && this.items.some(other => other.id !== item.id && other.type === "gear" && other.system.category === "skillChip" && other.system.loaded && other.system.chipTarget === item.system.chipTarget)) {
+    if (loading && item.type === "gear" && this.items.some(other => other.id !== item.id && other.type === "gear" && other.system.category === "skillChip" && other.system.loaded && other.system.chipTarget === item.system.chipTarget && (item.system.chipTarget !== "driving" || String(other.system.chipVehicle ?? "").trim().toLocaleLowerCase("es") === String(item.system.chipVehicle ?? "").trim().toLocaleLowerCase("es")))) {
       return ui.notifications.warn("No puedes cargar dos chips de la misma habilidad a la vez.");
     }
     await item.update({ "system.loaded": loading });
@@ -855,6 +874,7 @@ const methods = {
     if (profile.penalty) extraRules.push({ type: "penalty", value: profile.penalty, label: "Penalizador del arma" });
     const targets = currentTargets();
     const defenseKey = item.system.defense || "evasion";
+    if (!options.preset && warnIfAllImmune(targets, defenseKey)) return null;
     const isMelee = moduleKey === "melee";
     const willLink = isMelee && flags.has("willLinkMelee");
     const multi = props.multiHit;
@@ -877,7 +897,7 @@ const methods = {
       third: willLink ? { label: "Voluntad del piloto", faces: pilot.system.defenses.will.value } : null,
       minimumFaces: !isMelee && this.system.aiCameras ? 6 : 0,
       difficulty: single ?? 0,
-      automaticDifficulty: targets.length === 1 ? (single === null ? `${targets[0].name}: tirada enfrentada` : `${targets[0].name}: ${TDT.attackDefenses[defenseKey] ?? defenseKey} ${single}`) : null,
+      automaticDifficulty: automaticDifficultyText(targets, defenseKey),
       extraRules,
       extraFields,
       readExtra: (form, data) => ({ hits: Number(data.get("hits") || 0), charge: Boolean(data.get("charge")), startup: Boolean(data.get("startup")) }),
@@ -978,16 +998,17 @@ const methods = {
     return say(this, `Recarga: ${item.name}`, `<p>Gasta una acción entera y ${esc(supply.name)}.${failed ? ` Módulo de captación fallido (d6 = ${failure.total}): la recarga falla, gasta tu ataque para corregirlo.` : ""}</p>`);
   },
 
-  async _mechaDamageCheck(damage) {
-    if (!rule("mechaDamage") || damage <= 0) return;
+  /** Optional damage table: losing 6 + 2 × category HP in one attack, or fumbling a defense. */
+  async _mechaDamageCheck(damage, { fumble = false } = {}) {
+    if (!rule("mechaDamage")) return;
     const threshold = 6 + 2 * Number(this.system.category || 1);
-    if (damage < threshold) return;
+    if (!fumble && (damage <= 0 || damage < threshold)) return;
     const roll = await new Roll("1d8").evaluate();
     const pilot = this.pilotActor();
     const pilotButton = roll.total === 7 && pilot
       ? `<button type="button" class="tdt-chat-button" data-tdt-action="apply-damage" data-payload="${payload({ targetUuid: pilot.uuid, amount: damage, options: {} })}">Aplicar ${damage} al piloto (resta su aguante)</button>`
       : "";
-    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this }), flavor: card("Daños en el mecha", `<p>${esc(this.name)} pierde ${damage} PV (umbral ${threshold}).</p><p><strong>${roll.total}:</strong> ${esc(TDT.mechaDamageTable[roll.total])}</p>${pilotButton}`) });
+    await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: this }), flavor: card("Daños en el mecha", `<p>${fumble ? `${esc(this.name)} pifia al defenderse${damage ? ` y pierde ${damage} PV` : ""}.` : `${esc(this.name)} pierde ${damage} PV (umbral ${threshold}).`}</p><p><strong>${roll.total}:</strong> ${esc(TDT.mechaDamageTable[roll.total])}</p>${pilotButton}`) });
   },
 
   async upgradeMechaModule(key, direction = 1) {

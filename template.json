@@ -183,6 +183,7 @@
       "category": "misc",
       "loaded": false,
       "chipTarget": "",
+      "chipVehicle": "",
       "inventoryCost": "",
       "vehicle": { "category": "", "attribute": "dexterity", "passengers": 0, "modifier": 0, "health": { "value": 0, "max": 0 }, "endurance": 0, "crashDamage": 0, "autopilot": 0, "analog": false, "flying": false }
     },

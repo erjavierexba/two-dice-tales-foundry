@@ -44,7 +44,7 @@ function sheetConfig() {
     hackDefenseChoices: TDT.hackDefenses,
     moduleChoices: { "": "Básico", ...TDT.modules },
     skillChoices: Object.fromEntries(Object.entries(TDT.skills).filter(([key]) => skillVisible(key))),
-    chipTargets: { "": "—", ...Object.fromEntries(Object.entries(TDT.skills).filter(([key]) => skillVisible(key))), evasion: "Esquiva", fortitude: "Fortaleza", will: "Voluntad" }
+    chipTargets: { "": "—", ...Object.fromEntries(Object.entries(TDT.skills).filter(([key]) => skillVisible(key))), driving: "Conducir (dote)", evasion: "Esquiva", fortitude: "Fortaleza", will: "Voluntad" }
   };
 }
 
