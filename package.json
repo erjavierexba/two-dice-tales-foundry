@@ -1,12 +1,16 @@
 {
   "name": "two-dice-tales-foundry",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node tests/dice.test.mjs && node tests/modules.test.mjs && node tests/system.test.mjs"
+    "test": "node tests/dice.test.mjs && node tests/modules.test.mjs && node tests/system.test.mjs",
+    "test:e2e": "node tests/e2e/run.mjs"
   },
   "engines": {
     "node": ">=20"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.17.0"
   }
 }

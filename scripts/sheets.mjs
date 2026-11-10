@@ -21,7 +21,7 @@ const ITEM_IMAGES = {
   race: "icons/svg/mystery-man.svg",
   spell: "icons/svg/explosion.svg",
   power: "icons/svg/lightning.svg",
-  implant: "icons/svg/circuit.svg",
+  implant: "icons/svg/clockwork.svg",
   hack: "icons/svg/daze.svg"
 };
 

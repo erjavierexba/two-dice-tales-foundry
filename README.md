@@ -1,6 +1,6 @@
 # Two Dice Tales para Foundry VTT
 
-Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.5): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.6): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
 
 ## Instalación
 
@@ -87,8 +87,17 @@ node tools/build-packs.mjs            # packs/ y system.json
 Pruebas:
 
 ```bash
-npm test
+npm test          # unitarias (dados, módulos, datos)
+npm run test:e2e  # e2e en un Foundry real
 ```
+
+Las pruebas e2e (`tests/e2e/`) arrancan un Foundry 13 aislado en un directorio temporal, con un mundo desechable y una copia del sistema (los packs del repo no se tocan), y lo manejan con Chrome sin ventana. Los dados se trucan para que cada tirada sea predecible. Necesitan:
+
+- Foundry 13 instalado (`FOUNDRY_APP`, por defecto `~/ExecApps/FoundryVTT/FoundryVTT/resources/app`) y su licencia (`FOUNDRY_LICENSE`, por defecto la de `~/.local/share/FoundryVTT/Config`).
+- Node 20 para el servidor (`FOUNDRY_NODE`; si no, se busca en nvm). Con Node 24 el cliente de Foundry no carga.
+- Google Chrome (`CHROME_PATH`, por defecto `/usr/bin/google-chrome`).
+
+Opciones: `TDT_E2E_ONLY=texto` (solo los casos que lo contengan), `TDT_E2E_VERBOSE=1` (registro del servidor), `TDT_E2E_HEADFUL=1` (Chrome con ventana), `TDT_E2E_PORT` (por defecto 30555).
 
 La ficha incluye búsqueda instantánea en habilidades e inventario, se adapta al ancho real de la ventana y permite arrastrar/reordenar objetos con el comportamiento nativo de Foundry.
 

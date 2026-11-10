@@ -9893,7 +9893,7 @@
     {
      "name": "AVS (Advanced VirtualSelf)",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 3.\n\nEl chip que convierte tu VirtualSelf de serie en una herramienta de hacker.\n* Te da 1 ranura de hack. Puedes ampliarlo gastando más CC, como se explica en Hacking.\n\nRanuras: cambia el número de ranuras (1–5) en la ficha del implante; la segunda cuesta 1 CC y cada una de las siguientes 2 CC.",
       "module": "cyber",
@@ -9939,7 +9939,7 @@
     {
      "name": "Brazo robótico",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 3 por brazo.\n\nUn brazo de metal y fibra sintética que tiene más fuerza que cualquier músculo.\n* Baja en 2 la dificultad de tus tiradas de Atletismo para aplicar fuerza de cualquier tipo, incluidas las tiradas de Maniobra de lucha para agarrar.\n* Tus puñetazos con este brazo tienen +2 al Daño.\n* Tus golpes desarmados pierden la propiedad Dual, salvo que lleves los dos brazos robóticos.",
       "module": "cyber",
@@ -10035,7 +10035,7 @@
     {
      "name": "Exoesqueleto",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 7.\n\nUna estructura metálica fijada a tus huesos que reparte los golpes por todo el cuerpo.\n* Aumenta tu aguante en 2. Cuenta como armadura, no como aguante natural, y se suma a cualquier otra armadura que lleves.",
       "module": "cyber",
@@ -10091,7 +10091,7 @@
     {
      "name": "Ojos cibernéticos",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 4.\n\nTus ojos de siempre, pero con un procesador de señales detrás.\n* Ves el origen de las señales cableadas: sabes a qué está conectado algo, incluso a través de las paredes. Lo ves con claridad hasta distancia media-larga; más allá, todo se vuelve borroso.",
       "module": "cyber",
@@ -10161,7 +10161,7 @@
     {
      "name": "Piernas cibernéticas",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 4 (se instalan las dos a la vez).\n\nUnas piernas de cromo con amortiguadores en cada articulación.\n* Los primeros 6 metros de una caída no cuentan: resta 6 a los metros de caída antes de aplicar las reglas de daño por caída.\n* Bonifica en 1 tus tiradas de Atletismo para correr.",
       "module": "cyber",
@@ -10228,7 +10228,7 @@
     {
      "name": "Médula ósea acelerada",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 5.\n\nTu médula fabrica glóbulos rojos cien veces más rápido que la de un humano normal.\n* Mientras tengas menos de 5 PV, regeneras 1 PV al comienzo de cada uno de tus turnos, hasta llegar a 5 PV.\n* Si caes a 0 PV, no regeneras, pero la dificultad de tus tiradas de Fortaleza para no morir es 2 menor.",
       "module": "cyber",
@@ -10284,7 +10284,7 @@
     {
      "name": "Compresores pulmonares",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 3.\n\nUnos pequeños compresores que almacenan aire a presión dentro de tus pulmones.\n* Puedes aguantar la respiración durante 1 hora antes de aplicar las reglas de ahogamiento.",
       "module": "cyber",
@@ -10322,7 +10322,7 @@
     {
      "name": "Oído de alto rango",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste de CC: 3.\n\nUnos receptores en el oído interno que captan frecuencias que ningún humano debería oír.\n* Bonifica en 2 tus tiradas de Percepción auditiva.",
       "module": "cyber",
@@ -10365,7 +10365,7 @@
     {
      "name": "Frontera IPv6",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Requisitos: AVS\nCoste por uso: una tirada para defenderte de un hack de dificultad 14. Si fallas, tu personaje muere o queda desalineado.\nLa versión hacker de los implantes supremos. Te permite hacer lo que nadie se atreve a hacer desde 2099: conectar algo a internet.\n* Puedes conectar a internet cualquier dispositivo o VirtualSelf que esté a tu alcance de hackeo. No hace falta tirar ni ocupa ninguna ranura de tu AVS: nadie ha conseguido cerrarle esa puerta a Eva.\n* A partir de ahí no hackeas tú, hackea Eva. Lo detecta al instante y lo hackea de formas que ningún humano llega a entender:\n* Un humano muere con el cerebro frito o queda desalineado en el acto (DJ).\n* Una máquina pasa a estar controlada a la perfección por Eva: se destruye o queda desalineada y ataca todo lo que encuentra (DJ).\n* El problema: mientras la conexión está abierta, tú sigues conectado a ese dispositivo, así que Eva también va a por ti. Ese es el coste de usarlo: si fallas la tirada, ya puedes tirar la ficha.",
       "module": "cyber",
@@ -10387,7 +10387,7 @@
     {
      "name": "Aceleración Neuronal Suprema (ANS)",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste por uso: 2d6 de CC\nDurante un instante, el mundo se congela y tú no.\n* Al comienzo de tu turno, puedes activarlo: juegas tres turnos seguidos.",
       "module": "cyber",
@@ -10409,7 +10409,7 @@
     {
      "name": "Simulador Avanzado en Tiempo Real (SATR)",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste por uso: 1d6 de CC\nUna IA instalada en tu cerebro analiza a tus enemigos y predice sus movimientos antes de que los hagan.\n* Al activarlo, tu siguiente tirada de combate (atacar o esquivar) bonifica en 3 y no puede ser pifia: si algún dado sale 1, vuelve a tirarlo hasta que no salga 1.",
       "module": "cyber",
@@ -10431,7 +10431,7 @@
     {
      "name": "Copia de seguridad",
      "type": "implant",
-     "img": "icons/svg/circuit.svg",
+     "img": "icons/svg/clockwork.svg",
      "system": {
       "description": "Coste por uso: 2d6 de CC y tus recuerdos\nUn enjambre de nanomáquinas vigila tu cuerpo constantemente. Cuando algo falla de forma crítica, revisan qué pueden arreglar y lo arreglan.\n* Si mueres, las nanomáquinas te hacen el equivalente a una operación en cuestión de segundos: vuelves a la vida con 1 PV.\n* A cambio, pierdes recuerdos: el DJ decide cuáles, y pueden ser tan importantes como quiera.\n* Solo funciona una vez. Después, el implante deja de funcionar, pero no puedes quitártelo: lo necesitas para seguir vivo.",
       "module": "cyber",
@@ -12357,7 +12357,7 @@
       {
        "name": "AVS (Advanced VirtualSelf)",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 3.\n\nEl chip que convierte tu VirtualSelf de serie en una herramienta de hacker.\n* Te da 1 ranura de hack. Puedes ampliarlo gastando más CC, como se explica en Hacking.\n\nRanuras: cambia el número de ranuras (1–5) en la ficha del implante; la segunda cuesta 1 CC y cada una de las siguientes 2 CC.",
         "module": "cyber",
@@ -12769,7 +12769,7 @@
       {
        "name": "Brazo robótico",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 3 por brazo.\n\nUn brazo de metal y fibra sintética que tiene más fuerza que cualquier músculo.\n* Baja en 2 la dificultad de tus tiradas de Atletismo para aplicar fuerza de cualquier tipo, incluidas las tiradas de Maniobra de lucha para agarrar.\n* Tus puñetazos con este brazo tienen +2 al Daño.\n* Tus golpes desarmados pierden la propiedad Dual, salvo que lleves los dos brazos robóticos.",
         "module": "cyber",
@@ -12865,7 +12865,7 @@
       {
        "name": "Piernas cibernéticas",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 4 (se instalan las dos a la vez).\n\nUnas piernas de cromo con amortiguadores en cada articulación.\n* Los primeros 6 metros de una caída no cuentan: resta 6 a los metros de caída antes de aplicar las reglas de daño por caída.\n* Bonifica en 1 tus tiradas de Atletismo para correr.",
         "module": "cyber",
@@ -12932,7 +12932,7 @@
       {
        "name": "Médula ósea acelerada",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 5.\n\nTu médula fabrica glóbulos rojos cien veces más rápido que la de un humano normal.\n* Mientras tengas menos de 5 PV, regeneras 1 PV al comienzo de cada uno de tus turnos, hasta llegar a 5 PV.\n* Si caes a 0 PV, no regeneras, pero la dificultad de tus tiradas de Fortaleza para no morir es 2 menor.",
         "module": "cyber",
@@ -13248,7 +13248,7 @@
       {
        "name": "Ojos cibernéticos",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 4.\n\nTus ojos de siempre, pero con un procesador de señales detrás.\n* Ves el origen de las señales cableadas: sabes a qué está conectado algo, incluso a través de las paredes. Lo ves con claridad hasta distancia media-larga; más allá, todo se vuelve borroso.",
         "module": "cyber",
@@ -13318,7 +13318,7 @@
       {
        "name": "AVS (Advanced VirtualSelf)",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 3.\n\nEl chip que convierte tu VirtualSelf de serie en una herramienta de hacker.\n* Te da 1 ranura de hack. Puedes ampliarlo gastando más CC, como se explica en Hacking.\n\nRanuras: cambia el número de ranuras (1–5) en la ficha del implante; la segunda cuesta 1 CC y cada una de las siguientes 2 CC.",
         "module": "cyber",
@@ -13679,7 +13679,7 @@
       {
        "name": "Compresores pulmonares",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 3.\n\nUnos pequeños compresores que almacenan aire a presión dentro de tus pulmones.\n* Puedes aguantar la respiración durante 1 hora antes de aplicar las reglas de ahogamiento.",
         "module": "cyber",
@@ -13964,7 +13964,7 @@
       {
        "name": "Oído de alto rango",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 3.\n\nUnos receptores en el oído interno que captan frecuencias que ningún humano debería oír.\n* Bonifica en 2 tus tiradas de Percepción auditiva.",
         "module": "cyber",
@@ -14007,7 +14007,7 @@
       {
        "name": "AVS (Advanced VirtualSelf)",
        "type": "implant",
-       "img": "icons/svg/circuit.svg",
+       "img": "icons/svg/clockwork.svg",
        "system": {
         "description": "Coste de CC: 3.\n\nEl chip que convierte tu VirtualSelf de serie en una herramienta de hacker.\n* Te da 1 ranura de hack. Puedes ampliarlo gastando más CC, como se explica en Hacking.\n\nRanuras: cambia el número de ranuras (1–5) en la ficha del implante; la segunda cuesta 1 CC y cada una de las siguientes 2 CC.",
         "module": "cyber",
