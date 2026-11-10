@@ -147,3 +147,9 @@ console.log("Pruebas de módulos superadas.");
   assert.equal(warnIfAllImmune([drone], "will"), true);
   assert.equal(warnIfAllImmune([drone], "evasion"), false);
 }
+
+/* Special damage against living beings or machines, in both word orders */
+assert.equal(parseWeaponProperties("Daño 4, Daño 8 contra seres vivos").vsLiving, 8);
+assert.equal(parseWeaponProperties("Daño 4, Contusión 7. Contra seres vivos, Daño 8.").vsLiving, 8);
+assert.equal(parseWeaponProperties("Dual, Daño 3, Aturdidora 4. Contra robots y máquinas, Daño 7.").vsMachines, 7);
+assert.equal(parseWeaponProperties("Daño 4, Daño 8 contra seres vivos").damage, 4);

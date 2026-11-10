@@ -53,7 +53,8 @@ function itemSummary(item, actor) {
   switch (item.type) {
     case "weapon": {
       const parts = [`Daño ${system.damage}`];
-      if (Number(system.ammo?.max)) parts.push(`${system.ammo.value}/${system.ammo.max}`);
+      if (/consumible/i.test(system.properties ?? "")) parts.push(`×${Number(system.quantity ?? 1)}`);
+      if (Number(system.ammo?.max)) parts.push(`${system.ammo.value}/${actor?.weaponProfile ? actor.weaponProfile(item).ammoMax : system.ammo.max}`);
       if (moduleActive("cyber") || rule("weaponCondition")) parts.push(TDT.weaponConditions[system.condition || "normal"]);
       if (actor?.type === "npc" && system.attackDifficulty) parts.unshift(`Ataque ${system.attackDifficulty}`);
       return parts.join(" · ");

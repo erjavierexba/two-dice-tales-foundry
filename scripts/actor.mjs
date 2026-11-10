@@ -484,6 +484,11 @@ export class TDTActor extends Actor {
       ui.notifications.warn(`${item.name} no tiene munición.`);
       return null;
     }
+    const consumable = profile.props.consumable;
+    if (!options.preset && consumable && Number(item.system.quantity ?? 1) <= 0) {
+      ui.notifications.warn(`No te quedan ${item.name}.`);
+      return null;
+    }
     const skillKey = item.system.skill;
     const skill = this.system.skills[skillKey];
     const attributeKey = item.system.attribute || skill?.attribute || "power";
@@ -550,8 +555,26 @@ export class TDTActor extends Actor {
       };
       lastResult = await this.rollCheck(check, attackOptions);
       if (tracksAmmo && !options.preset) await item.update({ "system.ammo.value": Math.max(0, Number(item.system.ammo.value) - 1) });
+      // Grenades and other consumables are spent when thrown.
+      if (consumable && !options.preset && lastResult) {
+        await item.update({ "system.quantity": Math.max(0, Number(item.system.quantity ?? 1) - 1) });
+        if (Number(item.system.quantity) <= 0) break;
+      }
     }
     return lastResult;
+  }
+
+  /** Refills a weapon up to its effective magazine (Bruta halves it, Cargador de doble fondo doubles it). */
+  async reloadWeapon(itemRef) {
+    const item = typeof itemRef === "string" ? this.items.get(itemRef) : itemRef;
+    if (!item || item.type !== "weapon" || !Number(item.system.ammo?.max)) return null;
+    const max = Math.max(0, Number(this.weaponProfile(item).ammoMax) || 0);
+    await item.update({ "system.ammo.value": max });
+    const quick = rule("weaponUpgrades") && (item.system.upgrades?.basic ?? []).includes("quickReload");
+    return ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      content: `<div class="tdt-chat-card"><header>Recarga: ${esc(item.name)}</header><p>Munición ${max}/${max}. ${quick ? "Recargador rápido: solo gasta el equivalente a un ataque múltiple." : "Gasta el turno."}</p></div>`
+    });
   }
 
   async _weaponAfter(item, profile, outcome, { attacks, defenseKey, targets, reroll = false }) {
@@ -669,7 +692,7 @@ export class TDTActor extends Actor {
     const defense = hackDefense || item.system.defense || "evasion";
     const damage = Number(item.system.damage || 0);
     const hackOptions = hackDefense ? { hack: true } : {};
-    const data = { attackValue: value, fixed: true, attacks, damage, defense, attackerUuid: this.uuid, attackerName: this.name, weaponName: item.name, options: { stun: props.stun, armorBreak: props.armorBreaker, shot: !["melee", "brawl"].includes(item.system.skill) && /munici|bater/i.test(item.system.properties), ...hackOptions } };
+    const data = { attackValue: value, fixed: true, attacks, damage, vsLiving: props.vsLiving, vsMachines: props.vsMachines, defense, attackerUuid: this.uuid, attackerName: this.name, weaponName: item.name, options: { stun: props.stun, armorBreak: props.armorBreaker, shot: !["melee", "brawl"].includes(item.system.skill) && /munici|bater/i.test(item.system.properties), ...hackOptions } };
     const defenseLabel = TDT.hackDefenses[defense] ?? defense;
     const content = `<div class="tdt-chat-card"><header>Ataque: ${esc(item.name)}${attacks > 1 ? ` ×${attacks}` : ""}</header>
       <div class="tdt-roll-total">${value}</div><div>Dificultad del ${hackDefense ? "hack" : "ataque"} · se defiende con ${esc(defenseLabel)}</div>
@@ -710,9 +733,14 @@ export class TDTActor extends Actor {
     }
     const incoming = attackValue - result.total;
     const endurance = targetEndurance(this, { hack: isHack, shot: options.shot });
-    let damage = Math.max(0, incoming + Number(data.damage || 0) - endurance);
+    // Weapons with a special damage against living beings or machines (Hoja vibrante, Porra eléctrica…).
+    const isMachine = this.type === "mecha";
+    let weaponDamage = Number(data.damage || 0);
+    if (isMachine && Number(data.vsMachines)) weaponDamage = Number(data.vsMachines);
+    if (!isMachine && Number(data.vsLiving)) weaponDamage = Number(data.vsLiving);
+    let damage = Math.max(0, incoming + weaponDamage - endurance);
     if (result.isFumble) damage *= 2;
-    const lines = [`Entrante ${incoming} + Daño ${data.damage} − Aguante ${endurance}${result.isFumble ? " × 2 (pifia defendiendo)" : ""} = <strong>${damage}</strong>`];
+    const lines = [`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${result.isFumble ? " × 2 (pifia defendiendo)" : ""} = <strong>${damage}</strong>`];
     if (options.stun && damage >= options.stun) {
       if (this.tdtFlags.has("noStun") || this.items.some(item => item.type === "armor" && item.system.equipped && item.system.noStun)) lines.push("El traje aislante evita el aturdimiento.");
       else {

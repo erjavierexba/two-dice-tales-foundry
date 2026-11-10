@@ -164,6 +164,7 @@
             <a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
             <span class="tdt-item-summary">{{item.summary}}</span>
             <button type="button" data-action="weapon-roll" title="Atacar"><i class="fas fa-dice"></i></button>
+            {{#if item.system.ammo.max}}<button type="button" data-actor-method="reloadWeapon" title="Recargar"><i class="fas fa-rotate-right"></i></button>{{/if}}
             {{#if (eq item.system.upgrades.special "suppression")}}<button type="button" data-actor-method="suppressiveFire" title="Fuego de supresión (3 de munición)"><i class="fas fa-wind"></i></button>{{/if}}
             <button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Equipar"><i class="fas fa-hand-fist"></i></button>
           </li>
