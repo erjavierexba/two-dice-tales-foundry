@@ -794,8 +794,9 @@ export class TDTActor extends Actor {
     if (isMachine && Number(data.vsMachines)) weaponDamage = Number(data.vsMachines);
     if (!isMachine && Number(data.vsLiving)) weaponDamage = Number(data.vsLiving);
     let damage = Math.max(0, incoming + weaponDamage - endurance);
-    if (result.isFumble) damage *= 2;
-    const lines = [`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${result.isFumble ? " × 2 (pifia defendiendo)" : ""} = <strong>${damage}</strong>`];
+    // Pifia defendiendo: daño ×2 y, tras el aguante, como mínimo 1.
+    if (result.isFumble) damage = Math.max(1, damage * 2);
+    const lines = [`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${result.isFumble ? " × 2 (pifia defendiendo, mínimo 1)" : ""} = <strong>${damage}</strong>`];
     if (options.stun && damage >= options.stun) {
       if (this.tdtFlags.has("noStun") || this.items.some(item => item.type === "armor" && item.system.equipped && item.system.noStun)) lines.push("El traje aislante evita el aturdimiento.");
       else {
