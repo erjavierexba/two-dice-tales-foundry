@@ -159,6 +159,7 @@
       "attackDifficulty": 0,
       "skill": "brawl",
       "attribute": "power",
+      "attributeAlt": "",
       "range": "contact",
       "properties": "",
       "ammo": { "value": 0, "max": 0 },

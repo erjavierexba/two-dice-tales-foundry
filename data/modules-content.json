@@ -27,7 +27,8 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "pristine",
+      "attributeAlt": "dexterity"
      }
     },
     {
@@ -67,7 +68,8 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "pristine",
+      "attributeAlt": "dexterity"
      }
     },
     {
@@ -10815,7 +10817,8 @@
        "special": "",
        "specialEnabled": false
       },
-      "price": 1500
+      "price": 1500,
+      "attributeAlt": "dexterity"
      }
     },
     {
@@ -10867,7 +10870,8 @@
        "special": "",
        "specialEnabled": false
       },
-      "price": 12000
+      "price": 12000,
+      "attributeAlt": "dexterity"
      }
     },
     {
@@ -11679,7 +11683,8 @@
         "equipped": true,
         "hackDefense": "",
         "defense": "evasion",
-        "module": "cyber"
+        "module": "cyber",
+        "attributeAlt": "dexterity"
        }
       },
       {
@@ -13095,7 +13100,8 @@
          "specialEnabled": false
         },
         "price": 12000,
-        "equipped": true
+        "equipped": true,
+        "attributeAlt": "dexterity"
        }
       },
       {

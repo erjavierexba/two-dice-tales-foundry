@@ -2713,7 +2713,8 @@
           "max": 0
         },
         "quantity": 1,
-        "equipped": false
+        "equipped": false,
+        "attributeAlt": "dexterity"
       }
     },
     {
@@ -2767,7 +2768,8 @@
           "max": 0
         },
         "quantity": 1,
-        "equipped": false
+        "equipped": false,
+        "attributeAlt": "dexterity"
       }
     },
     {
@@ -2785,7 +2787,8 @@
           "max": 0
         },
         "quantity": 1,
-        "equipped": false
+        "equipped": false,
+        "attributeAlt": "dexterity"
       }
     },
     {

@@ -430,9 +430,10 @@ const methods = {
     const recipes = useCyber ? TDT.cyberRecipes : TDT.zombieRecipes;
     const weapons = this.items.filter(item => item.type === "weapon");
     const content = `<form>
-      <div class="form-group"><label>Acción</label><select name="mode"><option value="craft">Fabricar o construir</option><option value="repair">Reparar arma (sube un estado)</option>${useCyber ? `<option value="dismantle">Desguazar</option><option value="armor">Reparar armadura (1 material de construcción por punto)</option><option value="implant">Reparar implante averiado (Cibernética)</option>` : ""}</select></div>
+      <div class="form-group"><label>Acción</label><select name="mode"><option value="craft">Fabricar o construir</option><option value="repair">Reparar arma (sube un estado)</option>${useCyber ? `<option value="dismantle">Desguazar</option><option value="armor">Reparar armadura (1 material de construcción por punto)</option><option value="implant">Reparar implante averiado (Construir)</option>` : ""}</select></div>
       <div class="form-group"><label>Receta</label><select name="recipe">${recipes.map(recipe => `<option value="${recipe.key}">${esc(recipe.label)}${useCyber ? ` (${recipe.weapons}/${recipe.generic}/${recipe.construction} · ${recipe.difficulty})` : ` (${recipe.materials})`}</option>`).join("")}</select></div>
       <div class="form-group"><label>Arma (reparar)</label><select name="weapon"><option value="">—</option>${weapons.map(item => `<option value="${item.id}">${esc(item.name)} (${TDT.weaponConditions[item.system.condition || "normal"]})</option>`).join("")}</select></div>
+      ${useCyber ? `<div class="form-group"><label>Objeto (desguazar)</label><select name="scrap"><option value="">—</option>${this.items.filter(item => ["weapon", "armor"].includes(item.type) || (item.type === "implant" && !item.system.supreme?.enabled) || (item.type === "gear" && item.system.category === "vehicle")).map(item => `<option value="${item.id}">${esc(item.name)}</option>`).join("")}</select><p class="hint">Se elimina de la ficha. Un implante usa los materiales de su tipo; el resto, los de la receta elegida.</p></div>` : ""}
       ${useCyber ? `<div class="form-group"><label>Implante (reparar)</label><select name="implant"><option value="">—</option>${this.items.filter(item => item.type === "implant" && item.system.malfunction && !item.system.supreme?.enabled).map(item => `<option value="${item.id}">${esc(item.name)}</option>`).join("")}</select></div>` : ""}
       ${useCyber ? `<div class="form-group"><label>Armadura (reparar)</label><select name="armor"><option value="">—</option>${this.items.filter(item => item.type === "armor").map(item => `<option value="${item.id}">${esc(item.name)} (−${item.system.damage || 0})</option>`).join("")}</select></div>` : `<div class="form-group"><label>Dificultad (DJ)</label><input type="number" name="difficulty" value="6"></div>`}
       <div class="form-group"><label>Característica</label><select name="attribute"><option value="mind">Mente</option><option value="dexterity">Destreza</option><option value="power">Potencia</option></select></div>
@@ -460,10 +461,20 @@ const methods = {
     if (useCyber) {
       const stock = this.system.cyber.materials;
       if (form.mode === "dismantle") {
+        const scrap = form.scrap ? this.items.get(form.scrap) : null;
+        if (!scrap) return ui.notifications.warn("Elige el objeto que quieres desguazar.");
+        let source = recipe;
+        if (scrap.type === "implant") {
+          const tier = scrap.system.tier in TDT.implantRemovalDifficulty ? scrap.system.tier : Cyber.implantTierFromCost(Cyber.implantCost(scrap));
+          source = TDT.cyberRecipes.find(entry => entry.tier === tier) ?? recipe;
+        }
+        const ok = await confirmDialog("Desguazar", `${scrap.name} se desmonta y desaparece de la ficha (receta: ${source.label}). ¿Seguro?`);
+        if (!ok) return;
         const ratio = flags.has("scrapper") ? 1 : 0.8;
-        const gained = { weapons: Math.floor(recipe.weapons * ratio), generic: Math.floor(recipe.generic * ratio), construction: Math.floor(recipe.construction * ratio) };
+        const gained = { weapons: Math.floor(source.weapons * ratio), generic: Math.floor(source.generic * ratio), construction: Math.floor(source.construction * ratio) };
         await this.update({ "system.cyber.materials.weapons": stock.weapons + gained.weapons, "system.cyber.materials.generic": stock.generic + gained.generic, "system.cyber.materials.construction": stock.construction + gained.construction });
-        return say(this, `Desguace: ${recipe.label}`, `<p>Recuperas ${gained.weapons} de armas, ${gained.generic} genéricos y ${gained.construction} de construcción${ratio === 1 ? " (Chatarrero)" : ""}.</p>`);
+        await scrap.delete();
+        return say(this, `Desguace: ${scrap.name}`, `<p>Recuperas ${gained.weapons} de armas, ${gained.generic} genéricos y ${gained.construction} de construcción${ratio === 1 ? " (Chatarrero)" : ""}.</p>`);
       }
       if (form.mode === "armor") {
         const armor = form.armor ? this.items.get(form.armor) : null;
@@ -484,12 +495,12 @@ const methods = {
         if (implantCost.weapons > stock.weapons || implantCost.generic > stock.generic || implantCost.construction > stock.construction) {
           return ui.notifications.warn(`Faltan materiales: necesitas ${implantCost.weapons}/${implantCost.generic}/${implantCost.construction} (armas/genéricos/construcción).`);
         }
-        const surgeon = await this._chooseSurgeon();
-        if (!surgeon) return;
-        const result = await surgeon.rollSkill("cybernetics", {
-          label: `Reparar ${implant.name} a ${this.name}`,
+        // Repairing the prosthesis is assembly work (Construir); only installing it in a body uses Cibernética.
+        const result = await this.rollSkill("crafting", {
+          attribute: form.attribute,
+          label: `Reparar: ${implant.name}`,
           difficulty: implantRecipe.difficulty,
-          scopes: ["implant-surgery", "craft"],
+          scopes: ["craft"],
           extraRules: form.tools ? [] : [{ type: "penalty", value: 2, label: "Sin herramientas" }]
         });
         if (!result) return;

@@ -42,6 +42,7 @@
           <label>Daño <input type="number" name="system.damage" min="0" value="{{system.damage}}"></label>
           <label>Dificultad de ataque (PNJ) <input type="number" name="system.attackDifficulty" min="0" value="{{system.attackDifficulty}}"></label>
           <label>Característica <select name="system.attribute">{{selectOptions config.attributeChoices selected=system.attribute}}</select></label>
+          <label title="Para armas de «Potencia o Destreza»: al atacar se elige una de las dos.">Alternativa <select name="system.attributeAlt">{{selectOptions config.attributeAltChoices selected=system.attributeAlt}}</select></label>
           <label>Habilidad <select name="system.skill">{{selectOptions config.skillChoices selected=system.skill}}</select></label>
           <label>Defensa del objetivo <select name="system.defense">{{selectOptions config.defenseChoices selected=system.defense}}</select></label>
           <label>Distancia <select name="system.range">{{selectOptions config.ranges selected=system.range}}</select></label>

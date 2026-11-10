@@ -35,6 +35,7 @@ function sheetConfig() {
     dieChoices: { 0: "+1", 4: "d4", 6: "d6", 8: "d8", 10: "d10", 12: "d12" },
     rolledDieChoices: { 4: "d4", 6: "d6", 8: "d8", 10: "d10", 12: "d12" },
     attributeChoices: TDT.attributes,
+    attributeAltChoices: { "": "Ninguna", ...TDT.attributes },
     perChoices: { day: "Día", rest: "Descanso", scene: "Escena", combat: "Combate", session: "Sesión" },
     magicModes: { simple: "Magia sencilla", circles: "Círculos mágicos" },
     magicSkills: { arcana: "Arcano", nature: "Naturaleza", religion: "Religión" },

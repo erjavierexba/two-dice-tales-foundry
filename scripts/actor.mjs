@@ -491,7 +491,8 @@ export class TDTActor extends Actor {
     }
     const skillKey = item.system.skill;
     const skill = this.system.skills[skillKey];
-    const attributeKey = item.system.attribute || skill?.attribute || "power";
+    const attributeKey = await this._weaponAttribute(item, skill, options);
+    if (!attributeKey) return null;
     const attribute = this.system.attributes[attributeKey];
     const extraRules = [...profile.optionalRules];
     if (profile.bonus) extraRules.push({ type: "bonus", value: profile.bonus, label: `${item.name}: mejoras` });
@@ -550,7 +551,7 @@ export class TDTActor extends Actor {
       const check = {
         ...baseCheck,
         label: attacks > 1 ? `Ataque ${attack + 1}/${attacks}: ${item.name}` : baseCheck.label,
-        reroll: { method: "rollWeapon", args: [item.id, {}] },
+        reroll: { method: "rollWeapon", args: [item.id, { attribute: attributeKey }] },
         after: outcome => this._weaponAfter(item, profile, outcome, { attacks, defenseKey, targets, reroll: Boolean(options.preset) })
       };
       lastResult = await this.rollCheck(check, attackOptions);
@@ -562,6 +563,18 @@ export class TDTActor extends Actor {
       }
     }
     return lastResult;
+  }
+
+  /** Weapons of "Potencia o Destreza" let the player choose (no question when both dice are equal). */
+  async _weaponAttribute(item, skill, options = {}) {
+    const main = item.system.attribute || skill?.attribute || "power";
+    const alt = item.system.attributeAlt;
+    if (options.attribute && this.system.attributes[options.attribute]) return options.attribute;
+    if (!alt || alt === main || !this.system.attributes[alt]) return main;
+    const dice = key => Number(this.system.attributes[key].value) || 4;
+    if (dice(main) === dice(alt)) return main;
+    const order = dice(alt) > dice(main) ? [alt, main] : [main, alt];
+    return choiceDialog(`Ataque: ${item.name}`, "¿Con qué característica atacas?", order.map(key => ({ id: key, label: `${this.system.attributes[key].label} (d${dice(key)})` })));
   }
 
   /** Refills a weapon up to its effective magazine (Bruta halves it, Cargador de doble fondo doubles it). */

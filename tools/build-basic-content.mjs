@@ -105,6 +105,8 @@ const weapons = weaponRows.map(([name, primary, properties]) => {
       damage,
       skill: isMelee ? (name === "Cuerpo (desarmado)" ? "brawl" : "melee") : "ranged",
       attribute: primary.includes("Destreza") && !primary.includes("Potencia") ? "dexterity" : "power",
+      // "Potencia o Destreza": the player chooses when attacking.
+      attributeAlt: primary.includes("Destreza") && primary.includes("Potencia") ? "dexterity" : "",
       range: isMelee ? "contact" : "medium",
       properties,
       ammo: { value: ammo, max: ammo },
