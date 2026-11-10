@@ -1,6 +1,14 @@
 # Two Dice Tales para Foundry VTT
 
-Sistema de juego de TDT para Foundry VTT 13 (versión 0.3.0): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.1): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+
+## Instalación
+
+En Foundry, *Sistemas de juego → Instalar sistema*, pega esta URL de manifiesto y pulsa *Instalar*:
+
+```
+https://github.com/erjavierexba/two-dice-tales-foundry/raw/main/system.json
+```
 
 ## Módulo básico
 
@@ -64,9 +72,11 @@ Para copiar al mundo el contenido de los módulos activos, usa el botón del men
 
 ## Desarrollo
 
-En este equipo, `foundryvtt/tdt` se enlaza como `/home/javi/FoundryVTT/Data/systems/tdt`.
+En este equipo, este repositorio se enlaza como `/home/javi/FoundryVTT/Data/systems/tdt`.
 
-Los compendios se generan a partir del manual (`PorPartes/`). Para que los compendios no estén en uso al reescribirlos, Foundry tiene que estar cerrado:
+Los compendios se generan a partir del manual (`PorPartes/` del repositorio TDT). Por defecto se busca en una carpeta hermana llamada `TDT`; para usar otra ruta, define `TDT_MANUAL=/ruta/a/TDT`. `build-packs.mjs` usa el `classic-level` de la instalación de Foundry; si está en otro sitio, define `CLASSIC_LEVEL=/ruta/a/classic-level`.
+
+Ojo: `data/modules-content.json` tiene retoques posteriores a la generación (por ejemplo, los implantes instalados de los personajes de ejemplo). Regenerarlo los pierde; revisa el diff antes de commitear. Para que los compendios no estén en uso al reescribirlos, Foundry tiene que estar cerrado:
 
 ```bash
 node tools/build-basic-content.mjs    # data/basic-content.json
@@ -81,3 +91,7 @@ npm test
 ```
 
 La ficha incluye búsqueda instantánea en habilidades e inventario, se adapta al ancho real de la ventana y permite arrastrar/reordenar objetos con el comportamiento nativo de Foundry.
+
+## Licencia
+
+El código es MIT y el contenido de juego (`data/` y `packs/`) está bajo la ORC, como el manual. Detalles en [LICENSE](LICENSE).

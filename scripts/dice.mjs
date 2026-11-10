@@ -45,7 +45,9 @@ export function resolveTdtRoll({ rawResults, faces, bonusAllocations = [0, 0, 0]
   const [a, b] = adjusted;
   const hasPair = faces[0] > 0 && faces[1] > 0;
   const hasLinked = faces.length > 2 && faces[2] > 0;
-  const isFumble = hasPair && a === 1 && b === 1;
+  // A fixed value (no skill die: "suma 1") counts as a 1, so 1 + fixed 1 is a fumble too.
+  // Criticals still need two real dice.
+  const isFumble = a === 1 && b === 1;
   let criticalBonus = 0;
   let criticalValue = 0;
   if (hasPair && a > 1 && a === b) {

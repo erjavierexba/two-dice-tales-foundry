@@ -93,6 +93,17 @@ export class TDTActor extends Actor {
     }
   }
 
+  /** Token HUD edits of the health bar are clamped to the effective maximum (base + feats), not the base value. */
+  async modifyTokenAttribute(attribute, value, isDelta = false, isBar = true) {
+    if (attribute !== "health" || this.type === "mecha" || !isBar) return super.modifyTokenAttribute(attribute, value, isDelta, isBar);
+    const current = Number(this.system.health.value) || 0;
+    const max = Number(this.system.health.effectiveMax ?? this.system.health.max) || 0;
+    const next = Math.min(max, Math.max(0, isDelta ? current + Number(value) : Number(value)));
+    const updates = { "system.health.value": next };
+    const allowed = Hooks.call("modifyTokenAttribute", { attribute, value, isDelta, isBar }, updates, this);
+    return allowed !== false ? this.update(updates) : this;
+  }
+
   /** Special flags from items. A mecha also uses its pilot's feats (Mechasinapsis, Vincula voluntad…). */
   get tdtFlags() {
     const own = this._tdtFlags ?? new Set();
@@ -408,6 +419,8 @@ export class TDTActor extends Actor {
                 const entry = mechanicalRules[Number(input.dataset.ruleIndex)];
                 applyRuleToOptions(entry, options, check);
               }
+              // Hero point and SATR only affect the first roll; later attacks of a multiple attack use followUpBonus.
+              options.followUpBonus = options.noBonus ? 0 : Math.min(3, Math.max(0, options.bonus - Number(options.satrBonus || 0)));
               options.bonus = options.noBonus ? 0 : Math.min(3, options.bonus) + (options.heroPoint ? 2 : 0);
               if (options.difficulty) options.difficulty = Math.max(0, options.difficulty - options.difficultyMod);
               resolve(options);
@@ -519,7 +532,15 @@ export class TDTActor extends Actor {
         ui.notifications.warn(`${item.name} se ha quedado sin munición.`);
         break;
       }
-      const attackOptions = { ...rollOptions, secondStep: rollOptions.secondStep - (attacks - 1), consumed: attack ? [] : rollOptions.consumed, heroPoint: attack ? false : rollOptions.heroPoint, consumeSatr: attack ? false : rollOptions.consumeSatr };
+      const followUp = attack > 0;
+      const attackOptions = {
+        ...rollOptions,
+        secondStep: rollOptions.secondStep - (attacks - 1),
+        consumed: followUp ? [] : rollOptions.consumed,
+        heroPoint: followUp ? false : rollOptions.heroPoint,
+        consumeSatr: followUp ? false : rollOptions.consumeSatr,
+        ...(followUp ? { bonus: rollOptions.followUpBonus ?? rollOptions.bonus, rerollOnes: Boolean(rollOptions.followUpRerollOnes) } : {})
+      };
       const check = {
         ...baseCheck,
         label: attacks > 1 ? `Ataque ${attack + 1}/${attacks}: ${item.name}` : baseCheck.label,
@@ -644,7 +665,7 @@ export class TDTActor extends Actor {
     const defense = hackDefense || item.system.defense || "evasion";
     const damage = Number(item.system.damage || 0);
     const hackOptions = hackDefense ? { hack: true } : {};
-    const data = { attackValue: value, fixed: true, damage, defense, attackerUuid: this.uuid, attackerName: this.name, weaponName: item.name, options: { stun: props.stun, armorBreak: props.armorBreaker, shot: !["melee", "brawl"].includes(item.system.skill) && /munici|bater/i.test(item.system.properties), ...hackOptions } };
+    const data = { attackValue: value, fixed: true, attacks, damage, defense, attackerUuid: this.uuid, attackerName: this.name, weaponName: item.name, options: { stun: props.stun, armorBreak: props.armorBreaker, shot: !["melee", "brawl"].includes(item.system.skill) && /munici|bater/i.test(item.system.properties), ...hackOptions } };
     const defenseLabel = TDT.hackDefenses[defense] ?? defense;
     const content = `<div class="tdt-chat-card"><header>Ataque: ${esc(item.name)}${attacks > 1 ? ` ×${attacks}` : ""}</header>
       <div class="tdt-roll-total">${value}</div><div>Dificultad del ${hackDefense ? "hack" : "ataque"} · se defiende con ${esc(defenseLabel)}</div>
@@ -656,18 +677,26 @@ export class TDTActor extends Actor {
     return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content });
   }
 
-  /** The player rolls its defense against an attack value; ties favour the attacker. */
+  /** The player rolls its defense against an attack value; ties favour the attacker. A multiple attack is defended once per attack. */
   async defendAgainst(data) {
+    const count = Math.max(1, Math.min(10, Math.floor(Number(data.attacks) || 1)));
+    for (let index = 0; index < count; index++) {
+      const done = await this._defendOnce(data, count > 1 ? ` (${index + 1}/${count})` : "");
+      if (done === null) return;
+    }
+  }
+
+  async _defendOnce(data, suffix = "") {
     const defense = data.defense || "evasion";
     const options = data.options ?? {};
     const isHack = Boolean(options.hack);
-    const rollOptions = { label: `Defensa contra ${data.weaponName ?? data.attackerName ?? "ataque"}`, difficulty: Number(data.attackValue) + 1, scopes: isHack ? ["hack-defense"] : [] };
+    const rollOptions = { label: `Defensa contra ${data.weaponName ?? data.attackerName ?? "ataque"}${suffix}`, difficulty: Number(data.attackValue) + 1, scopes: isHack ? ["hack-defense"] : [] };
     let result;
     if (this.type === "mecha") result = await this.rollMechaStat(defense === "fortitude" ? "robustness" : "maneuver", rollOptions);
     else if (isHack) result = await this.rollHackDefense(defense, rollOptions);
     else if (defense === "perception") result = await this.rollPerception(rollOptions);
     else result = await this.rollDefense(defense, rollOptions);
-    if (!result) return;
+    if (!result) return null;
     const attackValue = Number(data.attackValue);
     if (result.total > attackValue) {
       return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} se defiende</header><p>${result.total} supera ${attackValue}: el ataque falla.</p></div>` });
@@ -745,6 +774,14 @@ export class TDTActor extends Actor {
 
   async _fallDown(leftover, options = {}) {
     const difficulty = Math.max(0, leftover);
+    // With 0 or 1 left over the character is already stable: unconscious at 0 HP, no dying rolls.
+    if (difficulty <= 1) {
+      await this.update({ "system.dying.active": false, "system.dying.difficulty": 0 });
+      return ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this }),
+        content: `<div class="tdt-chat-card"><header>${esc(this.name)} cae</header><p>Queda inconsciente y suelta lo que tenga en las manos. Daño sobrante: ${difficulty}, así que está <strong>estabilizado</strong>: no hace tiradas de caído.</p></div>`
+      });
+    }
     await this.update({ "system.dying.active": true, "system.dying.difficulty": difficulty });
     const buttons = [`<button type="button" class="tdt-chat-button" data-tdt-action="dying" data-actor-uuid="${this.uuid}">Tirada de caído (Fortaleza ${difficulty})</button>`];
     const orc = this.items.find(item => item.type === "race" && (item.system.modifiers ?? []).some(entry => entry.target === "flag.orcSurvive") && Number(item.system.uses?.value) > 0);
@@ -991,8 +1028,12 @@ function applyRuleToOptions(entry, options, check) {
   if (entry.damage) options.damageBonus += Number(entry.damage);
   if (entry.noBonus) options.noBonus = true;
   if (entry.rerollOnes) options.rerollOnes = true;
+  if (entry.rerollOnes && entry.consume !== "satr") options.followUpRerollOnes = true;
   if (entry.consume === "hackUse") options.consumed.push("hackUse");
-  if (entry.consume === "satr") options.consumeSatr = true;
+  if (entry.consume === "satr") {
+    options.consumeSatr = true;
+    if (entry.type === "bonus") options.satrBonus = Number(options.satrBonus || 0) + value;
+  }
   if (entry.consume === "evasionPenalty") options.consumeEvasionPenalty = true;
   if (entry.ignorePower) options.difficultyMod = Math.max(0, options.difficultyMod);
 }

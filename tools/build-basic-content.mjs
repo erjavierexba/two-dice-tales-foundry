@@ -3,7 +3,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const root = path.resolve(here, "../../..");
+// Folder of the manual repository (TDT). By default, a sibling folder called TDT; override with TDT_MANUAL.
+const root = path.resolve(process.env.TDT_MANUAL ?? path.join(here, "../../TDT"));
 const sourcePath = path.join(root, "PorPartes/2 - Módulo básico.md");
 const outputPath = path.join(here, "../data/basic-content.json");
 const markdown = fs.readFileSync(sourcePath, "utf8").replaceAll("\\.", ".");

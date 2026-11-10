@@ -13,7 +13,8 @@ import {
 } from "./md-lib.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const manual = path.resolve(here, "../../../PorPartes");
+// Manual repository (TDT): a sibling folder called TDT by default; override with TDT_MANUAL.
+const manual = path.join(path.resolve(process.env.TDT_MANUAL ?? path.join(here, "../../TDT")), "PorPartes");
 const read = file => fs.readFileSync(path.join(manual, file), "utf8").replace(/\r/g, "");
 const basic = read("2 - Módulo básico.md");
 const fantasyMd = read("modulos_opcionales/1 - Módulo fantástico.md");

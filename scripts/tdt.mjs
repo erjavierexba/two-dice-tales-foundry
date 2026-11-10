@@ -1,6 +1,7 @@
 import { TDT } from "./config.mjs";
 import { TDTActor } from "./actor.mjs";
 import { TDTCombat } from "./combat.mjs";
+import { TDTTokenDocument } from "./token.mjs";
 import "./actor-modules.mjs";
 import { TDTActorSheet, TDTItemSheet, TDTMechaSheet } from "./sheets.mjs";
 import * as dice from "./dice.mjs";
@@ -13,6 +14,7 @@ Hooks.once("init", () => {
   CONFIG.TDT = TDT;
   CONFIG.Actor.documentClass = TDTActor;
   CONFIG.Combat.documentClass = TDTCombat;
+  CONFIG.Token.documentClass = TDTTokenDocument;
   registerSettings();
 
   const Actors = foundry.documents.collections.Actors;

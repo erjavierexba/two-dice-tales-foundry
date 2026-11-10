@@ -2,7 +2,7 @@
   "id": "tdt",
   "title": "Two Dice Tales",
   "description": "Sistema oficial de Two Dice Tales para Foundry Virtual Tabletop.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "compatibility": {
     "minimum": "13",
     "verified": "13.348"
@@ -12,6 +12,12 @@
       "name": "Javi"
     }
   ],
+  "url": "https://github.com/erjavierexba/two-dice-tales-foundry",
+  "manifest": "https://github.com/erjavierexba/two-dice-tales-foundry/raw/main/system.json",
+  "download": "https://github.com/erjavierexba/two-dice-tales-foundry/archive/refs/heads/main.zip",
+  "readme": "https://github.com/erjavierexba/two-dice-tales-foundry#readme",
+  "bugs": "https://github.com/erjavierexba/two-dice-tales-foundry/issues",
+  "license": "LICENSE",
   "relationships": {
     "recommends": [
       {

@@ -38,4 +38,10 @@ assert.equal(untrained.isFumble, false);
 assert.equal(untrained.total, 5);
 assert.equal(untrained.success, true);
 
+const untrainedFumble = resolveTdtRoll({ rawResults: [1, 1], faces: [6, 0], difficulty: 2 });
+assert.equal(untrainedFumble.isFumble, true, "1 en la característica + 1 fijo sin habilidad es pifia");
+assert.equal(untrainedFumble.success, false);
+assert.equal(untrainedFumble.isCritical, false);
+assert.deepEqual(applyBonus([1, 1], [6, 0], [2, 2]), [1, 1], "ni un 1 ni el valor fijo se bonifican");
+
 console.log("TDT dice tests: OK");

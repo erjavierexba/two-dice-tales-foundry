@@ -540,12 +540,17 @@ const methods = {
       if (system.wired && !stats.wiredCapable && !flags.has("hackerHands")) return ui.notifications.warn(`${hack.name} solo se lanza por cable y no tienes conexión cableada.`);
       const overloadLimit = flags.has("overclocking") ? 2 : 1;
       if (system.neuralOverload && Number(this.system.cyber.neuralOverload || 0) >= overloadLimit) return ui.notifications.warn("Tu chip está sobrecargado: no puedes lanzar otro hack con Sobrecarga neural hasta la siguiente escena.");
+    }
+    // The use is spent once the hack is actually launched, so cancelling the roll dialog keeps it.
+    const spendUse = async () => {
+      if (options.preset) return;
       await this.update({
         "system.cyber.hackUses": Number(this.system.cyber.hackUses || 0) + 1,
         "system.cyber.neuralOverload": Number(this.system.cyber.neuralOverload || 0) + (system.neuralOverload ? 1 : 0)
       });
-    }
+    };
     const defense = system.defense || "evasion";
+    if (defense === "none") await spendUse();
     if (defense === "none") return say(this, `Hack: ${hack.name}`, `<p>No hace falta tirar.</p><div class="tdt-item-message">${esc(system.description)}</div>`);
     const targets = currentTargets();
     const extraRules = [];
@@ -570,6 +575,7 @@ const methods = {
       extraFields: targets.length ? `<p class="hint">Objetivos: ${targets.map(target => esc(target.name)).join(", ")}.</p>` : "",
       reroll: { method: "castHack", args: [hack.id, {}] },
       after: async outcome => {
+        await spendUse();
         const { result } = outcome;
         const notes = [];
         const lines = [];
