@@ -25,7 +25,7 @@ function targetLines(actor, outcome, targets, { defenseKey = "evasion", damage =
   const lines = [];
   for (const target of targets) {
     const defense = targetDefense(target, defenseKey);
-    lines.push(actor._targetLine(target, { total: outcome.result.total, defense, damage, endurance: endurance(target), minimum, afterEndurance, defenseKey, options }));
+    lines.push(actor._targetLine(target, { total: outcome.result.total, difficultyMod: outcome.result.difficultyMod, defense, damage, endurance: endurance(target), minimum, afterEndurance, defenseKey, options }));
   }
   return lines;
 }
@@ -661,6 +661,7 @@ const methods = {
           const value = targetDefense(target, defense);
           const line = this._targetLine(target, {
             total: result.total,
+            difficultyMod: result.difficultyMod,
             defense: value,
             damage: Number(system.damage || 0),
             endurance: targetEndurance(target, { hack: true, ignoreHuman: system.ignoreHumanEndurance, machineZero: system.machineEnduranceZero }),

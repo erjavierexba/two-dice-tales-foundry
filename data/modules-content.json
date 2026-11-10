@@ -6050,7 +6050,9 @@
         "value": 5
        }
       ],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6086,7 +6088,9 @@
         "label": "Cuerpo de goma (gastando energía; Sobrecarga 2: bonifica 2)",
         "optional": true
        }
-      ]
+      ],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6121,7 +6125,9 @@
         "value": 4
        }
       ],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6147,7 +6153,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6173,7 +6181,28 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [
+       {
+        "type": "damage",
+        "value": 4,
+        "scopes": [
+         "melee-attack"
+        ],
+        "label": "Superfuerza (Daño +4; la sobrecarga suma más)"
+       },
+       {
+        "type": "difficulty",
+        "value": 5,
+        "scopes": [
+         "athletics",
+         "brawl"
+        ],
+        "label": "Superfuerza (prueba de fuerza; la sobrecarga baja más)",
+        "optional": true
+       }
+      ],
+      "toggle": true,
+      "active": false
      }
     },
     {
@@ -6199,7 +6228,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6230,7 +6261,9 @@
         "value": -5
        }
       ],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6256,7 +6289,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6282,7 +6317,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6308,7 +6345,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6334,7 +6373,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6360,7 +6401,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6386,7 +6429,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6412,7 +6457,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6437,8 +6484,35 @@
        "defense": "evasion",
        "overloadDamage": true
       },
-      "modifiers": [],
-      "rules": []
+      "modifiers": [
+       {
+        "target": "endurance",
+        "value": 4
+       }
+      ],
+      "rules": [
+       {
+        "type": "reminder",
+        "value": 0,
+        "scopes": [
+         "fortitude",
+         "evasion"
+        ],
+        "label": "Armadura subzero",
+        "text": "Aguante +4 ante todo lo que no sea fuego (contra el fuego, réstalo a mano)."
+       },
+       {
+        "type": "difficulty",
+        "value": 5,
+        "scopes": [
+         "athletics"
+        ],
+        "label": "Armadura subzero (correr patinando)",
+        "optional": true
+       }
+      ],
+      "toggle": true,
+      "active": false
      }
     },
     {
@@ -6464,7 +6538,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6490,7 +6566,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6516,7 +6594,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6542,7 +6622,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6568,7 +6650,27 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [
+       {
+        "type": "damage",
+        "value": 3,
+        "scopes": [
+         "unarmed"
+        ],
+        "label": "Inmolación (golpes desarmados)"
+       },
+       {
+        "type": "damage",
+        "value": 3,
+        "scopes": [
+         "unarmed"
+        ],
+        "label": "Inmolación (el doble contra seres vivos)",
+        "optional": true
+       }
+      ],
+      "toggle": true,
+      "active": false
      }
     },
     {
@@ -6594,7 +6696,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6620,7 +6724,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6646,7 +6752,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6672,7 +6780,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6698,7 +6808,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6724,7 +6836,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6750,7 +6864,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6776,7 +6892,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6802,7 +6920,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6828,7 +6948,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6854,7 +6976,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6880,7 +7004,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6906,7 +7032,18 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [
+       {
+        "type": "difficulty",
+        "value": 1,
+        "scopes": [
+         "attack"
+        ],
+        "label": "Maldición del golpe certero"
+       }
+      ],
+      "toggle": true,
+      "active": false
      }
     },
     {
@@ -6932,7 +7069,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6958,7 +7097,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -6984,7 +7125,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7010,7 +7153,29 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [
+       {
+        "type": "difficulty",
+        "value": 1,
+        "scopes": [
+         "attack",
+         "evasion"
+        ],
+        "label": "Aceleración (hasta tu siguiente turno)"
+       },
+       {
+        "type": "difficulty",
+        "value": 1,
+        "scopes": [
+         "attack",
+         "evasion"
+        ],
+        "label": "Aceleración (con sobrecarga)",
+        "optional": true
+       }
+      ],
+      "toggle": true,
+      "active": false
      }
     },
     {
@@ -7036,7 +7201,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7062,7 +7229,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7088,7 +7257,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7114,7 +7285,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7140,7 +7313,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7166,7 +7341,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7192,7 +7369,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7218,7 +7397,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     },
     {
@@ -7244,7 +7425,9 @@
        "overloadDamage": true
       },
       "modifiers": [],
-      "rules": []
+      "rules": [],
+      "toggle": false,
+      "active": false
      }
     }
    ]

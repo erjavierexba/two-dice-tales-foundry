@@ -459,6 +459,37 @@ const powerAnnotations = {
   Endurecimiento: { modifiers: [mod("energy", -5), mod("endurance", 4)] },
   "Cuerpo completo": { modifiers: [mod("energy", -5)] },
   "Cuerpo de goma": { rules: [rule("bonus", 1, ["evasion"], "Cuerpo de goma (gastando energía; Sobrecarga 2: bonifica 2)", { optional: true })] },
+  // Poderes de mejora: al usarlos quedan activos (botón de encendido) hasta que se apaguen.
+  Superfuerza: {
+    toggle: true,
+    rules: [
+      rule("damage", 4, ["melee-attack"], "Superfuerza (Daño +4; la sobrecarga suma más)"),
+      rule("difficulty", 5, ["athletics", "brawl"], "Superfuerza (prueba de fuerza; la sobrecarga baja más)", { optional: true })
+    ]
+  },
+  "Armadura subzero": {
+    toggle: true,
+    modifiers: [mod("endurance", 4)],
+    rules: [
+      rule("reminder", 0, ["fortitude", "evasion"], "Armadura subzero", { text: "Aguante +4 ante todo lo que no sea fuego (contra el fuego, réstalo a mano)." }),
+      rule("difficulty", 5, ["athletics"], "Armadura subzero (correr patinando)", { optional: true })
+    ]
+  },
+  "Inmolación": {
+    toggle: true,
+    rules: [
+      rule("damage", 3, ["unarmed"], "Inmolación (golpes desarmados)"),
+      rule("damage", 3, ["unarmed"], "Inmolación (el doble contra seres vivos)", { optional: true })
+    ]
+  },
+  "Aceleración/Ralentización": {
+    toggle: true,
+    rules: [
+      rule("difficulty", 1, ["attack", "evasion"], "Aceleración (hasta tu siguiente turno)"),
+      rule("difficulty", 1, ["attack", "evasion"], "Aceleración (con sobrecarga)", { optional: true })
+    ]
+  },
+  "Maldición del golpe certero": { toggle: true, rules: [rule("difficulty", 1, ["attack"], "Maldición del golpe certero")] },
   "Absorción ígnea": { permanent: true },
   "Control piromántico": { permanent: true },
   "Vuelo incandescente": { permanent: true }
@@ -495,7 +526,9 @@ for (const branchBlock of branchBlocks) {
         requirements,
         attack: attackMatch ? { enabled: true, damage: Number(attackMatch[2]), range: rangeKey(attackMatch[1]), defense: "evasion", overloadDamage: true } : { enabled: false, damage: 0, range: "medium", defense: "evasion", overloadDamage: true },
         modifiers: note.modifiers ?? [],
-        rules: note.rules ?? []
+        rules: note.rules ?? [],
+        toggle: Boolean(note.toggle),
+        active: false
       }
     });
   }

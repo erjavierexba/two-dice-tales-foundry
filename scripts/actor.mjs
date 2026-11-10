@@ -270,6 +270,8 @@ export class TDTActor extends Actor {
       if (result.difficulty) result.success = result.total >= result.difficulty;
     }
     result.extraResults = extraResults;
+    // Las reglas de «baja/sube la dificultad» también cuentan al comparar con la defensa de cada objetivo.
+    result.difficultyMod = Number(options.difficultyMod || 0);
     result.alternatives = firstCandidates.length > 1 ? firstCandidates.map((candidate, index) => ({ label: candidate.label, faces: candidate.faces, value: firstResults[index] })) : null;
     result.chosen = best.candidate.label;
     if (options.consumed?.includes("hackUse")) await this.update({ "system.cyber.hackUses": Number(this.system.cyber?.hackUses || 0) + 1 });
@@ -639,7 +641,7 @@ export class TDTActor extends Actor {
       if (!isMachine && profile.props.vsLiving) targetDamage = profile.props.vsLiving + delta;
       // Guerrero: ignora 1 punto de aguante de los enemigos.
       const endurance = Math.max(0, targetEndurance(target, { shot: profile.isFirearm }) - (this.tdtFlags.has("warrior") ? 1 : 0));
-      lines.push(this._targetLine(target, { total: result.total, defense, damage: targetDamage, endurance, minimum: profile.minimumDamage, defenseKey, isFumble: result.isFumble, options: { raw: true, area: Boolean(extra.area), stun: profile.props.stun, armorBreak: profile.props.armorBreaker, attackerFlags: [...this.tdtFlags] } }));
+      lines.push(this._targetLine(target, { total: result.total, difficultyMod: result.difficultyMod, defense, damage: targetDamage, endurance, minimum: profile.minimumDamage, defenseKey, isFumble: result.isFumble, options: { raw: true, area: Boolean(extra.area), stun: profile.props.stun, armorBreak: profile.props.armorBreaker, attackerFlags: [...this.tdtFlags] } }));
     }
     if (profile.props.stun) notes.push(`Aturdidora ${profile.props.stun}: si inflige ${profile.props.stun} o más, el objetivo pierde su próximo turno.`);
     if (profile.props.contusion) notes.push(`Contusión ${profile.props.contusion}: con ${profile.props.contusion} o más de daño, penalización severa (DJ).`);
@@ -661,14 +663,16 @@ export class TDTActor extends Actor {
   }
 
   /** One line of a chat card showing the result against a target, with an apply button. */
-  _targetLine(target, { total, defense, damage, endurance, minimum = 0, afterEndurance = 0, defenseKey = "evasion", options = {}, label = "" }) {
+  _targetLine(target, { total, defense, damage, endurance, minimum = 0, afterEndurance = 0, defenseKey = "evasion", options = {}, label = "", difficultyMod = 0 }) {
+    const mod = Number(difficultyMod || 0);
+    if (mod && defense !== null && defense !== undefined) defense = Math.max(0, Number(defense) - mod);
     const defenseLabel = TDT.hackDefenses[defenseKey] ?? TDT.attackDefenses[defenseKey] ?? defenseKey;
     if (targetImmune(target, defenseKey)) {
       return { hit: false, html: `<div class="tdt-target-line miss"><strong>${esc(target.name)}</strong>: ${esc(defenseLabel)} «-», es inmune.</div>` };
     }
     if (defense === null || defense === undefined) {
       if (target.type === "character") {
-        const data = { attackValue: total, damage, defense: defenseKey, attackerUuid: this.uuid, attackerName: this.name, options };
+        const data = { attackValue: total + mod, damage, defense: defenseKey, attackerUuid: this.uuid, attackerName: this.name, options };
         return { hit: null, html: `<div class="tdt-target-line"><strong>${esc(target.name)}</strong>: tirada enfrentada. <button type="button" class="tdt-chat-button" data-tdt-action="defend" data-payload="${payload(data)}">Defenderse (${esc(defenseLabel)})</button></div>` };
       }
       return { hit: null, html: `<div class="tdt-target-line"><strong>${esc(target.name)}</strong>: sin valor de ${esc(defenseLabel)} (lo decide el DJ).</div>` };
@@ -734,9 +738,12 @@ export class TDTActor extends Actor {
     }
     const value = difficulty - reduction * (attacks - 1);
     const defense = hackDefense || item.system.defense || "evasion";
-    const damage = Number(item.system.damage || 0);
+    // Armas solo de área (misiles…): el Área hace de Daño.
+    const areaOnly = !Number(item.system.damage || 0) && Number(props.area || 0) > 0;
+    const damage = areaOnly ? Number(props.area) : Number(item.system.damage || 0);
+    if (areaOnly) notes.push(`Ataque de área: Área ${props.area} como Daño a todos los que estén en la zona.`);
     const hackOptions = hackDefense ? { hack: true } : {};
-    const data = { attackValue: value, fixed: true, attacks, damage, vsLiving: props.vsLiving, vsMachines: props.vsMachines, defense, attackerUuid: this.uuid, attackerName: this.name, weaponName: item.name, options: { stun: props.stun, armorBreak: props.armorBreaker, shot: !["melee", "brawl"].includes(item.system.skill) && /munici|bater/i.test(item.system.properties), ...hackOptions } };
+    const data = { attackValue: value, fixed: true, attacks, damage, vsLiving: props.vsLiving, vsMachines: props.vsMachines, defense, attackerUuid: this.uuid, attackerName: this.name, weaponName: item.name, options: { area: areaOnly, stun: props.stun, armorBreak: props.armorBreaker, shot: !["melee", "brawl"].includes(item.system.skill) && /munici|bater/i.test(item.system.properties), ...hackOptions } };
     const defenseLabel = TDT.hackDefenses[defense] ?? defense;
     const content = `<div class="tdt-chat-card"><header>Ataque: ${esc(item.name)}${attacks > 1 ? ` ×${attacks}` : ""}</header>
       <div class="tdt-roll-total">${value}</div><div>Dificultad del ${hackDefense ? "hack" : "ataque"} · se defiende con ${esc(defenseLabel)}</div>
@@ -753,8 +760,10 @@ export class TDTActor extends Actor {
     const count = Math.max(1, Math.min(10, Math.floor(Number(data.attacks) || 1)));
     for (let index = 0; index < count; index++) {
       const done = await this._defendOnce(data, count > 1 ? ` (${index + 1}/${count})` : "");
-      if (done === null) return;
+      // Cancelar antes de la primera defensa no gasta el botón; a medias, sí.
+      if (done === null) return index > 0 ? true : null;
     }
+    return true;
   }
 
   async _defendOnce(data, suffix = "") {
@@ -772,10 +781,12 @@ export class TDTActor extends Actor {
     else result = await this.rollDefense(defense, rollOptions);
     if (!result) return null;
     const attackValue = Number(data.attackValue);
-    if (result.total > attackValue) {
-      return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} se defiende</header><p>${result.total} supera ${attackValue}: el ataque falla.</p></div>` });
+    // Una regla que baja la dificultad de esquivar cuenta como sumar ese valor a la defensa.
+    const defenseTotal = result.total + Number(result.difficultyMod || 0);
+    if (defenseTotal > attackValue && !result.isFumble) {
+      return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} se defiende</header><p>${defenseTotal} supera ${attackValue}: el ataque falla.</p></div>` });
     }
-    const incoming = attackValue - result.total;
+    const incoming = Math.max(0, attackValue - defenseTotal);
     const endurance = targetEndurance(this, { hack: isHack, shot: options.shot });
     // Weapons with a special damage against living beings or machines (Hoja vibrante, Porra eléctrica…).
     const isMachine = this.type === "mecha";

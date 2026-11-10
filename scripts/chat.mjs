@@ -17,6 +17,13 @@ export function registerSocket() {
         content: `<p>¿Aplicar <strong>${amount}</strong> de daño a <strong>${esc(actor.name)}</strong>?</p><p class="hint">La solicitud procede de otro cliente y necesita confirmación del DJ.</p>`
       }, { classes: ["tdt", "tdt-dialog"] });
       if (approved) await actor.applyDamage(amount, options);
+    } else if (data?.action === "markChatAction") {
+      const message = game.messages.get(data.messageId);
+      if (!message || typeof data.actionId !== "string" || data.actionId.length > 100) return;
+      const applied = new Set(message.getFlag("tdt", "appliedActions") ?? []);
+      if (applied.has(data.actionId)) return;
+      applied.add(data.actionId);
+      await message.setFlag("tdt", "appliedActions", [...applied]);
     }
   });
 }
@@ -84,7 +91,16 @@ async function handleChatAction(action, data, message, button, actionId) {
     case "defend": {
       const defenders = defendersFor(data);
       if (!defenders.length) return ui.notifications.warn("Selecciona o marca como objetivo un personaje que controles para defenderte.");
-      for (const actor of defenders) await actor.defendAgainst(data);
+      const done = new Set(message.getFlag("tdt", "appliedActions") ?? []);
+      for (const actor of defenders) {
+        const key = `${actionId}:${actor.uuid}`;
+        if (done.has(key)) {
+          ui.notifications.warn(`${actor.name} ya se ha defendido de este ataque.`);
+          continue;
+        }
+        const result = await actor.defendAgainst(data);
+        if (result !== null && result !== undefined) await recordChatAction(message, key);
+      }
       return;
     }
     case "reroll": {
@@ -127,6 +143,16 @@ async function handleChatAction(action, data, message, button, actionId) {
 
 async function markChatAction(message, button, actionId) {
   button.disabled = true;
+  return recordChatAction(message, actionId);
+}
+
+/** Stores that an action of a chat card was already used (so a reload doesn't re-enable it). */
+async function recordChatAction(message, actionId) {
+  // Un jugador no puede modificar mensajes ajenos: se lo pide al DJ activo.
+  if (!message.isOwner) {
+    if (game.users.activeGM) game.socket.emit(SOCKET, { action: "markChatAction", messageId: message.id, actionId });
+    return;
+  }
   const applied = new Set(message.getFlag("tdt", "appliedActions") ?? []);
   applied.add(actionId);
   try {
