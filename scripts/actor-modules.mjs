@@ -272,13 +272,16 @@ const methods = {
     if (system.cursed && energy < cost) return ui.notifications.warn(`${power.name} es Maldito: necesitas ${cost} de energía.`);
     const energyPaid = Math.min(energy, cost);
     const healthPaid = system.cursed ? cost : cost - energyPaid;
-    if (!options.preset) {
-      await this.update({ "system.powers.energy.value": energy - energyPaid });
+    // The cost is paid once the power is actually used, so cancelling the attack roll keeps the energy.
+    const payCost = async () => {
+      if (options.preset) return;
+      await this.update({ "system.powers.energy.value": Math.max(0, Number(this.system.powers.energy.value || 0) - energyPaid) });
       if (healthPaid > 0) await this.applyDamage(healthPaid, { raw: true });
       if (system.toggle) await power.update({ "system.active": true });
-    }
+    };
     const notes = [options.preset ? "Repetición: no vuelve a pagar el coste." : `Coste: ${energyPaid} de energía${healthPaid ? ` y ${healthPaid} PV` : ""}.`];
     if (overload) notes.push(`Sobrecarga ${overload}: ${system.attack?.enabled && system.attack.overloadDamage ? `Daño +${overload}` : `reduce la dificultad en ${overload}`}.`);
+    if (!system.attack?.enabled) await payCost();
     if (!system.attack?.enabled) return say(this, power.name, `${notesList(notes)}<div class="tdt-item-message">${esc(system.description)}</div>`);
     const skill = this.system.skills.superpower;
     const attributeKey = skill.attribute || "social";
@@ -298,6 +301,7 @@ const methods = {
       automaticDifficulty: targets.length === 1 ? (targetDefense(targets[0], defenseKey) === null ? `${targets[0].name}: tirada enfrentada` : `${targets[0].name}: ${TDT.attackDefenses[defenseKey] ?? defenseKey} ${targetDefense(targets[0], defenseKey)}`) : null,
       reroll: { method: "usePower", args: [power.id, {}] },
       after: async outcome => {
+        await payCost();
         const lines = targetLines(this, outcome, targets, { defenseKey, damage });
         return { html: `<div class="tdt-roll-weapon"><strong>Daño:</strong> ${damage}</div>${lines.map(line => line.html).join("")}${notesList(notes)}` };
       }

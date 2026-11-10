@@ -114,3 +114,14 @@ const saw = parseWeaponProperties("Daño 6, Contusión 5, Rompearmaduras. **Pena
 assert.deepEqual([saw.armorBreaker, saw.attackPenalty], [true, 2]);
 
 console.log("Pruebas de módulos superadas.");
+
+/* Enemies with "-" in a defense are immune to it */
+{
+  const { targetImmune, targetDefense } = await import("../scripts/attack.mjs");
+  const zombie = { type: "npc", system: { npcStats: { evasion: 3, fortitude: 3, will: 0, perception: 5, hacking: 4 } } };
+  assert.equal(targetImmune(zombie, "will"), true, "Voluntad «-» = inmune");
+  assert.equal(targetDefense(zombie, "will"), null);
+  assert.equal(targetImmune(zombie, "evasion"), false);
+  assert.equal(targetDefense(zombie, "evasion"), 3);
+  assert.equal(targetImmune({ type: "character", system: {} }, "will"), false);
+}

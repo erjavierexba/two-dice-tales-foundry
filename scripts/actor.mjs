@@ -2,7 +2,7 @@ import { TDT } from "./config.mjs";
 import { chooseAutomaticBonus, dieScore, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepRolledDie } from "./dice.mjs";
 import { collectModifiers, hasItemNamed, itemNameSet, modifierValue } from "./modifiers.mjs";
 import { moduleActive, rule } from "./settings.mjs";
-import { finalDamage, parseWeaponProperties, targetDefense, targetEndurance, weaponProfile } from "./attack.mjs";
+import { finalDamage, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
 import { esc, payload, requestDamage } from "./chat.mjs";
 import * as Fantasy from "./modules/fantasy.mjs";
 import * as Mecha from "./modules/mecha.mjs";
@@ -595,6 +595,9 @@ export class TDTActor extends Actor {
   /** One line of a chat card showing the result against a target, with an apply button. */
   _targetLine(target, { total, defense, damage, endurance, minimum = 0, afterEndurance = 0, defenseKey = "evasion", options = {}, label = "" }) {
     const defenseLabel = TDT.hackDefenses[defenseKey] ?? TDT.attackDefenses[defenseKey] ?? defenseKey;
+    if (targetImmune(target, defenseKey)) {
+      return { hit: false, html: `<div class="tdt-target-line miss"><strong>${esc(target.name)}</strong>: ${esc(defenseLabel)} «-», es inmune.</div>` };
+    }
     if (defense === null || defense === undefined) {
       if (target.type === "character") {
         const data = { attackValue: total, damage, defense: defenseKey, attackerUuid: this.uuid, attackerName: this.name, options };
@@ -690,6 +693,9 @@ export class TDTActor extends Actor {
     const defense = data.defense || "evasion";
     const options = data.options ?? {};
     const isHack = Boolean(options.hack);
+    if (isHack && this.tdtFlags.has("animal")) {
+      return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)}: Animal</header><p>No tiene VirtualSelf: el hack no le afecta. Si el hack actúa directamente sobre sus implantes, lo decide el DJ.</p></div>` });
+    }
     const rollOptions = { label: `Defensa contra ${data.weaponName ?? data.attackerName ?? "ataque"}${suffix}`, difficulty: Number(data.attackValue) + 1, scopes: isHack ? ["hack-defense"] : [] };
     let result;
     if (this.type === "mecha") result = await this.rollMechaStat(defense === "fortitude" ? "robustness" : "maneuver", rollOptions);

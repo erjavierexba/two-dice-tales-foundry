@@ -206,12 +206,24 @@ export function weaponProfile(item, actor, { rule = () => false, moduleActive = 
   };
 }
 
-/** Defense value of a target actor against an attack, as a fixed number (NPC) or null (character: opposed). */
+const IMMUNITY_DEFENSES = new Set(["evasion", "fortitude", "will", "perception"]);
+
+/** An enemy with "-" in a defense (stored as 0 or empty) is immune to anything that targets it. */
+export function targetImmune(actor, defense = "evasion") {
+  if (actor?.type !== "npc" || !IMMUNITY_DEFENSES.has(defense)) return false;
+  const raw = actor.system.npcStats?.[defense];
+  if (raw === null || raw === undefined) return false;
+  const text = String(raw).trim();
+  return text === "" || text === "-" || Number(text) <= 0;
+}
+
+/** Defense value of a target actor against an attack, as a fixed number (NPC) or null (character: opposed, or immune NPC). */
 export function targetDefense(actor, defense = "evasion") {
   if (!actor) return null;
   if (actor.type === "npc") {
     if (defense === "hacking") return Number(actor.system.npcStats?.hacking || 4) || 4;
     if (defense === "gm") return Number(actor.system.npcStats?.hackDifficulty || 0) || null;
+    if (targetImmune(actor, defense)) return null;
     const value = Number(actor.system.npcStats?.[defense]);
     return Number.isFinite(value) ? value : null;
   }

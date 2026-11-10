@@ -552,7 +552,7 @@ const cyberAnnotations = {
   "Ojo para el cromo": { rules: [rule("bonus", 2, ["perception"], "Ojo para el cromo (descubrir implantes y armas ocultas)", { optional: true })] },
   Overclocking: { modifiers: [flag("overclocking")], rules: [] },
   Buscavidas: { rules: [rule("bonus", 2, ["society"], "Buscavidas (mercado negro, clínicas y encargos)", { optional: true })] },
-  "Piloto de fuga": { rules: [rule("bonus", 2, [], "Piloto de fuga (conducir para escapar o perder a alguien)", { optional: true })] }
+  "Piloto de fuga": { rules: [rule("bonus", 2, ["driving"], "Piloto de fuga (conducir para escapar o perder a alguien)", { optional: true })] }
 };
 const cyberFeats = parseFeats(section(cyberMd, "## Dotes del módulo cyberpunk", "## Hacking")).map(feat => featItem(feat, "cyber", cyberAnnotations));
 addPack("cyber-feats", "TDT Cyberpunk · Dotes", "Item", "cyber", cyberFeats);

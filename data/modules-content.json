@@ -9409,7 +9409,9 @@
        {
         "type": "bonus",
         "value": 2,
-        "scopes": [],
+        "scopes": [
+         "driving"
+        ],
         "label": "Piloto de fuga (conducir para escapar o perder a alguien)",
         "optional": true
        }
