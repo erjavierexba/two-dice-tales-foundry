@@ -1,0 +1,12 @@
+{
+  "name": "two-dice-tales-foundry",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/dice.test.mjs && node tests/modules.test.mjs && node tests/system.test.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

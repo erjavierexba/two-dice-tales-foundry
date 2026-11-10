@@ -1,0 +1,69 @@
+import assert from "node:assert/strict";
+import { access, readFile, readdir } from "node:fs/promises";
+import { execFileSync } from "node:child_process";
+import { dirname, join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
+
+const root = dirname(dirname(fileURLToPath(import.meta.url)));
+const read = path => readFile(join(root, path), "utf8");
+const exists = async path => access(join(root, path)).then(() => true, () => false);
+
+const system = JSON.parse(await read("system.json"));
+const pkg = JSON.parse(await read("package.json"));
+const template = JSON.parse(await read("template.json"));
+
+assert.equal(system.id, "tdt");
+assert.equal(system.version, pkg.version, "system.json y package.json deben compartir versión");
+assert.equal(system.compatibility.minimum, "13");
+assert.ok(system.relationships?.recommends?.some(entry => entry.id === "dice-so-nice"), "Dice So Nice debe figurar como integración recomendada");
+assert.equal(template.Item.implant.installed, false, "los implantes del inventario no empiezan instalados");
+assert.equal(template.Item.weapon.mecha.repairRequired, false);
+assert.equal(template.Item.weapon.mecha.destroyed, false);
+for (const path of [...system.esmodules, ...system.styles]) assert.ok(await exists(path), `Falta ${path}`);
+for (const pack of system.packs) assert.ok(await exists(pack.path), `Falta el compendio ${pack.path}`);
+for (const [document, config] of Object.entries(system.documentTypes)) {
+  const declared = new Set(template[document]?.types ?? []);
+  for (const type of Object.keys(config)) assert.ok(declared.has(type), `${document}.${type} no está en template.json`);
+}
+
+for (const file of await readdir(join(root, "scripts"), { recursive: true })) {
+  if (!file.endsWith(".mjs")) continue;
+  const path = join(root, "scripts", file);
+  execFileSync(process.execPath, ["--check", path], { stdio: "pipe" });
+}
+
+const actorTemplate = await read("templates/actor-sheet.hbs");
+const mechaTemplate = await read("templates/mecha-sheet.hbs");
+for (const [name, source] of [["actor", actorTemplate], ["mecha", mechaTemplate]]) {
+  const itemRows = source.match(/<li class="item tdt-item" data-item-id=/g) ?? [];
+  const rawRows = source.match(/<li data-item-id=/g) ?? [];
+  assert.ok(itemRows.length > 0, `${name}: no hay filas de objetos arrastrables`);
+  assert.equal(rawRows.length, 0, `${name}: quedan filas incompatibles con el drag & drop de Foundry`);
+}
+assert.match(actorTemplate, /data-action="item-chat"/);
+assert.match(actorTemplate, /data-action="item-use"/);
+assert.match(actorTemplate, /data-action="compendium-pick"/);
+assert.match(actorTemplate, /name="system\.moneyMinor"/);
+assert.match(actorTemplate, /tdt-hero-point/);
+assert.match(actorTemplate, /tdt-character-economy/);
+assert.match(actorTemplate, /name="system\.initiative\.value"/);
+assert.match(actorTemplate, /data-actor-method="driveVehicle"/);
+assert.match(actorTemplate, /data-actor-method="damageVehicle"/);
+assert.match(mechaTemplate, /data-action="activate-tab" data-tab="inventory"/);
+assert.match(mechaTemplate, /data-actor-method="mechaRepairWeapon"/);
+assert.match(mechaTemplate, /data-action="compendium-pick"/);
+
+const chat = await read("scripts/chat.mjs");
+assert.doesNotMatch(chat, /data\?\.action === "update"/);
+assert.match(chat, /Dialog\.confirm/);
+
+const actor = await read("scripts/actor.mjs");
+assert.match(actor, /rolls:\s*outcome\.rolls/, "las tiradas deben publicarse como Roll de Foundry para Dice So Nice");
+const entrypoint = await read("scripts/tdt.mjs");
+assert.match(entrypoint, /CONFIG\.Combat\.documentClass\s*=\s*TDTCombat/);
+
+const css = await read("styles/tdt.css");
+assert.match(css, /@container tdt-sheet/);
+assert.doesNotMatch(css, /height:\s*calc\(100% - 154px\)/);
+
+console.log(`TDT system checks: OK (${relative(process.cwd(), root)})`);

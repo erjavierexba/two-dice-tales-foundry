@@ -1,0 +1,1510 @@
+.tdt {
+  --tdt-ink: #18232b;
+  --tdt-muted: #667078;
+  --tdt-paper: #eee9dc;
+  --tdt-panel: #fffdf7;
+  --tdt-red: #b93e36;
+  --tdt-red-dark: #842923;
+  --tdt-gold: #d9aa49;
+  --tdt-gold-light: #f4d98f;
+  --tdt-blue: #1f6170;
+  --tdt-blue-dark: #102b34;
+  --tdt-line: #c8bda7;
+  --tdt-shadow: 0 8px 22px rgba(19, 31, 35, .12);
+  color: var(--tdt-ink);
+  font-family: Inter, "Segoe UI", sans-serif;
+}
+
+.tdt .window-content {
+  background:
+    radial-gradient(circle at 12% 12%, rgba(217, 170, 73, .12), transparent 28%),
+    linear-gradient(rgba(238, 233, 220, .96), rgba(238, 233, 220, .96)),
+    repeating-linear-gradient(0deg, transparent 0 24px, rgba(31, 97, 112, .08) 24px 25px);
+  padding: 0;
+  overflow: hidden;
+  container: tdt-sheet / inline-size;
+}
+
+.tdt form.tdt-actor-sheet,
+.tdt form.tdt-item-sheet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.window-app.tdt .window-header {
+  color: #f4ead4;
+  background: #12232a;
+  border-bottom: 1px solid #d5a23c;
+}
+
+.window-app.tdt .window-header a:hover {
+  color: #f2c961;
+  text-shadow: none;
+}
+
+.tdt input,
+.tdt select,
+.tdt textarea {
+  color: var(--tdt-ink);
+  background: rgba(255, 255, 255, .55);
+  border: 1px solid var(--tdt-line);
+  border-radius: 6px;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.tdt input[type="checkbox"] {
+  width: 16px !important;
+  min-width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--tdt-red);
+}
+
+.tdt input:focus,
+.tdt select:focus,
+.tdt textarea:focus {
+  border-color: var(--tdt-blue);
+  box-shadow: 0 0 0 2px rgba(31, 97, 112, .2);
+  outline: none;
+}
+
+.tdt button {
+  color: var(--tdt-ink);
+  border: 0;
+  background: transparent;
+}
+
+.tdt button:focus-visible,
+.tdt a:focus-visible {
+  outline: 2px solid var(--tdt-gold);
+  outline-offset: 2px;
+}
+
+.tdt .tdt-header {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr) 150px;
+  align-items: stretch;
+  flex: 0 0 auto;
+  min-height: 122px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 72% 0, rgba(255, 255, 255, .12), transparent 34%),
+    linear-gradient(120deg, #0d2028, var(--tdt-blue) 70%, #183d47);
+  border-bottom: 4px solid var(--tdt-gold);
+  box-shadow: 0 5px 18px rgba(10, 26, 31, .24);
+  isolation: isolate;
+}
+
+.tdt .tdt-header .profile-img {
+  width: 90px;
+  height: 122px;
+  padding: 7px;
+  object-fit: cover;
+  background: rgba(5, 15, 19, .35);
+  border: 0;
+  border-right: 3px solid var(--tdt-gold);
+  filter: saturate(.88) contrast(1.04);
+  cursor: pointer;
+}
+
+.tdt .tdt-identity {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  padding: 14px 20px;
+  min-width: 0;
+}
+
+.tdt .tdt-identity-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 32px;
+}
+
+.tdt .tdt-kicker {
+  color: var(--tdt-gold-light);
+  font: 700 13px/1 "Arial Narrow", sans-serif;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.tdt .tdt-hero-point {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 0 0 auto;
+  padding: 3px 9px 3px 4px;
+  color: rgba(255, 255, 255, .62);
+  background: rgba(0, 0, 0, .2);
+  border: 1px solid rgba(255, 255, 255, .15);
+  border-radius: 99px;
+  cursor: pointer;
+  transition: color .15s ease, border-color .15s ease, background .15s ease, transform .15s ease;
+}
+
+.tdt .tdt-hero-point:hover { transform: translateY(-1px); }
+
+.tdt .tdt-hero-point input {
+  position: absolute;
+  width: 1px !important;
+  min-width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tdt .tdt-hero-coin {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: #6e7374;
+  background: #283c43;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,.18);
+}
+
+.tdt .tdt-hero-copy {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1;
+}
+
+.tdt .tdt-hero-copy small {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.tdt .tdt-hero-copy strong { font-size: 12px; }
+
+.tdt .tdt-hero-point.active {
+  color: #fff1bf;
+  background: rgba(110, 72, 12, .34);
+  border-color: rgba(244, 217, 143, .52);
+}
+
+.tdt .tdt-hero-point.active .tdt-hero-coin {
+  color: #3b2a08;
+  background: linear-gradient(145deg, #ffe39a, #d9a52f);
+  border-color: #ffe8a9;
+  box-shadow: 0 0 10px rgba(242, 201, 97, .34), inset 0 0 0 2px rgba(255,255,255,.25);
+}
+
+.tdt .tdt-name {
+  height: 40px;
+  padding: 0;
+  color: #fff;
+  font: 800 32px/1 "Arial Narrow", "Roboto Condensed", sans-serif;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(255,255,255,.3);
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.tdt .tdt-identity-grid {
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px;
+}
+
+.tdt .tdt-identity-grid label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #e9dfca !important;
+}
+
+.tdt .tdt-identity-grid input {
+  min-width: 0;
+  height: 24px;
+  color: #fff;
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.25);
+  color: #fff !important;
+  opacity: 1;
+}
+
+.tdt .tdt-health-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  color: #fff;
+  padding: 10px;
+  background: rgba(0, 0, 0, .22);
+  border-left: 1px solid rgba(255, 255, 255, .1);
+}
+
+.tdt .tdt-health-block > span {
+  color: #e7c879;
+  font: 700 14px "Arial Narrow", sans-serif;
+  letter-spacing: .18em;
+}
+
+.tdt .tdt-health-meter {
+  width: 112px;
+  height: 7px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, .35);
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 99px;
+}
+
+.tdt .tdt-health-meter > span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #bd3d35, #f07766);
+  border-radius: inherit;
+  box-shadow: 0 0 8px rgba(240, 119, 102, .45);
+  transition: width .25s ease;
+}
+
+.tdt .tdt-health-block > div {
+  font: 700 24px "Arial Narrow", sans-serif;
+}
+
+.tdt .tdt-health-block input {
+  width: 48px;
+  height: 34px;
+  color: #fff;
+  font: inherit;
+  text-align: center;
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.25);
+}
+
+.tdt .tdt-header input::placeholder {
+  color: rgba(255,255,255,.55);
+}
+
+.tdt .tdt-health-actions {
+  display: flex;
+}
+
+.tdt .tdt-health-block > small {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+}
+
+.tdt .tdt-health-block > small input {
+  width: 34px;
+  height: 22px;
+  font: 600 11px Inter, "Segoe UI", sans-serif;
+}
+
+.tdt .tdt-health-actions button {
+  width: 36px;
+  color: #fff;
+}
+
+.tdt .sheet-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  margin: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 0;
+  background: #162a32;
+  scrollbar-width: thin;
+  scrollbar-color: var(--tdt-gold) transparent;
+}
+
+.tdt .sheet-tabs .item {
+  flex: 1;
+  min-width: 76px;
+  padding: 8px 10px 7px;
+  color: #d8dfdf;
+  font: 700 12px "Arial Narrow", sans-serif;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.tdt .sheet-tabs .item i {
+  display: block;
+  margin-bottom: 4px;
+  color: #91a7ab;
+  font-size: 14px;
+}
+
+.tdt .sheet-tabs .item:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, .06);
+  text-shadow: none;
+}
+
+.tdt .sheet-tabs .item.active {
+  color: #fff;
+  background: linear-gradient(180deg, rgba(185, 62, 54, .7), var(--tdt-red-dark));
+  border-bottom-color: var(--tdt-gold);
+  text-shadow: none;
+}
+
+.tdt .sheet-tabs .item.active i { color: var(--tdt-gold-light); }
+
+.tdt .sheet-tabs .item b {
+  display: inline-grid;
+  min-width: 18px;
+  height: 18px;
+  margin-left: 4px;
+  place-items: center;
+  color: #14262d;
+  font-size: 10px;
+  background: var(--tdt-gold-light);
+  border-radius: 99px;
+}
+
+.tdt .sheet-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 18px;
+  overflow: auto;
+  scrollbar-color: var(--tdt-blue) rgba(255, 255, 255, .25);
+}
+
+.tdt .tab.active {
+  height: 100%;
+}
+
+.tdt .tdt-section {
+  margin-bottom: 16px;
+  padding: 15px;
+  background: rgba(255, 253, 247, .82);
+  border: 1px solid var(--tdt-line);
+  border-radius: 8px;
+  box-shadow: var(--tdt-shadow);
+}
+
+.tdt h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0 0 12px;
+  color: var(--tdt-blue);
+  font: 800 21px/1 "Arial Narrow", "Roboto Condensed", sans-serif;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  border: 0;
+}
+
+.tdt h2::before {
+  width: 4px;
+  height: 18px;
+  content: "";
+  background: linear-gradient(var(--tdt-gold), var(--tdt-red));
+  border-radius: 4px;
+}
+
+.tdt h2 small {
+  color: #6d736f;
+  font: 500 11px Inter, "Segoe UI", sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.tdt .tdt-attributes {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.tdt .tdt-stat-card {
+  display: flex;
+  min-height: 84px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(155deg, #fffefa, #f5efe2);
+  border: 1px solid var(--tdt-line);
+  border-top: 4px solid var(--tdt-blue);
+  border-radius: 7px;
+  box-shadow: 0 3px 8px rgba(26, 42, 47, .08);
+  transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+}
+
+.tdt .tdt-stat-card:hover {
+  z-index: 1;
+  border-color: rgba(31, 97, 112, .65);
+  box-shadow: 0 6px 14px rgba(26, 42, 47, .14);
+  transform: translateY(-1px);
+}
+
+.tdt .tdt-stat-card.accent {
+  color: #fff;
+  background: linear-gradient(145deg, var(--tdt-red), var(--tdt-red-dark));
+  border-color: #83251f;
+}
+
+.tdt .tdt-stat-card.accent strong {
+  font: 800 32px "Arial Narrow", sans-serif;
+}
+
+.tdt .tdt-stat-card small {
+  font-size: 10px;
+}
+
+.tdt .tdt-stat-card select {
+  width: 72px;
+  height: 30px;
+  font-weight: 700;
+  text-align: center;
+  background: rgba(255, 255, 255, .75);
+}
+
+.tdt .tdt-roll-label,
+.tdt .tdt-skill-row button {
+  font: 700 14px "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.tdt .tdt-roll-label:hover,
+.tdt .tdt-skill-row button:hover {
+  color: var(--tdt-red);
+  text-shadow: none;
+}
+
+.tdt .tdt-secondary-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 9px;
+}
+
+.tdt .tdt-secondary-grid .tdt-stat-card {
+  min-width: 0;
+}
+
+.tdt .tdt-resource-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+}
+
+.tdt .tdt-resource-row label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(255, 253, 247, .82);
+  border: 1px solid var(--tdt-line);
+  border-radius: 6px;
+}
+
+.tdt .tdt-resource-row input[type="number"] {
+  width: 60px;
+  text-align: center;
+}
+
+.tdt .tdt-resource-row .tdt-money {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.tdt .tdt-money > span:first-child { flex: 1 1 100%; font-weight: 700; text-transform: capitalize; }
+.tdt .tdt-money input[type="number"] { width: 70px; }
+.tdt .tdt-money .tdt-money-separator { color: var(--tdt-muted); font-weight: 800; }
+.tdt .tdt-money small { color: var(--tdt-muted); }
+
+.tdt .tdt-character-economy {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.tdt .tdt-npc-resources { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.tdt .tdt-character-economy .tdt-money {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.tdt .tdt-character-economy .tdt-money > span:first-child {
+  flex: 0 1 auto;
+  white-space: nowrap;
+}
+
+.tdt .tdt-character-economy .tdt-money input[type="number"] {
+  width: 56px;
+  min-width: 48px;
+}
+
+.tdt .tdt-character-economy .tdt-money small { white-space: nowrap; }
+
+.tdt .tdt-skill-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px 16px;
+}
+
+.tdt .tdt-skill-row {
+  display: grid;
+  grid-template-columns: 1fr 112px 66px;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 4px 6px;
+  background: rgba(255, 255, 255, .34);
+  border: 1px solid transparent;
+  border-bottom-color: var(--tdt-line);
+  border-radius: 5px;
+  transition: background .15s ease, border-color .15s ease;
+}
+
+.tdt .tdt-skill-row:hover {
+  background: rgba(255, 253, 247, .92);
+  border-color: var(--tdt-line);
+}
+
+.tdt .tdt-skill-row button {
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tdt .tdt-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tdt .tdt-section-actions {
+  display: flex;
+  gap: 5px;
+}
+
+.tdt .tdt-section-title button {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 28px;
+  color: #fff;
+  background: var(--tdt-blue);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tdt .tdt-section-title button:hover { background: #28788a; }
+
+.tdt .tdt-section-title [data-action="section-toggle"] {
+  color: var(--tdt-blue);
+  background: rgba(31, 97, 112, .1);
+  border: 1px solid rgba(31, 97, 112, .25);
+}
+
+.tdt .tdt-count {
+  display: inline-grid;
+  min-width: 22px;
+  height: 22px;
+  place-items: center;
+  color: #fff;
+  font-weight: 800;
+  background: var(--tdt-blue);
+  border-radius: 99px;
+}
+
+.tdt .tdt-item-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tdt .tdt-item-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin: 2px 0;
+  padding: 3px 5px;
+  background: rgba(255, 255, 255, .24);
+  border: 1px solid transparent;
+  border-top-color: rgba(200, 189, 167, .75);
+  border-radius: 5px;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+
+.tdt .tdt-item-list li[data-item-id]:hover {
+  background: rgba(255, 253, 247, .95);
+  border-color: var(--tdt-line);
+  transform: translateX(2px);
+}
+
+.tdt .tdt-item-list li img {
+  width: 34px;
+  height: 34px;
+  object-fit: cover;
+  border: 1px solid rgba(31, 97, 112, .3);
+  border-radius: 5px;
+  cursor: grab;
+}
+
+.tdt .tdt-item-list li > a {
+  flex: 1;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tdt .tdt-item-list li > button {
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.tdt .tdt-item-list li > button:hover {
+  color: #fff;
+  background: var(--tdt-blue);
+}
+
+.tdt .tdt-item-list button.equipped {
+  color: #fff;
+  background: var(--tdt-red);
+}
+
+.tdt .tdt-item-list .empty {
+  color: #76736c;
+  font-style: italic;
+  justify-content: center;
+  min-height: 54px;
+  border: 1px dashed var(--tdt-line);
+}
+
+.tdt .filtered-out { display: none !important; }
+
+.tdt .tdt-filter-empty {
+  padding: 22px;
+  color: var(--tdt-muted);
+  font-style: italic;
+  text-align: center;
+  background: rgba(255, 255, 255, .35);
+  border: 1px dashed var(--tdt-line);
+  border-radius: 7px;
+}
+
+.tdt .tdt-list-toolbar {
+  position: sticky;
+  z-index: 3;
+  top: -18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: -4px 0 12px;
+  padding: 8px 10px;
+  color: var(--tdt-blue);
+  background: rgba(238, 233, 220, .96);
+  border: 1px solid var(--tdt-line);
+  border-radius: 7px;
+  box-shadow: 0 5px 14px rgba(20, 35, 40, .1);
+  backdrop-filter: blur(5px);
+}
+
+.tdt .tdt-list-toolbar input {
+  flex: 1;
+  height: 30px;
+  background: rgba(255, 255, 255, .72);
+  border: 0;
+}
+
+.tdt .tdt-list-toolbar button {
+  flex: 0 0 28px;
+  height: 28px;
+  color: var(--tdt-muted);
+  cursor: pointer;
+}
+
+.tdt-compendium-dialog .dialog-content { overflow: hidden; }
+
+.tdt .tdt-difficulty-field label {
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.tdt .tdt-difficulty-field label small {
+  color: var(--tdt-blue);
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.tdt .tdt-difficulty-field input.automatic {
+  border-color: #39806d;
+  background: rgba(70, 151, 125, .12);
+  box-shadow: 0 0 0 1px rgba(70, 151, 125, .18);
+}
+
+.tdt .tdt-compendium-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-height: 430px;
+}
+
+.tdt .tdt-compendium-picker .tdt-list-toolbar {
+  position: static;
+  margin: 0;
+}
+
+.tdt .tdt-compendium-picker select {
+  flex: 1;
+  width: 100%;
+  min-height: 340px;
+  padding: 4px;
+  background: rgba(255,253,247,.92);
+}
+
+.tdt .tdt-compendium-picker option {
+  padding: 7px 9px;
+  border-bottom: 1px solid rgba(200,189,167,.55);
+}
+
+.tdt .tdt-items-section.collapsed > :not(.tdt-section-title) { display: none; }
+.tdt .tdt-items-section.collapsed { padding-bottom: 7px; }
+.tdt .tdt-items-section.collapsed [data-action="section-toggle"] i { transform: rotate(180deg); }
+.tdt [data-action="section-toggle"] i { transition: transform .15s ease; }
+
+.tdt textarea {
+  width: 100%;
+  min-height: 170px;
+  padding: 10px;
+  resize: vertical;
+}
+
+.tdt-item-sheet .tdt-header {
+  grid-template-columns: 78px minmax(0, 1fr);
+  min-height: 82px;
+}
+
+.tdt-item-sheet .sheet-body { padding: 0; }
+.tdt-item-sheet .tab > .tdt-section { margin: 16px; }
+
+.tdt-item-sheet .tdt-header .profile-img {
+  width: 78px;
+  height: 82px;
+  padding: 10px;
+}
+
+.tdt-item-sheet .tdt-name {
+  height: 34px;
+  font-size: 27px;
+}
+
+.tdt .tdt-item-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px 14px;
+  padding: 16px;
+}
+
+.tdt .tdt-item-fields label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tdt .tdt-item-fields label.wide {
+  align-items: flex-start;
+  flex-direction: column;
+}
+
+.tdt .tdt-item-fields label.wide > input,
+.tdt .tdt-item-fields label.wide > textarea { width: 100%; }
+
+.tdt .tdt-item-fields input,
+.tdt .tdt-item-fields select {
+  width: 130px;
+}
+
+.tdt-chat-card {
+  overflow: hidden;
+  color: #18222b;
+  text-align: center;
+  background: #f8f3e7;
+  border: 1px solid #bdb29d;
+  border-radius: 5px;
+}
+
+.tdt-chat-card header {
+  padding: 8px;
+  color: #fff;
+  font: 800 18px "Arial Narrow", sans-serif;
+  text-transform: uppercase;
+  background: #245c6b;
+}
+
+.tdt-dice-line {
+  display: flex;
+  justify-content: space-around;
+  padding: 9px 6px 4px;
+}
+
+.tdt-roll-total {
+  margin: 4px auto;
+  color: #b63b32;
+  font: 800 38px "Arial Narrow", sans-serif;
+}
+
+.tdt-roll-state {
+  padding: 5px;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: .08em;
+  background: #4b6662;
+}
+
+.tdt-roll-state.critical { background: #b27a13; }
+.tdt-roll-state.fumble,
+.tdt-roll-state.failure { background: #a63029; }
+.tdt-roll-state.success { background: #35704c; }
+
+.tdt-roll-weapon {
+  padding: 8px;
+  border-top: 1px solid #bdb29d;
+}
+
+.tdt-auto-bonus {
+  margin: 4px 10px;
+  padding: 5px;
+  color: #245c6b;
+  font-weight: 700;
+  background: rgba(213, 162, 60, .16);
+  border: 1px solid rgba(213, 162, 60, .5);
+}
+
+.tdt .tdt-stat-label {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.tdt .tdt-fixed-dice {
+  color: #245c6b;
+  font: 800 22px "Arial Narrow", sans-serif;
+}
+
+.tdt-item-message {
+  padding: 10px;
+  text-align: left;
+}
+
+.tdt-roll-feats {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 10px 0;
+  padding: 8px 10px;
+  border: 1px solid #c7bda8;
+}
+
+.tdt-roll-feats label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tdt-roll-feats small {
+  color: #736b5f;
+}
+
+.tdt-roll-reminders {
+  max-height: 180px;
+  margin-top: 8px;
+  padding: 7px;
+  overflow: auto;
+  background: rgba(36, 92, 107, .08);
+}
+
+.tdt-welcome {
+  padding: 8px;
+  border-left: 4px solid #d5a23c;
+}
+
+@media (max-width: 700px) {
+  .tdt .tdt-attributes,
+  .tdt .tdt-secondary-grid,
+  .tdt .tdt-skill-list { grid-template-columns: 1fr 1fr; }
+}
+
+/* -------------------------------------------- */
+/*  Modules: sheets                              */
+/* -------------------------------------------- */
+
+.tdt .tdt-quick-actions,
+.tdt .tdt-button-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.tdt .tdt-quick-actions button {
+  flex: 0 0 auto !important;
+  width: auto !important;
+  min-width: 0;
+  height: 26px;
+  margin: 0;
+  padding: 2px 9px;
+  color: #f4ead4;
+  font-size: 11px;
+  line-height: 20px;
+  white-space: nowrap;
+  background: rgba(255, 255, 255, .12);
+  border: 1px solid rgba(213, 162, 60, .55);
+  border-radius: 3px;
+}
+
+.tdt .tdt-quick-actions button i { margin-right: 4px; }
+
+.tdt .tdt-button-row button {
+  padding: 3px 9px;
+  background: rgba(36, 92, 107, .1);
+  border: 1px solid var(--tdt-line);
+  border-radius: 3px;
+}
+
+.tdt .tdt-button-row button:hover,
+.tdt .tdt-quick-actions button:hover {
+  border-color: var(--tdt-gold);
+}
+
+.tdt .tdt-button-row button:disabled { opacity: .45; }
+
+.tdt .tdt-health-block.dying { background: rgba(166, 48, 41, .55); }
+
+.tdt .tdt-dying {
+  margin-top: 4px;
+  padding: 2px 6px;
+  color: #fff;
+  font-weight: 700;
+  background: #a63029;
+  border-radius: 3px;
+}
+
+.tdt .tdt-stepped {
+  color: var(--tdt-blue);
+  font-weight: 700;
+}
+
+.tdt .tdt-stat-card.danger {
+  background: rgba(166, 48, 41, .12);
+  border-color: #a63029;
+}
+
+.tdt .tdt-stat-card.danger strong { color: #a63029; }
+
+.tdt .tdt-item-summary {
+  flex: 0 1 auto;
+  margin-left: auto;
+  overflow: hidden;
+  color: #5a554c;
+  font-size: 11px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.tdt .tdt-uses {
+  padding: 0 5px;
+  font-size: 11px;
+  font-weight: 700;
+  border: 1px solid var(--tdt-line);
+  border-radius: 8px;
+}
+
+.tdt .tdt-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 4px 12px;
+}
+
+.tdt .tdt-checks label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tdt .tdt-status-text {
+  margin: 6px 0;
+  padding: 6px 8px;
+  background: rgba(36, 92, 107, .07);
+  border-left: 3px solid var(--tdt-blue);
+}
+
+.tdt .hint {
+  color: #6b6458;
+  font-size: 11px;
+}
+
+.tdt .tdt-inline-number { width: 48px; }
+
+.tdt .tdt-item-fields .wide,
+.tdt .tdt-item-fields fieldset {
+  grid-column: 1 / -1;
+}
+
+.tdt .tdt-item-fields fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  padding: 6px 10px;
+  border: 1px solid var(--tdt-line);
+}
+
+.tdt .tdt-item-fields fieldset legend button {
+  padding: 0 4px;
+}
+
+.tdt .tdt-upgrade-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.tdt .tdt-upgrade-row > input:first-child { flex: 1 1 160px; }
+
+.tdt .tdt-upgrade-row small {
+  flex-basis: 100%;
+  color: #6b6458;
+}
+
+.tdt .tdt-circle-summary {
+  padding: 6px 10px;
+  background: rgba(213, 162, 60, .14);
+  border: 1px solid rgba(213, 162, 60, .5);
+}
+
+.tdt .tdt-circle-summary ul { margin: 4px 0 0 16px; padding: 0; }
+
+.tdt textarea.tdt-description { min-height: 380px; }
+
+.tdt.mecha .tdt-header { background: linear-gradient(115deg, #1b1f26, #55606e); }
+
+/* -------------------------------------------- */
+/*  Mecha cockpit                                */
+/* -------------------------------------------- */
+
+.tdt .tdt-mecha-sheet .tdt-header {
+  min-height: 132px;
+}
+
+.tdt .tdt-mecha-sheet .tdt-header .profile-img {
+  height: 132px;
+  padding: 9px;
+  object-fit: contain;
+  background: linear-gradient(145deg, rgba(5, 10, 14, .88), rgba(33, 46, 55, .72));
+}
+
+.tdt .tdt-mecha-sheet .tdt-identity {
+  justify-content: flex-start;
+  gap: 5px;
+  padding-block: 10px;
+}
+
+.tdt .tdt-mecha-sheet .tdt-name {
+  height: 34px;
+  font-size: 28px;
+}
+
+.tdt .tdt-mecha-meta,
+.tdt .tdt-crew-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.tdt .tdt-mecha-meta label,
+.tdt .tdt-crew-strip label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  color: #dce4e5;
+  font-size: 10px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.tdt .tdt-mecha-meta select,
+.tdt .tdt-crew-strip select {
+  min-width: 0;
+  height: 25px;
+  color: #fff;
+  background: rgba(255,255,255,.1);
+  border-color: rgba(255,255,255,.25);
+}
+
+.tdt .tdt-crew-strip label { flex: 1; }
+.tdt .tdt-crew-strip select { flex: 1; }
+
+.tdt .tdt-mecha-spec {
+  padding: 5px 8px;
+  color: #dce4e5;
+  font-size: 11px;
+  white-space: nowrap;
+  background: rgba(0,0,0,.2);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 4px;
+}
+
+.tdt .tdt-mecha-dashboard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(190px, 1.25fr) minmax(0, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.tdt .tdt-crew-card,
+.tdt .tdt-capacity-card,
+.tdt .tdt-inventory-summary {
+  min-height: 78px;
+  padding: 10px 12px;
+  background: linear-gradient(145deg, rgba(27, 36, 43, .97), rgba(51, 69, 79, .94));
+  border: 1px solid #74828a;
+  border-radius: 7px;
+  box-shadow: 0 6px 15px rgba(15, 24, 28, .16);
+}
+
+.tdt .tdt-crew-card > span,
+.tdt .tdt-capacity-card > span:first-child,
+.tdt .tdt-inventory-summary span:first-child {
+  display: block;
+  color: var(--tdt-gold-light);
+  font: 700 10px "Arial Narrow", sans-serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.tdt .tdt-crew-card button {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 7px;
+  width: 100%;
+  margin-top: 5px;
+  padding: 2px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.tdt .tdt-crew-card button:hover { color: var(--tdt-gold-light); }
+.tdt .tdt-crew-card button img { width: 32px; height: 32px; object-fit: cover; border: 1px solid #87979f; border-radius: 50%; }
+.tdt .tdt-crew-card button strong { overflow: hidden; text-align: left; text-overflow: ellipsis; white-space: nowrap; }
+.tdt .tdt-crew-card small { display: block; margin-top: 9px; color: #c0c9cc; line-height: 1.25; }
+
+.tdt .tdt-capacity-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tdt .tdt-capacity-card:hover { border-color: var(--tdt-gold); box-shadow: 0 0 0 2px rgba(217,170,73,.16), 0 6px 15px rgba(15,24,28,.2); }
+.tdt .tdt-capacity-card strong { margin: 2px 0; font: 800 21px "Arial Narrow", sans-serif; }
+.tdt .tdt-capacity-card small { color: #c8d1d4; }
+
+.tdt .tdt-capacity-meter {
+  display: block;
+  height: 7px;
+  overflow: hidden;
+  background: rgba(0,0,0,.34);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 99px;
+}
+
+.tdt .tdt-capacity-meter i { display: block; height: 100%; background: linear-gradient(90deg, #3d9a84, #73cf9f); border-radius: inherit; }
+.tdt .danger .tdt-capacity-meter i { background: linear-gradient(90deg, #b4322d, #ed6c5d); }
+
+.tdt .tdt-mecha-budget {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 10px;
+  padding: 8px 10px;
+  color: #515b60;
+  font-size: 11px;
+  background: rgba(31, 97, 112, .07);
+  border-radius: 5px;
+}
+
+.tdt .tdt-mecha-budget label { display: flex; align-items: center; gap: 6px; }
+
+.tdt .tdt-inventory-summary {
+  display: grid;
+  grid-template-columns: 1fr minmax(170px, 45%);
+  align-items: center;
+  gap: 16px;
+  min-height: 64px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.tdt .tdt-inventory-summary > div { display: grid; grid-template-columns: auto auto; gap: 2px 10px; align-items: baseline; }
+.tdt .tdt-inventory-summary strong { font: 800 22px "Arial Narrow", sans-serif; text-align: right; }
+.tdt .tdt-inventory-summary small { grid-column: 1 / -1; color: #c8d1d4; }
+
+.tdt .tdt-mecha-notes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.tdt .tdt-mecha-notes label > span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--tdt-blue);
+  font: 800 19px "Arial Narrow", sans-serif;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+
+.tdt .tdt-mecha-notes textarea { min-height: 330px; }
+
+/* -------------------------------------------- */
+/*  Modules: chat                                */
+/* -------------------------------------------- */
+
+.tdt-chat-card header .tdt-chat-button.small {
+  float: right;
+  margin: -2px 0 0;
+  padding: 0 6px;
+  color: #fff;
+  background: transparent;
+  border: 0;
+}
+
+.tdt-chat-button {
+  display: inline-block;
+  width: auto;
+  margin: 4px 2px;
+  padding: 2px 8px;
+  color: #18222b;
+  font-size: 12px;
+  line-height: 20px;
+  background: #efe3c3;
+  border: 1px solid #b89c5e;
+  border-radius: 3px;
+}
+
+.tdt-chat-button:hover { background: #f6d98f; }
+
+.tdt-chat-button:disabled { opacity: .5; }
+
+.tdt-target-line {
+  margin: 3px 6px;
+  padding: 4px 6px;
+  text-align: left;
+  border-left: 4px solid #7b8b88;
+  background: rgba(36, 92, 107, .06);
+}
+
+.tdt-target-line.hit { border-left-color: #35704c; }
+.tdt-target-line.miss { border-left-color: #a63029; }
+
+.tdt-roll-note {
+  margin: 2px 8px;
+  color: #5a554c;
+  font-size: 11px;
+}
+
+.tdt-roll-notes {
+  margin: 4px 8px 6px 22px;
+  padding: 0;
+  text-align: left;
+  font-size: 12px;
+}
+
+.tdt-excess {
+  margin: 4px 8px;
+  padding: 6px;
+  font-weight: 700;
+  border-radius: 3px;
+}
+
+/* -------------------------------------------- */
+/*  Sheet personality and responsive layout      */
+/* -------------------------------------------- */
+
+.tdt .tdt-npc-sheet .tdt-header {
+  background:
+    radial-gradient(circle at 72% 0, rgba(255, 255, 255, .1), transparent 34%),
+    linear-gradient(120deg, #271516, #74352f 70%, #48201d);
+}
+
+.tdt.mecha .tdt-header {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%) 0 0 / 18px 18px,
+    linear-gradient(120deg, #151a20, #465969 68%, #26323d);
+}
+
+.tdt .tdt-actor-sheet:has(.tab.magic.active) .sheet-tabs .item.active { background: linear-gradient(180deg, #66518d, #43335f); }
+.tdt .tdt-actor-sheet:has(.tab.powers.active) .sheet-tabs .item.active { background: linear-gradient(180deg, #71458b, #4d2c62); }
+.tdt .tdt-actor-sheet:has(.tab.survival.active) .sheet-tabs .item.active { background: linear-gradient(180deg, #4b704c, #2f4c32); }
+.tdt .tdt-actor-sheet:has(.tab.cyber.active) .sheet-tabs .item.active { background: linear-gradient(180deg, #087786, #074c5a); }
+
+.tdt .tab.magic .tdt-section { border-top: 3px solid #76609a; }
+.tdt .tab.powers .tdt-section { border-top: 3px solid #8b4fa5; }
+.tdt .tab.survival .tdt-section { border-top: 3px solid #557b51; }
+.tdt .tab.cyber .tdt-section { border-top: 3px solid #168a99; }
+
+.tdt .tab.magic > .tdt-section:first-child,
+.tdt .tab.powers > .tdt-section:first-child,
+.tdt .tab.survival > .tdt-section:first-child,
+.tdt .tab.cyber > .tdt-section:first-child {
+  background-image: linear-gradient(120deg, rgba(255,255,255,.26), transparent 55%);
+}
+
+.tdt .tab.magic .tdt-stat-card strong { color: #5e477f; }
+.tdt .tab.powers .tdt-stat-card strong { color: #713b89; }
+.tdt .tab.survival .tdt-stat-card strong { color: #3f663d; }
+.tdt .tab.cyber .tdt-stat-card strong { color: #087786; }
+
+.tdt .tdt-resource-row > button,
+.tdt .tdt-dying {
+  min-height: 34px;
+  padding: 5px 10px;
+  color: #fff;
+  background: var(--tdt-blue);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.tdt button:disabled {
+  cursor: not-allowed !important;
+  filter: grayscale(.65);
+  opacity: .45;
+}
+
+.tdt .tdt-quick-actions button {
+  transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+
+.tdt .tdt-quick-actions button:hover {
+  color: #fff;
+  background: rgba(217, 170, 73, .2);
+}
+
+.tdt .tdt-status-text {
+  border-radius: 0 6px 6px 0;
+}
+
+.tdt .tdt-checks input + * { min-width: 0; }
+
+@container tdt-sheet (max-width: 720px) {
+  .tdt .tdt-header {
+    grid-template-columns: 78px minmax(0, 1fr) 132px;
+  }
+
+  .tdt .tdt-header .profile-img {
+    width: 78px;
+  }
+
+  .tdt .tdt-identity { padding: 12px 14px; }
+  .tdt .tdt-name { font-size: 27px; }
+  .tdt .tdt-kicker { font-size: 11px; }
+  .tdt .tdt-quick-actions button span { display: none; }
+  .tdt .tdt-quick-actions button i { margin: 0; font-size: 12px; }
+
+  .tdt .tdt-attributes,
+  .tdt .tdt-secondary-grid,
+  .tdt .tdt-skill-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  .tdt .tdt-resource-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tdt .tdt-character-economy { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .tdt .tdt-npc-resources { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tdt .tdt-item-summary { max-width: 180px; }
+  .tdt .sheet-body { padding: 12px; }
+  .tdt .tdt-list-toolbar { top: -12px; }
+  .tdt .tdt-mecha-dashboard { grid-template-columns: 1fr 1fr; }
+  .tdt .tdt-capacity-card { grid-column: 1 / -1; grid-row: 1; }
+  .tdt .tdt-mecha-notes { grid-template-columns: 1fr; }
+  .tdt .tdt-mecha-notes textarea { min-height: 210px; }
+}
+
+@container tdt-sheet (max-width: 520px) {
+  .tdt .tdt-header {
+    grid-template-columns: 72px minmax(0, 1fr);
+    min-height: 108px;
+  }
+
+  .tdt .tdt-header .profile-img {
+    width: 72px;
+    height: 108px;
+  }
+
+  .tdt .tdt-health-block {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: auto auto minmax(70px, 1fr) auto auto;
+    padding: 7px 10px;
+    border-top: 1px solid rgba(255, 255, 255, .12);
+    border-left: 0;
+  }
+
+  .tdt .tdt-health-block > div { font-size: 19px; }
+  .tdt .tdt-health-meter { width: auto; }
+  .tdt .tdt-health-actions { display: flex !important; }
+  .tdt .tdt-dying { grid-column: 1 / -1; }
+  .tdt .tdt-identity-grid { grid-template-columns: 1fr; gap: 4px; }
+
+  .tdt .sheet-tabs .item { min-width: 44px; padding-inline: 7px; }
+  .tdt .sheet-tabs .item span { display: none; }
+  .tdt .sheet-tabs .item i { margin: 0; font-size: 16px; }
+
+  .tdt .tdt-resource-row,
+  .tdt .tdt-item-fields { grid-template-columns: 1fr; }
+  .tdt .tdt-character-economy { grid-template-columns: 1fr; }
+  .tdt .tdt-skill-row { grid-template-columns: minmax(100px, 1fr) 98px 58px; }
+  .tdt .tdt-item-summary { display: none; }
+  .tdt .tdt-section { padding: 11px; }
+  .tdt h2 { font-size: 18px; }
+  .tdt .tdt-item-fields label { align-items: flex-start; flex-direction: column; }
+  .tdt .tdt-item-fields input,
+  .tdt .tdt-item-fields select { width: 100%; }
+  .tdt .tdt-mecha-meta { flex-wrap: wrap; }
+  .tdt .tdt-crew-strip { display: none; }
+  .tdt .tdt-mecha-dashboard { grid-template-columns: 1fr; }
+  .tdt .tdt-capacity-card { grid-column: auto; }
+  .tdt .tdt-inventory-summary { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tdt *,
+  .tdt *::before,
+  .tdt *::after { scroll-behavior: auto !important; transition: none !important; }
+}
+
+.tdt-excess.ok { color: #35704c; background: rgba(53, 112, 76, .12); }
+.tdt-excess.absorbed { color: #8a6313; background: rgba(213, 162, 60, .2); }
+.tdt-excess.snap { color: #fff; background: #a63029; }
+.tdt-excess.misaligned { color: #fff; background: #12232a; border: 2px solid #1d8a9c; }

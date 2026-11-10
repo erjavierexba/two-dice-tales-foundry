@@ -1,0 +1,478 @@
+{{#*inline "itemControls"}}
+<button type="button" data-action="item-chat" title="Mostrar en el chat"><i class="fas fa-comment-dots"></i></button>
+{{#if system.uses.max}}<button type="button" data-action="item-use" title="Usar (consume un uso)"><i class="fas fa-play"></i></button>{{else}}{{#if (eq system.category "consumable")}}<button type="button" data-action="item-use" title="Consumir"><i class="fas fa-play"></i></button>{{/if}}{{/if}}
+<button type="button" data-action="item-edit" title="Editar"><i class="fas fa-pen"></i></button>
+<button type="button" data-action="item-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
+{{/inline}}
+<form class="{{cssClass}} tdt-actor-sheet {{#if isNPC}}tdt-npc-sheet{{/if}}" autocomplete="off">
+  <header class="sheet-header tdt-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="Cambiar retrato de {{actor.name}}" alt="Retrato de {{actor.name}}">
+    <div class="tdt-identity">
+      <div class="tdt-identity-topline">
+        <span class="tdt-kicker">{{actorTypeLabel}} · Two Dice Tales</span>
+        {{#unless isNPC}}
+        <label class="tdt-hero-point {{#if system.heroPoint}}active{{/if}}" title="Pulsa para marcar o gastar el punto de héroe">
+          <input type="checkbox" name="system.heroPoint" {{checked system.heroPoint}}>
+          <span class="tdt-hero-coin"><i class="fas fa-star"></i></span>
+          <span class="tdt-hero-copy"><small>Punto de héroe</small><strong>{{#if system.heroPoint}}1 / 1{{else}}0 / 1{{/if}}</strong></span>
+        </label>
+        {{/unless}}
+      </div>
+      <input class="tdt-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre">
+      <div class="tdt-identity-grid">
+        <label>Edad <input name="system.biography.age" value="{{system.biography.age}}"></label>
+        <label>Profesión <input name="system.biography.profession" value="{{system.biography.profession}}"></label>
+      </div>
+      {{#if quickActions.visible}}
+      <div class="tdt-quick-actions" aria-label="Acciones rápidas">
+        {{#if quickActions.rest}}<button type="button" data-actor-method="rest" title="Descanso largo: recupera maná, energía y usos diarios"><i class="fas fa-bed"></i><span>Descansar</span></button>{{/if}}
+        {{#if quickActions.newScene}}<button type="button" data-actor-method="newScene" title="Descanso pequeño: reinicia usos por escena y hacks"><i class="fas fa-mug-hot"></i><span>Descanso pequeño</span></button>{{/if}}
+        {{#if quickActions.fallDamage}}<button type="button" data-actor-method="fallDamage" title="Daño por caída"><i class="fas fa-person-falling"></i><span>Caída</span></button>{{/if}}
+      </div>
+      {{/if}}
+    </div>
+    <div class="tdt-health-block {{#if dying}}dying{{/if}}">
+      <span><i class="fas fa-heart-pulse"></i> VIDA</span>
+      <div><input type="number" name="system.health.value" value="{{system.health.value}}" min="0"> / <strong>{{system.health.effectiveMax}}</strong></div>
+      <div class="tdt-health-meter" role="meter" aria-label="Vida" aria-valuemin="0" aria-valuemax="{{system.health.effectiveMax}}" aria-valuenow="{{system.health.value}}"><span style="width: {{healthPercent}}%"></span></div>
+      <small title="Vida máxima base y modificador de dotes">Base <input type="number" name="system.health.max" value="{{system.health.max}}" min="1"> {{#if system.health.modifier}}({{system.health.modifier}}){{/if}}</small>
+      <div class="tdt-health-actions"><button type="button" data-action="damage" title="Aplicar daño"><i class="fas fa-heart-crack"></i></button><button type="button" data-action="heal" title="Curar"><i class="fas fa-kit-medical"></i></button></div>
+      {{#if dying}}<button type="button" class="tdt-dying" data-actor-method="rollDying">Caído: Fortaleza {{system.dying.difficulty}}</button>{{/if}}
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="main" title="Ficha"><i class="fas fa-id-card"></i><span>Ficha</span></a>
+    <a class="item" data-tab="skills" title="Habilidades"><i class="fas fa-dice-d20"></i><span>Habilidades</span></a>
+    <a class="item" data-tab="inventory" title="Inventario"><i class="fas fa-suitcase"></i><span>Inventario</span></a>
+    {{#if modules.fantasy}}<a class="item" data-tab="magic" title="Magia"><i class="fas fa-wand-sparkles"></i><span>Magia</span></a>{{/if}}
+    {{#if modules.powers}}<a class="item" data-tab="powers" title="Poderes"><i class="fas fa-bolt"></i><span>Poderes</span></a>{{/if}}
+    {{#if modules.zombie}}<a class="item" data-tab="survival" title="Supervivencia"><i class="fas fa-biohazard"></i><span>Supervivencia</span></a>{{/if}}
+    {{#if modules.cyber}}<a class="item" data-tab="cyber" title="Cromo"><i class="fas fa-microchip"></i><span>Cromo</span></a>{{/if}}
+    <a class="item" data-tab="bio" title="Biografía"><i class="fas fa-book-open"></i><span>Biografía</span></a>
+  </nav>
+
+  <section class="sheet-body">
+    {{!-- ============ MAIN ============ --}}
+    <div class="tab main" data-group="primary" data-tab="main">
+      {{#if isNPC}}
+      <section class="tdt-section">
+        <h2>Valores de enemigo</h2>
+        <div class="tdt-attributes">
+          <article class="tdt-stat-card"><span>Esquiva</span><input type="number" name="system.npcStats.evasion" value="{{system.npcStats.evasion}}"></article>
+          <article class="tdt-stat-card"><span>Fortaleza</span><input type="number" name="system.npcStats.fortitude" value="{{system.npcStats.fortitude}}"></article>
+          <article class="tdt-stat-card"><span>Voluntad</span><input type="number" name="system.npcStats.will" value="{{system.npcStats.will}}"></article>
+          <article class="tdt-stat-card"><span>Percepción</span><input type="number" name="system.npcStats.perception" value="{{system.npcStats.perception}}"></article>
+        </div>
+      </section>
+      <section class="tdt-resource-row tdt-npc-resources">
+        <label><span>Aguante</span><input type="number" name="system.endurance.base" value="{{system.endurance.base}}"></label>
+        <label><span>XP al derrotarlo</span><input type="number" name="system.experience.value" value="{{system.experience.value}}"></label>
+        <label><span>Iniciativa de bando</span><input type="number" name="system.initiative.value" value="{{system.initiative.value}}" placeholder="6"></label>
+        <label><span>Habilidades (texto)</span><input name="system.npcStats.skills" value="{{system.npcStats.skills}}"></label>
+      </section>
+      <section class="tdt-section">
+        <h2>Fuente de villano</h2>
+        <div class="tdt-resource-row">
+          <label><span>Puntos</span><input type="number" name="system.npcStats.villain.value" value="{{system.npcStats.villain.value}}"></label>
+          <label><span>Máximo (8–20)</span><input type="number" name="system.npcStats.villain.max" value="{{system.npcStats.villain.max}}"></label>
+        </div>
+        {{#if system.npcStats.villain.max}}
+        <div class="tdt-button-row">
+          <button type="button" data-actor-method="spendVillain" data-arg="difficulty">1: +2 dificultad</button>
+          <button type="button" data-actor-method="spendVillain" data-arg="defense">2: +4 defensa o aguante</button>
+          <button type="button" data-actor-method="spendVillain" data-arg="turn" {{#if system.npcStats.villain.extraTurnUsed}}disabled{{/if}}>3: turno extra</button>
+          <button type="button" data-actor-method="spendVillain" data-arg="escape">Escape magistral</button>
+        </div>
+        {{/if}}
+      </section>
+      {{#if modules.cyber}}
+      <section class="tdt-section">
+        <h2>Cyberpunk</h2>
+        <div class="tdt-resource-row">
+          <label><span>Hacking (defensa contra intrusiones)</span><input type="number" name="system.npcStats.hacking" value="{{system.npcStats.hacking}}"></label>
+          <label><span>Aguante contra hacks</span><input name="system.npcStats.hackEndurance" value="{{system.npcStats.hackEndurance}}" placeholder="natural"></label>
+          <label><span>Aguante contra disparos</span><input name="system.npcStats.shotEndurance" value="{{system.npcStats.shotEndurance}}"></label>
+          <label><span>Dificultad DJ (dispositivos)</span><input type="number" name="system.npcStats.hackDifficulty" value="{{system.npcStats.hackDifficulty}}"></label>
+          <label><span>Exceso de carga</span><input type="number" name="system.npcStats.excess" value="{{system.npcStats.excess}}"></label>
+        </div>
+        <div class="tdt-checks">
+          <label><input type="checkbox" name="system.npcStats.machine" {{checked system.npcStats.machine}}> Máquina o robot</label>
+          <label><input type="checkbox" name="system.npcStats.noVirtualSelf" {{checked system.npcStats.noVirtualSelf}}> Sin VirtualSelf (Animal)</label>
+          <label><input type="checkbox" name="system.npcStats.implants" {{checked system.npcStats.implants}}> Lleva implantes</label>
+        </div>
+      </section>
+      {{else}}
+      <div class="tdt-checks"><label><input type="checkbox" name="system.npcStats.machine" {{checked system.npcStats.machine}}> Máquina o constructo (para armas «contra máquinas»)</label></div>
+      {{/if}}
+      {{#if modules.zombie}}
+      <section class="tdt-section">
+        <h2>Grupo de zombis</h2>
+        <div class="tdt-resource-row">
+          <label><span>Zombis en el grupo (1–6)</span><input type="number" min="1" max="6" name="system.npcStats.group" value="{{system.npcStats.group}}"></label>
+          {{#if zombie.group}}<p>Quedan {{zombie.group.remaining}} de {{zombie.group.size}} · vida máx. {{zombie.group.maxHealth}} · +{{zombie.group.attackBonus}} a la dificultad de ataque.</p>{{/if}}
+        </div>
+      </section>
+      {{/if}}
+      {{else}}
+      <section class="tdt-section">
+        <h2>Características</h2>
+        <div class="tdt-attributes">
+          {{#each attributes as |attribute|}}
+          <article class="tdt-stat-card">
+            <span class="tdt-stat-label">{{attribute.label}}</span>
+            <select name="system.attributes.{{attribute.key}}.die">{{selectOptions ../config.rolledDieChoices selected=attribute.die}}</select>
+            {{#if attribute.stepped}}<small class="tdt-stepped">Efectivo d{{attribute.value}}</small>{{/if}}
+          </article>
+          {{/each}}
+        </div>
+      </section>
+
+      <section class="tdt-section tdt-secondary-grid">
+        <article class="tdt-stat-card accent">
+          <span>Aguante</span><strong>{{system.endurance.value}}</strong>
+          <small>Natural {{system.endurance.natural}} + armadura {{system.endurance.armor}}{{#if modules.cyber}} · disparos {{system.endurance.vsShots}}{{/if}}</small>
+        </article>
+        <article class="tdt-stat-card">
+          <button type="button" class="tdt-roll-label" data-roll-perception><i class="fas fa-eye"></i> Percepción</button>
+          <strong class="tdt-fixed-dice" title="Percepción siempre tira dos dados iguales">2d{{system.perception.faces}}</strong>
+        </article>
+        {{#each defenses as |defense|}}
+        <article class="tdt-stat-card">
+          <button type="button" class="tdt-roll-label" data-roll-defense="{{defense.key}}"><i class="fas fa-shield-halved"></i> {{defense.label}}</button>
+          <select name="system.defenses.{{defense.key}}.die">{{selectOptions ../config.rolledDieChoices selected=defense.die}}</select>
+          {{#if defense.stepped}}<small class="tdt-stepped">Efectivo d{{defense.value}}{{#if defense.chip}} (chip){{/if}}</small>{{/if}}
+          {{#if defense.armorPenalty}}<small>Armadura: −{{defense.armorPenalty}}</small>{{/if}}
+        </article>
+        {{/each}}
+      </section>
+
+      <section class="tdt-resource-row tdt-character-economy">
+        <label><span>Experiencia disponible</span><input type="number" name="system.experience.value" value="{{system.experience.value}}"></label>
+        <label><span>Experiencia gastada</span><input type="number" name="system.experience.spent" value="{{system.experience.spent}}"></label>
+        {{#if currency.enabled}}<label class="tdt-money"><span>{{currency.name}}</span><input type="number" min="0" name="system.money" value="{{system.money}}">{{#if currency.hasSubunits}}<span class="tdt-money-separator">+</span><input type="number" min="0" max="99" name="system.moneyMinor" value="{{system.moneyMinor}}" title="{{currency.subunitName}}"><small>{{currency.subunitName}}</small>{{/if}}</label>{{/if}}
+      </section>
+      {{/if}}
+
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Ataques</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="weapon" title="Buscar arma en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="weapon" title="Crear arma"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each sections as |section|}}{{#if (eq section.type "weapon")}}
+          {{#each section.items as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt="">
+            <a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}</span>
+            <button type="button" data-action="weapon-roll" title="Atacar"><i class="fas fa-dice"></i></button>
+            {{#if (eq item.system.upgrades.special "suppression")}}<button type="button" data-actor-method="suppressiveFire" title="Fuego de supresión (3 de munición)"><i class="fas fa-wind"></i></button>{{/if}}
+            <button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Equipar"><i class="fas fa-hand-fist"></i></button>
+          </li>
+          {{else}}<li class="empty">Sin armas.</li>
+          {{/each}}
+          {{/if}}{{/each}}
+        </ol>
+      </section>
+    </div>
+
+    {{!-- ============ SKILLS ============ --}}
+    <div class="tab skills" data-group="primary" data-tab="skills">
+      <div class="tdt-list-toolbar">
+        <i class="fas fa-magnifying-glass"></i><input type="search" data-filter-list placeholder="Filtrar habilidades…" aria-label="Filtrar habilidades">
+        <button type="button" data-action="filter-clear" title="Limpiar filtro" hidden><i class="fas fa-xmark"></i></button>
+      </div>
+      <section class="tdt-section">
+        <h2>Habilidades <small>Sin dado = +1</small></h2>
+        <div class="tdt-skill-list">
+          {{#each skills as |skill|}}
+          <div class="tdt-skill-row">
+            <button type="button" data-roll-skill="{{skill.key}}"><i class="fas fa-dice-d20"></i> {{skill.label}}{{#if skill.chip}} <i class="fas fa-microchip" title="Chip de habilidad"></i>{{/if}}</button>
+            <select name="system.skills.{{skill.key}}.attribute">{{selectOptions ../config.attributeChoices selected=skill.attribute}}</select>
+            <select name="system.skills.{{skill.key}}.die">{{selectOptions ../config.dieChoices selected=skill.die}}</select>
+            {{#if skill.stepped}}<small class="tdt-stepped">d{{skill.value}}</small>{{/if}}
+          </div>
+          {{/each}}
+        </div>
+      </section>
+    </div>
+
+    {{!-- ============ INVENTORY ============ --}}
+    <div class="tab inventory" data-group="primary" data-tab="inventory">
+      <div class="tdt-list-toolbar">
+        <i class="fas fa-magnifying-glass"></i><input type="search" data-filter-list placeholder="Buscar en el inventario…" aria-label="Buscar en el inventario">
+        <button type="button" data-action="filter-clear" title="Limpiar filtro" hidden><i class="fas fa-xmark"></i></button>
+      </div>
+      {{#each sections as |section|}}
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>{{section.label}} <small class="tdt-count">{{section.count}}</small></h2><div class="tdt-section-actions"><button type="button" data-action="section-toggle" title="Plegar o desplegar" aria-expanded="true"><i class="fas fa-chevron-up"></i></button><button type="button" data-action="compendium-pick" data-item-type="{{section.type}}" title="Buscar en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="{{section.type}}" title="Crear"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each section.items as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt="">
+            <a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}</span>
+            {{#if (eq item.type "weapon")}}<button type="button" data-action="weapon-roll" title="Atacar"><i class="fas fa-dice"></i></button>{{/if}}
+            {{#if (eq item.type "armor")}}<button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Equipar"><i class="fas fa-shirt"></i></button>{{/if}}
+            {{#if (eq item.type "weapon")}}<button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Equipar"><i class="fas fa-hand-fist"></i></button>{{/if}}
+            {{#if (eq item.type "gear")}}{{#unless (eq item.system.category "vehicle")}}<button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Equipar o llevar encima"><i class="fas fa-suitcase"></i></button>{{/unless}}{{/if}}
+            {{#if (eq item.system.category "vehicle")}}<button type="button" data-actor-method="driveVehicle" title="Maniobra de conducción"><i class="fas fa-car-side"></i></button><button type="button" data-actor-method="ramVehicle" title="Embestir al objetivo marcado"><i class="fas fa-car-burst"></i></button><button type="button" data-actor-method="damageVehicle" title="Aplicar daño al vehículo"><i class="fas fa-heart-crack"></i></button>{{/if}}
+            {{#if item.system.toggle}}<button type="button" data-action="item-toggle" class="{{#if item.system.active}}equipped{{/if}}" title="Activar o desactivar"><i class="fas fa-power-off"></i></button>{{/if}}
+            {{#if item.system.uses.max}}<span class="tdt-uses">{{item.system.uses.value}}/{{item.system.uses.max}}</span>{{/if}}
+            {{> itemControls}}
+          </li>
+          {{else}}
+          <li class="empty">Aún no hay elementos.</li>
+          {{/each}}
+        </ol>
+      </section>
+      {{/each}}
+    </div>
+
+    {{!-- ============ FANTASY ============ --}}
+    {{#if modules.fantasy}}
+    <div class="tab magic" data-group="primary" data-tab="magic">
+      <section class="tdt-section">
+        <h2>Magia</h2>
+        <div class="tdt-resource-row">
+          {{#if fantasy.allowChoice}}<label><span>Modo</span><select name="system.fantasy.magicMode">{{selectOptions config.magicModes selected=system.fantasy.magicMode}}</select></label>{{/if}}
+          <label><span>Característica mágica</span><select name="system.fantasy.magicAttribute">{{selectOptions config.attributeChoices selected=system.fantasy.magicAttribute}}</select></label>
+          <label><span>Habilidad mágica</span><select name="system.fantasy.magicSkill">{{selectOptions config.magicSkills selected=system.fantasy.magicSkill}}</select></label>
+          <label><span>Objeto canalizador</span><input type="checkbox" name="system.fantasy.hasFocus" {{checked system.fantasy.hasFocus}}></label>
+        </div>
+        <div class="tdt-resource-row">
+          <label><span>Dificultad Incremental</span><input type="number" name="system.fantasy.incremental.difficulty" value="{{system.fantasy.incremental.difficulty}}"></label>
+          <label><span>Reserva libre</span><strong>{{fantasy.reserveFree}} / {{system.fantasy.reserveMax}}</strong></label>
+          <label><span>Maná</span><span><input type="number" name="system.fantasy.mana.value" value="{{system.fantasy.mana.value}}"> / {{system.fantasy.manaMax}}</span></label>
+          <label><span>Concentración</span><input name="system.fantasy.concentration" value="{{system.fantasy.concentration}}" placeholder="Hechizo mantenido"></label>
+        </div>
+      </section>
+      {{#if (ne fantasy.mode "circles")}}
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Magia sencilla (dotes)</h2><button type="button" data-action="compendium-pick" data-item-type="feat" data-module="fantasy" title="Buscar magia en compendios"><i class="fas fa-magnifying-glass"></i></button></div>
+        <ol class="item-list tdt-item-list">
+          {{#each fantasy.simpleSpells as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{#if item.system.incremental}}Incremental {{item.system.incremental}}{{/if}}{{#if item.system.sacrifice}} · Sacrificio {{item.system.sacrifice}}{{/if}}{{#if item.system.attack.enabled}} · Daño {{item.system.attack.damage}}{{/if}}</span>
+            <button type="button" data-actor-method="castSimpleSpell" title="Lanzar"><i class="fas fa-wand-sparkles"></i></button>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Las dotes mágicas con Incremental, Sacrificio o ataque aparecen aquí.</li>
+          {{/each}}
+        </ol>
+      </section>
+      {{/if}}
+      {{#if (ne fantasy.mode "simple")}}
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Círculos mágicos</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="spell" data-module="fantasy" title="Buscar círculo en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="spell" title="Diseñar círculo"><i class="fas fa-plus"></i></button></div></div>
+        <p class="hint">Raíces conocidas: {{fantasy.known.roots}}. Modificadores: {{fantasy.known.modifiers}}.</p>
+        <ol class="item-list tdt-item-list">
+          {{#each fantasy.circles as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}</span>
+            <button type="button" data-actor-method="castCircle" title="Formular"><i class="fas fa-circle-notch"></i></button>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Aún no hay círculos.</li>
+          {{/each}}
+        </ol>
+      </section>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ============ POWERS ============ --}}
+    {{#if modules.powers}}
+    <div class="tab powers" data-group="primary" data-tab="powers">
+      <section class="tdt-section">
+        <h2>Energía</h2>
+        <div class="tdt-resource-row">
+          <label><span>Energía</span><span><input type="number" name="system.powers.energy.value" value="{{system.powers.energy.value}}"> / {{system.powers.energyMax}}</span></label>
+          {{#if powers.weakPoint}}
+          <label><span>Punto débil</span><input name="system.powers.weakPoint.text" value="{{system.powers.weakPoint.text}}"></label>
+          <label><span>Energía extra (1–10)</span><input type="number" min="0" max="10" name="system.powers.weakPoint.bonus" value="{{system.powers.weakPoint.bonus}}"></label>
+          {{/if}}
+        </div>
+      </section>
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Poderes</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="power" data-module="powers" title="Buscar poder en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="power" title="Crear poder"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each powers.items as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.system.branch}} · {{item.summary}}</span>
+            {{#unless item.system.permanent}}<button type="button" data-actor-method="usePower" title="Usar"><i class="fas fa-bolt"></i></button>{{/unless}}
+            {{#if item.system.toggle}}<button type="button" data-action="item-toggle" class="{{#if item.system.active}}equipped{{/if}}" title="Activo"><i class="fas fa-power-off"></i></button>{{/if}}
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Arrastra poderes desde el compendio.</li>
+          {{/each}}
+        </ol>
+      </section>
+    </div>
+    {{/if}}
+
+    {{!-- ============ ZOMBIES ============ --}}
+    {{#if modules.zombie}}
+    <div class="tab survival" data-group="primary" data-tab="survival">
+      <section class="tdt-section">
+        <h2>Zombificación y hambruna</h2>
+        <div class="tdt-resource-row">
+          <label><span>Zombificación (0–5)</span><input type="number" min="0" max="5" name="system.zombie.zombification" value="{{system.zombie.zombification}}"></label>
+          <label><span>Tiradas superadas</span><input type="number" min="0" name="system.zombie.zombificationChecks" value="{{system.zombie.zombificationChecks}}"></label>
+          <label><span>Hambruna (0–5)</span><input type="number" min="0" max="5" name="system.zombie.hunger" value="{{system.zombie.hunger}}"></label>
+          <label><span>Días sin comer nada</span><input type="number" min="0" name="system.zombie.daysWithoutFood" value="{{system.zombie.daysWithoutFood}}"></label>
+        </div>
+        <p class="tdt-status-text"><strong>Zombificación:</strong> {{zombie.zombificationText}}<br><strong>Hambruna:</strong> {{zombie.hungerText}}</p>
+        <div class="tdt-button-row">
+          <button type="button" data-actor-method="zombieBite" data-arg="bite"><i class="fas fa-tooth"></i> Mordisco</button>
+          <button type="button" data-actor-method="zombieBite" data-arg="acid"><i class="fas fa-flask"></i> Ácido</button>
+          <button type="button" data-actor-method="endOfDay"><i class="fas fa-moon"></i> Fin del día</button>
+          <button type="button" data-actor-method="searchSupplies"><i class="fas fa-box-open"></i> Buscar recompensas{{#if system.zombie.searchUsedToday}} · extra gastado{{/if}}</button>
+        </div>
+      </section>
+      <section class="tdt-section">
+        <h2>Recursos</h2>
+        <div class="tdt-resource-row">
+          <label><span>Víveres</span><input type="number" min="0" name="system.zombie.food" value="{{system.zombie.food}}"></label>
+          <label><span>Necesita al día</span><strong>{{system.zombie.foodNeed}}</strong></label>
+          <label><span>Materiales</span><input type="number" min="0" name="system.zombie.materials" value="{{system.zombie.materials}}"></label>
+          <label><span>Zombix hoy</span><input type="checkbox" name="system.zombie.zombixToday" {{checked system.zombie.zombixToday}}></label>
+        </div>
+        <div class="tdt-button-row"><button type="button" data-actor-method="craft"><i class="fas fa-hammer"></i> Construir o reparar</button></div>
+      </section>
+      {{#if zombie.terror}}
+      <section class="tdt-section">
+        <h2>Terror</h2>
+        <div class="tdt-resource-row">
+          <label><span>Aterrorizado</span><input type="checkbox" name="system.zombie.terror.active" {{checked system.zombie.terror.active}}></label>
+          <label><span>Dificultad</span><input type="number" name="system.zombie.terror.difficulty" value="{{system.zombie.terror.difficulty}}"></label>
+          <label><span>Fuente</span><input name="system.zombie.terror.source" value="{{system.zombie.terror.source}}"></label>
+          <label><span>Fuera de la vista</span><input type="checkbox" name="system.zombie.terror.hidden" {{checked system.zombie.terror.hidden}}></label>
+        </div>
+      </section>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ============ CYBER ============ --}}
+    {{#if modules.cyber}}
+    <div class="tab cyber" data-group="primary" data-tab="cyber">
+      <section class="tdt-section">
+        <h2>Compatibilidad cibernética</h2>
+        <div class="tdt-attributes">
+          <article class="tdt-stat-card"><span>CC</span><strong>{{cyber.stats.cc}}</strong><small>10 + Social × 5 − perdida</small></article>
+          <article class="tdt-stat-card"><span>Carga</span><strong>{{cyber.stats.load}}</strong></article>
+          <article class="tdt-stat-card {{#if cyber.overloaded}}danger{{/if}}"><span>Exceso</span><strong>{{cyber.stats.excess}}</strong>{{#if cyber.overloaded}}<button type="button" data-actor-method="rollExcess">Voluntad {{cyber.stats.excess}}+4</button>{{/if}}</article>
+          <article class="tdt-stat-card"><span>CC perdida</span><input type="number" min="0" name="system.cyber.ccLost" value="{{system.cyber.ccLost}}"><small>Supremos (permanente)</small></article>
+        </div>
+      </section>
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Implantes</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="implant" data-module="cyber" title="Buscar implante en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="implant" title="Crear implante"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each cyber.implants as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}</span>
+            {{#unless item.system.installed}}<button type="button" data-action="item-toggle" title="Instalar implante"><i class="fas fa-plug"></i></button>{{/unless}}
+            {{#if item.system.installed}}<button type="button" data-actor-method="removeImplant" title="Descromarse (operación de Cibernética)"><i class="fas fa-user-doctor"></i></button>{{/if}}
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Sin implantes.</li>
+          {{/each}}
+        </ol>
+      </section>
+      {{#if cyber.supremes.length}}
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Implante supremo</h2></div>
+        <ol class="item-list tdt-item-list">
+          {{#each cyber.supremes as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}{{#if item.system.supreme.used}} · usado{{/if}}</span>
+            <button type="button" data-actor-method="useSupreme" title="Usar (coste permanente)"><i class="fas fa-skull"></i></button>
+            {{> itemControls}}
+          </li>
+          {{/each}}
+        </ol>
+      </section>
+      {{/if}}
+      <section class="tdt-section">
+        <div class="tdt-section-title"><h2>Hacking</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="hack" data-module="cyber" title="Buscar hack en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="hack" title="Crear hack"><i class="fas fa-plus"></i></button></div></div>
+        <p>
+          {{#if cyber.stats.slots}}{{cyber.stats.source}}: {{cyber.stats.usedSlots}}/{{cyber.stats.slots}} ranuras ocupadas · Usos de hack {{cyber.stats.usesLeft}}/{{cyber.stats.usesMax}}{{#if cyber.stats.hackPenalty}} · penaliza {{cyber.stats.hackPenalty}}{{/if}}{{else}}Sin AVS ni terminal externo equipado: no puedes hackear.{{/if}}
+          · Sobrecarga neural {{system.cyber.neuralOverload}}/{{cyber.overloadLimit}}
+          {{#if cyber.stats.wiredCapable}} · Cable{{/if}}{{#if cyber.stats.longRange}} · Alcance larga{{/if}}{{#if cyber.stats.firewall}} · Extrafirewall{{/if}}
+        </p>
+        <div class="tdt-resource-row">
+          <label><span>Hacks usados en la escena</span><input type="number" min="0" name="system.cyber.hackUses" value="{{system.cyber.hackUses}}"></label>
+          <label><span>Sobrecargas neurales</span><input type="number" min="0" name="system.cyber.neuralOverload" value="{{system.cyber.neuralOverload}}"></label>
+        </div>
+        <ol class="item-list tdt-item-list">
+          {{#each cyber.hacks as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}</span>
+            <button type="button" data-action="item-toggle" class="{{#if item.system.loaded}}equipped{{/if}}" title="Cargar en una ranura"><i class="fas fa-sd-card"></i></button>
+            <button type="button" data-actor-method="castHack" title="Lanzar hack" {{#unless item.system.loaded}}disabled{{/unless}}><i class="fas fa-terminal"></i></button>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Arrastra hacks desde el compendio.</li>
+          {{/each}}
+        </ol>
+      </section>
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Chips de habilidad</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="gear" data-category="skillChip" data-module="cyber" title="Buscar chip en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="gear" data-category="skillChip" title="Crear chip"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each cyber.chips as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{lookup ../config.chipTargets item.system.chipTarget}}</span>
+            <button type="button" data-action="item-toggle" class="{{#if item.system.loaded}}equipped{{/if}}" title="Cargar (ocupa ranura)"><i class="fas fa-sd-card"></i></button>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Sin chips.</li>
+          {{/each}}
+        </ol>
+      </section>
+      <section class="tdt-section">
+        <h2>Materiales</h2>
+        <div class="tdt-resource-row">
+          <label><span>De armas</span><input type="number" min="0" name="system.cyber.materials.weapons" value="{{system.cyber.materials.weapons}}"></label>
+          <label><span>Genéricos</span><input type="number" min="0" name="system.cyber.materials.generic" value="{{system.cyber.materials.generic}}"></label>
+          <label><span>De construcción</span><input type="number" min="0" name="system.cyber.materials.construction" value="{{system.cyber.materials.construction}}"></label>
+          <button type="button" data-actor-method="craft"><i class="fas fa-screwdriver-wrench"></i> Fabricar, reparar o desguazar</button>
+        </div>
+      </section>
+      {{#if cyber.reputation}}
+      <section class="tdt-section">
+        <div class="tdt-section-title"><h2>Reputación</h2><button type="button" data-action="reputation-add" title="Añadir facción"><i class="fas fa-plus"></i></button></div>
+        {{#each cyber.reputationEntries as |entry|}}
+        <div class="tdt-resource-row">
+          <input name="system.cyber.reputation.{{entry.index}}.faction" value="{{entry.faction}}">
+          <input type="number" min="-5" max="5" name="system.cyber.reputation.{{entry.index}}.value" value="{{entry.value}}">
+          <button type="button" data-action="reputation-delete" data-index="{{entry.index}}"><i class="fas fa-trash"></i></button>
+        </div>
+        {{/each}}
+      </section>
+      {{/if}}
+    </div>
+    {{/if}}
+
+    {{!-- ============ BIO ============ --}}
+    <div class="tab bio" data-group="primary" data-tab="bio">
+      <section class="tdt-section">
+        <h2>Descripción</h2>
+        <textarea name="system.description">{{system.description}}</textarea>
+        {{#if isNPC}}
+        <h2>Rasgos</h2>
+        <textarea name="system.npcStats.traits">{{system.npcStats.traits}}</textarea>
+        <h2>Variantes</h2>
+        <textarea name="system.npcStats.variants">{{system.npcStats.variants}}</textarea>
+        {{/if}}
+        <h2>Notas</h2>
+        <textarea name="system.biography.notes">{{system.biography.notes}}</textarea>
+      </section>
+    </div>
+  </section>
+</form>

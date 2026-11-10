@@ -1,0 +1,83 @@
+# Two Dice Tales para Foundry VTT
+
+Sistema de juego de TDT para Foundry VTT 13 (versión 0.3.0): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+
+## Módulo básico
+
+- Actores de tipo Personaje y PNJ (y Mecha con el módulo de mechas).
+- Características, habilidades, Percepción, defensas, vida, aguante, experiencia y punto de héroe.
+- Tiradas activas y reactivas con cambio de dado, reparto automático del bonificador, penalización, dificultad, críticos y pifias.
+- Ataques desde armas, aguante por Potencia y armaduras, aplicación de daño y ataque múltiple.
+- Reglas contextuales de las dotes en el diálogo de tirada (bonifica, penaliza, cambios de dado, dificultad, recordatorios).
+- Villanos con fuente de villano, escape magistral y turno extra (se reinicia al empezar cada combate).
+
+## Configuración
+
+En *Configurar ajustes → Two Dice Tales* hay dos grupos de opciones.
+
+**Módulos** (desactivados por defecto; cambiarlos recarga el mundo): fantástico, mechas, superpoderes, zombis y cyberpunk. Si un módulo está desactivado, se ocultan sus compendios, sus pestañas de la ficha y sus tipos de documento.
+
+**Reglas opcionales**:
+
+- Básico: personaje avanzado, reasignar dados defensivos, armas específicas, mejorar armas, estado de las armas y ataque múltiple de enemigos (−2 o −1).
+- Fantástico: modo de magia (sencilla, círculos o ambos) y razas.
+- Mechas: dotes Mechanime, límite de mejora de módulos y tabla de daños.
+- Superpoderes: punto débil.
+- Zombis: terror.
+- Cyberpunk: reputación.
+
+## Qué añade cada módulo
+
+- **Fantástico**:
+  - Arcano y Naturaleza.
+  - Razas con efectos.
+  - Magia sencilla (Incremental con reserva, Sacrificio).
+  - Círculos mágicos con editor de marcas, cálculo de inscripción, dificultad y maná, y maná sustraído.
+- **Mechas**:
+  - Actor Mecha con piloto y copiloto.
+  - Categoría, módulos de control (se suben desde la ficha), puntos de inventario y robustez.
+  - Vincula voluntad (tercer dado), Golpe múltiple, carga, sobrecarga y recarga.
+  - Tabla de daños opcional.
+- **Superpoderes**:
+  - Energía y habilidad Superpoder.
+  - Poderes por ramas con Sobrecarga y Maldito.
+  - Punto débil.
+- **Zombis**:
+  - Mordiscos y zombificación, Zombix y Antizombix.
+  - Víveres y hambruna al final del día, y búsqueda de suministros.
+  - Construcción y reparación, tablas de recompensas.
+  - Grupos de zombis (los ataques y el límite de daño escalan con las unidades que quedan).
+  - Terror.
+- **Cyberpunk**:
+  - Compatibilidad cibernética y tirada de exceso (absorto, se le va la pinza, desalineado).
+  - Implantes con mejoras, instalación y retirada con cirujano.
+  - Implantes supremos con coste permanente.
+  - Hacking con el AVS (ranuras, usos por escena y Sobrecarga neural), hacks cargados y chips de habilidad.
+  - Mejoras de armas, fuego de supresión y construcción con tres materiales.
+  - Dinero y reputación.
+
+## Compendios
+
+El sistema trae 28 compendios, agrupados en carpetas por módulo, con las dotes, las armas, el equipo, los enemigos y los PNJ de cada módulo. También incluye los mechas y pilotos de ejemplo, los personajes de ejemplo del cyberpunk y las tablas de zombis.
+
+Para copiar al mundo el contenido de los módulos activos, usa el botón del mensaje de bienvenida o ejecuta `game.tdt.importContent()`.
+
+## Desarrollo
+
+En este equipo, `foundryvtt/tdt` se enlaza como `/home/javi/FoundryVTT/Data/systems/tdt`.
+
+Los compendios se generan a partir del manual (`PorPartes/`). Para que los compendios no estén en uso al reescribirlos, Foundry tiene que estar cerrado:
+
+```bash
+node tools/build-basic-content.mjs    # data/basic-content.json
+node tools/build-module-content.mjs   # data/modules-content.json
+node tools/build-packs.mjs            # packs/ y system.json
+```
+
+Pruebas:
+
+```bash
+npm test
+```
+
+La ficha incluye búsqueda instantánea en habilidades e inventario, se adapta al ancho real de la ventana y permite arrastrar/reordenar objetos con el comportamiento nativo de Foundry.

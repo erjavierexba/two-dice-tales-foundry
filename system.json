@@ -1,0 +1,590 @@
+{
+  "id": "tdt",
+  "title": "Two Dice Tales",
+  "description": "Sistema oficial de Two Dice Tales para Foundry Virtual Tabletop.",
+  "version": "0.4.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13.348"
+  },
+  "authors": [
+    {
+      "name": "Javi"
+    }
+  ],
+  "relationships": {
+    "recommends": [
+      {
+        "id": "dice-so-nice",
+        "type": "module"
+      }
+    ]
+  },
+  "esmodules": [
+    "scripts/tdt.mjs"
+  ],
+  "styles": [
+    "styles/tdt.css"
+  ],
+  "languages": [
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {},
+      "npc": {},
+      "mecha": {}
+    },
+    "Item": {
+      "feat": {},
+      "weapon": {},
+      "armor": {},
+      "gear": {},
+      "race": {},
+      "spell": {},
+      "power": {},
+      "implant": {},
+      "hack": {}
+    }
+  },
+  "packs": [
+    {
+      "name": "basic-feats",
+      "label": "TDT · Dotes básicas",
+      "path": "packs/basic-feats",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": ""
+        }
+      }
+    },
+    {
+      "name": "basic-weapons",
+      "label": "TDT · Armas específicas",
+      "path": "packs/basic-weapons",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": ""
+        }
+      }
+    },
+    {
+      "name": "basic-armor",
+      "label": "TDT · Armaduras básicas",
+      "path": "packs/basic-armor",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": ""
+        }
+      }
+    },
+    {
+      "name": "basic-gear",
+      "label": "TDT · Objetos y vehículos",
+      "path": "packs/basic-gear",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": ""
+        }
+      }
+    },
+    {
+      "name": "basic-npcs",
+      "label": "TDT · PNJ básicos",
+      "path": "packs/basic-npcs",
+      "type": "Actor",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": ""
+        }
+      }
+    },
+    {
+      "name": "basic-generic-weapons",
+      "label": "TDT · Armas genéricas y estacionarias",
+      "path": "packs/basic-generic-weapons",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": ""
+        }
+      }
+    },
+    {
+      "name": "fantasy-races",
+      "label": "TDT Fantástico · Razas",
+      "path": "packs/fantasy-races",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "fantasy"
+        }
+      }
+    },
+    {
+      "name": "fantasy-feats",
+      "label": "TDT Fantástico · Dotes",
+      "path": "packs/fantasy-feats",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "fantasy"
+        }
+      }
+    },
+    {
+      "name": "fantasy-circles",
+      "label": "TDT Fantástico · Círculos de ejemplo",
+      "path": "packs/fantasy-circles",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "fantasy"
+        }
+      }
+    },
+    {
+      "name": "mecha-feats",
+      "label": "TDT Mechas · Dotes",
+      "path": "packs/mecha-feats",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "mecha"
+        }
+      }
+    },
+    {
+      "name": "mecha-weapons",
+      "label": "TDT Mechas · Armas",
+      "path": "packs/mecha-weapons",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "mecha"
+        }
+      }
+    },
+    {
+      "name": "mecha-inventory",
+      "label": "TDT Mechas · Inventario",
+      "path": "packs/mecha-inventory",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "mecha"
+        }
+      }
+    },
+    {
+      "name": "mecha-enemies",
+      "label": "TDT Mechas · Enemigos",
+      "path": "packs/mecha-enemies",
+      "type": "Actor",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "mecha"
+        }
+      }
+    },
+    {
+      "name": "mecha-examples",
+      "label": "TDT Mechas · Mechas y pilotos de ejemplo",
+      "path": "packs/mecha-examples",
+      "type": "Actor",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "mecha"
+        }
+      }
+    },
+    {
+      "name": "powers-powers",
+      "label": "TDT Superpoderes · Poderes",
+      "path": "packs/powers-powers",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "powers"
+        }
+      }
+    },
+    {
+      "name": "powers-enemies",
+      "label": "TDT Superpoderes · Enemigos",
+      "path": "packs/powers-enemies",
+      "type": "Actor",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "powers"
+        }
+      }
+    },
+    {
+      "name": "zombie-feats",
+      "label": "TDT Zombis · Dotes",
+      "path": "packs/zombie-feats",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "zombie"
+        }
+      }
+    },
+    {
+      "name": "zombie-gear",
+      "label": "TDT Zombis · Objetos",
+      "path": "packs/zombie-gear",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "zombie"
+        }
+      }
+    },
+    {
+      "name": "zombie-enemies",
+      "label": "TDT Zombis · Zombies",
+      "path": "packs/zombie-enemies",
+      "type": "Actor",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "zombie"
+        }
+      }
+    },
+    {
+      "name": "zombie-tables",
+      "label": "TDT Zombis · Tablas",
+      "path": "packs/zombie-tables",
+      "type": "RollTable",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "zombie"
+        }
+      }
+    },
+    {
+      "name": "cyber-feats",
+      "label": "TDT Cyberpunk · Dotes",
+      "path": "packs/cyber-feats",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    },
+    {
+      "name": "cyber-hacks",
+      "label": "TDT Cyberpunk · Hacks",
+      "path": "packs/cyber-hacks",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    },
+    {
+      "name": "cyber-implants",
+      "label": "TDT Cyberpunk · Implantes",
+      "path": "packs/cyber-implants",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    },
+    {
+      "name": "cyber-weapons",
+      "label": "TDT Cyberpunk · Armas",
+      "path": "packs/cyber-weapons",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    },
+    {
+      "name": "cyber-armor",
+      "label": "TDT Cyberpunk · Armaduras",
+      "path": "packs/cyber-armor",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    },
+    {
+      "name": "cyber-gear",
+      "label": "TDT Cyberpunk · Objetos, chips y vehículos",
+      "path": "packs/cyber-gear",
+      "type": "Item",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    },
+    {
+      "name": "cyber-npcs",
+      "label": "TDT Cyberpunk · PNJ y máquinas",
+      "path": "packs/cyber-npcs",
+      "type": "Actor",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    },
+    {
+      "name": "cyber-characters",
+      "label": "TDT Cyberpunk · Personajes de ejemplo",
+      "path": "packs/cyber-characters",
+      "type": "Actor",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": "cyber"
+        }
+      }
+    }
+  ],
+  "grid": {
+    "distance": 2,
+    "units": "m"
+  },
+  "primaryTokenAttribute": "health",
+  "secondaryTokenAttribute": null,
+  "initiative": "1d4 + 1d4",
+  "packFolders": [
+    {
+      "name": "Two Dice Tales · Básico",
+      "sorting": "a",
+      "color": "#245c6b",
+      "packs": [
+        "basic-feats",
+        "basic-weapons",
+        "basic-armor",
+        "basic-gear",
+        "basic-npcs",
+        "basic-generic-weapons"
+      ],
+      "sort": 0
+    },
+    {
+      "name": "TDT · Fantástico",
+      "sorting": "a",
+      "color": "#4b6b2a",
+      "packs": [
+        "fantasy-races",
+        "fantasy-feats",
+        "fantasy-circles"
+      ],
+      "sort": 1
+    },
+    {
+      "name": "TDT · Mechas",
+      "sorting": "a",
+      "color": "#55606e",
+      "packs": [
+        "mecha-feats",
+        "mecha-weapons",
+        "mecha-inventory",
+        "mecha-enemies",
+        "mecha-examples"
+      ],
+      "sort": 2
+    },
+    {
+      "name": "TDT · Superpoderes",
+      "sorting": "a",
+      "color": "#7a3a8c",
+      "packs": [
+        "powers-powers",
+        "powers-enemies"
+      ],
+      "sort": 3
+    },
+    {
+      "name": "TDT · Zombis",
+      "sorting": "a",
+      "color": "#6b4a2a",
+      "packs": [
+        "zombie-feats",
+        "zombie-gear",
+        "zombie-enemies",
+        "zombie-tables"
+      ],
+      "sort": 4
+    },
+    {
+      "name": "TDT · Cyberpunk",
+      "sorting": "a",
+      "color": "#1d8a9c",
+      "packs": [
+        "cyber-feats",
+        "cyber-hacks",
+        "cyber-implants",
+        "cyber-weapons",
+        "cyber-armor",
+        "cyber-gear",
+        "cyber-npcs",
+        "cyber-characters"
+      ],
+      "sort": 5
+    }
+  ],
+  "socket": true
+}

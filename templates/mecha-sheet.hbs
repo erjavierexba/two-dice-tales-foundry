@@ -1,0 +1,157 @@
+{{#*inline "itemControls"}}
+<button type="button" data-action="item-chat" title="Mostrar en el chat"><i class="fas fa-comment-dots"></i></button>
+{{#if system.uses.max}}<button type="button" data-action="item-use" title="Usar (consume un uso)"><i class="fas fa-play"></i></button>{{else}}{{#if (eq system.category "consumable")}}<button type="button" data-action="item-use" title="Consumir"><i class="fas fa-play"></i></button>{{/if}}{{/if}}
+<button type="button" data-action="item-edit" title="Editar"><i class="fas fa-pen"></i></button>
+<button type="button" data-action="item-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
+{{/inline}}
+<form class="{{cssClass}} tdt-actor-sheet tdt-mecha-sheet" autocomplete="off">
+  <header class="sheet-header tdt-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="Cambiar imagen de {{actor.name}}" alt="Imagen de {{actor.name}}">
+    <div class="tdt-identity">
+      <span class="tdt-kicker">Mecha · Two Dice Tales</span>
+      <input class="tdt-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre">
+      <div class="tdt-mecha-meta">
+        <label><span>Categoría</span><select name="system.category" data-dtype="Number">{{selectOptions categories selected=system.category}}</select></label>
+        <span class="tdt-mecha-spec"><i class="fas fa-ruler-combined"></i> {{system.size}} m</span>
+        <span class="tdt-mecha-spec"><i class="fas fa-gauge-high"></i> {{system.cruise}} km/h</span>
+      </div>
+      <div class="tdt-crew-strip">
+        <label><span>Piloto</span><select name="system.pilot">{{selectOptions pilots selected=system.pilot}}</select></label>
+        <label><span>Copiloto</span><select name="system.copilot">{{selectOptions pilots selected=system.copilot}}</select></label>
+      </div>
+    </div>
+    <div class="tdt-health-block">
+      <span><i class="fas fa-shield-heart"></i> INTEGRIDAD</span>
+      <div><input type="number" name="system.health.value" value="{{system.health.value}}" min="0"> / <strong>{{system.health.max}}</strong></div>
+      <div class="tdt-health-meter" role="meter" aria-label="Integridad" aria-valuemin="0" aria-valuemax="{{system.health.max}}" aria-valuenow="{{system.health.value}}"><span style="width: {{healthPercent}}%"></span></div>
+      <small>Aguante {{system.endurance.value}}{{#if system.endurance.shield}} (Blinda +{{system.endurance.shield}}){{/if}}</small>
+      <div class="tdt-health-actions"><button type="button" data-action="damage" title="Aplicar daño"><i class="fas fa-heart-crack"></i></button><button type="button" data-action="heal" title="Reparar"><i class="fas fa-screwdriver-wrench"></i></button></div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="main" role="tab" tabindex="0"><i class="fas fa-robot"></i><span>Mecha</span></a>
+    <a class="item" data-tab="inventory" role="tab" tabindex="0"><i class="fas fa-toolbox"></i><span>Inventario <b>{{itemCount}}</b></span></a>
+    <a class="item" data-tab="bio" role="tab" tabindex="0"><i class="fas fa-book-open"></i><span>Notas</span></a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab main" data-group="primary" data-tab="main">
+      <section class="tdt-mecha-dashboard">
+        <article class="tdt-crew-card">
+          <span>Piloto</span>
+          {{#if pilot}}<button type="button" data-action="open-pilot" data-uuid="{{pilot.uuid}}"><img src="{{pilot.img}}" alt=""><strong>{{pilot.name}}</strong><i class="fas fa-arrow-up-right-from-square"></i></button>{{else}}<small>Arrastra aquí un personaje o selecciónalo arriba.</small>{{/if}}
+        </article>
+        <button type="button" class="tdt-capacity-card {{#if inventoryOver}}danger{{/if}}" data-action="activate-tab" data-tab="inventory">
+          <span><i class="fas fa-toolbox"></i> Capacidad</span><strong>{{system.inventory.spent}} / {{system.inventory.max}}</strong>
+          <span class="tdt-capacity-meter"><i style="width: {{inventoryPercent}}%"></i></span>
+          <small>{{#if inventoryOver}}Exceso de {{inventoryExcess}} puntos{{else}}{{system.inventory.remaining}} puntos libres · abrir inventario{{/if}}</small>
+        </button>
+        <article class="tdt-crew-card">
+          <span>Copiloto</span>
+          {{#if copilot}}<button type="button" data-action="open-pilot" data-uuid="{{copilot.uuid}}"><img src="{{copilot.img}}" alt=""><strong>{{copilot.name}}</strong><i class="fas fa-arrow-up-right-from-square"></i></button>{{else}}<small>Opcional; requiere una cabina o dote adecuada.</small>{{/if}}
+        </article>
+      </section>
+      <section class="tdt-section tdt-secondary-grid">
+        <article class="tdt-stat-card">
+          <button type="button" class="tdt-roll-label" data-mecha-roll="robustness"><i class="fas fa-shield"></i> Robustez</button>
+          <strong>d{{system.dice.robustness}}</strong><small>+ Potencia o Fortaleza del piloto</small>
+        </article>
+        <article class="tdt-stat-card">
+          <button type="button" class="tdt-roll-label" data-mecha-roll="maneuver"><i class="fas fa-person-running"></i> Maniobra táctica</button>
+          <strong>{{#if system.dice.maneuver}}d{{system.dice.maneuver}}{{else}}+1{{/if}}</strong><small>+ Destreza del piloto</small>
+        </article>
+        <article class="tdt-stat-card">
+          <button type="button" class="tdt-roll-label" data-mecha-roll="perception"><i class="fas fa-eye"></i> Percepción</button>
+          <strong>{{#if system.aiCameras}}2d10{{else}}Piloto{{/if}}</strong>
+        </article>
+        <article class="tdt-stat-card"><span>Desplazamiento</span><strong>{{system.dice.displacement}}</strong></article>
+      </section>
+      <section class="tdt-section">
+        <h2>Módulos de control de combate</h2>
+        <div class="tdt-attributes">
+          {{#each modulesList as |module|}}
+          <article class="tdt-stat-card">
+            <span>{{module.label}}</span>
+            <strong>d{{module.die}}</strong>
+            <div class="tdt-button-row">
+              <button type="button" data-module-key="{{module.key}}" data-module-step="-1" title="Bajar"><i class="fas fa-minus"></i></button>
+              <button type="button" data-module-key="{{module.key}}" data-module-step="1" title="Subir{{#if module.nextCost}} ({{module.nextCost}} de inventario){{/if}}"><i class="fas fa-plus"></i></button>
+            </div>
+            {{#if module.nextCost}}<small>Siguiente: {{module.nextCost}} pts</small>{{/if}}
+          </article>
+          {{/each}}
+        </div>
+        <div class="tdt-mecha-budget"><span>Invertido en módulos <strong>{{system.inventory.moduleCost}}</strong></span><label>Bono de capacidad <input type="number" class="tdt-inline-number" name="system.inventory.bonus" value="{{system.inventory.bonus}}"></label>{{#if (lt moduleLimit 12)}}<span>Tope de módulo <strong>d{{moduleLimit}}</strong></span>{{/if}}</div>
+      </section>
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Armas</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="weapon" data-module="mecha" title="Buscar arma en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="weapon" title="Crear arma"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each weapons as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{lookup ../config.mechaModules item.system.mecha.module}} · {{item.summary}} · {{item.cost}} pts{{#if item.system.mecha.primary}} · principal{{/if}}{{#if item.system.mecha.destroyed}} · DESTRUIDA{{else}}{{#if item.system.mecha.repairRequired}} · AVERIADA{{else}}{{#if item.system.mecha.overloadPenalty}} · penaliza {{item.system.mecha.overloadPenalty}}{{/if}}{{/if}}{{/if}}</span>
+            <button type="button" data-action="weapon-roll" title="Atacar" {{#if item.system.mecha.destroyed}}disabled{{else}}{{#if item.system.mecha.repairRequired}}disabled{{/if}}{{/if}}><i class="fas fa-dice"></i></button>
+            {{#if item.reloadable}}<button type="button" data-actor-method="mechaReload" title="Recargar"><i class="fas fa-battery-full"></i></button>{{/if}}
+            {{#if item.overloadable}}<button type="button" data-actor-method="mechaOverload" title="Sobrecargar"><i class="fas fa-radiation"></i></button>{{/if}}
+            {{#if item.system.mecha.repairCost}}<button type="button" data-actor-method="mechaRepairWeapon" title="Reparar con kit ({{item.system.mecha.repairCost}} cargas)"><i class="fas fa-screwdriver-wrench"></i></button>{{/if}}
+            <button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Equipada"><i class="fas fa-hand-fist"></i></button>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Sin armas.</li>
+          {{/each}}
+        </ol>
+      </section>
+      <section class="tdt-section">
+        <h2>Partes dañadas</h2>
+        <textarea name="system.brokenParts" placeholder="{{#if mechaDamage}}Resultados de la tabla de daños en el mecha{{else}}Anota aquí las averías{{/if}}">{{system.brokenParts}}</textarea>
+      </section>
+    </div>
+
+    <div class="tab inventory" data-group="primary" data-tab="inventory">
+      <section class="tdt-inventory-summary {{#if inventoryOver}}danger{{/if}}">
+        <div><span>Capacidad usada</span><strong>{{system.inventory.spent}} / {{system.inventory.max}}</strong><small>{{system.inventory.moduleCost}} en módulos · {{system.inventory.remaining}} libres</small></div>
+        <span class="tdt-capacity-meter"><i style="width: {{inventoryPercent}}%"></i></span>
+      </section>
+      <div class="tdt-list-toolbar">
+        <i class="fas fa-magnifying-glass"></i><input type="search" data-filter-list placeholder="Buscar equipo o dotes…" aria-label="Buscar equipo o dotes">
+        <button type="button" data-action="filter-clear" title="Limpiar filtro" hidden><i class="fas fa-xmark"></i></button>
+      </div>
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Inventario</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="gear" data-module="mecha" title="Buscar equipo en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="gear" data-category="mecha" title="Crear objeto"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each gear as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}} · {{item.cost}} pts</span>
+            <button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Instalado"><i class="fas fa-plug"></i></button>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Arrastra objetos de inventario de mecha desde el compendio.</li>
+          {{/each}}
+        </ol>
+      </section>
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Dotes del mecha</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="feat" data-module="mecha" title="Buscar dote en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="feat" title="Crear dote"><i class="fas fa-plus"></i></button></div></div>
+        <p class="hint">Las dotes de piloto van en la ficha del piloto; el mecha las usa automáticamente.</p>
+        <ol class="item-list tdt-item-list">
+          {{#each feats as |item|}}
+          <li class="item tdt-item" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}</span>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Sin dotes propias.</li>
+          {{/each}}
+        </ol>
+      </section>
+    </div>
+
+    <div class="tab bio" data-group="primary" data-tab="bio">
+      <section class="tdt-section tdt-mecha-notes">
+        <label><span>Descripción</span><textarea name="system.description" placeholder="Aspecto, fabricante, historia y función del mecha…">{{system.description}}</textarea></label>
+        <label><span>Notas de misión</span><textarea name="system.notes" placeholder="Munición, objetivos, reparaciones pendientes…">{{system.notes}}</textarea></label>
+      </section>
+    </div>
+  </section>
+</form>

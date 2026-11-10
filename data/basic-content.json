@@ -1,0 +1,4122 @@
+{
+  "generatedFrom": "PorPartes/2 - Módulo básico.md",
+  "items": [
+    {
+      "name": "Alergia",
+      "type": "feat",
+      "system": {
+        "description": "Tienes uno o varios elementos a los que eres muy alérgico. Si estás en presencia de este elemento, a todas tus tiradas añadele un 1d4 y quédate con los peores resultados ya que no puedes parar de estornudar.",
+        "cost": -3,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Alergia",
+            "text": "Tienes uno o varios elementos a los que eres muy alérgico. Si estás en presencia de este elemento, a todas tus tiradas añadele un 1d4 y quédate con los peores resultados ya que no puedes parar de estornudar."
+          },
+          {
+            "type": "disadvantage",
+            "scopes": [],
+            "value": 1,
+            "label": "Alergia"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cabeza hueca",
+      "type": "feat",
+      "system": {
+        "description": "Nunca se te ha dado bien eso de pensar. Cada vez que tires algo con la característica mente, tira dos veces el dado de mente y quedate con el peor resultado.",
+        "cost": -4,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind"
+            ],
+            "label": "Cabeza hueca",
+            "text": "Nunca se te ha dado bien eso de pensar. Cada vez que tires algo con la característica mente, tira dos veces el dado de mente y quedate con el peor resultado."
+          },
+          {
+            "type": "disadvantage",
+            "scopes": [
+              "mind"
+            ],
+            "value": 1,
+            "label": "Cabeza hueca"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cegato",
+      "type": "feat",
+      "system": {
+        "description": "Si haces una prueba de percepción y esta depende de la vista, añade 1d4 más a la tirada y quédate con los dos menores resultados.",
+        "cost": -4,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception"
+            ],
+            "label": "Cegato",
+            "text": "Si haces una prueba de percepción y esta depende de la vista, añade 1d4 más a la tirada y quédate con los dos menores resultados."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cobarde",
+      "type": "feat",
+      "system": {
+        "description": "Si haces una tirada de voluntad para no tener miedo de algo, reduce tu dado de mente. En caso de tener 1d4, pasa a ser 1. Adicionalmente, intentas huir o esconderte en situaciones de violencia física. Para poder controlar tus miedos en caso de batalla, necesitas superar una tirada de voluntad contra el miedo a discreción del DJ.",
+        "cost": -6,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind",
+              "will"
+            ],
+            "label": "Cobarde",
+            "text": "Si haces una tirada de voluntad para no tener miedo de algo, reduce tu dado de mente. En caso de tener 1d4, pasa a ser 1. Adicionalmente, intentas huir o esconderte en situaciones de violencia física. Para poder controlar tus miedos en caso de batalla, necesitas superar una tirada de voluntad contra el miedo a discreción del DJ."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "mind",
+              "will"
+            ],
+            "value": -1,
+            "label": "Cobarde"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Duro de oído",
+      "type": "feat",
+      "system": {
+        "description": "Si haces una prueba de percepción y esta depende del oído, añade 1d4 más a la tirada y quédate con los dos menores resultados.",
+        "cost": -4,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception"
+            ],
+            "label": "Duro de oído",
+            "text": "Si haces una prueba de percepción y esta depende del oído, añade 1d4 más a la tirada y quédate con los dos menores resultados."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Enfermo grave",
+      "type": "feat",
+      "system": {
+        "description": "Tienes una enfermedad jodida, y tienes que tomar un tratamiento. Decide con el DJ de juego la enfermedad y la frecuencia de la medicación necesaria. Si no tomas la medicación cuando toca, reduce tu aguante en 1, si tu aguante es 0 y vuelves a faltar en tu dosis, pierde progresivamente puntos de vida máximos, es decir, el primer día 1 punto de vida máximo eliminado, quedándote 9, 2 al siguiente, quedando 7, 3 al siguiente, quedando 4 y así hasta que tus puntos de vida lleguen a 0. Este ejemplo asume 10 puntos de vida, pero podrías tener más. Si tomas la cura, solo restaura el último paso negativo dado, es decir, si has perdido 3 de aguante, necesitarás tomarte 3 dosis normales para volver a la normalidad.",
+        "cost": -6,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind"
+            ],
+            "label": "Enfermo grave",
+            "text": "Tienes una enfermedad jodida, y tienes que tomar un tratamiento. Decide con el DJ de juego la enfermedad y la frecuencia de la medicación necesaria. Si no tomas la medicación cuando toca, reduce tu aguante en 1, si tu aguante es 0 y vuelves a faltar en tu dosis, pierde progresivamente puntos de vida máximos, es decir, el primer día 1 punto de vida máximo eliminado, quedándote 9, 2 al siguiente, quedando 7, 3 al siguiente, quedando 4 y así hasta que tus puntos de vida lleguen a 0. Este ejemplo asume 10 puntos de vida, pero podrías tener más. Si tomas la cura, solo restaura el último paso negativo dado, es decir, si has perdido 3 de aguante, necesitarás tomarte 3 dosis normales para volver a la normalidad."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Feo de cojones",
+      "type": "feat",
+      "system": {
+        "description": "Tus impresiones sociales de diplomacia disminuyen siempre que te vean en persona. Si no tienes habilidad de diplomacia, fallas automáticamente. Si la tienes, baja el dado.",
+        "cost": -3,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "diplomacy",
+              "mind",
+              "social"
+            ],
+            "label": "Feo de cojones",
+            "text": "Tus impresiones sociales de diplomacia disminuyen siempre que te vean en persona. Si no tienes habilidad de diplomacia, fallas automáticamente. Si la tienes, baja el dado."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "diplomacy",
+              "mind",
+              "social"
+            ],
+            "value": -1,
+            "label": "Feo de cojones"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Gordo",
+      "type": "feat",
+      "system": {
+        "description": "Igual la cuarta hamburguesa sobraba y eso lo nota tu cuerpo. Usar una habilidad atlética por un tiempo medio hará que empieces a cansarte mucho. Tira dos veces la habilidad correspondiente y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente.",
+        "cost": -4,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "athletics",
+              "mind"
+            ],
+            "label": "Gordo",
+            "text": "Igual la cuarta hamburguesa sobraba y eso lo nota tu cuerpo. Usar una habilidad atlética por un tiempo medio hará que empieces a cansarte mucho. Tira dos veces la habilidad correspondiente y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente."
+          },
+          {
+            "type": "disadvantage",
+            "scopes": [
+              "athletics",
+              "mind"
+            ],
+            "value": 1,
+            "label": "Gordo"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Incrédulo",
+      "type": "feat",
+      "system": {
+        "description": "Reduce el dado de mente para las tiradas en las que alguien intente colarte una mentira. En caso de tener 1d4, pasa a ser 1.",
+        "cost": -2,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind"
+            ],
+            "label": "Incrédulo",
+            "text": "Reduce el dado de mente para las tiradas en las que alguien intente colarte una mentira. En caso de tener 1d4, pasa a ser 1."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "mind"
+            ],
+            "value": -1,
+            "label": "Incrédulo"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Indeciso",
+      "type": "feat",
+      "system": {
+        "description": "Cuando eres libre de escoger izquierda y derecha, siendo difícil de elegir, te quedas paralizado pensando en las posibles implicaciones. Para salir deberás superar una tirada de voluntad 5 o que alguien elija por ti.",
+        "cost": -2,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "will"
+            ],
+            "label": "Indeciso",
+            "text": "Cuando eres libre de escoger izquierda y derecha, siendo difícil de elegir, te quedas paralizado pensando en las posibles implicaciones. Para salir deberás superar una tirada de voluntad 5 o que alguien elija por ti."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mala suerte no, lo siguiente",
+      "type": "feat",
+      "system": {
+        "description": "Tu DJ puede invalidar cualquier tirada y hacer que la vuelvas a tirar.",
+        "cost": -20,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Mala suerte no, lo siguiente",
+            "text": "Tu DJ puede invalidar cualquier tirada y hacer que la vuelvas a tirar."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Me llaman “el pupas”",
+      "type": "feat",
+      "system": {
+        "description": "Cada vez que recibas daño a tus puntos de vida, recibirás 1 más.",
+        "cost": -8,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Me llaman “el pupas”",
+            "text": "Cada vez que recibas daño a tus puntos de vida, recibirás 1 más."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Me la suda",
+      "type": "feat",
+      "system": {
+        "description": "Pareces pasar un poco de todo. Cuando alguien habla contigo previamente y ve este comportamiento, tus siguientes tiradas de diplomacia tira dos veces el dado y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente. Sin embargo, aumenta tu dado de voluntad cuando alguien intenta engañarte (recordar al DJ esta propiedad).",
+        "cost": -4,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "deception",
+              "diplomacy",
+              "mind",
+              "will"
+            ],
+            "label": "Me la suda",
+            "text": "Pareces pasar un poco de todo. Cuando alguien habla contigo previamente y ve este comportamiento, tus siguientes tiradas de diplomacia tira dos veces el dado y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente. Sin embargo, aumenta tu dado de voluntad cuando alguien intenta engañarte (recordar al DJ esta propiedad)."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "deception",
+              "diplomacy",
+              "mind",
+              "will"
+            ],
+            "value": 1,
+            "target": "scoped",
+            "label": "Me la suda"
+          },
+          {
+            "type": "disadvantage",
+            "scopes": [
+              "deception",
+              "diplomacy",
+              "mind",
+              "will"
+            ],
+            "value": 1,
+            "label": "Me la suda"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mr Burns",
+      "type": "feat",
+      "system": {
+        "description": "No tienes lo que se dice mucha salud. Reduce tus puntos de vida en 4.",
+        "cost": -10,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Mr Burns",
+            "text": "No tienes lo que se dice mucha salud. Reduce tus puntos de vida en 4."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Otako",
+      "type": "feat",
+      "system": {
+        "description": "Eres MUY friki con un tema en concreto. Cualquier tirada en relación a diplomacia para mejorar la relación con una persona (hacer amigos, ligar...) reduce el dado de diplomacia. Si no tenías dado, la tirada falla automáticamente. Pero si la otra persona tiene esta misma dote de tu mismo tema, aumenta el dado de diplomacia.",
+        "cost": -2,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "diplomacy",
+              "mind"
+            ],
+            "label": "Otako",
+            "text": "Eres MUY friki con un tema en concreto. Cualquier tirada en relación a diplomacia para mejorar la relación con una persona (hacer amigos, ligar...) reduce el dado de diplomacia. Si no tenías dado, la tirada falla automáticamente. Pero si la otra persona tiene esta misma dote de tu mismo tema, aumenta el dado de diplomacia."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "diplomacy",
+              "mind"
+            ],
+            "value": 1,
+            "target": "scoped",
+            "label": "Otako"
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "diplomacy",
+              "mind"
+            ],
+            "value": -1,
+            "label": "Otako"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Paranoico",
+      "type": "feat",
+      "system": {
+        "description": "Siempre crees que te están observando, que hay algo en la siguiente esquina, alguien mirando por la ventana… Tu DJ siempre podrá hacerte tirar una salvación de voluntad para no creer que has visto a algo o alguien en algún lado. También, ya que estás paranoico, las personas que intenten engañarte o ser diplomáticas lo tienen más difícil contigo. Aumenta tu dado de voluntad en estos casos.",
+        "cost": -4,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "deception",
+              "will"
+            ],
+            "label": "Paranoico",
+            "text": "Siempre crees que te están observando, que hay algo en la siguiente esquina, alguien mirando por la ventana… Tu DJ siempre podrá hacerte tirar una salvación de voluntad para no creer que has visto a algo o alguien en algún lado. También, ya que estás paranoico, las personas que intenten engañarte o ser diplomáticas lo tienen más difícil contigo. Aumenta tu dado de voluntad en estos casos."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "deception",
+              "will"
+            ],
+            "value": 1,
+            "target": "scoped",
+            "label": "Paranoico"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Perroflauta",
+      "type": "feat",
+      "system": {
+        "description": "Has hecho lo mínimo en la vida para sobrevivir, y ha sido bastante poco. Cualquier tarea que sea durante un tiempo medio tira dos veces la habilidad correspondiente y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente. Si fallas la tirada, estás haciendo el vago en lugar de hacer la tarea que deberías.",
+        "cost": -5,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind"
+            ],
+            "label": "Perroflauta",
+            "text": "Has hecho lo mínimo en la vida para sobrevivir, y ha sido bastante poco. Cualquier tarea que sea durante un tiempo medio tira dos veces la habilidad correspondiente y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente. Si fallas la tirada, estás haciendo el vago en lugar de hacer la tarea que deberías."
+          },
+          {
+            "type": "disadvantage",
+            "scopes": [
+              "mind"
+            ],
+            "value": 1,
+            "label": "Perroflauta"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pésimo para los negocios",
+      "type": "feat",
+      "system": {
+        "description": "Cada vez que hagas una tirada para intentar conseguir dinero, tira dos veces la habilidad correspondiente y quédate con el peor resultado. Si no tenías habilidad, falla automáticamente.",
+        "cost": -2,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind"
+            ],
+            "label": "Pésimo para los negocios",
+            "text": "Cada vez que hagas una tirada para intentar conseguir dinero, tira dos veces la habilidad correspondiente y quédate con el peor resultado. Si no tenías habilidad, falla automáticamente."
+          },
+          {
+            "type": "disadvantage",
+            "scopes": [
+              "mind"
+            ],
+            "value": 1,
+            "label": "Pésimo para los negocios"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sordo como una tapia",
+      "type": "feat",
+      "system": {
+        "description": "Estás sordo bro. Fallas críticamente todas las tiradas de percepción sonora.",
+        "cost": -12,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind",
+              "perception"
+            ],
+            "label": "Sordo como una tapia",
+            "text": "Estás sordo bro. Fallas críticamente todas las tiradas de percepción sonora."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Te metes con mi ... , pues te vas a enterar",
+      "type": "feat",
+      "system": {
+        "description": "Eres ligero de temperamento cuando se meten con lo que tu consideras sagrado, bien puede ser tu familia, religión, país u otro. Siempre que se metan o burlen de tu tema predilecto, tienes que entrar en conflicto verbal o físico con quién lo ha dicho. Esta dote no se activa si es imposible ganar esta pelea, como por ejemplo que el que te ofenda esté en un tanque y tu no tengas armas por ejemplo.",
+        "cost": -2,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "religion"
+            ],
+            "label": "Te metes con mi ... , pues te vas a enterar",
+            "text": "Eres ligero de temperamento cuando se meten con lo que tu consideras sagrado, bien puede ser tu familia, religión, país u otro. Siempre que se metan o burlen de tu tema predilecto, tienes que entrar en conflicto verbal o físico con quién lo ha dicho. Esta dote no se activa si es imposible ganar esta pelea, como por ejemplo que el que te ofenda esté en un tanque y tu no tengas armas por ejemplo."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Yonki",
+      "type": "feat",
+      "system": {
+        "description": "Tomas una sustancia de forma continuada. Si dejas de tomarla, tendrás que hacer una salvación de voluntad de dificultad creciente cada día que dejas de tomarla. Si la fallas, obtener esa sustancia se vuelve tu prioridad, tal vez no matarías por ella (esto solo ocurriría en caso de pifia) pero si llegarías a robar, incluso de forma violenta..",
+        "cost": -4,
+        "requirements": "",
+        "category": "disadvantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "will"
+            ],
+            "label": "Yonki",
+            "text": "Tomas una sustancia de forma continuada. Si dejas de tomarla, tendrás que hacer una salvación de voluntad de dificultad creciente cada día que dejas de tomarla. Si la fallas, obtener esa sustancia se vuelve tu prioridad, tal vez no matarías por ella (esto solo ocurriría en caso de pifia) pero si llegarías a robar, incluso de forma violenta.."
+          }
+        ]
+      }
+    },
+    {
+      "name": "100tifico",
+      "type": "feat",
+      "system": {
+        "description": "Eres un profesional en una rama de la ciencia. Si haces una tirada de ciencia o de tu profesión con respecto a tu rama de conocimiento, bonifica en 2 la tirada.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "science",
+              "profession"
+            ],
+            "label": "100tifico",
+            "text": "Eres un profesional en una rama de la ciencia. Si haces una tirada de ciencia o de tu profesión con respecto a tu rama de conocimiento, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "science",
+              "profession"
+            ],
+            "value": 2,
+            "label": "100tifico"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Análisis metódico",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Ciencia 1d4, Investigación 1d6 Al investigar a fondo un objeto o escena, se bonifica en 2 la tirada.",
+        "cost": 3,
+        "requirements": "Ciencia 1d4, Investigación 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "science",
+              "investigation"
+            ],
+            "label": "Análisis metódico",
+            "text": "Requisitos: Ciencia 1d4, Investigación 1d6 Al investigar a fondo un objeto o escena, se bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "science",
+              "investigation"
+            ],
+            "value": 2,
+            "label": "Análisis metódico"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Anestesista",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Medicina 1d6, Ciencia 1d4 Sabes como crear, reconocer y administrar todo tipo de sedantes en el cuerpo humano. Aumenta en 2 la dificultad para que tu objetivo resista cualquier sedación creada por tí.",
+        "cost": 4,
+        "requirements": "Medicina 1d6, Ciencia 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "science",
+              "medicine"
+            ],
+            "label": "Anestesista",
+            "text": "Requisitos: Medicina 1d6, Ciencia 1d4 Sabes como crear, reconocer y administrar todo tipo de sedantes en el cuerpo humano. Aumenta en 2 la dificultad para que tu objetivo resista cualquier sedación creada por tí."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Conducir",
+      "type": "feat",
+      "system": {
+        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces.",
+        "cost": 2,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Conducir",
+            "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Carterista de la pista",
+      "type": "feat",
+      "system": {
+        "description": "Siempre que hagas una tirada para robar, bonifica en 2 la tirada.",
+        "cost": 6,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Carterista de la pista",
+            "text": "Siempre que hagas una tirada para robar, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [],
+            "value": 2,
+            "label": "Carterista de la pista"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cerrajero",
+      "type": "feat",
+      "system": {
+        "description": "Puedes usar acrobacias para intentar abrir cerraduras con ganzúas u similares.",
+        "cost": 8,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "acrobatics"
+            ],
+            "label": "Cerrajero",
+            "text": "Puedes usar acrobacias para intentar abrir cerraduras con ganzúas u similares."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Centro de todas las miradas",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Interpretación 1d6 Al hacer una interpretación para atraer la atención de un grupo de personas, baja en 2 su dificultad.",
+        "cost": 3,
+        "requirements": "Interpretación 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "performance"
+            ],
+            "label": "Centro de todas las miradas",
+            "text": "Requisitos: Interpretación 1d6 Al hacer una interpretación para atraer la atención de un grupo de personas, baja en 2 su dificultad."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cocinero",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Supervivencia 1d4 Cuando uses supervivencia o tu profesión para cocinar, bonifica en 2 la tirada.",
+        "cost": 4,
+        "requirements": "Supervivencia 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "profession",
+              "survival"
+            ],
+            "label": "Cocinero",
+            "text": "Requisitos: Supervivencia 1d4 Cuando uses supervivencia o tu profesión para cocinar, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "profession",
+              "survival"
+            ],
+            "value": 2,
+            "label": "Cocinero"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Conocimiento de religiones blasfemas",
+      "type": "feat",
+      "system": {
+        "description": "Conoces otras religiones y dioses , incluidas las ocultistas. Para identificar una religión, bonifica en 1 la tirada.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "religion",
+              "stealth"
+            ],
+            "label": "Conocimiento de religiones blasfemas",
+            "text": "Conoces otras religiones y dioses , incluidas las ocultistas. Para identificar una religión, bonifica en 1 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "religion",
+              "stealth"
+            ],
+            "value": 1,
+            "label": "Conocimiento de religiones blasfemas"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Currante",
+      "type": "feat",
+      "system": {
+        "description": "Añade una profesión nueva disponible, empieza con 1d4.",
+        "cost": 5,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "profession"
+            ],
+            "label": "Currante",
+            "text": "Añade una profesión nueva disponible, empieza con 1d4."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Da Vinki",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Ciencia 1d8 Sabes de todo con una certeza inhumana. Eres inmune a las pifias de ciencia, tirando de nuevo hasta que no salga una pifia.",
+        "cost": 8,
+        "requirements": "Ciencia 1d8",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "science"
+            ],
+            "label": "Da Vinki",
+            "text": "Requisitos: Ciencia 1d8 Sabes de todo con una certeza inhumana. Eres inmune a las pifias de ciencia, tirando de nuevo hasta que no salga una pifia."
+          },
+          {
+            "type": "noFumble",
+            "scopes": [
+              "science"
+            ],
+            "value": 1,
+            "label": "Da Vinki"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Diamante en bruto de tu profesión",
+      "type": "feat",
+      "system": {
+        "description": "Subir tus habilidades de profesión cuestan la mitad.",
+        "cost": 6,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "profession"
+            ],
+            "label": "Diamante en bruto de tu profesión",
+            "text": "Subir tus habilidades de profesión cuestan la mitad."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Disfraz",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Interpretación 1d6, Engaño 1d4 Al hacer una interpretación para intentar suplantar a alguien, bonifica en 2 la tirada.",
+        "cost": 3,
+        "requirements": "Interpretación 1d6, Engaño 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "deception",
+              "performance"
+            ],
+            "label": "Disfraz",
+            "text": "Requisitos: Interpretación 1d6, Engaño 1d4 Al hacer una interpretación para intentar suplantar a alguien, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "deception",
+              "performance"
+            ],
+            "value": 2,
+            "label": "Disfraz"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Disfrutador de novelas románticas",
+      "type": "feat",
+      "system": {
+        "description": "Te has estudiado cómo funcionan las relaciones a través de libros y otros. Puedes tirar mente en lugar de social cada vez que vayas a intentar ligar.",
+        "cost": 2,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "diplomacy",
+              "mind",
+              "social"
+            ],
+            "label": "Disfrutador de novelas románticas",
+            "text": "Te has estudiado cómo funcionan las relaciones a través de libros y otros. Puedes tirar mente en lugar de social cada vez que vayas a intentar ligar."
+          }
+        ]
+      }
+    },
+    {
+      "name": "El bicho pelao",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Profesional de un deporte Eres famoso en el mundillo del deporte que has elegido. La mayor parte de personas te reconoce por la calle. Cada vez que tires diplomacia con personas que sean fans tuyas, tu dado de diplomacia es 1d12 o bonifica 2, a elegir..",
+        "cost": 6,
+        "requirements": "Profesional de un deporte",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "diplomacy"
+            ],
+            "label": "El bicho pelao",
+            "text": "Requisitos: Profesional de un deporte Eres famoso en el mundillo del deporte que has elegido. La mayor parte de personas te reconoce por la calle. Cada vez que tires diplomacia con personas que sean fans tuyas, tu dado de diplomacia es 1d12 o bonifica 2, a elegir.."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "diplomacy"
+            ],
+            "value": 2,
+            "label": "El bicho pelao"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Encantador animal",
+      "type": "feat",
+      "system": {
+        "description": "Tienes una conexión especial con los animales. Bonifica en 2 la tirada de manejo de animales y reduce en 1 la dificultad para domesticar criaturas.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Encantador animal",
+            "text": "Tienes una conexión especial con los animales. Bonifica en 2 la tirada de manejo de animales y reduce en 1 la dificultad para domesticar criaturas."
+          },
+          {
+            "type": "bonus",
+            "scopes": [],
+            "value": 2,
+            "label": "Encantador animal"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Engranaje de metal sólido",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Sigilo 1d6 Si tienes una caja o algo donde ocultarte, bonifica en 2 la tirada.",
+        "cost": 6,
+        "requirements": "Sigilo 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "stealth"
+            ],
+            "label": "Engranaje de metal sólido",
+            "text": "Requisitos: Sigilo 1d6 Si tienes una caja o algo donde ocultarte, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "stealth"
+            ],
+            "value": 2,
+            "label": "Engranaje de metal sólido"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Equilibrio",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Acrobacias 1d4 Cuando intentas mantener el equilibrio, bonifica en 2 la tirada.",
+        "cost": 4,
+        "requirements": "Acrobacias 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "acrobatics"
+            ],
+            "label": "Equilibrio",
+            "text": "Requisitos: Acrobacias 1d4 Cuando intentas mantener el equilibrio, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "acrobatics"
+            ],
+            "value": 2,
+            "label": "Equilibrio"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Eso lo hace mi primillo chico",
+      "type": "feat",
+      "system": {
+        "description": "Eres un Macgyver, aunque no tengas planos ni tiempo puedes intentar construir algo en poco tiempo con materiales que tengas a mano. Construir cosas que llevarían minutos para otra persona para tí son escasos segundos.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "crafting"
+            ],
+            "label": "Eso lo hace mi primillo chico",
+            "text": "Eres un Macgyver, aunque no tengas planos ni tiempo puedes intentar construir algo en poco tiempo con materiales que tengas a mano. Construir cosas que llevarían minutos para otra persona para tí son escasos segundos."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Específico",
+      "type": "feat",
+      "system": {
+        "description": "Te centras en una rama de una habilidad específica. Para esta rama tienes un bonifica en 1. Pero se penaliza en 1 para todas las otras habilidades de esta habilidad. Esta habilidad puede seleccionarse varias veces, cada vez con una rama diferente. El penalizador solo se aplica a las ramas que no reciban el bonifica en 1 por esta dote. *Ejemplo: si coges esta habilidad para informática dentro de la habilidad ciencia tienes un bonifica en 1 para todo lo que tenga que ver con informática, pero un \\-1 a todo lo demás, como biología por ejemplo.*",
+        "cost": 2,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "science"
+            ],
+            "label": "Específico",
+            "text": "Te centras en una rama de una habilidad específica. Para esta rama tienes un bonifica en 1. Pero se penaliza en 1 para todas las otras habilidades de esta habilidad. Esta habilidad puede seleccionarse varias veces, cada vez con una rama diferente. El penalizador solo se aplica a las ramas que no reciban el bonifica en 1 por esta dote. *Ejemplo: si coges esta habilidad para informática dentro de la habilidad ciencia tienes un bonifica en 1 para todo lo que tenga que ver con informática, pero un \\-1 a todo lo demás, como biología por ejemplo.*"
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "science"
+            ],
+            "value": 1,
+            "label": "Específico"
+          },
+          {
+            "type": "penalty",
+            "scopes": [
+              "science"
+            ],
+            "value": 1,
+            "label": "Específico"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Fan de las novelas de detectives",
+      "type": "feat",
+      "system": {
+        "description": "Al investigar una escena de un crimen, se bonifica en 1 la tirada de investigación.",
+        "cost": 6,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "investigation"
+            ],
+            "label": "Fan de las novelas de detectives",
+            "text": "Al investigar una escena de un crimen, se bonifica en 1 la tirada de investigación."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "investigation"
+            ],
+            "value": 1,
+            "label": "Fan de las novelas de detectives"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Forense",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Medicina 1d6, Investigación 1d4 Puedes usar medicina en lugar de investigación para examinar la escena de un asesinato. Adicionalmente, bonifica en 1 la tirada de medicina para descubrir cómo ha fallecido un ser vivo.",
+        "cost": 2,
+        "requirements": "Medicina 1d6, Investigación 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "investigation",
+              "medicine",
+              "mind"
+            ],
+            "label": "Forense",
+            "text": "Requisitos: Medicina 1d6, Investigación 1d4 Puedes usar medicina en lugar de investigación para examinar la escena de un asesinato. Adicionalmente, bonifica en 1 la tirada de medicina para descubrir cómo ha fallecido un ser vivo."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "investigation",
+              "medicine",
+              "mind"
+            ],
+            "value": 1,
+            "label": "Forense"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Guapa, guapa guapa y guapaaa",
+      "type": "feat",
+      "system": {
+        "description": "Prohibido en caso de coger Feo de cojones Estás que toma pan y moja. Tus tiradas de diplomacia y engaño bonifican en 2 si eres visible hacía estas personas.",
+        "cost": 6,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "deception",
+              "diplomacy"
+            ],
+            "label": "Guapa, guapa guapa y guapaaa",
+            "text": "Prohibido en caso de coger Feo de cojones Estás que toma pan y moja. Tus tiradas de diplomacia y engaño bonifican en 2 si eres visible hacía estas personas."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "deception",
+              "diplomacy"
+            ],
+            "value": 2,
+            "label": "Guapa, guapa guapa y guapaaa"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Guía",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Supervivencia 1d6 Mientras estés en la superficie, siempre sabes ubicarte en un mapa.",
+        "cost": 6,
+        "requirements": "Supervivencia 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "survival"
+            ],
+            "label": "Guía",
+            "text": "Requisitos: Supervivencia 1d6 Mientras estés en la superficie, siempre sabes ubicarte en un mapa."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Hacker",
+      "type": "feat",
+      "system": {
+        "description": "Puedes usar ciencia para intentar hackear dispositivos. Dependiendo del dispositivo, podrías necesitar herramientas.",
+        "cost": 8,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "science"
+            ],
+            "label": "Hacker",
+            "text": "Puedes usar ciencia para intentar hackear dispositivos. Dependiendo del dispositivo, podrías necesitar herramientas."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Igual con 9 dedos vas bien",
+      "type": "feat",
+      "system": {
+        "description": "Cuando tiras intimidación para interrogar a alguien, bonifica en 2 la tirada de intimidación.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "intimidation"
+            ],
+            "label": "Igual con 9 dedos vas bien",
+            "text": "Cuando tiras intimidación para interrogar a alguien, bonifica en 2 la tirada de intimidación."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "intimidation"
+            ],
+            "value": 2,
+            "label": "Igual con 9 dedos vas bien"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Kansei Dorifto",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Conducir El vehículo en concreto es tu pasión. Cada vez que vayas a hacer una maniobra arriesgada con el vehículo, el dado pasa a ser 1d8 y además se bonifica en 1 la tirada.Puede escogerse varias veces, una vez por cada vez que hayas escogido “Conducir”-",
+        "cost": 8,
+        "requirements": "Conducir",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Kansei Dorifto",
+            "text": "Requisitos: Conducir El vehículo en concreto es tu pasión. Cada vez que vayas a hacer una maniobra arriesgada con el vehículo, el dado pasa a ser 1d8 y además se bonifica en 1 la tirada.Puede escogerse varias veces, una vez por cada vez que hayas escogido “Conducir”-"
+          },
+          {
+            "type": "bonus",
+            "scopes": [],
+            "value": 1,
+            "label": "Kansei Dorifto"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ligón",
+      "type": "feat",
+      "system": {
+        "description": "Selecciona una preferencia sexual, bonifica en 1 la tirada al intentar ligar de cualquier forma con el grupo seleccionado, pero aumenta la dificultad en 1 con todos los demás.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "diplomacy"
+            ],
+            "label": "Ligón",
+            "text": "Selecciona una preferencia sexual, bonifica en 1 la tirada al intentar ligar de cualquier forma con el grupo seleccionado, pero aumenta la dificultad en 1 con todos los demás."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "diplomacy"
+            ],
+            "value": 1,
+            "label": "Ligón"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Maestro de disfraces",
+      "type": "feat",
+      "system": {
+        "description": "Puedes asumir diferentes identidades con facilidad. Bonifica en 2 la tirada de engaño cuando intentas suplantar a alguien.",
+        "cost": 5,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "deception"
+            ],
+            "label": "Maestro de disfraces",
+            "text": "Puedes asumir diferentes identidades con facilidad. Bonifica en 2 la tirada de engaño cuando intentas suplantar a alguien."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "deception"
+            ],
+            "value": 2,
+            "label": "Maestro de disfraces"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Manos sanadoras",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Primeros auxilios Tus habilidades curativas son superiores. Bonifica en 2 la tirada de medicina cuando intentas curar a alguien y añade 1 punto de vida adicional curado.",
+        "cost": 6,
+        "requirements": "Primeros auxilios",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "medicine"
+            ],
+            "label": "Manos sanadoras",
+            "text": "Requisitos: Primeros auxilios Tus habilidades curativas son superiores. Bonifica en 2 la tirada de medicina cuando intentas curar a alguien y añade 1 punto de vida adicional curado."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "medicine"
+            ],
+            "value": 2,
+            "label": "Manos sanadoras"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mascota",
+      "type": "feat",
+      "system": {
+        "description": "Tienes una mascota, a veces te obedece y otras no.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Mascota",
+            "text": "Tienes una mascota, a veces te obedece y otras no."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mastodonte",
+      "type": "feat",
+      "system": {
+        "description": "Prohibido en caso de coger Retaco. Eres una persona muy grande, aumenta tu aguante en 1. Si intentas intimidar a alguien más pequeño que tú, bonifica en 1 la tirada de intimidación. A cambio, tienes un penalizador de 1 en las tiradas de esquiva.",
+        "cost": 8,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "intimidation",
+              "evasion"
+            ],
+            "label": "Mastodonte",
+            "text": "Prohibido en caso de coger Retaco. Eres una persona muy grande, aumenta tu aguante en 1. Si intentas intimidar a alguien más pequeño que tú, bonifica en 1 la tirada de intimidación. A cambio, tienes un penalizador de 1 en las tiradas de esquiva."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "intimidation",
+              "evasion"
+            ],
+            "value": 1,
+            "label": "Mastodonte"
+          },
+          {
+            "type": "penalty",
+            "scopes": [
+              "intimidation",
+              "evasion"
+            ],
+            "value": 1,
+            "label": "Mastodonte"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Medicina química",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Ciencia 1d6 Puedes usar ciencia en lugar de medicina. Si tienes al menos 1d4 en medicina, bonifica en 2 la tirada a la hora de crear fármacos o tratar heridas.",
+        "cost": 6,
+        "requirements": "Ciencia 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "science",
+              "medicine"
+            ],
+            "label": "Medicina química",
+            "text": "Requisitos: Ciencia 1d6 Puedes usar ciencia en lugar de medicina. Si tienes al menos 1d4 en medicina, bonifica en 2 la tirada a la hora de crear fármacos o tratar heridas."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "science",
+              "medicine"
+            ],
+            "value": 2,
+            "label": "Medicina química"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Memoria fotográfica",
+      "type": "feat",
+      "system": {
+        "description": "Tienes una memoria excepcional para los detalles visuales. Bonifica en 2 la tirada de conocimiento o percepción cuando intentas recordar información visual.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception"
+            ],
+            "label": "Memoria fotográfica",
+            "text": "Tienes una memoria excepcional para los detalles visuales. Bonifica en 2 la tirada de conocimiento o percepción cuando intentas recordar información visual."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "perception"
+            ],
+            "value": 2,
+            "label": "Memoria fotográfica"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mente de tiburón",
+      "type": "feat",
+      "system": {
+        "description": "Siempre que hagas una tirada para intentar ganar dinero, disminuye en 2 su dificultad.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Mente de tiburón",
+            "text": "Siempre que hagas una tirada para intentar ganar dinero, disminuye en 2 su dificultad."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mi virgencita de Guadalupe me protegerá",
+      "type": "feat",
+      "system": {
+        "description": "Para evitar el miedo, puedes hacer una tirada de religión en lugar de una salvación de voluntad. Sin embargo, todos los modificadores del dado de voluntad pasan al dado de religión.",
+        "cost": 6,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "religion",
+              "will"
+            ],
+            "label": "Mi virgencita de Guadalupe me protegerá",
+            "text": "Para evitar el miedo, puedes hacer una tirada de religión en lugar de una salvación de voluntad. Sin embargo, todos los modificadores del dado de voluntad pasan al dado de religión."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Mil caras",
+      "type": "feat",
+      "system": {
+        "description": "Bonifica en 1 cualquier acción para impersonar a otra persona. Si te preparas de antemano y sabes algo de información sobre la persona a disfrazarse, bonifica en 3. Si te disfrazas de alguien genérico, como un policía, bonifica en 2.",
+        "cost": 6,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Mil caras",
+            "text": "Bonifica en 1 cualquier acción para impersonar a otra persona. Si te preparas de antemano y sabes algo de información sobre la persona a disfrazarse, bonifica en 3. Si te disfrazas de alguien genérico, como un policía, bonifica en 2."
+          },
+          {
+            "type": "bonus",
+            "scopes": [],
+            "value": 3,
+            "label": "Mil caras"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Monkey",
+      "type": "feat",
+      "system": {
+        "description": "Usar atletismo para escalar hace que bonifique en 2 la tirada.",
+        "cost": 5,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "athletics"
+            ],
+            "label": "Monkey",
+            "text": "Usar atletismo para escalar hace que bonifique en 2 la tirada."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Murciélago",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Oído fino A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.).Adicionalmente, detectar exactamente de donde viene el sonido baja su dificultad en 2.",
+        "cost": 3,
+        "requirements": "Oído fino",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind",
+              "perception"
+            ],
+            "label": "Murciélago",
+            "text": "Requisitos: Oído fino A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.).Adicionalmente, detectar exactamente de donde viene el sonido baja su dificultad en 2."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "mind",
+              "perception"
+            ],
+            "value": 1,
+            "target": "both",
+            "label": "Murciélago"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Nadador",
+      "type": "feat",
+      "system": {
+        "description": "Usar atletismo para nadar hace que bonifique en 2 la tirada.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "athletics"
+            ],
+            "label": "Nadador",
+            "text": "Usar atletismo para nadar hace que bonifique en 2 la tirada."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ninja",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Sigilo 1d8 Maestro de la ocultación, puedes intentar que no te vean aunque estés a plena vista.",
+        "cost": 8,
+        "requirements": "Sigilo 1d8",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "stealth",
+              "perception"
+            ],
+            "label": "Ninja",
+            "text": "Requisitos: Sigilo 1d8 Maestro de la ocultación, puedes intentar que no te vean aunque estés a plena vista."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Operación",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Medicina 1d8, Primeros auxilios Si tienes todos los materiales necesarios (DJ) puedes realizar una operación quirúrgica. Haz una prueba de medicina más mente o destreza dificultad 10. Si la superas, cura tu dado de medicina de esta tirada. Si sale una pifia, lanza de nuevo el dado de medicina e inflige ese mismo daño ignorando el aguante.",
+        "cost": 8,
+        "requirements": "Medicina 1d8, Primeros auxilios",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "medicine",
+              "dexterity",
+              "mind"
+            ],
+            "label": "Operación",
+            "text": "Requisitos: Medicina 1d8, Primeros auxilios Si tienes todos los materiales necesarios (DJ) puedes realizar una operación quirúrgica. Haz una prueba de medicina más mente o destreza dificultad 10. Si la superas, cura tu dado de medicina de esta tirada. Si sale una pifia, lanza de nuevo el dado de medicina e inflige ese mismo daño ignorando el aguante."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Oído fino",
+      "type": "feat",
+      "system": {
+        "description": "Prohibido en caso de coger Sordo como una tapia. A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.).",
+        "cost": 3,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception"
+            ],
+            "label": "Oído fino",
+            "text": "Prohibido en caso de coger Sordo como una tapia. A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.)."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "perception"
+            ],
+            "value": 1,
+            "target": "both",
+            "label": "Oído fino"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Parkour",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Acrobacias 1d6 Puedes usar acrobacias en lugar de atletismo para escalar.",
+        "cost": 4,
+        "requirements": "Acrobacias 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "acrobatics",
+              "athletics"
+            ],
+            "label": "Parkour",
+            "text": "Requisitos: Acrobacias 1d6 Puedes usar acrobacias en lugar de atletismo para escalar."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Practicante de un deporte",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Atletismo 1d4 Cada vez que tires alguna tirada de atletismo para hacer tu deporte, bonifica en 1 la tirada de atletismo.",
+        "cost": 2,
+        "requirements": "Atletismo 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "athletics"
+            ],
+            "label": "Practicante de un deporte",
+            "text": "Requisitos: Atletismo 1d4 Cada vez que tires alguna tirada de atletismo para hacer tu deporte, bonifica en 1 la tirada de atletismo."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "athletics"
+            ],
+            "value": 1,
+            "label": "Practicante de un deporte"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Primeros auxilios",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida, si se produce una pifia, infringe 1 de daño a la vida ignorando el aguante.",
+        "cost": 4,
+        "requirements": "Medicina 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "medicine",
+              "dexterity",
+              "mind"
+            ],
+            "label": "Primeros auxilios",
+            "text": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida, si se produce una pifia, infringe 1 de daño a la vida ignorando el aguante."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Primo de Zumosol",
+      "type": "feat",
+      "system": {
+        "description": "Aumenta en 1 tus puntos de vida máximos. Si tienes al menos 1d8 en potencia, en su lugar aumenta en 2.",
+        "cost": 8,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "power"
+            ],
+            "label": "Primo de Zumosol",
+            "text": "Aumenta en 1 tus puntos de vida máximos. Si tienes al menos 1d8 en potencia, en su lugar aumenta en 2."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Profesional de un deporte",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Practicante de un deporte, Atletismo 1d8 Cada vez que tires alguna tirada de atletismo para hacer tu deporte, bonifica en 2 la tirada.",
+        "cost": 4,
+        "requirements": "Practicante de un deporte, Atletismo 1d8",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "athletics"
+            ],
+            "label": "Profesional de un deporte",
+            "text": "Requisitos: Practicante de un deporte, Atletismo 1d8 Cada vez que tires alguna tirada de atletismo para hacer tu deporte, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "athletics"
+            ],
+            "value": 2,
+            "label": "Profesional de un deporte"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Psicoanálisis",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Mente 1d6, Investigación 1d6 Puedes hacer un perfil de una tirada de investigación para generar el perfil de una persona por las conductas que tiene. Esta tirada la debe permitir el DJ, pero por ejemplo, cuando investigas una escena de un crimen, si sacas suficientes pistas podrías sacar su perfil con una tirada de investigación.",
+        "cost": 3,
+        "requirements": "Mente 1d6, Investigación 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "investigation",
+              "mind"
+            ],
+            "label": "Psicoanálisis",
+            "text": "Requisitos: Mente 1d6, Investigación 1d6 Puedes hacer un perfil de una tirada de investigación para generar el perfil de una persona por las conductas que tiene. Esta tirada la debe permitir el DJ, pero por ejemplo, cuando investigas una escena de un crimen, si sacas suficientes pistas podrías sacar su perfil con una tirada de investigación."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Puntero",
+      "type": "feat",
+      "system": {
+        "description": "Elige una habilidad no combativa (ni maniobra de combate, ni combate con armas cac, ni puntería). Para esta habilidad selecciona una acción que harías con esa habilidad y obtén bonifica en 1 para esa acción. Pero elige otra acción de esa misma habilidad con la que tendrás un penaliza en 2 a partir de ahora. Ejemplo: *En atletismo,el bonifica para correr y el penaliza para nadar.*",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "athletics",
+              "melee",
+              "brawl",
+              "ranged"
+            ],
+            "label": "Puntero",
+            "text": "Elige una habilidad no combativa (ni maniobra de combate, ni combate con armas cac, ni puntería). Para esta habilidad selecciona una acción que harías con esa habilidad y obtén bonifica en 1 para esa acción. Pero elige otra acción de esa misma habilidad con la que tendrás un penaliza en 2 a partir de ahora. Ejemplo: *En atletismo,el bonifica para correr y el penaliza para nadar.*"
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "athletics",
+              "melee",
+              "brawl",
+              "ranged"
+            ],
+            "value": 1,
+            "label": "Puntero"
+          },
+          {
+            "type": "penalty",
+            "scopes": [
+              "athletics",
+              "melee",
+              "brawl",
+              "ranged"
+            ],
+            "value": 2,
+            "label": "Puntero"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Rastreador",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Supervivencia 1d4 Cuando uses supervivencia para rastrear, bonifica en 2 la tirada.",
+        "cost": 4,
+        "requirements": "Supervivencia 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "survival"
+            ],
+            "label": "Rastreador",
+            "text": "Requisitos: Supervivencia 1d4 Cuando uses supervivencia para rastrear, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "survival"
+            ],
+            "value": 2,
+            "label": "Rastreador"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Retaco",
+      "type": "feat",
+      "system": {
+        "description": "Prohibido en caso de coger Mastodonte. Te acercas más a un enano de fantasía que a un humano normal, la gente lo tiene más difícil para darte de ostias, tu dado de esquiva aumenta de forma permanente, pero cada vez que quieres intimidar a alguien más alto que tú, reduce tu dado de intimidación y tu aguante reduce en 1.",
+        "cost": 5,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "intimidation",
+              "evasion"
+            ],
+            "label": "Retaco",
+            "text": "Prohibido en caso de coger Mastodonte. Te acercas más a un enano de fantasía que a un humano normal, la gente lo tiene más difícil para darte de ostias, tu dado de esquiva aumenta de forma permanente, pero cada vez que quieres intimidar a alguien más alto que tú, reduce tu dado de intimidación y tu aguante reduce en 1."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "intimidation",
+              "evasion"
+            ],
+            "value": -1,
+            "label": "Retaco"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sentido del peligro",
+      "type": "feat",
+      "system": {
+        "description": "Tienes una especie de sexto sentido para el peligro. Bonifica en 1 todas las tiradas de percepción para detectar amenazas inmediatas.",
+        "cost": 3,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception"
+            ],
+            "label": "Sentido del peligro",
+            "text": "Tienes una especie de sexto sentido para el peligro. Bonifica en 1 todas las tiradas de percepción para detectar amenazas inmediatas."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "perception"
+            ],
+            "value": 1,
+            "label": "Sentido del peligro"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Stalker",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Sigilo 1d4 Cuando intentas seguir a alguien sin ser descubierto, bonifica en 1 la tirada.",
+        "cost": 3,
+        "requirements": "Sigilo 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "stealth"
+            ],
+            "label": "Stalker",
+            "text": "Requisitos: Sigilo 1d4 Cuando intentas seguir a alguien sin ser descubierto, bonifica en 1 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "stealth"
+            ],
+            "value": 1,
+            "label": "Stalker"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Topo",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Supervivencia 1d6 Mientras estés bajo la superficie, cuando uses supervivencia para encontrar la salida u otros espacios bajo tierra, bonifica en 2 la tirada.",
+        "cost": 6,
+        "requirements": "Supervivencia 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "survival"
+            ],
+            "label": "Topo",
+            "text": "Requisitos: Supervivencia 1d6 Mientras estés bajo la superficie, cuando uses supervivencia para encontrar la salida u otros espacios bajo tierra, bonifica en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "survival"
+            ],
+            "value": 2,
+            "label": "Topo"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vista de águila",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Vista de cazador A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.). Adicionalmente, ver entre la niebla u otra obstaculización parcial baja su dificultad en 2.",
+        "cost": 3,
+        "requirements": "Vista de cazador",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind",
+              "perception"
+            ],
+            "label": "Vista de águila",
+            "text": "Requisitos: Vista de cazador A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.). Adicionalmente, ver entre la niebla u otra obstaculización parcial baja su dificultad en 2."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "mind",
+              "perception"
+            ],
+            "value": 1,
+            "target": "both",
+            "label": "Vista de águila"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Vista de cazador",
+      "type": "feat",
+      "system": {
+        "description": "Prohibido en caso de coger Cegato. A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.)",
+        "cost": 3,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception"
+            ],
+            "label": "Vista de cazador",
+            "text": "Prohibido en caso de coger Cegato. A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.)"
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "perception"
+            ],
+            "value": 1,
+            "target": "both",
+            "label": "Vista de cazador"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Voz encantadora",
+      "type": "feat",
+      "system": {
+        "description": "Tu voz tiene un efecto hipnótico sobre las personas. Bonifica en 2 la tirada de engaño o diplomacia cuando hablas directamente a alguien a solas.",
+        "cost": 5,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "deception",
+              "diplomacy",
+              "mind"
+            ],
+            "label": "Voz encantadora",
+            "text": "Tu voz tiene un efecto hipnótico sobre las personas. Bonifica en 2 la tirada de engaño o diplomacia cuando hablas directamente a alguien a solas."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "deception",
+              "diplomacy",
+              "mind"
+            ],
+            "value": 2,
+            "label": "Voz encantadora"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Yo conozco a uno…",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Sociedad 1d4 Cada vez que intentes hacer una tirada de sociedad para buscar a alguien que pueda ser útil para un tema en concreto,bonifica en 2 la tirada de sociedad y quedate con el mayor.",
+        "cost": 4,
+        "requirements": "Sociedad 1d4",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "society"
+            ],
+            "label": "Yo conozco a uno…",
+            "text": "Requisitos: Sociedad 1d4 Cada vez que intentes hacer una tirada de sociedad para buscar a alguien que pueda ser útil para un tema en concreto,bonifica en 2 la tirada de sociedad y quedate con el mayor."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "society"
+            ],
+            "value": 2,
+            "label": "Yo conozco a uno…"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Yo y mi pandilla",
+      "type": "feat",
+      "system": {
+        "description": "Bonifica en 2 la tirada de intimidación siempre que estés con al menos dos aliados. Reducelo en cualquier otro caso.",
+        "cost": 2,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "intimidation"
+            ],
+            "label": "Yo y mi pandilla",
+            "text": "Bonifica en 2 la tirada de intimidación siempre que estés con al menos dos aliados. Reducelo en cualquier otro caso."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "intimidation"
+            ],
+            "value": 2,
+            "label": "Yo y mi pandilla"
+          }
+        ]
+      }
+    },
+    {
+      "name": "¿Miedo? ¿Eso que es?",
+      "type": "feat",
+      "system": {
+        "description": "Cuando hagas una tirada de voluntad para no pasar miedo sobre algún tema, bonifica en 1 la tirada de voluntad si estás solo, bonifica en 3 si estás acompañado.",
+        "cost": 6,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "will"
+            ],
+            "label": "¿Miedo? ¿Eso que es?",
+            "text": "Cuando hagas una tirada de voluntad para no pasar miedo sobre algún tema, bonifica en 1 la tirada de voluntad si estás solo, bonifica en 3 si estás acompañado."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "will"
+            ],
+            "value": 3,
+            "label": "¿Miedo? ¿Eso que es?"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Agarre",
+      "type": "feat",
+      "system": {
+        "description": "Bonifica en 1 la tirada de maniobra de lucha para agarrar, empujar, tirar y otras maniobras no destinadas a hacer daño específicamente.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "brawl",
+              "mind"
+            ],
+            "label": "Agarre",
+            "text": "Bonifica en 1 la tirada de maniobra de lucha para agarrar, empujar, tirar y otras maniobras no destinadas a hacer daño específicamente."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "brawl",
+              "mind"
+            ],
+            "value": 1,
+            "label": "Agarre"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Apuntado concentrado",
+      "type": "feat",
+      "system": {
+        "description": "Puedes invertir tu turno entero en preparar un disparo preciso, cuando dispares, bonifica en 2 tu tirada de puntería.",
+        "cost": 1,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "crafting",
+              "ranged"
+            ],
+            "label": "Apuntado concentrado",
+            "text": "Puedes invertir tu turno entero en preparar un disparo preciso, cuando dispares, bonifica en 2 tu tirada de puntería."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "crafting",
+              "ranged"
+            ],
+            "value": 2,
+            "label": "Apuntado concentrado"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Armas lanzables",
+      "type": "feat",
+      "system": {
+        "description": "Si lanzas un arma cac habilitada para ser lanzada, puedes usar tu habilidad de combate con armas cac en lugar de puntería para esta tirada.",
+        "cost": 2,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "melee",
+              "ranged"
+            ],
+            "label": "Armas lanzables",
+            "text": "Si lanzas un arma cac habilitada para ser lanzada, puedes usar tu habilidad de combate con armas cac en lugar de puntería para esta tirada."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Boxing",
+      "type": "feat",
+      "system": {
+        "description": "Bonifica en 1 la tirada de maniobra de lucha para infligir daño.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "brawl"
+            ],
+            "label": "Boxing",
+            "text": "Bonifica en 1 la tirada de maniobra de lucha para infligir daño."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "brawl"
+            ],
+            "value": 1,
+            "label": "Boxing"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cálculo de tiro",
+      "type": "feat",
+      "system": {
+        "description": "Al usar puntería para tu tirada de ataque, incrementa al siguiente rango de distancia el alcance de tu arma..",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "ranged"
+            ],
+            "label": "Cálculo de tiro",
+            "text": "Al usar puntería para tu tirada de ataque, incrementa al siguiente rango de distancia el alcance de tu arma.."
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "ranged"
+            ],
+            "value": 1,
+            "target": "scoped",
+            "label": "Cálculo de tiro"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cubrirte no te servirá",
+      "type": "feat",
+      "system": {
+        "description": "Cada vez que uses puntería para atacar, ignora 1 punto de la cobertura.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "ranged"
+            ],
+            "label": "Cubrirte no te servirá",
+            "text": "Cada vez que uses puntería para atacar, ignora 1 punto de la cobertura."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Defensa antiarmas",
+      "type": "feat",
+      "system": {
+        "description": "Cualquier habilidad que requiere que superes una maniobra de lucha también aplica a las armas CaC.",
+        "cost": 2,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "brawl"
+            ],
+            "label": "Defensa antiarmas",
+            "text": "Cualquier habilidad que requiere que superes una maniobra de lucha también aplica a las armas CaC."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Dual",
+      "type": "feat",
+      "system": {
+        "description": "Puedes usar la etiqueta “Dual” de las armas.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Dual",
+            "text": "Puedes usar la etiqueta “Dual” de las armas."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Entrenado en un arma",
+      "type": "feat",
+      "system": {
+        "description": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas cac o puntería.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "melee",
+              "ranged"
+            ],
+            "label": "Entrenado en un arma",
+            "text": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas cac o puntería."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "melee",
+              "ranged"
+            ],
+            "value": 1,
+            "label": "Entrenado en un arma"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ganador del torneo del puño de hierro",
+      "type": "feat",
+      "system": {
+        "description": "Has llegado a la cúspide de potencia del cuerpo humano. Tu ataque con “cuerpo(desarmado)” tiene un Daño equivalente a tu puntuación de dado de potencia si no ejecutas un ataque múltiple.",
+        "cost": 10,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "power"
+            ],
+            "label": "Ganador del torneo del puño de hierro",
+            "text": "Has llegado a la cúspide de potencia del cuerpo humano. Tu ataque con “cuerpo(desarmado)” tiene un Daño equivalente a tu puntuación de dado de potencia si no ejecutas un ataque múltiple."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Golpes del maestro",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Maniobras de lucha 1d10 Al comienzo de tu turno, puedes hacer una prueba de mente\\+maniobras de lucha dificultad 10, si la superas, no dividas los dados para un ataque múltiple. Si la fallas, esta ronda tienes el dado de maniobras de lucha reducido (reduciendo el número de ataques disponibles también).",
+        "cost": 9,
+        "requirements": "Maniobras de lucha 1d10",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind"
+            ],
+            "label": "Golpes del maestro",
+            "text": "Requisitos: Maniobras de lucha 1d10 Al comienzo de tu turno, puedes hacer una prueba de mente\\+maniobras de lucha dificultad 10, si la superas, no dividas los dados para un ataque múltiple. Si la fallas, esta ronda tienes el dado de maniobras de lucha reducido (reduciendo el número de ataques disponibles también)."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Golpe vital",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Puntería 1d12 o maniobras de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16.",
+        "cost": 8,
+        "requirements": "Puntería 1d12 o maniobras de lucha 1d12 o combate cac 1d12",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "ranged",
+              "mind"
+            ],
+            "label": "Golpe vital",
+            "text": "Requisitos: Puntería 1d12 o maniobras de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Guerrero",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Maniobras de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles.",
+        "cost": 12,
+        "requirements": "Maniobras de lucha 1d8, combate con armas cac 1d8, puntería 1d8",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "melee",
+              "ranged"
+            ],
+            "label": "Guerrero",
+            "text": "Requisitos: Maniobras de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Jackpot",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Dual, disparar dos armas a distancia con la etiqueta “dual” al mismo objetivo. No puedes separar este ataque, realiza un único ataque (en lugar de 2 como sería normal) contra un objetivo con bonifica en 1. Si aciertas el ataque, suma el Daño de ambas armas para este ataque. *Ejemplo: Tienes dos pistolas con Daño 3 y la etiqueta “dual”, pues si usas esta habilidad y aciertas, es un único ataque con Daño 6.*",
+        "cost": 8,
+        "requirements": "Dual, disparar dos armas a distancia con la etiqueta “dual” al mismo objetivo.",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [],
+            "label": "Jackpot",
+            "text": "Requisitos: Dual, disparar dos armas a distancia con la etiqueta “dual” al mismo objetivo. No puedes separar este ataque, realiza un único ataque (en lugar de 2 como sería normal) contra un objetivo con bonifica en 1. Si aciertas el ataque, suma el Daño de ambas armas para este ataque. *Ejemplo: Tienes dos pistolas con Daño 3 y la etiqueta “dual”, pues si usas esta habilidad y aciertas, es un único ataque con Daño 6.*"
+          },
+          {
+            "type": "bonus",
+            "scopes": [],
+            "value": 1,
+            "label": "Jackpot"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Parry",
+      "type": "feat",
+      "system": {
+        "description": "Si esquivas un golpe a corta distancia por 5 o más y tienes un arma cac o tienes las manos libres para hacer una maniobra de lucha puedes realizar un contraataque brutal, realiza una tirada de ataque con bonificación 3.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "brawl",
+              "evasion"
+            ],
+            "label": "Parry",
+            "text": "Si esquivas un golpe a corta distancia por 5 o más y tienes un arma cac o tienes las manos libres para hacer una maniobra de lucha puedes realizar un contraataque brutal, realiza una tirada de ataque con bonificación 3."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Practicante marcial",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Maniobras de lucha 1d6 Tu entrenamiento te ha llevado a mejorar en destreza a la hora del combate cuerpo a cuerpo desarmado, bonifica en 2 la esquiva en caso de que te ataquen usando maniobra de lucha como habilidad.",
+        "cost": 4,
+        "requirements": "Maniobras de lucha 1d6",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "brawl",
+              "dexterity",
+              "evasion"
+            ],
+            "label": "Practicante marcial",
+            "text": "Requisitos: Maniobras de lucha 1d6 Tu entrenamiento te ha llevado a mejorar en destreza a la hora del combate cuerpo a cuerpo desarmado, bonifica en 2 la esquiva en caso de que te ataquen usando maniobra de lucha como habilidad."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "brawl",
+              "dexterity",
+              "evasion"
+            ],
+            "value": 2,
+            "label": "Practicante marcial"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Posición defensiva",
+      "type": "feat",
+      "system": {
+        "description": "Te preparas mentalmente para un ataque. Al comienzo de tu turno, puedes elegir que tus tiradas con habilidades ofensivas ven reducido su dado, pero aumenta tu aguante en 1 y bonifica en 2 tu tirada de esquiva.",
+        "cost": 3,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind",
+              "evasion"
+            ],
+            "label": "Posición defensiva",
+            "text": "Te preparas mentalmente para un ataque. Al comienzo de tu turno, puedes elegir que tus tiradas con habilidades ofensivas ven reducido su dado, pero aumenta tu aguante en 1 y bonifica en 2 tu tirada de esquiva."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "mind",
+              "evasion"
+            ],
+            "value": 2,
+            "label": "Posición defensiva"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Posición ofensiva",
+      "type": "feat",
+      "system": {
+        "description": "Lo importante es que el enemigo caiga. Al comienzo de tu turno, puedes elegir que tus habilidades ofensivas se bonifican en 1, pero reduce tu aguante en 1 y reduce el dado esquiva. Si tienes 1d4, pasa a ser 1.",
+        "cost": 3,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "evasion"
+            ],
+            "label": "Posición ofensiva",
+            "text": "Lo importante es que el enemigo caiga. Al comienzo de tu turno, puedes elegir que tus habilidades ofensivas se bonifican en 1, pero reduce tu aguante en 1 y reduce el dado esquiva. Si tienes 1d4, pasa a ser 1."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "evasion"
+            ],
+            "value": 1,
+            "label": "Posición ofensiva"
+          },
+          {
+            "type": "dieStep",
+            "scopes": [
+              "evasion"
+            ],
+            "value": -1,
+            "label": "Posición ofensiva"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Pulso estable",
+      "type": "feat",
+      "system": {
+        "description": "Cuando uses un arma que use puntería pero te encuentres en una situación desventajosa (corriendo, en un coche en una carretera con baches...etc). Puedes hacer una prueba de puntería y mente para omitir el penalizador a la tirada, dificultad a discreción del DJ.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "ranged",
+              "mind"
+            ],
+            "label": "Pulso estable",
+            "text": "Cuando uses un arma que use puntería pero te encuentres en una situación desventajosa (corriendo, en un coche en una carretera con baches...etc). Puedes hacer una prueba de puntería y mente para omitir el penalizador a la tirada, dificultad a discreción del DJ."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Punto débil",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Maniobras de lucha 1d8, Practicante marcial Cuando intenten atacarte con maniobra de lucha y falla, puedes aprovechar la inercia del esquive para dar un contraataque. Este ataque es cualquier acción de maniobra de lucha y se hace con el dado de maniobras de lucha reducido. Si tienes Agarre o Boxing para la respectiva maniobra, en su lugar no reduces el dado, pero no obtienes la bonificación. Especial: Si tienes la dote de “Parry” no tienes que reducir el dado de maniobras de lucha y aparte obtienes un bonifica en 1.",
+        "cost": 6,
+        "requirements": "Maniobras de lucha 1d8, Practicante marcial",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "brawl"
+            ],
+            "label": "Punto débil",
+            "text": "Requisitos: Maniobras de lucha 1d8, Practicante marcial Cuando intenten atacarte con maniobra de lucha y falla, puedes aprovechar la inercia del esquive para dar un contraataque. Este ataque es cualquier acción de maniobra de lucha y se hace con el dado de maniobras de lucha reducido. Si tienes Agarre o Boxing para la respectiva maniobra, en su lugar no reduces el dado, pero no obtienes la bonificación. Especial: Si tienes la dote de “Parry” no tienes que reducir el dado de maniobras de lucha y aparte obtienes un bonifica en 1."
+          },
+          {
+            "type": "bonus",
+            "scopes": [
+              "brawl"
+            ],
+            "value": 1,
+            "label": "Punto débil"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sed de sangre",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Una criatura enemiga muere por un ataque tuyo. La adrenalina invade tu torrente sanguíneo y reaccionas rápido para hacer otro ataque más (exactamente igual que el que mató al enemigo original) o puedes recargar directamente. Solo se puede activar una vez por turno. Si la habilidad de ataque es 1d12, puede activarse dos veces.",
+        "cost": 14,
+        "requirements": "Una criatura enemiga muere por un ataque tuyo.",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "mind"
+            ],
+            "label": "Sed de sangre",
+            "text": "Requisitos: Una criatura enemiga muere por un ataque tuyo. La adrenalina invade tu torrente sanguíneo y reaccionas rápido para hacer otro ataque más (exactamente igual que el que mató al enemigo original) o puedes recargar directamente. Solo se puede activar una vez por turno. Si la habilidad de ataque es 1d12, puede activarse dos veces."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Tiro perforador",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Puntería 1d12, Entrenado en un arma Disparas como nadie este arma. Si sacas un crítico y haces al menos un punto de daño, puedes atacar a un objetivo a discreción del director de juego con ese mismo tiro, pero tendrá el dado de puntería reducido y no podrá bonificarse. Además tendrá una penalización en 1.",
+        "cost": 6,
+        "requirements": "Puntería 1d12, Entrenado en un arma",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "ranged"
+            ],
+            "label": "Tiro perforador",
+            "text": "Requisitos: Puntería 1d12, Entrenado en un arma Disparas como nadie este arma. Si sacas un crítico y haces al menos un punto de daño, puedes atacar a un objetivo a discreción del director de juego con ese mismo tiro, pero tendrá el dado de puntería reducido y no podrá bonificarse. Además tendrá una penalización en 1."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Sangrado",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Combate con armas cac 1d8 Sabes dar en los puntos clave del cuerpo, bien sangrado interno o externo. Cuando hagas un crítico e infliges daño a los puntos de vida, tu enemigo empieza a sangrar durante 1d4 rondas. Cada vez que le toque, pierde 1 punto de vida ignorando su aguante.",
+        "cost": 8,
+        "requirements": "Combate con armas cac 1d8",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "melee"
+            ],
+            "label": "Sangrado",
+            "text": "Requisitos: Combate con armas cac 1d8 Sabes dar en los puntos clave del cuerpo, bien sangrado interno o externo. Cuando hagas un crítico e infliges daño a los puntos de vida, tu enemigo empieza a sangrar durante 1d4 rondas. Cada vez que le toque, pierde 1 punto de vida ignorando su aguante."
+          }
+        ]
+      }
+    },
+    {
+      "name": "Cuerpo (desarmado)",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Potencia o Destreza. Propiedades: Dual, Daño 1",
+        "damage": 1,
+        "skill": "brawl",
+        "attribute": "power",
+        "range": "contact",
+        "properties": "Dual, Daño 1",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Cuchillo de combate",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Dual, Daño 3, Arrojadiza",
+        "damage": 3,
+        "skill": "melee",
+        "attribute": "dexterity",
+        "range": "contact",
+        "properties": "Dual, Daño 3, Arrojadiza",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Martillo de mano",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Dual,Daño 2, Arrojadiza, Forzuda",
+        "damage": 2,
+        "skill": "melee",
+        "attribute": "dexterity",
+        "range": "contact",
+        "properties": "Dual,Daño 2, Arrojadiza, Forzuda",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Espada medieval",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Potencia o Destreza. Propiedades: Daño 5, Contusión 7",
+        "damage": 5,
+        "skill": "melee",
+        "attribute": "power",
+        "range": "contact",
+        "properties": "Daño 5, Contusión 7",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Katana",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Potencia o Destreza. Propiedades: Daño 5, Contusión 7, Golpe concentrado 5",
+        "damage": 5,
+        "skill": "melee",
+        "attribute": "power",
+        "range": "contact",
+        "properties": "Daño 5, Contusión 7, Golpe concentrado 5",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Espadón",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Potencia. Propiedades: Daño 6, Contusión 4",
+        "damage": 6,
+        "skill": "melee",
+        "attribute": "power",
+        "range": "contact",
+        "properties": "Daño 6, Contusión 4",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Lanza /Alabarda",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Potencia. Propiedades: Daño 5, Contusión 6, Rango, Arrojadiza",
+        "damage": 5,
+        "skill": "melee",
+        "attribute": "power",
+        "range": "contact",
+        "properties": "Daño 5, Contusión 6, Rango, Arrojadiza",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Arco",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 2, Munición, Sin recarga",
+        "damage": 2,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 2, Munición, Sin recarga",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Ballesta",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 3, Munición",
+        "damage": 3,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 3, Munición",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Pistola",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 4, Munición (12), Dual",
+        "damage": 4,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 4, Munición (12), Dual",
+        "ammo": {
+          "value": 12,
+          "max": 12
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Revolver",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 5, Munición (6), Dual",
+        "damage": 5,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 5, Munición (6), Dual",
+        "ammo": {
+          "value": 6,
+          "max": 6
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Subfusil",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 5, Munición (20)",
+        "damage": 5,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 5, Munición (20)",
+        "ammo": {
+          "value": 20,
+          "max": 20
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Fusil",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 6, Munición (10)",
+        "damage": 6,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 6, Munición (10)",
+        "ammo": {
+          "value": 10,
+          "max": 10
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Escopeta",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 5, Munición (4), Quemarropa 8",
+        "damage": 5,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 5, Munición (4), Quemarropa 8",
+        "ammo": {
+          "value": 4,
+          "max": 4
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Ametralladora",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 6, Munición (30), Potencia 1d6",
+        "damage": 6,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 6, Munición (30), Potencia 1d6",
+        "ammo": {
+          "value": 30,
+          "max": 30
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Francotirador",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 7, Munición (1), Ataque único, Rango",
+        "damage": 7,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 7, Munición (1), Ataque único, Rango",
+        "ammo": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Bazooka",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Daño 8, Área 6, Munición (1), Potencia 1d6, Ataque único, Antiestructura",
+        "damage": 8,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Daño 8, Área 6, Munición (1), Potencia 1d6, Ataque único, Antiestructura",
+        "ammo": {
+          "value": 1,
+          "max": 1
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Granada",
+      "type": "weapon",
+      "system": {
+        "description": "Característica: Destreza. Propiedades: Área 6, Consumible",
+        "damage": 0,
+        "skill": "ranged",
+        "attribute": "dexterity",
+        "range": "medium",
+        "properties": "Área 6, Consumible",
+        "ammo": {
+          "value": 0,
+          "max": 0
+        },
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Armadura ligera",
+      "type": "armor",
+      "system": {
+        "description": "Potencia necesaria: Ninguna",
+        "endurance": 1,
+        "evasionPenalty": 0,
+        "powerRequired": 0,
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Armadura mediana",
+      "type": "armor",
+      "system": {
+        "description": "Potencia necesaria: 1d6",
+        "endurance": 2,
+        "evasionPenalty": 0,
+        "powerRequired": 6,
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Armadura pesada",
+      "type": "armor",
+      "system": {
+        "description": "Potencia necesaria: 1d8",
+        "endurance": 4,
+        "evasionPenalty": 0,
+        "powerRequired": 8,
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Bebidas alcohólicas",
+      "type": "gear",
+      "system": {
+        "description": "Cuando tomas un vaso de una de estas bebidas, obtienes un contador de intoxicado, que empieza en 2. Cuando bebes un vaso más, haz una prueba de fortaleza contra tu valor de intoxicado y luego incrementa en 2 el contador de intoxicado. Si la fallas, entras en estado borracho. Borracho:Tienes un penalizador de 2 puntos a las tiradas de destreza y mente, pero obtienes bonifica en 1 en social. Si sigues bebiendo una vez llegado este punto y vuelves a fallar la tirada, vomitas sin control en el sitio que estés.",
+        "category": "consumable",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Droga estimulante",
+      "type": "gear",
+      "system": {
+        "description": "Tomar una droga estimulante hace que tengas bonifica 1 en todas las tiradas de una característica, pero penaliza en 1 todas las demás. Muchas de ellas generan adicción, a discreción del DJ podrías hacer una tirada de fortaleza tras su uso o ganar la dote “Yonki” (sin ganar los puntos de experiencia)",
+        "category": "consumable",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Veneno",
+      "type": "gear",
+      "system": {
+        "description": "Cada veneno tiene un método de aplicación (ingesta, inhalación o inyección), una potencia de veneno (número), un daño de veneno (número o dado). También tienen su propia forma de cura y su duración. Al cabo de unos pocos segundos tras ser tomado, el afectado hace una salvación de fortaleza (o compara números en caso de ser enemigo), si la falla contra la potencia del veneno, el afectado pasa a estar envenenado y tiene que recibir el daño de veneno cada hora. *Ejemplo: La belladonna tiene un método de aplicación de ingesta, su potencia de veneno es 14 y su daño de veneno es 1d4 cada hora. Su cura es eserina obtenida del haba de Calabar. Dura hasta ser curado o muerte. Si Johnny Melavo ingiere belladona , deberá usar su fortaleza para intentar no quedar envenenado, si falla, recibirá 1d4 a sus puntos de vida directamente cada hora hasta encontrar la cura o morir.*",
+        "category": "consumable",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Arpón con cuerda",
+      "type": "gear",
+      "system": {
+        "description": "Cuenta como un ataque” Cac media” pero tiene la propiedad “arrojadizo” y solo puede lanzarse. Si acierta e inflige daño, puedes tirar de él, haciendo una prueba de potencia y atletismo. Si lo consigues, disminuye la distancia del enemigo hacia a ti .El rango máximo de ataque es “medio”. De “medio” pasa a “corta”, si estuviese en “corta”, pasa a “contacto”. El enemigo puede quitarse el arpón gastando su ataque. Por otro lado, puedes gastar tu ataque para recoger el arpón en caso de haber sido soltado o volver a tirar del enemigo si sigue conectado a este.",
+        "category": "misc",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Granada cegadora",
+      "type": "gear",
+      "system": {
+        "description": "Granada que ciega a todo a su alrededor. El lanzador hace una prueba de potencia o destreza y puntería contra los reflejos de los enemigos afectados. Por defecto no afecta a aliados, pero si se busca un mayor realismo, realizar también la prueba anterior haciendo una tirada entre jugadores de combate.",
+        "category": "misc",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Red",
+      "type": "gear",
+      "system": {
+        "description": "Si se usa como trampa, la tirada es de mente o destreza y construir. Si se lanza directamente, es destreza y puntería. Si consigue acertar, el enemigo no puede moverse y tiene un penalizador de 2 en sus ataques. Para salir la red uno mismo, puede ayudarte alguien (automático) o romperla tú mismo, la red tiene 1 punto de vida y tiene aguante 10 contra cualquier ataque que no sea una hoja afilada o 0 si fuera una hoja afilada. La dificultad de acierto es 3 (aunque el penalizador también se aplica si desea atacar a esta red).",
+        "category": "misc",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Dron con cámara",
+      "type": "gear",
+      "system": {
+        "description": "Dron autónomo que mide 30 cm diseñado para entrar en pequeños huecos y obtener información. Puede retransmitir todo lo que ve en tiempo real al mando radiocontrol vinculado. Se utiliza la habilidad de conducir como si de un vehículo se tratase. Estadísticas: Vida (4), Aguante(0)",
+        "category": "misc",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Radio",
+      "type": "gear",
+      "system": {
+        "description": "Es una radio de una potencia mediana (5-10 km).Puedes cambiarle la frecuencia para contactar con diferentes intercomunicadores. Las más avanzadas permiten encriptar la señal.",
+        "category": "misc",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Avión caza",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 2. Modificador de conducción: Bonifica en 2. Vida: 6. Aguante: 10. Este vehículo vuela. Bonifica en 2 las tiradas para correr a máxima velocidad. Al estampar, Daño 24.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Moto de agua",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 2. Modificador de conducción: Bonifica en 1. Vida: 10. Aguante: 6. Va por la superficie del agua.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Moto/Quad",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 2. Modificador de conducción: Bonifica en 1. Vida: 10. Aguante: 6. ",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Camión",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 3. Modificador de conducción: \\-1. Vida: 14. Aguante: 11. Permite llevar mucha carga. Al estampar, Daño 18.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Coche",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 5. Modificador de conducción: 0. Vida: 12. Aguante: 8. ",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Coche deportivo",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 5. Modificador de conducción: Bonifica en 1. Vida: 12. Aguante: 8. Bonifica en 2 las tiradas para correr a máxima velocidad Al estampar, Daño 14.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Tanque",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 5. Modificador de conducción: \\-1. Vida: 16. Aguante: 16. Suele tener armas integradas a discreción del DJ.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Todoterreno",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 5. Modificador de conducción: 0. Vida: 16. Aguante: 10. Bonifica en 2 para pasar por terreno dificultoso. Al estampar, Daño 14.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Lancha motora",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 6. Modificador de conducción: 0. Vida: 6. Aguante: 7. Va por la superficie del agua.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Helicóptero",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 8. Modificador de conducción: 0. Vida: 14. Aguante: 8. Este vehículo vuela. Al estampar, Daño 14.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Autobús",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 32. Modificador de conducción: \\-1. Vida: 12. Aguante: 10. Al estampar, Daño 15.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Galeón",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 32. Modificador de conducción: \\-2. Vida: 14. Aguante: 8. Va por la superficie del agua. Este vehículo por cada dos personas que ayudes a manejar disminuye en 1 el penalizador.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Avión comercial",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 128. Modificador de conducción: \\-1. Vida: 20. Aguante: 12. Este vehículo vuela. Al estampar, Daño 25.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Buque de guerra",
+      "type": "gear",
+      "system": {
+        "description": "Vehículo. Pasajeros: 128. Modificador de conducción: \\-2. Vida: 32. Aguante: 16. Va por la superficie del agua. Este vehículo por cada dos personas que ayudes a manejar disminuye en 1 el penalizador.",
+        "category": "vehicle",
+        "quantity": 1,
+        "equipped": false
+      }
+    }
+  ],
+  "actors": [
+    {
+      "name": "Águila",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 6,
+          "max": 6
+        },
+        "endurance": {
+          "base": 0,
+          "value": 0
+        },
+        "npcStats": {
+          "evasion": 8,
+          "fortitude": 4,
+          "will": 3,
+          "perception": 16,
+          "traits": "Esta criatura vuela. Si no está volando, su esquiva es 4.",
+          "variants": "Águila entrenada: Voluntad 5 y Percepción 18. Águila gigante: PV 10, Aguante 2, Garras(8, Daño 4\\)."
+        }
+      },
+      "items": [
+        {
+          "name": "Garras",
+          "type": "weapon",
+          "system": {
+            "damage": 2,
+            "attackDifficulty": 8,
+            "properties": "Daño 2\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Lobo",
+      "type": "npc",
+      "system": {
+        "description": "Atletismo 8, supervivencia 9.",
+        "health": {
+          "value": 9,
+          "max": 9
+        },
+        "endurance": {
+          "base": 2,
+          "value": 2
+        },
+        "npcStats": {
+          "evasion": 7,
+          "fortitude": 7,
+          "will": 4,
+          "perception": 14,
+          "traits": "",
+          "variants": "Lobo alfa: PV 12, Aguante 3, Voluntad 6. Lobo famélico: PV 6, Aguante 1, Mordisco(6, Daño 2\\)."
+        }
+      },
+      "items": [
+        {
+          "name": "Mordisco",
+          "type": "weapon",
+          "system": {
+            "damage": 3,
+            "attackDifficulty": 7,
+            "properties": "Daño 3\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Oso",
+      "type": "npc",
+      "system": {
+        "description": "Atletismo 8, supervivencia 6.",
+        "health": {
+          "value": 18,
+          "max": 18
+        },
+        "endurance": {
+          "base": 4,
+          "value": 4
+        },
+        "npcStats": {
+          "evasion": 5,
+          "fortitude": 8,
+          "will": 4,
+          "perception": 8,
+          "traits": "",
+          "variants": "Oso joven: PV 15, Aguante 3, Mordisco(5, Daño 6\\). Oso monstruoso: PV 24, Aguante 5, Garras(9, Daño 4\\), Mordisco(6, Daño 9\\)."
+        }
+      },
+      "items": [
+        {
+          "name": "Garras",
+          "type": "weapon",
+          "system": {
+            "damage": 3,
+            "attackDifficulty": 8,
+            "properties": "Daño 3\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Mordisco",
+          "type": "weapon",
+          "system": {
+            "damage": 8,
+            "attackDifficulty": 5,
+            "properties": "Daño 8\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Perro",
+      "type": "npc",
+      "system": {
+        "description": "Atletismo 7, supervivencia 9.",
+        "health": {
+          "value": 8,
+          "max": 8
+        },
+        "endurance": {
+          "base": 1,
+          "value": 1
+        },
+        "npcStats": {
+          "evasion": 6,
+          "fortitude": 6,
+          "will": 3,
+          "perception": 8,
+          "traits": "",
+          "variants": "Perro guardián: Voluntad 5, Percepción 10. Perro grande: PV 10, Aguante 2, Mordisco(7, Daño 3\\)."
+        }
+      },
+      "items": [
+        {
+          "name": "Mordisco",
+          "type": "weapon",
+          "system": {
+            "damage": 2,
+            "attackDifficulty": 7,
+            "properties": "Daño 2\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Serpiente venenosa",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 5,
+          "max": 5
+        },
+        "endurance": {
+          "base": 0,
+          "value": 0
+        },
+        "npcStats": {
+          "evasion": 7,
+          "fortitude": 4,
+          "will": 4,
+          "perception": 6,
+          "traits": "Al infringir al menos 1 punto de daño, infecta con veneno de serpiente. Leer el objeto “veneno” para más información. El veneno de serpiente tiene una dificultad 8 e inflige 1 punto de daño por hora durante 8 horas. Para curarse necesita pasar una prueba de medicina dificultad 8.",
+          "variants": "Serpiente pequeña: PV 3, Esquiva 9, Mordisco(4, Daño 0\\). Serpiente letal: la dificultad del veneno pasa a ser 10."
+        }
+      },
+      "items": [
+        {
+          "name": "Mordisco",
+          "type": "weapon",
+          "system": {
+            "damage": 1,
+            "attackDifficulty": 5,
+            "properties": "Daño 1\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rata gorda",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 4,
+          "max": 4
+        },
+        "endurance": {
+          "base": 0,
+          "value": 0
+        },
+        "npcStats": {
+          "evasion": 6,
+          "fortitude": 3,
+          "will": 3,
+          "perception": 8,
+          "traits": "",
+          "variants": "Enjambre de ratas: PV 8, Aguante \\-2, Mordisco(6, Daño 1\\), ocupa una zona pequeña. Rata enferma: si inflige daño, puede transmitir una enfermedad a discreción del DJ."
+        }
+      },
+      "items": [
+        {
+          "name": "Mordisco",
+          "type": "weapon",
+          "system": {
+            "damage": 0,
+            "attackDifficulty": 3,
+            "properties": "Daño 0\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Agente",
+      "type": "npc",
+      "system": {
+        "description": "Sigilo 10, atletismo 7, acrobacias 9.",
+        "health": {
+          "value": 10,
+          "max": 10
+        },
+        "endurance": {
+          "base": 3,
+          "value": 3
+        },
+        "npcStats": {
+          "evasion": 8,
+          "fortitude": 6,
+          "will": 8,
+          "perception": 12,
+          "traits": "Es un enemigo profesional; úsalo como especialista, no como matón común.",
+          "variants": "Con chaleco antibalas: Aguante 5 contra disparos y explosiones, Aguante 3 contra cuerpo a cuerpo. Agente de élite: Voluntad 9, ataque con pistola 10 y fuente de villano 8."
+        }
+      },
+      "items": [
+        {
+          "name": "Cuchillo",
+          "type": "weapon",
+          "system": {
+            "damage": 2,
+            "attackDifficulty": 9,
+            "properties": "dual, Daño 2",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Pistola con silenciador",
+          "type": "weapon",
+          "system": {
+            "damage": 3,
+            "attackDifficulty": 9,
+            "properties": "dual, Daño 3, munición 10",
+            "ammo": {
+              "value": 10,
+              "max": 10
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Boxeador",
+      "type": "npc",
+      "system": {
+        "description": "Atletismo 11, acrobacias 7.",
+        "health": {
+          "value": 12,
+          "max": 12
+        },
+        "endurance": {
+          "base": 3,
+          "value": 3
+        },
+        "npcStats": {
+          "evasion": 8,
+          "fortitude": 5,
+          "will": 6,
+          "perception": 8,
+          "traits": "Si esquiva un ataque por 4 o más, puede atacar si está a rango.",
+          "variants": "Campeón: PV 14, Fortaleza 7, Puñetazo(10, dual, Daño 2\\). Peleador agotado: PV 9, Esquiva 6."
+        }
+      },
+      "items": [
+        {
+          "name": "Puñetazo",
+          "type": "weapon",
+          "system": {
+            "damage": 1,
+            "attackDifficulty": 9,
+            "properties": "dual, Daño 1\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Persona común",
+      "type": "npc",
+      "system": {
+        "description": "Profesión 6.",
+        "health": {
+          "value": 10,
+          "max": 10
+        },
+        "endurance": {
+          "base": 1,
+          "value": 1
+        },
+        "npcStats": {
+          "evasion": 5,
+          "fortitude": 5,
+          "will": 5,
+          "perception": 5,
+          "traits": "",
+          "variants": "Persona frágil: PV 6, Aguante 0. Persona corpulenta: PV 12, Aguante 2, Puñetazo(6, Daño 1\\)."
+        }
+      },
+      "items": [
+        {
+          "name": "Puñetazo",
+          "type": "weapon",
+          "system": {
+            "damage": 1,
+            "attackDifficulty": 5,
+            "properties": "Daño 1\\",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pirata",
+      "type": "npc",
+      "system": {
+        "description": "Atletismo 6, acrobacias 9.",
+        "health": {
+          "value": 10,
+          "max": 10
+        },
+        "endurance": {
+          "base": 2,
+          "value": 2
+        },
+        "npcStats": {
+          "evasion": 6,
+          "fortitude": 4,
+          "will": 3,
+          "perception": 7,
+          "traits": "",
+          "variants": "Capitán pirata: PV 14, Aguante 3, Voluntad 6, Cimitarra(9, Daño 3\\), fuente de villano 8. Pirata borracho: ataque con pistola 6 y Voluntad 2."
+        }
+      },
+      "items": [
+        {
+          "name": "Cimitarra",
+          "type": "weapon",
+          "system": {
+            "damage": 2,
+            "attackDifficulty": 8,
+            "properties": "Daño 2",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Pistola",
+          "type": "weapon",
+          "system": {
+            "damage": 3,
+            "attackDifficulty": 8,
+            "properties": "Daño 3, munición 1",
+            "ammo": {
+              "value": 1,
+              "max": 1
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Policía",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 10,
+          "max": 10
+        },
+        "endurance": {
+          "base": 3,
+          "value": 3
+        },
+        "npcStats": {
+          "evasion": 6,
+          "fortitude": 5,
+          "will": 5,
+          "perception": 9,
+          "traits": "Representa a un agente equipado, pero no militarizado.",
+          "variants": "Sin protección: Aguante 1. Con chaleco antibalas: Aguante 5 contra disparos y explosiones, Aguante 3 contra cuerpo a cuerpo. Antidisturbios: Aguante 5, Porra(7, Daño 2\\), escudo que bonifica en 1 su esquiva contra ataques frontales."
+        }
+      },
+      "items": [
+        {
+          "name": "Porra",
+          "type": "weapon",
+          "system": {
+            "damage": 2,
+            "attackDifficulty": 6,
+            "properties": "Daño 2",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Pistola",
+          "type": "weapon",
+          "system": {
+            "damage": 3,
+            "attackDifficulty": 8,
+            "properties": "Daño 3, munición 10",
+            "ammo": {
+              "value": 10,
+              "max": 10
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Soldado",
+      "type": "npc",
+      "system": {
+        "description": "Atletismo 9, acrobacias 7.",
+        "health": {
+          "value": 12,
+          "max": 12
+        },
+        "endurance": {
+          "base": 4,
+          "value": 4
+        },
+        "npcStats": {
+          "evasion": 6,
+          "fortitude": 6,
+          "will": 6,
+          "perception": 10,
+          "traits": "Es una unidad entrenada. En grupos, suele usar cobertura y fuego coordinado.",
+          "variants": "Sin armadura: Aguante 2. Con chaleco antibalas: Aguante 6 contra disparos y explosiones, Aguante 4 contra cuerpo a cuerpo. Veterano: ataque con rifle 10 y Voluntad 8. Recluta: ataque con rifle 7 y Voluntad 4."
+        }
+      },
+      "items": [
+        {
+          "name": "Cuchillo",
+          "type": "weapon",
+          "system": {
+            "damage": 2,
+            "attackDifficulty": 8,
+            "properties": "dual, Daño 2",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Pistola",
+          "type": "weapon",
+          "system": {
+            "damage": 3,
+            "attackDifficulty": 8,
+            "properties": "dual, Daño 3, munición 10",
+            "ammo": {
+              "value": 10,
+              "max": 10
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Rifle",
+          "type": "weapon",
+          "system": {
+            "damage": 5,
+            "attackDifficulty": 9,
+            "properties": "Daño 5, munición 20\\",
+            "ammo": {
+              "value": 20,
+              "max": 20
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Yonki / Maleante",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 6,
+          "max": 6
+        },
+        "endurance": {
+          "base": 1,
+          "value": 1
+        },
+        "npcStats": {
+          "evasion": 7,
+          "fortitude": 4,
+          "will": 3,
+          "perception": 4,
+          "traits": "",
+          "variants": "Maleante armado: Pistola(7, Daño 3, munición 10). Matón grande: PV 10, Aguante 2, Navajazo(7, Daño 2\\). Asustado: Voluntad 2 y huye si cae un aliado cercano."
+        }
+      },
+      "items": [
+        {
+          "name": "Navajazo",
+          "type": "weapon",
+          "system": {
+            "damage": 2,
+            "attackDifficulty": 6,
+            "properties": "Daño 2",
+            "ammo": {
+              "value": 0,
+              "max": 0
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Pistola",
+          "type": "weapon",
+          "system": {
+            "damage": 3,
+            "attackDifficulty": 6,
+            "properties": "Daño 3, munición 10, raro",
+            "ammo": {
+              "value": 10,
+              "max": 10
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Avión caza",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 6,
+          "max": 6
+        },
+        "endurance": {
+          "base": 10,
+          "value": 10
+        },
+        "npcStats": {
+          "evasion": 8,
+          "fortitude": 4,
+          "will": 0,
+          "perception": 9,
+          "traits": "",
+          "variants": "Piloto novato: Esquiva 6, ataques \\-1. As aéreo: Esquiva 10, ataques +1."
+        }
+      },
+      "items": [
+        {
+          "name": "Ametralladora",
+          "type": "weapon",
+          "system": {
+            "damage": 8,
+            "attackDifficulty": 7,
+            "properties": "Daño 8, munición 80",
+            "ammo": {
+              "value": 80,
+              "max": 80
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Misiles",
+          "type": "weapon",
+          "system": {
+            "damage": 0,
+            "attackDifficulty": 8,
+            "properties": "área 6, munición 4, ataque único, antiestructura",
+            "ammo": {
+              "value": 4,
+              "max": 4
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Coche",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 12,
+          "max": 12
+        },
+        "endurance": {
+          "base": 8,
+          "value": 8
+        },
+        "npcStats": {
+          "evasion": 6,
+          "fortitude": 6,
+          "will": 0,
+          "perception": 8,
+          "traits": "",
+          "variants": "Coche blindado: Aguante 11. Coche destartalado: PV 8, Aguante 5."
+        }
+      },
+      "items": []
+    },
+    {
+      "name": "Helicóptero",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 14,
+          "max": 14
+        },
+        "endurance": {
+          "base": 8,
+          "value": 8
+        },
+        "npcStats": {
+          "evasion": 5,
+          "fortitude": 5,
+          "will": 0,
+          "perception": 7,
+          "traits": "",
+          "variants": "Helicóptero de transporte: sin misiles, PV 16. Helicóptero de combate: Ametralladora(7, Daño 8\\), Misiles(8, área 6\\)."
+        }
+      },
+      "items": [
+        {
+          "name": "Ametralladora",
+          "type": "weapon",
+          "system": {
+            "damage": 8,
+            "attackDifficulty": 5,
+            "properties": "Daño 8, munición 80",
+            "ammo": {
+              "value": 80,
+              "max": 80
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Misiles",
+          "type": "weapon",
+          "system": {
+            "damage": 0,
+            "attackDifficulty": 6,
+            "properties": "área 6, munición 12, ataque único, antiestructura",
+            "ammo": {
+              "value": 12,
+              "max": 12
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "Moto/Quad",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 10,
+          "max": 10
+        },
+        "endurance": {
+          "base": 6,
+          "value": 6
+        },
+        "npcStats": {
+          "evasion": 8,
+          "fortitude": 3,
+          "will": 0,
+          "perception": 6,
+          "traits": "",
+          "variants": "Moto ligera: PV 6, Aguante 4, Esquiva 10. Quad pesado: PV 12, Aguante 7, Esquiva 6."
+        }
+      },
+      "items": []
+    },
+    {
+      "name": "Tanque",
+      "type": "npc",
+      "system": {
+        "description": "",
+        "health": {
+          "value": 16,
+          "max": 16
+        },
+        "endurance": {
+          "base": 16,
+          "value": 16
+        },
+        "npcStats": {
+          "evasion": 4,
+          "fortitude": 6,
+          "will": 0,
+          "perception": 6,
+          "traits": "",
+          "variants": "Tanque ligero: PV 14, Aguante 12, Cañón(6, Daño 8, área 6\\). Tanque pesado: PV 24, Aguante 18, Cañón(7, Daño 12, área 8\\)."
+        }
+      },
+      "items": [
+        {
+          "name": "Ametralladora",
+          "type": "weapon",
+          "system": {
+            "damage": 8,
+            "attackDifficulty": 5,
+            "properties": "Daño 8, munición 80",
+            "ammo": {
+              "value": 80,
+              "max": 80
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        },
+        {
+          "name": "Cañón",
+          "type": "weapon",
+          "system": {
+            "damage": 10,
+            "attackDifficulty": 6,
+            "properties": "Daño 10, área 8, munición 1, ataque único, antiestructura",
+            "ammo": {
+              "value": 1,
+              "max": 1
+            },
+            "quantity": 1,
+            "equipped": true
+          }
+        }
+      ]
+    }
+  ]
+}

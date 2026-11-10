@@ -1,0 +1,238 @@
+<form class="{{cssClass}} tdt-item-sheet" autocomplete="off">
+  <header class="sheet-header tdt-header">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" title="Cambiar imagen de {{item.name}}" alt="Imagen de {{item.name}}">
+    <div class="tdt-identity">
+      <span class="tdt-kicker">{{typeLabel}} · Two Dice Tales</span>
+      <input class="tdt-name" name="name" type="text" value="{{item.name}}">
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-tab="details"><i class="fas fa-sliders"></i><span>Detalles</span></a>
+    <a class="item" data-tab="description"><i class="fas fa-align-left"></i><span>Descripción</span></a>
+    <a class="item" data-tab="automation"><i class="fas fa-gears"></i><span>Automatización</span></a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab details" data-group="primary" data-tab="details">
+      <section class="tdt-item-fields">
+        {{#if is.feat}}
+          <label>Tipo <select name="system.category"><option value="advantage" {{#if (eq system.category "advantage")}}selected{{/if}}>Ventaja</option><option value="disadvantage" {{#if (eq system.category "disadvantage")}}selected{{/if}}>Desventaja</option></select></label>
+          <label>Coste <input type="number" name="system.cost" value="{{system.cost}}"></label>
+          <label>Fórmula de coste <input name="system.costFormula" value="{{system.costFormula}}" placeholder="p. ej. 2 + categoría"></label>
+          <label>Requisitos <input name="system.requirements" value="{{system.requirements}}"></label>
+          <label>Etiquetas <input name="tagsText" value="{{tagsText}}" placeholder="Física, Mechanime…"></label>
+          <label>Activable <input type="checkbox" name="system.toggle" {{checked system.toggle}}></label>
+          {{#if system.toggle}}<label>Activa <input type="checkbox" name="system.active" {{checked system.active}}></label>{{/if}}
+          {{#if modules.fantasy}}
+          <label>Incremental <input type="number" min="0" name="system.incremental" value="{{system.incremental}}"></label>
+          <label>Sacrificio (PV) <input type="number" min="0" name="system.sacrifice" value="{{system.sacrifice}}"></label>
+          {{/if}}
+          <label>Hace un ataque <input type="checkbox" name="system.attack.enabled" {{checked system.attack.enabled}}></label>
+          {{#if system.attack.enabled}}
+          <label>Daño <input type="number" name="system.attack.damage" value="{{system.attack.damage}}"></label>
+          <label>Defensa <select name="system.attack.defense">{{selectOptions config.defenseChoices selected=system.attack.defense}}</select></label>
+          <label>Distancia <select name="system.attack.range">{{selectOptions config.ranges selected=system.attack.range}}</select></label>
+          <label>Área <input type="checkbox" name="system.attack.area" {{checked system.attack.area}}></label>
+          {{/if}}
+          {{#if modules.mecha}}<label>Coste de inventario <input name="system.inventoryCost" value="{{system.inventoryCost}}" placeholder="vacío = no ocupa"></label>{{/if}}
+        {{/if}}
+
+        {{#if is.weapon}}
+          <label>Daño <input type="number" name="system.damage" min="0" value="{{system.damage}}"></label>
+          <label>Dificultad de ataque (PNJ) <input type="number" name="system.attackDifficulty" min="0" value="{{system.attackDifficulty}}"></label>
+          <label>Característica <select name="system.attribute">{{selectOptions config.attributeChoices selected=system.attribute}}</select></label>
+          <label>Habilidad <select name="system.skill">{{selectOptions config.skillChoices selected=system.skill}}</select></label>
+          <label>Defensa del objetivo <select name="system.defense">{{selectOptions config.defenseChoices selected=system.defense}}</select></label>
+          <label>Distancia <select name="system.range">{{selectOptions config.ranges selected=system.range}}</select></label>
+          <label>Munición <span><input type="number" name="system.ammo.value" min="0" value="{{system.ammo.value}}"> / <input type="number" name="system.ammo.max" min="0" value="{{system.ammo.max}}"></span></label>
+          <label class="wide">Propiedades <input name="system.properties" value="{{system.properties}}" placeholder="Dual, Munición (6), Quemarropa 8, Rango…"></label>
+          {{#if modules.cyber}}<label>Hack del PNJ (defensa) <select name="system.hackDefense"><option value="">— No es un hack —</option>{{selectOptions config.hackDefenseChoices selected=system.hackDefense}}</select></label>{{/if}}
+          {{#if showCondition}}<label>Estado <select name="system.condition">{{selectOptions config.weaponConditions selected=system.condition}}</select></label>{{/if}}
+          {{#if modules.cyber}}
+          <label>Mejora general <select name="system.upgrades.general">{{selectOptions config.cyberGeneralUpgrades selected=system.upgrades.general}}</select></label>
+          <label>Mejora especial <select name="system.upgrades.special">{{selectOptions config.cyberSpecialUpgrades selected=system.upgrades.special}}</select></label>
+          {{/if}}
+          {{#if showBasicUpgrades}}
+          <fieldset class="wide"><legend>Mejoras (regla opcional del básico)</legend>
+            {{#each basicUpgrades as |upgrade|}}<label title="{{upgrade.text}}"><input type="checkbox" name="basicUpgrade.{{upgrade.key}}" {{checked upgrade.checked}}> {{upgrade.label}}</label>{{/each}}
+          </fieldset>
+          {{/if}}
+          {{#if modules.mecha}}
+          <fieldset class="wide"><legend>Arma de mecha</legend>
+            <label>Es arma de mecha <input type="checkbox" name="system.mecha.enabled" {{checked system.mecha.enabled}}></label>
+            {{#if mechaWeapon}}
+            <label>Módulo <select name="system.mecha.module">{{selectOptions config.mechaModules selected=system.mecha.module}}</select></label>
+            <label>Coste de inventario <input name="system.mecha.inventoryCost" value="{{system.mecha.inventoryCost}}" placeholder="p. ej. 4 + categoría"></label>
+            <label>Integrada <input type="checkbox" name="system.mecha.integrated" {{checked system.mecha.integrated}}></label>
+            <label>Arma principal <input type="checkbox" name="system.mecha.primary" {{checked system.mecha.primary}}></label>
+            {{/if}}
+          </fieldset>
+          {{/if}}
+        {{/if}}
+
+        {{#if is.armor}}
+          <label>Bono de aguante <input type="number" name="system.endurance" min="0" value="{{system.endurance}}"></label>
+          <label>Penalizador de esquiva <input type="number" name="system.evasionPenalty" min="0" value="{{system.evasionPenalty}}"></label>
+          <label>Potencia necesaria <select name="system.powerRequired">{{selectOptions config.dieChoices selected=system.powerRequired}}</select></label>
+          {{#if modules.cyber}}
+          <label>Aguante contra disparos <input type="number" min="0" name="system.shotEndurance" value="{{system.shotEndurance}}"></label>
+          <label>Impoluta (+1) <input type="checkbox" name="system.pristine" {{checked system.pristine}}></label>
+          <label>Daño acumulado <input type="number" min="0" name="system.damage" value="{{system.damage}}"></label>
+          <label>Inmune al aturdimiento eléctrico <input type="checkbox" name="system.noStun" {{checked system.noStun}}></label>
+          {{/if}}
+        {{/if}}
+
+        {{#if is.gear}}
+          <label>Categoría <select name="system.category">{{selectOptions config.gearCategories selected=system.category}}</select></label>
+          {{#if (eq system.category "skillChip")}}
+          <label>Habilidad o defensa <select name="system.chipTarget">{{selectOptions config.chipTargets selected=system.chipTarget}}</select></label>
+          <label>Cargado <input type="checkbox" name="system.loaded" {{checked system.loaded}}></label>
+          {{/if}}
+          {{#if (eq system.category "vehicle")}}
+          <fieldset class="wide"><legend>Vehículo</legend>
+            <label>Categoría de Conducir <input name="system.vehicle.category" value="{{vehicle.category}}" placeholder="Coche/furgoneta"></label>
+            <label>Característica <select name="system.vehicle.attribute">{{selectOptions config.attributeChoices selected=vehicle.attribute}}</select></label>
+            <label>Pasajeros <input type="number" min="0" name="system.vehicle.passengers" value="{{vehicle.passengers}}"></label>
+            <label>Modificador de conducción <input type="number" name="system.vehicle.modifier" value="{{vehicle.modifier}}"></label>
+            <label>PV <span><input type="number" min="0" name="system.vehicle.health.value" value="{{vehicle.health.value}}"> / <input type="number" min="0" name="system.vehicle.health.max" value="{{vehicle.health.max}}"></span></label>
+            <label>Aguante <input type="number" min="0" name="system.vehicle.endurance" value="{{vehicle.endurance}}"></label>
+            <label>Daño al embestir <input type="number" min="0" name="system.vehicle.crashDamage" value="{{vehicle.crashDamage}}"></label>
+            <label>Piloto automático <input type="number" min="0" name="system.vehicle.autopilot" value="{{vehicle.autopilot}}"></label>
+            <label>Analógico <input type="checkbox" name="system.vehicle.analog" {{checked vehicle.analog}}></label>
+            <label>Vuela <input type="checkbox" name="system.vehicle.flying" {{checked vehicle.flying}}></label>
+          </fieldset>
+          {{/if}}
+          {{#if modules.mecha}}<label>Coste de inventario (mecha) <input name="system.inventoryCost" value="{{system.inventoryCost}}"></label>{{/if}}
+        {{/if}}
+
+        {{#if is.race}}
+          <p class="wide hint">Los efectos de la raza se aplican desde la pestaña Automatización. Los que dependen de la situación aparecen como reglas opcionales en las tiradas.</p>
+        {{/if}}
+
+        {{#if is.power}}
+          <label>Rama <input name="system.branch" value="{{system.branch}}"></label>
+          <label>Complejidad <select name="system.complexity">{{selectOptions config.powerComplexity selected=system.complexity}}</select></label>
+          <label>Requisitos <input name="system.requirements" value="{{system.requirements}}"></label>
+          <label>Coste de energía <input type="number" min="0" name="system.energyCost" value="{{system.energyCost}}"></label>
+          <label>Coste variable (+X) <input type="checkbox" name="system.variableCost" {{checked system.variableCost}}></label>
+          <label>Permanente <input type="checkbox" name="system.permanent" {{checked system.permanent}}></label>
+          <label>Sobrecarga máxima <input type="number" min="0" name="system.overload" value="{{system.overload}}"></label>
+          <label>Maldito <input type="checkbox" name="system.cursed" {{checked system.cursed}}></label>
+          <label>Activable (se mantiene) <input type="checkbox" name="system.toggle" {{checked system.toggle}}></label>
+          <label>Hace un ataque <input type="checkbox" name="system.attack.enabled" {{checked system.attack.enabled}}></label>
+          {{#if system.attack.enabled}}
+          <label>Daño <input type="number" name="system.attack.damage" value="{{system.attack.damage}}"></label>
+          <label>Defensa <select name="system.attack.defense">{{selectOptions config.defenseChoices selected=system.attack.defense}}</select></label>
+          <label>Distancia <select name="system.attack.range">{{selectOptions config.ranges selected=system.attack.range}}</select></label>
+          <label>La sobrecarga suma Daño <input type="checkbox" name="system.attack.overloadDamage" {{checked system.attack.overloadDamage}}></label>
+          {{/if}}
+        {{/if}}
+
+        {{#if is.implant}}
+          <label>CC del implante base <input type="number" min="0" name="system.cc" value="{{system.cc}}"></label>
+          <label>Total con mejoras <strong>{{implantCost}} CC</strong></label>
+          <label>Tipo <select name="system.tier">{{selectOptions config.implantTiers selected=system.tier}}</select></label>
+          <label>Instalado <input type="checkbox" name="system.installed" {{checked system.installed}}></label>
+          <label>Averiado <input type="checkbox" name="system.malfunction" {{checked system.malfunction}}></label>
+          <label>Sin funcionar esta escena <input type="checkbox" name="system.offline" {{checked system.offline}}></label>
+          {{#if isAVS}}<label>Ranuras (1–5) <input type="number" min="1" max="5" name="system.slots" value="{{system.slots}}"></label>{{/if}}
+          <label>Solo una mejora <input type="checkbox" name="system.exclusiveUpgrades" {{checked system.exclusiveUpgrades}}></label>
+          <fieldset class="wide"><legend>Supremo</legend>
+            <label>Es supremo <input type="checkbox" name="system.supreme.enabled" {{checked system.supreme.enabled}}></label>
+            {{#if system.supreme.enabled}}
+            <label>Tipo <select name="system.supreme.kind">{{selectOptions config.supremeKinds selected=system.supreme.kind}}</select></label>
+            <label>CC perdida por uso <input name="system.supreme.costDice" value="{{system.supreme.costDice}}" placeholder="2d6"></label>
+            <label>Ya usado <input type="checkbox" name="system.supreme.used" {{checked system.supreme.used}}></label>
+            {{/if}}
+          </fieldset>
+          <fieldset class="wide"><legend>Mejoras <button type="button" data-action="upgrade-add" title="Añadir mejora"><i class="fas fa-plus"></i></button></legend>
+            {{#each upgradeRows as |upgrade|}}
+            <div class="tdt-upgrade-row">
+              <input name="system.upgrades.{{upgrade.index}}.name" value="{{upgrade.name}}">
+              <label>CC <input type="number" min="0" name="system.upgrades.{{upgrade.index}}.cc" value="{{upgrade.cc}}"></label>
+              <label>Instalada <input type="checkbox" name="system.upgrades.{{upgrade.index}}.installed" {{checked upgrade.installed}}></label>
+              <button type="button" data-action="upgrade-delete" data-index="{{upgrade.index}}"><i class="fas fa-trash"></i></button>
+              {{#if upgrade.description}}<small>{{upgrade.description}}</small>{{/if}}
+            </div>
+            {{else}}<p class="hint">Sin mejoras.</p>
+            {{/each}}
+          </fieldset>
+        {{/if}}
+
+        {{#if is.hack}}
+          <label>Defensa <select name="system.defense">{{selectOptions config.hackDefenseChoices selected=system.defense}}</select></label>
+          <label>Requiere Hacking <select name="system.requirement">{{selectOptions config.dieChoices selected=system.requirement}}</select></label>
+          <label>Daño <input type="number" min="0" name="system.damage" value="{{system.damage}}"></label>
+          <label>Cargado en una ranura <input type="checkbox" name="system.loaded" {{checked system.loaded}}></label>
+          <label class="wide">Propiedades <input name="system.properties" value="{{system.properties}}" placeholder="Duración (margen), Área…"></label>
+          <label>Sobrecarga neural <input type="checkbox" name="system.neuralOverload" {{checked system.neuralOverload}}></label>
+          <label>Solo por cable <input type="checkbox" name="system.wired" {{checked system.wired}}></label>
+          <label>Solo dispositivos <input type="checkbox" name="system.device" {{checked system.device}}></label>
+          <label>Solo implantes <input type="checkbox" name="system.implantsOnly" {{checked system.implantsOnly}}></label>
+          <label>No letal <input type="checkbox" name="system.nonLethal" {{checked system.nonLethal}}></label>
+          <label>Aguante 0 contra máquinas <input type="checkbox" name="system.machineEnduranceZero" {{checked system.machineEnduranceZero}}></label>
+          <label>Ignora el aguante humano <input type="checkbox" name="system.ignoreHumanEndurance" {{checked system.ignoreHumanEndurance}}></label>
+        {{/if}}
+
+        {{#if is.spell}}
+          <div class="wide tdt-circle-summary">
+            <strong>Inscripción {{circle.inscription}}</strong> · Dificultad {{circle.difficulty}} · Maná {{circle.mana}}{{#if circle.damage}} · Daño {{circle.damage}}{{/if}}
+            <ul>{{#each circle.marks as |mark|}}<li>Marca {{mark.index}}: {{mark.label}} ({{mark.rootCost}}) + {{mark.modifiers}} modificadores{{#if mark.surcharge}} + {{mark.surcharge}} de polaridad{{/if}}{{#if mark.subtracted}} · sustraída{{/if}} = {{mark.inscription}}</li>{{/each}}</ul>
+          </div>
+          <fieldset class="wide"><legend>Marcas <button type="button" data-action="mark-add" title="Añadir marca"><i class="fas fa-plus"></i></button></legend>
+            {{#each markRows as |mark|}}
+            <div class="tdt-upgrade-row">
+              <select name="system.marks.{{mark.index}}.root">{{selectOptions ../rootChoices selected=mark.root}}</select>
+              <input name="system.marks.{{mark.index}}.modifiersText" value="{{mark.modifiersText}}" placeholder="reach, potency…">
+              <label>Sustraída <input type="checkbox" name="system.marks.{{mark.index}}.subtracted" {{checked mark.subtracted}}></label>
+              <button type="button" data-action="mark-delete" data-index="{{mark.index}}"><i class="fas fa-trash"></i></button>
+            </div>
+            {{/each}}
+            <small>{{modifierHelp}}</small>
+          </fieldset>
+          <label class="wide">Modificadores compartidos (JSON) <textarea name="json.system.shared" rows="3">{{json.shared}}</textarea></label>
+          <label>Es un ataque <input type="checkbox" name="system.attack.enabled" {{checked system.attack.enabled}}></label>
+          <label>Defensa <select name="system.attack.defense">{{selectOptions config.defenseChoices selected=system.attack.defense}}</select></label>
+          <label>Varios objetivos (Daño −1) <input type="checkbox" name="system.attack.manyTargets" {{checked system.attack.manyTargets}}></label>
+          <label>Polaridad variable (modificador) <input name="system.variablePolarity" value="{{system.variablePolarity}}"></label>
+          <label>Contrapeso polar <input type="checkbox" name="system.counterweight" {{checked system.counterweight}}></label>
+          <label>Sustractor experto <input type="checkbox" name="system.subtractExpert" {{checked system.subtractExpert}}></label>
+        {{/if}}
+
+        {{#unless is.feat}}{{#unless is.race}}{{#unless is.spell}}{{#unless is.hack}}{{#unless is.power}}{{#unless is.implant}}
+          <label>Equipado <input type="checkbox" name="system.equipped" {{checked system.equipped}}></label>
+          <label>Cantidad <input type="number" name="system.quantity" min="0" value="{{system.quantity}}"></label>
+        {{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}{{/unless}}
+        <label>Precio <input type="number" min="0" name="system.price" value="{{system.price}}"></label>
+        <label>Módulo <select name="system.module">{{selectOptions config.moduleChoices selected=system.module}}</select></label>
+        <label>Usos <span><input type="number" min="0" name="system.uses.value" value="{{system.uses.value}}"> / <input type="number" min="0" name="system.uses.max" value="{{system.uses.max}}"></span></label>
+        <label>Se recuperan por <select name="system.uses.per">{{selectOptions config.perChoices selected=system.uses.per}}</select></label>
+        <label>Sirve para repetir tiradas <input type="checkbox" name="system.uses.reroll" {{checked system.uses.reroll}}></label>
+      </section>
+    </div>
+
+    <div class="tab description" data-group="primary" data-tab="description">
+      <section class="tdt-section">
+        <textarea class="tdt-description" name="system.description">{{system.description}}</textarea>
+      </section>
+    </div>
+
+    <div class="tab automation" data-group="primary" data-tab="automation">
+      <section class="tdt-section">
+        <h2>Modificadores pasivos</h2>
+        <p class="hint">Lista JSON de <code>{"target": "...", "value": N}</code>. Se aplican mientras el objeto esté activo (equipado, instalado, cargado o siempre en dotes y razas). Las marcas especiales usan <code>flag.nombre</code>.</p>
+        <textarea name="json.system.modifiers" rows="6">{{json.modifiers}}</textarea>
+        <details><summary>Objetivos disponibles</summary><pre>{{targetHelp}}</pre></details>
+        <h2>Reglas de tirada</h2>
+        <p class="hint">Lista JSON de reglas que aparecen en el diálogo de tirada: <code>{"type": "bonus|penalty|dieStep|advantage|disadvantage|noFumble|extraDie|difficulty|flat|damage|reminder", "value": N, "scopes": ["ranged", "attack"…], "optional": true, "label": "…", "text": "…"}</code>.</p>
+        <textarea name="json.system.rules" rows="8">{{json.rules}}</textarea>
+        {{#if is.implant}}
+        <h2>Mejoras (JSON completo)</h2>
+        <p class="hint">Cada mejora admite también <code>modifiers</code>, <code>rules</code> y <code>description</code>.</p>
+        <textarea name="json.system.upgrades" rows="8">{{json.upgrades}}</textarea>
+        {{/if}}
+      </section>
+    </div>
+  </section>
+</form>
