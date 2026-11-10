@@ -430,7 +430,7 @@ const methods = {
     const recipes = useCyber ? TDT.cyberRecipes : TDT.zombieRecipes;
     const weapons = this.items.filter(item => item.type === "weapon");
     const content = `<form>
-      <div class="form-group"><label>Acción</label><select name="mode"><option value="craft">Fabricar o construir</option><option value="repair">Reparar arma (sube un estado)</option>${useCyber ? `<option value="dismantle">Desguazar</option><option value="armor">Reparar armadura (1 material de construcción por punto)</option><option value="implant">Reparar implante averiado (Construir)</option>` : ""}</select></div>
+      <div class="form-group"><label>Acción</label><select name="mode"><option value="craft">Fabricar o construir</option><option value="repair">Reparar arma (sube un estado)</option>${useCyber ? `<option value="dismantle">Desguazar</option><option value="armor">Reparar armadura (1 material de construcción por punto)</option><option value="implant">Reparar implante averiado (Construir, o Cibernética con +2 de dificultad)</option>` : ""}</select></div>
       <div class="form-group"><label>Receta</label><select name="recipe">${recipes.map(recipe => `<option value="${recipe.key}">${esc(recipe.label)}${useCyber ? ` (${recipe.weapons}/${recipe.generic}/${recipe.construction} · ${recipe.difficulty})` : ` (${recipe.materials})`}</option>`).join("")}</select></div>
       <div class="form-group"><label>Arma (reparar)</label><select name="weapon"><option value="">—</option>${weapons.map(item => `<option value="${item.id}">${esc(item.name)} (${TDT.weaponConditions[item.system.condition || "normal"]})</option>`).join("")}</select></div>
       ${useCyber ? `<div class="form-group"><label>Objeto (desguazar)</label><select name="scrap"><option value="">—</option>${this.items.filter(item => ["weapon", "armor"].includes(item.type) || (item.type === "implant" && !item.system.supreme?.enabled) || (item.type === "gear" && item.system.category === "vehicle")).map(item => `<option value="${item.id}">${esc(item.name)}</option>`).join("")}</select><p class="hint">Se elimina de la ficha. Un implante usa los materiales de su tipo; el resto, los de la receta elegida.</p></div>` : ""}
@@ -495,12 +495,18 @@ const methods = {
         if (implantCost.weapons > stock.weapons || implantCost.generic > stock.generic || implantCost.construction > stock.construction) {
           return ui.notifications.warn(`Faltan materiales: necesitas ${implantCost.weapons}/${implantCost.generic}/${implantCost.construction} (armas/genéricos/construcción).`);
         }
-        // Repairing the prosthesis is assembly work (Construir); only installing it in a body uses Cibernética.
-        const result = await this.rollSkill("crafting", {
+        // Repairing the prosthesis is assembly work (Construir). Cibernética also works, at +2 difficulty.
+        const repairSkill = await choiceDialog(`Reparar ${implant.name}`, "¿Con qué habilidad lo reparas?", [
+          { id: "crafting", label: `Construir (dificultad ${implantRecipe.difficulty})` },
+          { id: "cybernetics", label: `Cibernética (dificultad ${implantRecipe.difficulty + 2})` }
+        ]);
+        if (!repairSkill) return;
+        const viaCybernetics = repairSkill === "cybernetics";
+        const result = await this.rollSkill(repairSkill, {
           attribute: form.attribute,
-          label: `Reparar: ${implant.name}`,
-          difficulty: implantRecipe.difficulty,
-          scopes: ["craft"],
+          label: `Reparar: ${implant.name}${viaCybernetics ? " (Cibernética)" : ""}`,
+          difficulty: implantRecipe.difficulty + (viaCybernetics ? 2 : 0),
+          scopes: viaCybernetics ? ["craft", "implant-surgery"] : ["craft"],
           extraRules: form.tools ? [] : [{ type: "penalty", value: 2, label: "Sin herramientas" }]
         });
         if (!result) return;
