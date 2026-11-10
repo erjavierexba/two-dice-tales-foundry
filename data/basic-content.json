@@ -17,10 +17,11 @@
             "text": "Tienes uno o varios elementos a los que eres muy alérgico. Si estás en presencia de este elemento, a todas tus tiradas añadele un 1d4 y quédate con los peores resultados ya que no puedes parar de estornudar."
           },
           {
-            "type": "disadvantage",
+            "type": "worseDie",
+            "value": 4,
             "scopes": [],
-            "value": 1,
-            "label": "Alergia"
+            "optional": true,
+            "label": "Alergia (en presencia del alérgeno)"
           }
         ]
       }
@@ -44,10 +45,11 @@
           },
           {
             "type": "disadvantage",
+            "value": 1,
             "scopes": [
               "mind"
             ],
-            "value": 1,
+            "target": "first",
             "label": "Cabeza hueca"
           }
         ]
@@ -69,6 +71,15 @@
             ],
             "label": "Cegato",
             "text": "Si haces una prueba de percepción y esta depende de la vista, añade 1d4 más a la tirada y quédate con los dos menores resultados."
+          },
+          {
+            "type": "worseDie",
+            "value": 4,
+            "scopes": [
+              "perception"
+            ],
+            "optional": true,
+            "label": "Cegato (percepción visual)"
           }
         ]
       }
@@ -85,7 +96,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "mind",
               "will"
             ],
             "label": "Cobarde",
@@ -93,12 +103,14 @@
           },
           {
             "type": "dieStep",
+            "value": -1,
             "scopes": [
-              "mind",
               "will"
             ],
-            "value": -1,
-            "label": "Cobarde"
+            "optional": true,
+            "target": "first",
+            "floorOne": true,
+            "label": "Cobarde (voluntad contra el miedo)"
           }
         ]
       }
@@ -119,6 +131,15 @@
             ],
             "label": "Duro de oído",
             "text": "Si haces una prueba de percepción y esta depende del oído, añade 1d4 más a la tirada y quédate con los dos menores resultados."
+          },
+          {
+            "type": "worseDie",
+            "value": 4,
+            "scopes": [
+              "perception"
+            ],
+            "optional": true,
+            "label": "Duro de oído (percepción auditiva)"
           }
         ]
       }
@@ -155,22 +176,19 @@
           {
             "type": "reminder",
             "scopes": [
-              "diplomacy",
-              "mind",
-              "social"
+              "diplomacy"
             ],
             "label": "Feo de cojones",
             "text": "Tus impresiones sociales de diplomacia disminuyen siempre que te vean en persona. Si no tienes habilidad de diplomacia, fallas automáticamente. Si la tienes, baja el dado."
           },
           {
             "type": "dieStep",
-            "scopes": [
-              "diplomacy",
-              "mind",
-              "social"
-            ],
             "value": -1,
-            "label": "Feo de cojones"
+            "scopes": [
+              "diplomacy"
+            ],
+            "target": "second",
+            "label": "Feo de cojones (te ven en persona)"
           }
         ]
       }
@@ -187,20 +205,20 @@
           {
             "type": "reminder",
             "scopes": [
-              "athletics",
-              "mind"
+              "athletics"
             ],
             "label": "Gordo",
             "text": "Igual la cuarta hamburguesa sobraba y eso lo nota tu cuerpo. Usar una habilidad atlética por un tiempo medio hará que empieces a cansarte mucho. Tira dos veces la habilidad correspondiente y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente."
           },
           {
             "type": "disadvantage",
-            "scopes": [
-              "athletics",
-              "mind"
-            ],
             "value": 1,
-            "label": "Gordo"
+            "scopes": [
+              "athletics"
+            ],
+            "optional": true,
+            "target": "second",
+            "label": "Gordo (esfuerzo de tiempo medio)"
           }
         ]
       }
@@ -217,18 +235,23 @@
           {
             "type": "reminder",
             "scopes": [
-              "mind"
+              "mind",
+              "will"
             ],
             "label": "Incrédulo",
             "text": "Reduce el dado de mente para las tiradas en las que alguien intente colarte una mentira. En caso de tener 1d4, pasa a ser 1."
           },
           {
             "type": "dieStep",
-            "scopes": [
-              "mind"
-            ],
             "value": -1,
-            "label": "Incrédulo"
+            "scopes": [
+              "mind",
+              "will"
+            ],
+            "optional": true,
+            "target": "first",
+            "floorOne": true,
+            "label": "Incrédulo (te intentan colar una mentira)"
           }
         ]
       }
@@ -301,36 +324,31 @@
           {
             "type": "reminder",
             "scopes": [
-              "deception",
               "diplomacy",
-              "mind",
               "will"
             ],
             "label": "Me la suda",
             "text": "Pareces pasar un poco de todo. Cuando alguien habla contigo previamente y ve este comportamiento, tus siguientes tiradas de diplomacia tira dos veces el dado y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente. Sin embargo, aumenta tu dado de voluntad cuando alguien intenta engañarte (recordar al DJ esta propiedad)."
           },
           {
-            "type": "dieStep",
-            "scopes": [
-              "deception",
-              "diplomacy",
-              "mind",
-              "will"
-            ],
+            "type": "disadvantage",
             "value": 1,
-            "target": "scoped",
-            "label": "Me la suda"
+            "scopes": [
+              "diplomacy"
+            ],
+            "optional": true,
+            "target": "second",
+            "label": "Me la suda (ya han visto tu actitud)"
           },
           {
-            "type": "disadvantage",
+            "type": "dieStep",
+            "value": 1,
             "scopes": [
-              "deception",
-              "diplomacy",
-              "mind",
               "will"
             ],
-            "value": 1,
-            "label": "Me la suda"
+            "optional": true,
+            "target": "second",
+            "label": "Me la suda (te intentan engañar)"
           }
         ]
       }
@@ -365,30 +383,30 @@
           {
             "type": "reminder",
             "scopes": [
-              "diplomacy",
-              "mind"
+              "diplomacy"
             ],
             "label": "Otako",
             "text": "Eres MUY friki con un tema en concreto. Cualquier tirada en relación a diplomacia para mejorar la relación con una persona (hacer amigos, ligar...) reduce el dado de diplomacia. Si no tenías dado, la tirada falla automáticamente. Pero si la otra persona tiene esta misma dote de tu mismo tema, aumenta el dado de diplomacia."
           },
           {
             "type": "dieStep",
+            "value": -1,
             "scopes": [
-              "diplomacy",
-              "mind"
+              "diplomacy"
             ],
-            "value": 1,
-            "target": "scoped",
-            "label": "Otako"
+            "optional": true,
+            "target": "second",
+            "label": "Otako (mejorar la relación)"
           },
           {
             "type": "dieStep",
+            "value": 1,
             "scopes": [
-              "diplomacy",
-              "mind"
+              "diplomacy"
             ],
-            "value": -1,
-            "label": "Otako"
+            "optional": true,
+            "target": "second",
+            "label": "Otako (la otra persona es del mismo tema)"
           }
         ]
       }
@@ -405,7 +423,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "deception",
               "will"
             ],
             "label": "Paranoico",
@@ -413,13 +430,13 @@
           },
           {
             "type": "dieStep",
+            "value": 1,
             "scopes": [
-              "deception",
               "will"
             ],
-            "value": 1,
-            "target": "scoped",
-            "label": "Paranoico"
+            "optional": true,
+            "target": "second",
+            "label": "Paranoico (te engañan o te hacen diplomacia)"
           }
         ]
       }
@@ -435,19 +452,17 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [
-              "mind"
-            ],
+            "scopes": [],
             "label": "Perroflauta",
             "text": "Has hecho lo mínimo en la vida para sobrevivir, y ha sido bastante poco. Cualquier tarea que sea durante un tiempo medio tira dos veces la habilidad correspondiente y quédate con el menor de los resultados. Si no tenías habilidad, falla automáticamente. Si fallas la tirada, estás haciendo el vago en lugar de hacer la tarea que deberías."
           },
           {
             "type": "disadvantage",
-            "scopes": [
-              "mind"
-            ],
             "value": 1,
-            "label": "Perroflauta"
+            "scopes": [],
+            "optional": true,
+            "target": "second",
+            "label": "Perroflauta (tarea de tiempo medio)"
           }
         ]
       }
@@ -463,19 +478,17 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [
-              "mind"
-            ],
+            "scopes": [],
             "label": "Pésimo para los negocios",
             "text": "Cada vez que hagas una tirada para intentar conseguir dinero, tira dos veces la habilidad correspondiente y quédate con el peor resultado. Si no tenías habilidad, falla automáticamente."
           },
           {
             "type": "disadvantage",
-            "scopes": [
-              "mind"
-            ],
             "value": 1,
-            "label": "Pésimo para los negocios"
+            "scopes": [],
+            "optional": true,
+            "target": "second",
+            "label": "Pésimo para los negocios (ganar dinero)"
           }
         ]
       }
@@ -492,7 +505,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "mind",
               "perception"
             ],
             "label": "Sordo como una tapia",
@@ -561,11 +573,12 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "science",
               "profession"
             ],
-            "value": 2,
+            "optional": true,
             "label": "100tifico"
           }
         ]
@@ -583,19 +596,20 @@
           {
             "type": "reminder",
             "scopes": [
-              "science",
-              "investigation"
+              "investigation",
+              "science"
             ],
             "label": "Análisis metódico",
             "text": "Requisitos: Ciencia 1d4, Investigación 1d6 Al investigar a fondo un objeto o escena, se bonifica en 2 la tirada."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "science",
-              "investigation"
-            ],
             "value": 2,
+            "scopes": [
+              "investigation",
+              "science"
+            ],
+            "optional": true,
             "label": "Análisis metódico"
           }
         ]
@@ -613,8 +627,8 @@
           {
             "type": "reminder",
             "scopes": [
-              "science",
-              "medicine"
+              "medicine",
+              "science"
             ],
             "label": "Anestesista",
             "text": "Requisitos: Medicina 1d6, Ciencia 1d4 Sabes como crear, reconocer y administrar todo tipo de sedantes en el cuerpo humano. Aumenta en 2 la dificultad para que tu objetivo resista cualquier sedación creada por tí."
@@ -651,14 +665,23 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [],
+            "scopes": [
+              "stealth",
+              "acrobatics",
+              "deception"
+            ],
             "label": "Carterista de la pista",
             "text": "Siempre que hagas una tirada para robar, bonifica en 2 la tirada."
           },
           {
             "type": "bonus",
-            "scopes": [],
             "value": 2,
+            "scopes": [
+              "stealth",
+              "acrobatics",
+              "deception"
+            ],
+            "optional": true,
             "label": "Carterista de la pista"
           }
         ]
@@ -700,6 +723,15 @@
             ],
             "label": "Centro de todas las miradas",
             "text": "Requisitos: Interpretación 1d6 Al hacer una interpretación para atraer la atención de un grupo de personas, baja en 2 su dificultad."
+          },
+          {
+            "type": "difficulty",
+            "value": 2,
+            "scopes": [
+              "performance"
+            ],
+            "optional": true,
+            "label": "Centro de todas las miradas (atraer a un grupo)"
           }
         ]
       }
@@ -716,19 +748,20 @@
           {
             "type": "reminder",
             "scopes": [
-              "profession",
-              "survival"
+              "survival",
+              "profession"
             ],
             "label": "Cocinero",
             "text": "Requisitos: Supervivencia 1d4 Cuando uses supervivencia o tu profesión para cocinar, bonifica en 2 la tirada."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "profession",
-              "survival"
-            ],
             "value": 2,
+            "scopes": [
+              "survival",
+              "profession"
+            ],
+            "optional": true,
             "label": "Cocinero"
           }
         ]
@@ -746,19 +779,18 @@
           {
             "type": "reminder",
             "scopes": [
-              "religion",
-              "stealth"
+              "religion"
             ],
             "label": "Conocimiento de religiones blasfemas",
             "text": "Conoces otras religiones y dioses , incluidas las ocultistas. Para identificar una religión, bonifica en 1 la tirada."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "religion",
-              "stealth"
-            ],
             "value": 1,
+            "scopes": [
+              "religion"
+            ],
+            "optional": true,
             "label": "Conocimiento de religiones blasfemas"
           }
         ]
@@ -803,10 +835,10 @@
           },
           {
             "type": "noFumble",
+            "value": 1,
             "scopes": [
               "science"
             ],
-            "value": 1,
             "label": "Da Vinki"
           }
         ]
@@ -844,7 +876,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "deception",
               "performance"
             ],
             "label": "Disfraz",
@@ -852,11 +883,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
-              "deception",
               "performance"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Disfraz"
           }
         ]
@@ -903,10 +934,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "diplomacy"
             ],
-            "value": 2,
+            "optional": true,
             "label": "El bicho pelao"
           }
         ]
@@ -923,14 +955,23 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [],
+            "scopes": [
+              "survival",
+              "nature",
+              "diplomacy"
+            ],
             "label": "Encantador animal",
             "text": "Tienes una conexión especial con los animales. Bonifica en 2 la tirada de manejo de animales y reduce en 1 la dificultad para domesticar criaturas."
           },
           {
             "type": "bonus",
-            "scopes": [],
             "value": 2,
+            "scopes": [
+              "survival",
+              "nature",
+              "diplomacy"
+            ],
+            "optional": true,
             "label": "Encantador animal"
           }
         ]
@@ -955,10 +996,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "stealth"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Engranaje de metal sólido"
           }
         ]
@@ -983,10 +1025,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "acrobatics"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Equilibrio"
           }
         ]
@@ -1023,27 +1066,23 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [
-              "science"
-            ],
+            "scopes": [],
             "label": "Específico",
             "text": "Te centras en una rama de una habilidad específica. Para esta rama tienes un bonifica en 1. Pero se penaliza en 1 para todas las otras habilidades de esta habilidad. Esta habilidad puede seleccionarse varias veces, cada vez con una rama diferente. El penalizador solo se aplica a las ramas que no reciban el bonifica en 1 por esta dote. *Ejemplo: si coges esta habilidad para informática dentro de la habilidad ciencia tienes un bonifica en 1 para todo lo que tenga que ver con informática, pero un \\-1 a todo lo demás, como biología por ejemplo.*"
           },
           {
             "type": "bonus",
-            "scopes": [
-              "science"
-            ],
             "value": 1,
-            "label": "Específico"
+            "scopes": [],
+            "optional": true,
+            "label": "Específico (rama elegida)"
           },
           {
             "type": "penalty",
-            "scopes": [
-              "science"
-            ],
             "value": 1,
-            "label": "Específico"
+            "scopes": [],
+            "optional": true,
+            "label": "Específico (otra rama de la habilidad)"
           }
         ]
       }
@@ -1067,10 +1106,11 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "investigation"
             ],
-            "value": 1,
+            "optional": true,
             "label": "Fan de las novelas de detectives"
           }
         ]
@@ -1088,21 +1128,18 @@
           {
             "type": "reminder",
             "scopes": [
-              "investigation",
-              "medicine",
-              "mind"
+              "medicine"
             ],
             "label": "Forense",
             "text": "Requisitos: Medicina 1d6, Investigación 1d4 Puedes usar medicina en lugar de investigación para examinar la escena de un asesinato. Adicionalmente, bonifica en 1 la tirada de medicina para descubrir cómo ha fallecido un ser vivo."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "investigation",
-              "medicine",
-              "mind"
-            ],
             "value": 1,
+            "scopes": [
+              "medicine"
+            ],
+            "optional": true,
             "label": "Forense"
           }
         ]
@@ -1120,20 +1157,20 @@
           {
             "type": "reminder",
             "scopes": [
-              "deception",
-              "diplomacy"
+              "diplomacy",
+              "deception"
             ],
             "label": "Guapa, guapa guapa y guapaaa",
             "text": "Prohibido en caso de coger Feo de cojones Estás que toma pan y moja. Tus tiradas de diplomacia y engaño bonifican en 2 si eres visible hacía estas personas."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "deception",
-              "diplomacy"
-            ],
             "value": 2,
-            "label": "Guapa, guapa guapa y guapaaa"
+            "scopes": [
+              "diplomacy",
+              "deception"
+            ],
+            "label": "Guapa (si te ven)"
           }
         ]
       }
@@ -1197,10 +1234,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "intimidation"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Igual con 9 dedos vas bien"
           }
         ]
@@ -1217,15 +1255,11 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [],
+            "scopes": [
+              "driving"
+            ],
             "label": "Kansei Dorifto",
             "text": "Requisitos: Conducir El vehículo en concreto es tu pasión. Cada vez que vayas a hacer una maniobra arriesgada con el vehículo, el dado pasa a ser 1d8 y además se bonifica en 1 la tirada.Puede escogerse varias veces, una vez por cada vez que hayas escogido “Conducir”-"
-          },
-          {
-            "type": "bonus",
-            "scopes": [],
-            "value": 1,
-            "label": "Kansei Dorifto"
           }
         ]
       }
@@ -1249,11 +1283,21 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "diplomacy"
             ],
-            "value": 1,
-            "label": "Ligón"
+            "optional": true,
+            "label": "Ligón (grupo elegido)"
+          },
+          {
+            "type": "difficulty",
+            "value": -1,
+            "scopes": [
+              "diplomacy"
+            ],
+            "optional": true,
+            "label": "Ligón (resto de grupos)"
           }
         ]
       }
@@ -1277,10 +1321,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "deception"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Maestro de disfraces"
           }
         ]
@@ -1305,10 +1350,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "medicine"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Manos sanadoras"
           }
         ]
@@ -1344,29 +1390,29 @@
           {
             "type": "reminder",
             "scopes": [
-              "intimidation",
-              "evasion"
+              "intimidation"
             ],
             "label": "Mastodonte",
             "text": "Prohibido en caso de coger Retaco. Eres una persona muy grande, aumenta tu aguante en 1. Si intentas intimidar a alguien más pequeño que tú, bonifica en 1 la tirada de intimidación. A cambio, tienes un penalizador de 1 en las tiradas de esquiva."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "intimidation",
-              "evasion"
-            ],
             "value": 1,
-            "label": "Mastodonte"
+            "scopes": [
+              "intimidation"
+            ],
+            "optional": true,
+            "label": "Mastodonte (intimidar a alguien más pequeño)"
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "endurance",
+            "value": 1
           },
           {
-            "type": "penalty",
-            "scopes": [
-              "intimidation",
-              "evasion"
-            ],
-            "value": 1,
-            "label": "Mastodonte"
+            "target": "evasionPenalty",
+            "value": 1
           }
         ]
       }
@@ -1391,11 +1437,12 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "science",
               "medicine"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Medicina química"
           }
         ]
@@ -1413,18 +1460,21 @@
           {
             "type": "reminder",
             "scopes": [
-              "perception"
+              "perception",
+              "mind"
             ],
             "label": "Memoria fotográfica",
             "text": "Tienes una memoria excepcional para los detalles visuales. Bonifica en 2 la tirada de conocimiento o percepción cuando intentas recordar información visual."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "perception"
-            ],
             "value": 2,
-            "label": "Memoria fotográfica"
+            "scopes": [
+              "perception",
+              "mind"
+            ],
+            "optional": true,
+            "label": "Memoria fotográfica (recordar algo visual)"
           }
         ]
       }
@@ -1443,6 +1493,13 @@
             "scopes": [],
             "label": "Mente de tiburón",
             "text": "Siempre que hagas una tirada para intentar ganar dinero, disminuye en 2 su dificultad."
+          },
+          {
+            "type": "difficulty",
+            "value": 2,
+            "scopes": [],
+            "optional": true,
+            "label": "Mente de tiburón (ganar dinero)"
           }
         ]
       }
@@ -1479,15 +1536,42 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [],
+            "scopes": [
+              "deception",
+              "performance"
+            ],
             "label": "Mil caras",
             "text": "Bonifica en 1 cualquier acción para impersonar a otra persona. Si te preparas de antemano y sabes algo de información sobre la persona a disfrazarse, bonifica en 3. Si te disfrazas de alguien genérico, como un policía, bonifica en 2."
           },
           {
             "type": "bonus",
-            "scopes": [],
+            "value": 1,
+            "scopes": [
+              "deception",
+              "performance"
+            ],
+            "optional": true,
+            "label": "Mil caras (impersonar)"
+          },
+          {
+            "type": "bonus",
+            "value": 2,
+            "scopes": [
+              "deception",
+              "performance"
+            ],
+            "optional": true,
+            "label": "Mil caras (alguien genérico)"
+          },
+          {
+            "type": "bonus",
             "value": 3,
-            "label": "Mil caras"
+            "scopes": [
+              "deception",
+              "performance"
+            ],
+            "optional": true,
+            "label": "Mil caras (preparado y con información)"
           }
         ]
       }
@@ -1508,6 +1592,15 @@
             ],
             "label": "Monkey",
             "text": "Usar atletismo para escalar hace que bonifique en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "value": 2,
+            "scopes": [
+              "athletics"
+            ],
+            "optional": true,
+            "label": "Monkey (escalar)"
           }
         ]
       }
@@ -1524,7 +1617,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "mind",
               "perception"
             ],
             "label": "Murciélago",
@@ -1532,13 +1624,21 @@
           },
           {
             "type": "dieStep",
+            "value": 1,
             "scopes": [
-              "mind",
               "perception"
             ],
-            "value": 1,
-            "target": "both",
-            "label": "Murciélago"
+            "optional": true,
+            "label": "Murciélago (percepción auditiva)"
+          },
+          {
+            "type": "difficulty",
+            "value": 2,
+            "scopes": [
+              "perception"
+            ],
+            "optional": true,
+            "label": "Murciélago (localizar el sonido)"
           }
         ]
       }
@@ -1559,6 +1659,15 @@
             ],
             "label": "Nadador",
             "text": "Usar atletismo para nadar hace que bonifique en 2 la tirada."
+          },
+          {
+            "type": "bonus",
+            "value": 2,
+            "scopes": [
+              "athletics"
+            ],
+            "optional": true,
+            "label": "Nadador (nadar)"
           }
         ]
       }
@@ -1625,12 +1734,12 @@
           },
           {
             "type": "dieStep",
+            "value": 1,
             "scopes": [
               "perception"
             ],
-            "value": 1,
-            "target": "both",
-            "label": "Oído fino"
+            "optional": true,
+            "label": "Oído fino (percepción auditiva)"
           }
         ]
       }
@@ -1675,10 +1784,11 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "athletics"
             ],
-            "value": 1,
+            "optional": true,
             "label": "Practicante de un deporte"
           }
         ]
@@ -1745,10 +1855,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "athletics"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Profesional de un deporte"
           }
         ]
@@ -1786,36 +1897,35 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [
-              "athletics",
-              "melee",
-              "brawl",
-              "ranged"
-            ],
+            "scopes": [],
             "label": "Puntero",
             "text": "Elige una habilidad no combativa (ni maniobra de combate, ni combate con armas cac, ni puntería). Para esta habilidad selecciona una acción que harías con esa habilidad y obtén bonifica en 1 para esa acción. Pero elige otra acción de esa misma habilidad con la que tendrás un penaliza en 2 a partir de ahora. Ejemplo: *En atletismo,el bonifica para correr y el penaliza para nadar.*"
           },
           {
             "type": "bonus",
-            "scopes": [
-              "athletics",
-              "melee",
-              "brawl",
-              "ranged"
-            ],
             "value": 1,
-            "label": "Puntero"
+            "scopes": [],
+            "optional": true,
+            "excludeScopes": [
+              "attack",
+              "melee",
+              "ranged",
+              "brawl"
+            ],
+            "label": "Puntero (acción elegida)"
           },
           {
             "type": "penalty",
-            "scopes": [
-              "athletics",
-              "melee",
-              "brawl",
-              "ranged"
-            ],
             "value": 2,
-            "label": "Puntero"
+            "scopes": [],
+            "optional": true,
+            "excludeScopes": [
+              "attack",
+              "melee",
+              "ranged",
+              "brawl"
+            ],
+            "label": "Puntero (acción contraria)"
           }
         ]
       }
@@ -1839,10 +1949,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "survival"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Rastreador"
           }
         ]
@@ -1860,20 +1971,30 @@
           {
             "type": "reminder",
             "scopes": [
-              "intimidation",
-              "evasion"
+              "intimidation"
             ],
             "label": "Retaco",
             "text": "Prohibido en caso de coger Mastodonte. Te acercas más a un enano de fantasía que a un humano normal, la gente lo tiene más difícil para darte de ostias, tu dado de esquiva aumenta de forma permanente, pero cada vez que quieres intimidar a alguien más alto que tú, reduce tu dado de intimidación y tu aguante reduce en 1."
           },
           {
             "type": "dieStep",
-            "scopes": [
-              "intimidation",
-              "evasion"
-            ],
             "value": -1,
-            "label": "Retaco"
+            "scopes": [
+              "intimidation"
+            ],
+            "optional": true,
+            "target": "second",
+            "label": "Retaco (intimidar a alguien más alto)"
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "step.defense.evasion",
+            "value": 1
+          },
+          {
+            "target": "endurance",
+            "value": -1
           }
         ]
       }
@@ -1897,11 +2018,12 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "perception"
             ],
-            "value": 1,
-            "label": "Sentido del peligro"
+            "optional": true,
+            "label": "Sentido del peligro (amenaza inmediata)"
           }
         ]
       }
@@ -1925,10 +2047,11 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "stealth"
             ],
-            "value": 1,
+            "optional": true,
             "label": "Stalker"
           }
         ]
@@ -1953,10 +2076,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "survival"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Topo"
           }
         ]
@@ -1974,7 +2098,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "mind",
               "perception"
             ],
             "label": "Vista de águila",
@@ -1982,13 +2105,21 @@
           },
           {
             "type": "dieStep",
+            "value": 1,
             "scopes": [
-              "mind",
               "perception"
             ],
-            "value": 1,
-            "target": "both",
-            "label": "Vista de águila"
+            "optional": true,
+            "label": "Vista de águila (percepción visual)"
+          },
+          {
+            "type": "difficulty",
+            "value": 2,
+            "scopes": [
+              "perception"
+            ],
+            "optional": true,
+            "label": "Vista de águila (niebla u obstáculo parcial)"
           }
         ]
       }
@@ -2012,12 +2143,12 @@
           },
           {
             "type": "dieStep",
+            "value": 1,
             "scopes": [
               "perception"
             ],
-            "value": 1,
-            "target": "both",
-            "label": "Vista de cazador"
+            "optional": true,
+            "label": "Vista de cazador (percepción visual)"
           }
         ]
       }
@@ -2035,20 +2166,19 @@
             "type": "reminder",
             "scopes": [
               "deception",
-              "diplomacy",
-              "mind"
+              "diplomacy"
             ],
             "label": "Voz encantadora",
             "text": "Tu voz tiene un efecto hipnótico sobre las personas. Bonifica en 2 la tirada de engaño o diplomacia cuando hablas directamente a alguien a solas."
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "deception",
-              "diplomacy",
-              "mind"
+              "diplomacy"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Voz encantadora"
           }
         ]
@@ -2073,10 +2203,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "society"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Yo conozco a uno…"
           }
         ]
@@ -2101,10 +2232,11 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
               "intimidation"
             ],
-            "value": 2,
+            "optional": true,
             "label": "Yo y mi pandilla"
           }
         ]
@@ -2129,11 +2261,21 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "will"
             ],
+            "optional": true,
+            "label": "¿Miedo? (solo)"
+          },
+          {
+            "type": "bonus",
             "value": 3,
-            "label": "¿Miedo? ¿Eso que es?"
+            "scopes": [
+              "will"
+            ],
+            "optional": true,
+            "label": "¿Miedo? (acompañado)"
           }
         ]
       }
@@ -2150,19 +2292,18 @@
           {
             "type": "reminder",
             "scopes": [
-              "brawl",
-              "mind"
+              "brawl"
             ],
             "label": "Agarre",
             "text": "Bonifica en 1 la tirada de maniobra de lucha para agarrar, empujar, tirar y otras maniobras no destinadas a hacer daño específicamente."
           },
           {
             "type": "bonus",
-            "scopes": [
-              "brawl",
-              "mind"
-            ],
             "value": 1,
+            "scopes": [
+              "brawl"
+            ],
+            "optional": true,
             "label": "Agarre"
           }
         ]
@@ -2180,7 +2321,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "crafting",
               "ranged"
             ],
             "label": "Apuntado concentrado",
@@ -2188,12 +2328,12 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
-              "crafting",
               "ranged"
             ],
-            "value": 2,
-            "label": "Apuntado concentrado"
+            "optional": true,
+            "label": "Apuntado concentrado (turno entero apuntando)"
           }
         ]
       }
@@ -2238,10 +2378,11 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "brawl"
             ],
-            "value": 1,
+            "optional": true,
             "label": "Boxing"
           }
         ]
@@ -2259,19 +2400,10 @@
           {
             "type": "reminder",
             "scopes": [
-              "ranged"
+              "ranged-attack"
             ],
             "label": "Cálculo de tiro",
             "text": "Al usar puntería para tu tirada de ataque, incrementa al siguiente rango de distancia el alcance de tu arma.."
-          },
-          {
-            "type": "dieStep",
-            "scopes": [
-              "ranged"
-            ],
-            "value": 1,
-            "target": "scoped",
-            "label": "Cálculo de tiro"
           }
         ]
       }
@@ -2288,7 +2420,7 @@
           {
             "type": "reminder",
             "scopes": [
-              "ranged"
+              "ranged-attack"
             ],
             "label": "Cubrirte no te servirá",
             "text": "Cada vez que uses puntería para atacar, ignora 1 punto de la cobertura."
@@ -2354,12 +2486,13 @@
           },
           {
             "type": "bonus",
+            "value": 1,
             "scopes": [
               "melee",
               "ranged"
             ],
-            "value": 1,
-            "label": "Entrenado en un arma"
+            "optional": true,
+            "label": "Entrenado en un arma (el arma elegida)"
           }
         ]
       }
@@ -2376,10 +2509,16 @@
           {
             "type": "reminder",
             "scopes": [
-              "power"
+              "unarmed"
             ],
             "label": "Ganador del torneo del puño de hierro",
             "text": "Has llegado a la cúspide de potencia del cuerpo humano. Tu ataque con “cuerpo(desarmado)” tiene un Daño equivalente a tu puntuación de dado de potencia si no ejecutas un ataque múltiple."
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "flag.ironFist",
+            "value": 1
           }
         ]
       }
@@ -2416,11 +2555,18 @@
           {
             "type": "reminder",
             "scopes": [
-              "ranged",
-              "mind"
+              "attack"
             ],
             "label": "Golpe vital",
             "text": "Requisitos: Puntería 1d12 o maniobras de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16."
+          },
+          {
+            "type": "critical",
+            "value": 1,
+            "scopes": [
+              "attack"
+            ],
+            "label": "Golpe vital (crítico al golpear)"
           }
         ]
       }
@@ -2437,11 +2583,20 @@
           {
             "type": "reminder",
             "scopes": [
-              "melee",
-              "ranged"
+              "attack"
             ],
             "label": "Guerrero",
             "text": "Requisitos: Maniobras de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles."
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "endurance",
+            "value": 1
+          },
+          {
+            "target": "flag.warrior",
+            "value": 1
           }
         ]
       }
@@ -2457,15 +2612,20 @@
         "rules": [
           {
             "type": "reminder",
-            "scopes": [],
+            "scopes": [
+              "ranged-attack"
+            ],
             "label": "Jackpot",
             "text": "Requisitos: Dual, disparar dos armas a distancia con la etiqueta “dual” al mismo objetivo. No puedes separar este ataque, realiza un único ataque (en lugar de 2 como sería normal) contra un objetivo con bonifica en 1. Si aciertas el ataque, suma el Daño de ambas armas para este ataque. *Ejemplo: Tienes dos pistolas con Daño 3 y la etiqueta “dual”, pues si usas esta habilidad y aciertas, es un único ataque con Daño 6.*"
           },
           {
             "type": "bonus",
-            "scopes": [],
             "value": 1,
-            "label": "Jackpot"
+            "scopes": [
+              "ranged-attack"
+            ],
+            "optional": true,
+            "label": "Jackpot (ataque único con dos armas duales)"
           }
         ]
       }
@@ -2482,11 +2642,20 @@
           {
             "type": "reminder",
             "scopes": [
-              "brawl",
-              "evasion"
+              "evasion",
+              "attack"
             ],
             "label": "Parry",
             "text": "Si esquivas un golpe a corta distancia por 5 o más y tienes un arma cac o tienes las manos libres para hacer una maniobra de lucha puedes realizar un contraataque brutal, realiza una tirada de ataque con bonificación 3."
+          },
+          {
+            "type": "bonus",
+            "value": 3,
+            "scopes": [
+              "attack"
+            ],
+            "optional": true,
+            "label": "Parry (contraataque tras esquivar por 5 o más)"
           }
         ]
       }
@@ -2503,8 +2672,6 @@
           {
             "type": "reminder",
             "scopes": [
-              "brawl",
-              "dexterity",
               "evasion"
             ],
             "label": "Practicante marcial",
@@ -2512,13 +2679,12 @@
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
-              "brawl",
-              "dexterity",
               "evasion"
             ],
-            "value": 2,
-            "label": "Practicante marcial"
+            "optional": true,
+            "label": "Practicante marcial (te atacan con maniobra de lucha)"
           }
         ]
       }
@@ -2535,22 +2701,38 @@
           {
             "type": "reminder",
             "scopes": [
-              "mind",
-              "evasion"
+              "evasion",
+              "attack"
             ],
             "label": "Posición defensiva",
             "text": "Te preparas mentalmente para un ataque. Al comienzo de tu turno, puedes elegir que tus tiradas con habilidades ofensivas ven reducido su dado, pero aumenta tu aguante en 1 y bonifica en 2 tu tirada de esquiva."
           },
           {
             "type": "bonus",
+            "value": 2,
             "scopes": [
-              "mind",
               "evasion"
             ],
-            "value": 2,
+            "label": "Posición defensiva"
+          },
+          {
+            "type": "dieStep",
+            "value": -1,
+            "scopes": [
+              "attack"
+            ],
+            "target": "second",
             "label": "Posición defensiva"
           }
-        ]
+        ],
+        "modifiers": [
+          {
+            "target": "endurance",
+            "value": 1
+          }
+        ],
+        "toggle": true,
+        "active": false
       }
     },
     {
@@ -2565,6 +2747,7 @@
           {
             "type": "reminder",
             "scopes": [
+              "attack",
               "evasion"
             ],
             "label": "Posición ofensiva",
@@ -2572,21 +2755,31 @@
           },
           {
             "type": "bonus",
-            "scopes": [
-              "evasion"
-            ],
             "value": 1,
+            "scopes": [
+              "attack"
+            ],
             "label": "Posición ofensiva"
           },
           {
             "type": "dieStep",
+            "value": -1,
             "scopes": [
               "evasion"
             ],
-            "value": -1,
+            "target": "second",
+            "floorOne": true,
             "label": "Posición ofensiva"
           }
-        ]
+        ],
+        "modifiers": [
+          {
+            "target": "endurance",
+            "value": -1
+          }
+        ],
+        "toggle": true,
+        "active": false
       }
     },
     {
@@ -2628,12 +2821,14 @@
             "text": "Requisitos: Maniobras de lucha 1d8, Practicante marcial Cuando intenten atacarte con maniobra de lucha y falla, puedes aprovechar la inercia del esquive para dar un contraataque. Este ataque es cualquier acción de maniobra de lucha y se hace con el dado de maniobras de lucha reducido. Si tienes Agarre o Boxing para la respectiva maniobra, en su lugar no reduces el dado, pero no obtienes la bonificación. Especial: Si tienes la dote de “Parry” no tienes que reducir el dado de maniobras de lucha y aparte obtienes un bonifica en 1."
           },
           {
-            "type": "bonus",
+            "type": "dieStep",
+            "value": -1,
             "scopes": [
               "brawl"
             ],
-            "value": 1,
-            "label": "Punto débil"
+            "optional": true,
+            "target": "second",
+            "label": "Punto débil (contraataque sin Agarre/Boxing)"
           }
         ]
       }
@@ -2706,6 +2901,7 @@
         "damage": 1,
         "skill": "brawl",
         "attribute": "power",
+        "attributeAlt": "dexterity",
         "range": "contact",
         "properties": "Dual, Daño 1",
         "ammo": {
@@ -2713,8 +2909,7 @@
           "max": 0
         },
         "quantity": 1,
-        "equipped": false,
-        "attributeAlt": "dexterity"
+        "equipped": false
       }
     },
     {
@@ -2725,6 +2920,7 @@
         "damage": 3,
         "skill": "melee",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "contact",
         "properties": "Dual, Daño 3, Arrojadiza",
         "ammo": {
@@ -2743,6 +2939,7 @@
         "damage": 2,
         "skill": "melee",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "contact",
         "properties": "Dual,Daño 2, Arrojadiza, Forzuda",
         "ammo": {
@@ -2761,6 +2958,7 @@
         "damage": 5,
         "skill": "melee",
         "attribute": "power",
+        "attributeAlt": "dexterity",
         "range": "contact",
         "properties": "Daño 5, Contusión 7",
         "ammo": {
@@ -2768,8 +2966,7 @@
           "max": 0
         },
         "quantity": 1,
-        "equipped": false,
-        "attributeAlt": "dexterity"
+        "equipped": false
       }
     },
     {
@@ -2780,6 +2977,7 @@
         "damage": 5,
         "skill": "melee",
         "attribute": "power",
+        "attributeAlt": "dexterity",
         "range": "contact",
         "properties": "Daño 5, Contusión 7, Golpe concentrado 5",
         "ammo": {
@@ -2787,8 +2985,7 @@
           "max": 0
         },
         "quantity": 1,
-        "equipped": false,
-        "attributeAlt": "dexterity"
+        "equipped": false
       }
     },
     {
@@ -2799,6 +2996,7 @@
         "damage": 6,
         "skill": "melee",
         "attribute": "power",
+        "attributeAlt": "",
         "range": "contact",
         "properties": "Daño 6, Contusión 4",
         "ammo": {
@@ -2817,6 +3015,7 @@
         "damage": 5,
         "skill": "melee",
         "attribute": "power",
+        "attributeAlt": "",
         "range": "contact",
         "properties": "Daño 5, Contusión 6, Rango, Arrojadiza",
         "ammo": {
@@ -2835,6 +3034,7 @@
         "damage": 2,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 2, Munición, Sin recarga",
         "ammo": {
@@ -2853,6 +3053,7 @@
         "damage": 3,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 3, Munición",
         "ammo": {
@@ -2871,6 +3072,7 @@
         "damage": 4,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 4, Munición (12), Dual",
         "ammo": {
@@ -2889,6 +3091,7 @@
         "damage": 5,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 5, Munición (6), Dual",
         "ammo": {
@@ -2907,6 +3110,7 @@
         "damage": 5,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 5, Munición (20)",
         "ammo": {
@@ -2925,6 +3129,7 @@
         "damage": 6,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 6, Munición (10)",
         "ammo": {
@@ -2943,6 +3148,7 @@
         "damage": 5,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 5, Munición (4), Quemarropa 8",
         "ammo": {
@@ -2961,6 +3167,7 @@
         "damage": 6,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 6, Munición (30), Potencia 1d6",
         "ammo": {
@@ -2979,6 +3186,7 @@
         "damage": 7,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 7, Munición (1), Ataque único, Rango",
         "ammo": {
@@ -2997,6 +3205,7 @@
         "damage": 8,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Daño 8, Área 6, Munición (1), Potencia 1d6, Ataque único, Antiestructura",
         "ammo": {
@@ -3015,6 +3224,7 @@
         "damage": 0,
         "skill": "ranged",
         "attribute": "dexterity",
+        "attributeAlt": "",
         "range": "medium",
         "properties": "Área 6, Consumible",
         "ammo": {

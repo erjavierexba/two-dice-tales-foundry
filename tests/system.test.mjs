@@ -67,3 +67,22 @@ assert.match(css, /@container tdt-sheet/);
 assert.doesNotMatch(css, /height:\s*calc\(100% - 154px\)/);
 
 console.log(`TDT system checks: OK (${relative(process.cwd(), root)})`);
+
+// Dotes del básico: las reglas condicionales salen desmarcadas y ninguna regla mecánica
+// con ámbito vacío se aplica sola a todas las tiradas.
+{
+  const basic = JSON.parse(await read("data/basic-content.json"));
+  const feats = basic.items.filter(item => item.type === "feat");
+  for (const feat of feats) {
+    for (const entry of feat.system.rules ?? []) {
+      if (entry.type === "reminder") continue;
+      if (!entry.scopes?.length) assert.ok(entry.optional, `${feat.name}: una regla sin ámbito debe ser opcional`);
+    }
+  }
+  const byName = name => feats.find(feat => feat.name === name);
+  assert.ok(byName("Cálculo de tiro").system.rules.every(entry => entry.type === "reminder"), "Cálculo de tiro solo amplía el alcance");
+  assert.ok(byName("Kansei Dorifto").system.rules.every(entry => entry.type === "reminder"), "Kansei ya lo aplica la tirada de conducir");
+  assert.deepEqual(byName("Retaco").system.modifiers.find(entry => entry.target === "step.defense.evasion")?.value, 1);
+  assert.equal(byName("Posición ofensiva").system.toggle, true);
+  assert.ok(byName("Gordo").system.rules.some(entry => entry.type === "disadvantage" && entry.target === "second"), "Gordo tira dos veces la habilidad");
+}

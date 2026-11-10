@@ -12,6 +12,14 @@ export function stepDie(value, steps = 0) {
   return DIE_SIZES[Math.max(0, Math.min(DIE_SIZES.length - 1, index + Number(steps || 0)))];
 }
 
+/** Steps a die where a d4 reduced further becomes 0 (a fixed 1). */
+export function stepDieToOne(value, steps = 0) {
+  const die = normalizeDie(value);
+  const n = Number(steps || 0);
+  if (die && n < 0 && DIE_SIZES.indexOf(die) + n < 0) return 0;
+  return stepDie(value, n);
+}
+
 /** Steps a die that may not drop below d4 (attributes, defenses, mecha dice). */
 export function stepRolledDie(value, steps = 0) {
   return stepDie(normalizeDie(value) || 4, steps) || 4;
@@ -40,7 +48,7 @@ export function applyBonus(results, faces, allocations) {
  * Resolves the two (or three, with "vincula voluntad") dice of a TDT roll.
  * The optional third die is the pilot's will die: it can join a critical but never a fumble.
  */
-export function resolveTdtRoll({ rawResults, faces, bonusAllocations = [0, 0, 0], penalty = 0, difficulty = 0, flat = 0 }) {
+export function resolveTdtRoll({ rawResults, faces, bonusAllocations = [0, 0, 0], penalty = 0, difficulty = 0, flat = 0, criticalExtra = 0 }) {
   const adjusted = applyBonus(rawResults, faces, bonusAllocations);
   const [a, b] = adjusted;
   const hasPair = faces[0] > 0 && faces[1] > 0;
@@ -58,6 +66,8 @@ export function resolveTdtRoll({ rawResults, faces, bonusAllocations = [0, 0, 0]
     criticalValue = adjusted[2];
     criticalBonus = adjusted[2];
   }
+  // Golpe vital y similares: el número del crítico se suma más veces.
+  if (criticalBonus > 0) criticalBonus += criticalValue * Math.max(0, Number(criticalExtra) || 0);
   const isCritical = criticalBonus > 0;
   const subtotal = adjusted.reduce((total, value) => total + value, 0) + (Number(flat) || 0);
   const appliedPenalty = Math.max(0, Number(penalty) || 0);
@@ -84,7 +94,7 @@ export function resolveTdtRoll({ rawResults, faces, bonusAllocations = [0, 0, 0]
  * Picks the best way to spread "bonifica X" between the dice (never on a 1, never above the maximum).
  * Prefers the highest total, then a critical, then spending as little as possible.
  */
-export function chooseAutomaticBonus(rawResults, faces, bonus, { flat = 0 } = {}) {
+export function chooseAutomaticBonus(rawResults, faces, bonus, { flat = 0, criticalExtra = 0 } = {}) {
   const available = Math.max(0, Number(bonus) || 0);
   const zero = rawResults.map(() => 0);
   if (!available) return zero;
@@ -99,7 +109,7 @@ export function chooseAutomaticBonus(rawResults, faces, bonus, { flat = 0 } = {}
     if (index === rawResults.length) {
       const spent = current.reduce((sum, value) => sum + value, 0);
       if (spent > available) return;
-      const result = resolveTdtRoll({ rawResults, faces, bonusAllocations: current, flat });
+      const result = resolveTdtRoll({ rawResults, faces, bonusAllocations: current, flat, criticalExtra });
       const score = [result.total, result.isCritical ? 1 : 0, -spent];
       for (let i = 0; i < score.length; i++) {
         if (score[i] > bestScore[i]) {

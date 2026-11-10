@@ -683,14 +683,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Magia interior",
-        "text": "Esta es una dote mágica común: puede comprarse usando magia sencilla o círculos mágicos.\nYa no necesitas foco u objeto canalizador para usar la magia de tu tradición. Si juegas con círculos mágicos, tampoco necesitas foco para formular círculos. Además, una vez por escena puedes ignorar el aumento de dificultad por formular o lanzar magia en condiciones adversas si la causa es perder el foco, estar desarmado o tener las manos ocupadas."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -736,14 +729,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Alcance",
-        "text": "Puedes afectar objetivos que no estás tocando. Sin este modificador, el círculo solo afecta aquello que tocas, el propio círculo o tu cuerpo."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -784,14 +770,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Objetivo",
-        "text": "Puedes fijar el efecto sobre una criatura, objeto o punto concreto. Es obligatorio para efectos selectivos como invisibilidad personal, maldiciones individuales o calentar una cerradura sin calentar toda la puerta."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -807,14 +786,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Potencia",
-        "text": "Puedes aumentar intensidad, daño, volumen o fuerza. Ya no es obligatorio para hacer daño elemental básico, pero sí para superar Daño 3 o convertir un efecto en una amenaza seria."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -830,14 +802,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Aceleración",
-        "text": "Puedes aumentar la velocidad, reacción o ritmo de un fenómeno: fuego que prende rápido, viento más veloz, cuerpo acelerado, planta que crece de golpe."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -878,14 +843,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Duración",
-        "text": "Puedes mantener un efecto más allá del instante. Los efectos mantenidos importantes cuentan como concentración."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -901,14 +859,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Negación",
-        "text": "Puedes suprimir, bloquear, apagar o invertir una propiedad. Es necesario para invisibilidad, silencio, apagar fuego, negar peso o impedir curación."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -924,14 +875,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Propiedad",
-        "text": "Puedes especificar qué cualidad concreta alteras: calor, refracción, peso, dureza, conductividad, metabolismo, humedad, presión, sombra, magnetismo, etc."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -947,14 +891,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Modificador: Forma",
-        "text": "Puedes dar geometría al efecto: proyectil, muro, esfera, cono, filo, cadena, nube, anillo, jaula, escudo o línea."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -970,14 +907,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Círculo estable",
-        "text": "Una vez por escena, puedes repetir una prueba de formulación que haya fallado, pero debes aceptar el segundo resultado."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -993,14 +923,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Enlace de marcas",
-        "text": "Cuando formulas un círculo con varias marcas raíz, al calcular el coste de maná solo pagas el coste de la marca raíz más cara. Las demás marcas raíz cuestan 0 maná.\nLos modificadores de todas las marcas, los sobrecostes por polaridad y la dificultad de formulación se calculan con normalidad. Esta dote representa que sabes alimentar varias marcas desde una misma placa, no que el círculo sea más fácil de dibujar."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1067,14 +990,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Doble inscripción",
-        "text": "Puedes mantener dos efectos con Duración a la vez, siempre que no usen el mismo símbolo raíz."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1115,14 +1031,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Caligrafía de combate",
-        "text": "No aumentas dificultad por formular en combate cuerpo a cuerpo, salvo que estés agarrado, inmovilizado o sin manos libres."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1138,14 +1047,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Geómetra",
-        "text": "Cuando uses Forma y Área en el mismo círculo, puedes elegir una geometría segura: cono que evita aliados cercanos, muro curvado, esfera incompleta, línea partida, etc. Esto no sustituye Objetivo para seleccionar criaturas concretas."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1361,14 +1263,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Símbolo metafísico: Gravedad",
-        "text": "Te permite usar este símbolo metafísico en tus círculos."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1384,14 +1279,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Símbolo metafísico: Tiempo",
-        "text": "Te permite usar este símbolo metafísico en tus círculos."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1407,14 +1295,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Símbolo metafísico: Cinética",
-        "text": "Te permite usar este símbolo metafísico en tus círculos."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1430,14 +1311,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Marca sacra: Luz divina",
-        "text": "Marca sacra para tus círculos. Los clérigos obtienen una gratis con Iniciado clérigo."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1453,14 +1327,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Marca sacra: Oscuridad divina",
-        "text": "Marca sacra para tus círculos. Los clérigos obtienen una gratis con Iniciado clérigo."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1476,14 +1343,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Campo druídico: Animal",
-        "text": "Campo druídico para tus círculos. Los druidas obtienen uno gratis con Iniciado druídico."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1499,14 +1359,7 @@
       "tags": [],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Campo druídico: Planta",
-        "text": "Campo druídico para tus círculos. Los druidas obtienen uno gratis con Iniciado druídico."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1525,14 +1378,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Proyectil mágico",
-        "text": "Generas un ataque mágico apuntando a un objetivo. Este ataque es de alcance medio y puede ejecutar ataques múltiples. Tiene la propiedad Daño 3, pero al adquirir este dote, debes elegir el elemento que expulsas con tu proyectil mágico."
-       }
-      ],
+      "rules": [],
       "attack": {
        "enabled": true,
        "damage": 3,
@@ -1558,14 +1404,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Eficiencia mágica",
-        "text": "La etiqueta Incremental para proyectil mágico pasa a ser Incremental 1."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1612,14 +1451,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Cono de proyectil mágico",
-        "text": "Generas un ataque mágico en el área, que es un cono a corta distancia. Realiza una prueba de conjuro contra todos los objetivos. Hace el mismo daño que un proyectil mágico."
-       }
-      ],
+      "rules": [],
       "attack": {
        "enabled": true,
        "damage": 3,
@@ -1645,14 +1477,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Aumento de alcance",
-        "text": "Aumentan tanto el alcance de proyectil mágico como del cono de proyectil mágico a su siguiente distancia disponible. Si eliges tener el alcance aumentado, aumenta el coste del incremental en 1."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1670,14 +1495,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Flujo mágico",
-        "text": "Puedes sobrecargar tus hechizos, aumenta la propiedad “Daño” del proyectil mágico en 2. Si eliges tener el daño aumentado, aumenta el coste del incremental en 1."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1726,14 +1544,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Alcance restaurador",
-        "text": "Puedes usar la magia restauradora desde un alcance medio."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1752,14 +1563,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Transfusión de alma",
-        "text": "Curas a todas los seres vivos a medio alcance, sean aliados o no. Si deseas controlar a los afectados, la etiqueta Sacrificio pasa a ser Sacrificio 2+ el número de objetivos a seleccionar. Tú jamás puedes ser objetivo de tus curas. Esta habilidad cuenta como dos usos de magia restauradora."
-       }
-      ],
+      "rules": [],
       "sacrifice": 2
      }
     },
@@ -1778,14 +1582,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Telekinesis",
-        "text": "Puedes hacer una prueba de dificultad variable (según lo que quieras levantar) y lo puedes mover a una distancia media de ti. Puedes usarlo como ataque, el Daño dependerá del objeto levantado."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1803,14 +1600,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Encantar arma",
-        "text": "Encantas un arma u objeto al tocarlo para que sea más dañino. Aumenta en 1 el valor de la propiedad Daño del arma, si no tuviese Daño, añade Daño 1 a sus propiedades. Si usaste este hechizo en un objeto y vuelves a usarlo en otro, el primer objeto pierde el encantamiento."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1828,14 +1618,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Encantar armadura",
-        "text": "Encantas una armadura o prenda al tocarla para que sea más resistente. Aumenta en 1 el valor del aguante que tiene el objeto. Si usaste este hechizo en un objeto y vuelves a usarlo en otro, el primer objeto pierde el encantamiento"
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -1912,14 +1695,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Influenciar emoción",
-        "text": "Selecciona uno o varios objetivos, si uno de ellos se libera de la emoción se liberan todos. Puedes influir una emoción en tus objetivos: Ejemplos: Cariño, rabia, tristeza, jolgorio, amor… etc."
-       }
-      ],
+      "rules": [],
       "incremental": 2
      }
     },
@@ -2090,14 +1866,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Metamorfosis diminutiva",
-        "text": "Puedes usar metamorfosis con animales de mucha menor masa que tú, siendo como mínimo en tamaño un ratón o un hámster."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -2115,14 +1884,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Metamorfosis aumentativa",
-        "text": "Puedes usar metamorfosis con animales de mucha mayor masa que tú, siendo como máximo en tamaño un elefante o una ballena."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -2141,14 +1903,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Metamorfosis duradera",
-        "text": "Haces que la metamorfosis dura una hora. Sigues teniendo que esperar 1 hora para volver a usarla."
-       }
-      ],
+      "rules": [],
       "incremental": 1
      }
     },
@@ -2168,14 +1923,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Metamorfosis infinita",
-        "text": "Haces que la metamorfosis dura 24 horas. Si lo usas así, no hay que esperar para volver a usar el hechizo."
-       }
-      ],
+      "rules": [],
       "incremental": 6
      }
     },
@@ -2282,6 +2030,14 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "attack"
+        ],
+        "label": "Caza",
+        "text": "Puedes seleccionar una criatura, de aquí en adelante tu presa. Aumenta el dado de tu habilidad principal de ataque una vez por turno. Además, puedes volver a tirar todas las tiradas para rastrear a tu presa, bien obteniendo información de debilidades como su posición o su entorno, a discreción del DJ si aplica o no. Solo puedes tener una presa activa a la vez."
+       },
+       {
         "type": "dieStep",
         "value": 1,
         "scopes": [
@@ -2379,14 +2135,7 @@
       ],
       "module": "fantasy",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Pozo interior",
-        "text": "Una vez por descanso, al quedarte a 0 de maná, recuperas 1d4 maná al final de tu turno."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -2775,25 +2524,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [
-         "mind"
-        ],
-        "label": "Autodestrucción",
-        "text": "Tu mecha tiene un modo de autodestrucción. Si el piloto está dentro, puede usar la salida de emergencia en caso de tenerla para salir ileso. Tras esta acción tu mecha queda inservible y habrá que hacer uno desde cero.\nSi el piloto consigue salir, la explosión hace:\n* Su tirada de ataque es 2d10 con “bonifica en 2”. E ignora 10+(5 x categoría) de aguante.\n* El diámetro de la explosión es igual a 4 veces la altura de tu mecha.\nSi el piloto no consigue salir, la explosión hace:\n* Tu personaje muere.\n* Su tirada es automáticamente un crítico de 10 ( con un total de 30 ). E ignora 10+(10 x categoría) de aguante o aguante, según se dé el caso.\n* El diámetro de la explosión es igual a 8 veces la altura de tu mecha."
-       },
-       {
-        "type": "bonus",
-        "scopes": [
-         "mind"
-        ],
-        "value": 2,
-        "label": "Autodestrucción",
-        "optional": true
-       }
-      ],
+      "rules": [],
       "inventoryCost": "2 x categoría"
      }
     },
@@ -2836,14 +2567,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Brazos extra",
-        "text": "En lugar de dos brazos, tienes cuatro. Los brazos interactúan como dos independientes, un par superior y un par inferior.\nEsta aclaración es para la propiedad de “golpe múltiple” cuando tienes armas en las manos. Es decir, si tuvieses un arma en una mano de tu par de brazos superior, tu par superior pierde el golpe múltiple, pero no tu par inferior."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "3 + 3 x categoría"
      }
     },
@@ -2860,14 +2584,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Caída neutralizada",
-        "text": "No recibes daño por caída. Un propulsor frena tu caída y te deja caer de pie desde cualquier altura."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "2 + categoría"
      }
     },
@@ -2910,22 +2627,18 @@
        {
         "type": "reminder",
         "scopes": [
-         "ranged",
-         "mind",
-         "maneuver"
+         "mecha-attack"
         ],
         "label": "Cañón doble de riel",
         "text": "Puedes cargar el disparo del cañón de rieles para un efecto brutalmente superior. La acción de tu turno pasa a ser cargar el disparo, no puedes moverte ni hacer nada más. Al no poder moverte, tus tiradas de maniobra táctica son (1d4+1).En tu segundo turno puedes disparar si tienes al menos una batería adicional. Entonces el cañón de riel pasa a tener el doble de “Daño” y aumenta su tirada de ataque a d12 + puntería. Obtienes bonifica 1 para este disparo. Tras el disparo, no puedes usar el cañón de rieles el siguiente turno, ni para cargar otro disparo ni para usarlo."
        },
        {
         "type": "bonus",
-        "scopes": [
-         "ranged",
-         "mind",
-         "maneuver"
-        ],
         "value": 1,
-        "label": "Cañón doble de riel",
+        "scopes": [
+         "mecha-attack"
+        ],
+        "label": "Cañón doble de riel (disparo cargado)",
         "optional": true
        }
       ],
@@ -2945,14 +2658,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Carguero",
-        "text": "Obtienes un compartimento para llevar pasajeros. El número de pasajeros que puedes llevar es igual a 2categoría. Es decir:\n| Categoría | Gente disponible para cargar |\n| :---: | :---: |\n| 1 | 2 |\n| 2 | 4 |\n| 3 | 8 |\n| 4 | 16 |\n| 5 | 32 |\n| 6 | 64 |"
-       }
-      ],
+      "rules": [],
       "inventoryCost": "4 x categoría"
      }
     },
@@ -2975,20 +2681,32 @@
        {
         "type": "reminder",
         "scopes": [
-         "crafting",
-         "mind"
+         "mecha-attack",
+         "robustness",
+         "maneuver",
+         "mecha"
         ],
         "label": "Componente Biológico",
         "text": "Especial: Esta dote sólo puede seleccionarse si tu mecha es categoría 3 o superior.\nEspecial 2: Tu DJ podría permitir solo seleccionar un subconjunto de habilidades de esta dote.\nDescripción: Tu mecha posee un núcleo biológico que le otorga habilidades y características únicas. Este núcleo puede estar compuesto por células vivas, un ser biológico, o algún tipo de organismo sintético integrado en la estructura del mecha. Este componente proporciona ventajas biológicas, pero también introduce ciertos riesgos.\nEfectos:\n* Segunda piel: El mecha gana la dote uno con la máquina si está tiene el 50% de sus puntos de vida máximos o ha usado conexión directa en este combate.\n* Empatía Sináptica: El piloto puede establecer una conexión emocional y mental con el mecha, mejorando la sincronización. Una vez por combate, el piloto puede sumar una bonificación de 2 a cualquier tirada de ataque o defensa. Adicionalmente, si el mecha recibe daños, el piloto sufre una simulación de ese daño. Si el mecha reduce sus puntos de vida a 0, el piloto queda inconsciente.\n* Conexión directa: Puedes ordenar a tu mecha que te pinche en la médula espinal para establecer una conexión directa entre vuestros sistemas nerviosos, alterando para siempre al piloto. Tu siguiente tirada de cualquier tipo con el mecha pasa a ser 2d12 y bonifica 2. A cambio, tu personaje pierde 1 punto de vida no recuperable. Opcionalmente, puedes usar una conexión directa total, que aplica este estado sin parar hasta que acabe el combate, luego el piloto muere. Puedes declarar una tirada como la última, en tal caso la tirada es automáticamente un crítico máximo. Tras esto el piloto muere.\n* Riesgo Biológico: El componente biológico puede volverse inestable bajo ciertas circunstancias. Cada vez que el mecha sufre un daño y este le dejaría con 0 puntos de vida o menos, lanza 1d4. Con un resultado de 1, el mecha entra en un estado de furia incontrolable durante 1d4 turnos, atacando tanto a aliados como enemigos indiscriminadamente.\n* Mantenimiento Complejo: Reparar el componente biológico es más complejo y costoso que reparar un mecha estándar. Todas las reparaciones requieren el doble de tiempo y recursos."
        },
        {
         "type": "bonus",
-        "scopes": [
-         "crafting",
-         "mind"
-        ],
         "value": 2,
-        "label": "Componente Biológico",
+        "scopes": [
+         "mecha-attack",
+         "robustness",
+         "maneuver"
+        ],
+        "label": "Empatía sináptica (una vez por combate)",
+        "optional": true
+       },
+       {
+        "type": "bonus",
+        "value": 2,
+        "scopes": [
+         "mecha"
+        ],
+        "label": "Conexión directa (la tirada pasa a 2d12)",
         "optional": true
        }
       ],
@@ -3034,14 +2752,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Escáner",
-        "text": "Puedes detectar a tus aliados en un gran radio. A discreción del director de juego, el sensor podría detectar diferentes tipos de cosas. Si vuelves a adquirir este dote, puedes preguntarle al mecha para detectar algo a placer."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "2"
      }
     },
@@ -3058,14 +2769,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Focos",
-        "text": "Tu mecha ahora tiene focos frontales de corta, media y larga distancia. Permitiéndote iluminar en la oscuridad, también vienen incluidos faros antiniebla, que bajan en 3 la dificultad para ver a través de la niebla."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "2 x categoría"
      }
     },
@@ -3084,31 +2788,7 @@
       ],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [
-         "mind",
-         "will",
-         "robustness",
-         "maneuver"
-        ],
-        "label": "Gattai da!",
-        "text": "Significa “combinémonos”, puedes fusionarte con cualquier otro mecha de tu mismo tamaño que también tenga esta dote, provocando que aumente la categoría del mecha y ganando la dote “copiloto”. Si se combinan 2 mechas de categoría 6, surge de forma temporal un mecha de categoría 7:\n| Categoría | Robustez | Maniobra táctica | Aguante | Salud | Puntos de inventario | Desplazamiento | Velocidad de crucero(km/h) | Tamaño (m) |\n| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n| 7 | d12 | d4 | 24 | 50 | 200 | d4+1 | 200 | 60 |\nSi es de tamaños diferentes, el mecha de mayor tamaño gana bonifica 1 en todas las tiradas junto con la dote “copiloto”. También aumenta su aguante en 1.\nEn cualquier caso, el mecha resultante obtiene todas las armas de los mechas que lo componen pero cambiando la categoría de esta si procede. Si ambos mechas tenían una misma arma, las tiradas con este arma ganan bonifica 2.\nEsta función requiere un drenaje voluntad por turno para ser mantenida la forma, pero al ser combinado, los puntos de vida se suman de los mechas componentes. Al disolverse, ambos mechas obtienen la mitad de puntos de vida restante. En cualquier caso, no puede volver a combinarse por 1 día."
-       },
-       {
-        "type": "bonus",
-        "scopes": [
-         "mind",
-         "will",
-         "robustness",
-         "maneuver"
-        ],
-        "value": 2,
-        "label": "Gattai da!",
-        "optional": true
-       }
-      ],
+      "rules": [],
       "inventoryCost": "2 x categoría"
      }
     },
@@ -3287,6 +2967,14 @@
       ],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "maneuver"
+        ],
+        "label": "Propulsor terrestre",
+        "text": "Este propulsor también viene incluido con una mejora de las piernas de tu mecha para “patinar” sobre cualquier terreno. Añade:\n* Aumenta el dado de maniobra táctica en tierra\n* Aumenta el dado de desplazamiento en tierra\n* Duplica la velocidad de crucero en tierra"
+       },
+       {
         "type": "dieStep",
         "value": 1,
         "scopes": [
@@ -3312,14 +3000,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Radio de nano-frecuencia",
-        "text": "Permite establecer conexión por voz con otras emisoras de radio incluso aunque haya obstáculos severos que impidiesen el funcionamiento de la radio normal."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "8"
      }
     },
@@ -3411,14 +3092,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Transformación en vehículo",
-        "text": "Tu mecha puede transformarse en un vehículo acorde a la categoría de mecha. Aumenta ambos dados de desplazamiento bien vía terrestre o vía aérea."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "3 x categoría"
      }
     },
@@ -3487,14 +3161,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Visión nocturna",
-        "text": "Puedes ver en la oscuridad sin necesidad de luz."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "2"
      }
     },
@@ -3511,14 +3178,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Visión térmica",
-        "text": "Puedes ver fuentes de calor."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "2"
      }
     },
@@ -3569,19 +3229,47 @@
         "type": "reminder",
         "scopes": [
          "robustness",
-         "maneuver"
+         "maneuver",
+         "mecha-attack"
         ],
         "label": "Puesto: Asesino",
         "text": "Eres parte del equipo táctico. Obtienes los siguientes beneficios:\n· Bonifica en 2 las tiradas de madas al robustez o maniobra táctica si tu objetivo es de al menos una categoría superior a ti en tamaño.\n· Bonifica en 3 si tu objetivo no es consciente de tu presencia o bonifica en 1 si es el primer ataque contra ese enemigo en el combate.\n· El primer ataque que realices contra un enemigo en cada combate tiene su dificultad de acierto reducida en 2. Este efecto solo se aplica al primer ataque que realices contra ese enemigo en el combate, no afectando ataques posteriores contra el mismo objetivo."
        },
        {
         "type": "bonus",
+        "value": 2,
         "scopes": [
          "robustness",
          "maneuver"
         ],
+        "label": "Asesino (objetivo de mayor categoría)",
+        "optional": true
+       },
+       {
+        "type": "bonus",
         "value": 3,
-        "label": "Puesto: Asesino",
+        "scopes": [
+         "mecha-attack"
+        ],
+        "label": "Asesino (objetivo que no te ha visto)",
+        "optional": true
+       },
+       {
+        "type": "bonus",
+        "value": 1,
+        "scopes": [
+         "mecha-attack"
+        ],
+        "label": "Asesino (primer ataque contra ese enemigo)",
+        "optional": true
+       },
+       {
+        "type": "difficulty",
+        "value": 2,
+        "scopes": [
+         "mecha-attack"
+        ],
+        "label": "Asesino (primer ataque contra ese enemigo)",
         "optional": true
        }
       ],
@@ -3607,22 +3295,32 @@
        {
         "type": "reminder",
         "scopes": [
-         "mind",
          "robustness",
-         "maneuver"
+         "maneuver",
+         "perception",
+         "mecha"
         ],
         "label": "Puesto: Explorador",
         "text": "Eres parte del frente de asalto. Obtienes los siguientes beneficios:\n· Bonifica en 3 las tiradas de robustez o maniobra táctica si estás explorando a solas o siendo el líder de la tropa y recibes un ataque sorpresa.\n· Aumenta ambos dados de la tirada de desplazamiento. Si alguno fuera 1d12 antes de aumentarlo, se bonifica en 1.\n· En cualquier tirada para obtener información vía escáner, auditiva, visual o cualquier otra forma de rastreo, bonifica en 2.\n· Los drones que obtengas bonifica en 1 en todas sus tiradas y adicionalmente ocupan la mitad de espacio de inventario (redondeando hacia abajo en cualquier caso)"
        },
        {
         "type": "bonus",
+        "value": 3,
         "scopes": [
-         "mind",
          "robustness",
          "maneuver"
         ],
-        "value": 3,
-        "label": "Puesto: Explorador",
+        "label": "Explorador (ataque sorpresa explorando solo o liderando)",
+        "optional": true
+       },
+       {
+        "type": "bonus",
+        "value": 2,
+        "scopes": [
+         "perception",
+         "mecha"
+        ],
+        "label": "Explorador (obtener información o rastrear)",
         "optional": true
        }
       ],
@@ -3648,33 +3346,31 @@
        {
         "type": "reminder",
         "scopes": [
-         "evasion",
          "robustness",
-         "maneuver"
+         "maneuver",
+         "mecha-attack"
         ],
         "label": "Puesto: Gladiador",
         "text": "Estás acostumbrado a los combates de la arena 1vs1 o 2vs2. Obtienes los siguientes beneficios si te encuentras en un combate de 1vs1 o 2vs2:\n· Bonifica en 2 las tiradas de robustez, maniobra táctica o al atacar.\nPuedes elegir a un enemigo de la batalla si no estás en la situación de un 1vs1 o 2vs2. Al elegirlo, obtienes los beneficios contra ese objetivo. Sin embargo, tienes un penalizador de 2 al atacar a cualquier otro enemigo y todos los ataques de otros enemigos son 1 más difícil para esquivar. No puedes marcar otro objetivo hasta que el combate finalice o el enemigo sea derrotado."
        },
        {
         "type": "bonus",
-        "scopes": [
-         "evasion",
-         "robustness",
-         "maneuver"
-        ],
         "value": 2,
-        "label": "Puesto: Gladiador",
+        "scopes": [
+         "robustness",
+         "maneuver",
+         "mecha-attack"
+        ],
+        "label": "Gladiador (1vs1, 2vs2 o enemigo marcado)",
         "optional": true
        },
        {
         "type": "penalty",
-        "scopes": [
-         "evasion",
-         "robustness",
-         "maneuver"
-        ],
         "value": 2,
-        "label": "Puesto: Gladiador",
+        "scopes": [
+         "mecha-attack"
+        ],
+        "label": "Gladiador (atacas a otro enemigo)",
         "optional": true
        }
       ],
@@ -3752,14 +3448,7 @@
       ],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Puesto: Suministrador",
-        "text": "Ayudas a tu equipo a cargar utilidades y otros recursos. Obtienes los siguientes beneficios:\n· Todos los objetos de inventario pesan la mitad para ti, si tuviera un coste de 1, en su lugar obtienes 2 veces el objeto.\n· Puedes enviar los objetos que desees a los aliados en una distancia media de forma automática y sin coste de acción una vez por turno.\n· El coste de la dote carguero pasa a ser 2 x categoría."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "0"
      }
     },
@@ -3782,6 +3471,7 @@
        {
         "type": "reminder",
         "scopes": [
+         "craft",
          "crafting"
         ],
         "label": "Puesto: Técnico",
@@ -3789,11 +3479,12 @@
        },
        {
         "type": "bonus",
+        "value": 2,
         "scopes": [
+         "craft",
          "crafting"
         ],
-        "value": 2,
-        "label": "Puesto: Técnico",
+        "label": "Técnico (kit de reparación)",
         "optional": true
        }
       ],
@@ -3865,14 +3556,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Fallo de uso de utilidades",
-        "text": "Cada vez que uses un objeto tira un d6, si sale un 1, el objeto falla en su uso y se pierde. En caso de granada o explosivo, te explota en la mano dificultad 12."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "-6"
      }
     },
@@ -3913,6 +3597,14 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "ranged-attack"
+        ],
+        "label": "Motor del tren inferior imparable",
+        "text": "No puedes parar de moverte a no ser que apagues el mecha, que requiere 10 minutos para volver a arrancar, siendo inviable en combate. Esto provoca que no puedas bonificarte de cobertura y tengas un penalizador de 1 para tus ataques a distancia."
+       },
+       {
         "type": "penalty",
         "value": 1,
         "scopes": [
@@ -3937,14 +3629,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Pistón débil",
-        "text": "Especial: Esta dote no puede ser escogida con caída neutralizada\nEl daño por caída tras el aguante te hace el doble de daño.."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "-2 x categoría"
      }
     },
@@ -3961,14 +3646,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Propulsor inestable",
-        "text": "Especial: Requiere la dote propulsor aéreo o propulsor terrestre\nAl perder puntos de vida, lanza un d6, si sacas un 1, tu propulsor se apaga, apagando el propulsor hasta que un técnico te lo repare."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "-2 x categoría"
      }
     },
@@ -4059,14 +3737,7 @@
       "tags": [],
       "module": "mecha",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Un brazo",
-        "text": "Especial: Esta dote no puede ser escogida con brazos extra.\nTu mecha solo tiene un brazo con una mano disponible, las armas básicas pierden la propiedad golpe múltiple."
-       }
-      ],
+      "rules": [],
       "inventoryCost": "-2 x categoría"
      }
     }
@@ -5433,22 +5104,32 @@
          {
           "type": "reminder",
           "scopes": [
-           "mind",
            "robustness",
-           "maneuver"
+           "maneuver",
+           "perception",
+           "mecha"
           ],
           "label": "Puesto: Explorador",
           "text": "Eres parte del frente de asalto. Obtienes los siguientes beneficios:\n· Bonifica en 3 las tiradas de robustez o maniobra táctica si estás explorando a solas o siendo el líder de la tropa y recibes un ataque sorpresa.\n· Aumenta ambos dados de la tirada de desplazamiento. Si alguno fuera 1d12 antes de aumentarlo, se bonifica en 1.\n· En cualquier tirada para obtener información vía escáner, auditiva, visual o cualquier otra forma de rastreo, bonifica en 2.\n· Los drones que obtengas bonifica en 1 en todas sus tiradas y adicionalmente ocupan la mitad de espacio de inventario (redondeando hacia abajo en cualquier caso)"
          },
          {
           "type": "bonus",
+          "value": 3,
           "scopes": [
-           "mind",
            "robustness",
            "maneuver"
           ],
-          "value": 3,
-          "label": "Puesto: Explorador",
+          "label": "Explorador (ataque sorpresa explorando solo o liderando)",
+          "optional": true
+         },
+         {
+          "type": "bonus",
+          "value": 2,
+          "scopes": [
+           "perception",
+           "mecha"
+          ],
+          "label": "Explorador (obtener información o rastrear)",
           "optional": true
          }
         ],
@@ -5494,14 +5175,7 @@
         "tags": [],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Focos",
-          "text": "Tu mecha ahora tiene focos frontales de corta, media y larga distancia. Permitiéndote iluminar en la oscuridad, también vienen incluidos faros antiniebla, que bajan en 3 la dificultad para ver a través de la niebla."
-         }
-        ],
+        "rules": [],
         "inventoryCost": "2 x categoría"
        }
       },
@@ -5518,14 +5192,7 @@
         "tags": [],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Escáner",
-          "text": "Puedes detectar a tus aliados en un gran radio. A discreción del director de juego, el sensor podría detectar diferentes tipos de cosas. Si vuelves a adquirir este dote, puedes preguntarle al mecha para detectar algo a placer."
-         }
-        ],
+        "rules": [],
         "inventoryCost": "2"
        }
       },
@@ -5542,14 +5209,7 @@
         "tags": [],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Visión nocturna",
-          "text": "Puedes ver en la oscuridad sin necesidad de luz."
-         }
-        ],
+        "rules": [],
         "inventoryCost": "2"
        }
       },
@@ -5770,14 +5430,7 @@
         ],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Puesto: Suministrador",
-          "text": "Ayudas a tu equipo a cargar utilidades y otros recursos. Obtienes los siguientes beneficios:\n· Todos los objetos de inventario pesan la mitad para ti, si tuviera un coste de 1, en su lugar obtienes 2 veces el objeto.\n· Puedes enviar los objetos que desees a los aliados en una distancia media de forma automática y sin coste de acción una vez por turno.\n· El coste de la dote carguero pasa a ser 2 x categoría."
-         }
-        ],
+        "rules": [],
         "inventoryCost": "0"
        }
       },
@@ -5800,6 +5453,7 @@
          {
           "type": "reminder",
           "scopes": [
+           "craft",
            "crafting"
           ],
           "label": "Puesto: Técnico",
@@ -5807,11 +5461,12 @@
          },
          {
           "type": "bonus",
+          "value": 2,
           "scopes": [
+           "craft",
            "crafting"
           ],
-          "value": 2,
-          "label": "Puesto: Técnico",
+          "label": "Técnico (kit de reparación)",
           "optional": true
          }
         ],
@@ -5857,14 +5512,7 @@
         "tags": [],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Focos",
-          "text": "Tu mecha ahora tiene focos frontales de corta, media y larga distancia. Permitiéndote iluminar en la oscuridad, también vienen incluidos faros antiniebla, que bajan en 3 la dificultad para ver a través de la niebla."
-         }
-        ],
+        "rules": [],
         "inventoryCost": "2 x categoría"
        }
       },
@@ -5881,14 +5529,7 @@
         "tags": [],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Escáner",
-          "text": "Puedes detectar a tus aliados en un gran radio. A discreción del director de juego, el sensor podría detectar diferentes tipos de cosas. Si vuelves a adquirir este dote, puedes preguntarle al mecha para detectar algo a placer."
-         }
-        ],
+        "rules": [],
         "inventoryCost": "2"
        }
       },
@@ -5905,14 +5546,7 @@
         "tags": [],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Visión nocturna",
-          "text": "Puedes ver en la oscuridad sin necesidad de luz."
-         }
-        ],
+        "rules": [],
         "inventoryCost": "2"
        }
       },
@@ -5951,14 +5585,7 @@
         "tags": [],
         "module": "mecha",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Carguero",
-          "text": "Obtienes un compartimento para llevar pasajeros. El número de pasajeros que puedes llevar es igual a 2categoría. Es decir:\n| Categoría | Gente disponible para cargar |\n| :---: | :---: |\n| 1 | 2 |\n| 2 | 4 |\n| 3 | 8 |\n| 4 | 16 |\n| 5 | 32 |\n| 6 | 64 |"
-         }
-        ],
+        "rules": [],
         "inventoryCost": "4 x categoría"
        }
       },
@@ -8018,6 +7645,16 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "stealth",
+         "intimidation",
+         "deception"
+        ],
+        "label": "Bandido",
+        "text": "Las tiradas para robar con sigilo, intimidar o engañar a otros supervivientes tienen bonifica en 1."
+       },
+       {
         "type": "bonus",
         "value": 1,
         "scopes": [
@@ -8086,14 +7723,7 @@
       "tags": [],
       "module": "zombie",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Estudioso de los muertos vivientes",
-        "text": "Especial: Esta dote puede escogerse varias veces.\nEstudias a un zombie especial, como el zombie explosivo por ejemplo, las habilidades únicas de este zombie tienen una dificultad reducida en 1. Por ejemplo la explosión al morir del zombie explosivo."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -8180,15 +7810,7 @@
       "tags": [],
       "module": "zombie",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "value": 0,
-        "scopes": [],
-        "label": "Piel dura",
-        "text": "Aguante +1 contra ataques de ácido."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -8290,6 +7912,16 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "investigation",
+         "perception",
+         "survival"
+        ],
+        "label": "Ser como tu madre buscando cosas",
+        "text": "Cuando buscas recompensas en algún lugar, una vez por día puedes tirar con bonifica 3."
+       },
+       {
         "type": "bonus",
         "value": 3,
         "scopes": [
@@ -8318,6 +7950,14 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "stealth"
+        ],
+        "label": "Sigilo zombie",
+        "text": "Bonifica en 1 las tiradas de sigilo para evitar que los zombies te detecten. Puedes hacer señas a alguien más para que también tenga bonifica en 1 en su tirada."
+       },
+       {
         "type": "bonus",
         "value": 1,
         "scopes": [
@@ -8343,6 +7983,14 @@
       "module": "zombie",
       "modifiers": [],
       "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "stealth"
+        ],
+        "label": "Sigilo zombie supremo",
+        "text": "Bonifica en 3 las tiradas de sigilo para evitar que los zombies te detecten. Puedes hacer señas a tu grupo para que tengan bonifica en 2 en su tirada."
+       },
        {
         "type": "bonus",
         "value": 3,
@@ -8370,10 +8018,23 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [],
+        "label": "Venganza sobre este mundo podrido",
+        "text": "Si una persona querida muere en un combate obtienes bonifica en 2 para todas tus tiradas tanto reactivas como activas. Si es zombificado o infectado, en su lugar obtienes bonifica en 1."
+       },
+       {
         "type": "bonus",
         "value": 2,
         "scopes": [],
-        "label": "Venganza (murió una persona querida; 1 si fue zombificada)",
+        "label": "Venganza (murió una persona querida)",
+        "optional": true
+       },
+       {
+        "type": "bonus",
+        "value": 1,
+        "scopes": [],
+        "label": "Venganza (una persona querida fue zombificada o infectada)",
         "optional": true
        }
       ]
@@ -8413,14 +8074,7 @@
       "tags": [],
       "module": "zombie",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Buscador horrible",
-        "text": "La dificultad para buscar recompensas aumenta en 1."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -8458,6 +8112,14 @@
       "module": "zombie",
       "modifiers": [],
       "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "stealth"
+        ],
+        "label": "Escándaloso/a",
+        "text": "Tus pruebas de sigilo tienen un penalizador de 1."
+       },
        {
         "type": "penalty",
         "value": 1,
@@ -8503,14 +8165,7 @@
       "tags": [],
       "module": "zombie",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Olor especial",
-        "text": "Los zombies lo tienen 1 punto más fácil para detectarse bajo cualquier circunstancia."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -8526,14 +8181,7 @@
       "tags": [],
       "module": "zombie",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Organizador terrible de víveres",
-        "text": "Tras guardar los víveres , siempre pierdes 1."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -8550,6 +8198,14 @@
       "module": "zombie",
       "modifiers": [],
       "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "attack"
+        ],
+        "label": "Miedo por los zombies",
+        "text": "El primer ataque que efectúes en un combate contra un zombie tiene penaliza en 3."
+       },
        {
         "type": "penalty",
         "value": 3,
@@ -8600,15 +8256,7 @@
       "tags": [],
       "module": "zombie",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "value": 0,
-        "scopes": [],
-        "label": "Piel fina",
-        "text": "Aguante −1 contra ataques de ácido."
-       }
-      ]
+      "rules": []
      }
     }
    ]
@@ -9244,6 +8892,14 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "society"
+        ],
+        "label": "Buscavidas",
+        "text": "Sabes moverte por el mercado negro. Bonifica en 2 tus tiradas de Sociedad para encontrar mercancía ilegal, una clínica de callejón o un encargo."
+       },
+       {
         "type": "bonus",
         "value": 2,
         "scopes": [
@@ -9269,6 +8925,14 @@
       "module": "cyber",
       "modifiers": [],
       "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "excess"
+        ],
+        "label": "Cabeza fría",
+        "text": "Llevas tanto tiempo con metal encima que sabes cuándo se te empieza a ir. Bonifica en 2 tus tiradas de exceso de carga."
+       },
        {
         "type": "bonus",
         "value": 2,
@@ -9337,6 +9001,14 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "implant-surgery"
+        ],
+        "label": "Mano de cirujano",
+        "text": "Has abierto tantos cuerpos que ya no te tiembla el pulso. Al instalar, quitar o reparar un implante, baja en 2 la dificultad de tu tirada de Cibernética."
+       },
+       {
         "type": "difficulty",
         "value": 2,
         "scopes": [
@@ -9361,6 +9033,14 @@
       "module": "cyber",
       "modifiers": [],
       "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "perception"
+        ],
+        "label": "Ojo para el cromo",
+        "text": "Con un vistazo sabes qué lleva alguien debajo de la piel. Bonifica en 2 tus tiradas de Percepción para descubrir implantes y armas ocultas. Si lo consigues, el DJ te dice además si esa persona parece tener exceso de carga."
+       },
        {
         "type": "bonus",
         "value": 2,
@@ -9409,6 +9089,14 @@
       "modifiers": [],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "driving"
+        ],
+        "label": "Piloto de fuga",
+        "text": "Las persecuciones son lo tuyo. Bonifica en 2 tus tiradas de conducción para escapar de alguien o perderlo de vista, con el vehículo de tu dote Conducir."
+       },
+       {
         "type": "bonus",
         "value": 2,
         "scopes": [
@@ -9440,6 +9128,14 @@
       ],
       "rules": [
        {
+        "type": "reminder",
+        "scopes": [
+         "diplomacy"
+        ],
+        "label": "Animal",
+        "text": "No tienes VirtualSelf, porque nunca te lo pusieron o porque te lo arrancaste. No se te pueden lanzar hacks que actúen sobre el VirtualSelf y no apareces en un Ping. A cambio, no tienes cartera, banco ni comunicaciones: pagas con chips de datos con dinero o en especie, no puedes llevar AVS ni usar armas inteligentes, y la gente te desprecia. Contra cualquiera que sepa lo que eres, reduce tu dado de Diplomacia."
+       },
+       {
         "type": "dieStep",
         "value": -1,
         "scopes": [
@@ -9466,6 +9162,14 @@
       "module": "cyber",
       "modifiers": [],
       "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "diplomacy"
+        ],
+        "label": "Antecedentes penales",
+        "text": "Tu VirtualSelf guarda un historial que no se puede borrar. Cualquier lector de nuca te delata, la policía te trata como sospechoso y los trabajos legales se te cierran. Contra policías y seguridad que hayan leído tu nuca, reduce tu dado de Diplomacia."
+       },
        {
         "type": "dieStep",
         "value": -1,
@@ -9513,14 +9217,7 @@
       "tags": [],
       "module": "cyber",
       "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [],
-        "label": "Deuda con una corporación",
-        "text": "Debes una cantidad que el DJ decide, y es mucho más de lo que puedes pagar. Cada mes que no pagas una parte, la corporación manda a alguien a recordártelo, y cada visita es menos amable que la anterior."
-       }
-      ]
+      "rules": []
      }
     },
     {
@@ -12454,6 +12151,14 @@
         "modifiers": [],
         "rules": [
          {
+          "type": "reminder",
+          "scopes": [
+           "diplomacy"
+          ],
+          "label": "Antecedentes penales",
+          "text": "Tu VirtualSelf guarda un historial que no se puede borrar. Cualquier lector de nuca te delata, la policía te trata como sospechoso y los trabajos legales se te cierran. Contra policías y seguridad que hayan leído tu nuca, reduce tu dado de Diplomacia."
+         },
+         {
           "type": "dieStep",
           "value": -1,
           "scopes": [
@@ -12714,17 +12419,18 @@
            "melee",
            "ranged"
           ],
-          "label": "Entrenado en un arma",
+          "label": "Entrenado en un arma (hoja vibrante)",
           "text": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas cac o puntería."
          },
          {
           "type": "bonus",
+          "value": 1,
           "scopes": [
            "melee",
            "ranged"
           ],
-          "value": 1,
-          "label": "Entrenado en un arma"
+          "optional": true,
+          "label": "Entrenado en un arma (el arma elegida)"
          }
         ]
        }
@@ -12741,29 +12447,29 @@
          {
           "type": "reminder",
           "scopes": [
-           "intimidation",
-           "evasion"
+           "intimidation"
           ],
           "label": "Mastodonte",
           "text": "Prohibido en caso de coger Retaco. Eres una persona muy grande, aumenta tu aguante en 1. Si intentas intimidar a alguien más pequeño que tú, bonifica en 1 la tirada de intimidación. A cambio, tienes un penalizador de 1 en las tiradas de esquiva."
          },
          {
           "type": "bonus",
-          "scopes": [
-           "intimidation",
-           "evasion"
-          ],
           "value": 1,
-          "label": "Mastodonte"
+          "scopes": [
+           "intimidation"
+          ],
+          "optional": true,
+          "label": "Mastodonte (intimidar a alguien más pequeño)"
+         }
+        ],
+        "modifiers": [
+         {
+          "target": "endurance",
+          "value": 1
          },
          {
-          "type": "penalty",
-          "scopes": [
-           "intimidation",
-           "evasion"
-          ],
-          "value": 1,
-          "label": "Mastodonte"
+          "target": "evasionPenalty",
+          "value": 1
          }
         ]
        }
@@ -12780,6 +12486,7 @@
          {
           "type": "reminder",
           "scopes": [
+           "attack",
            "evasion"
           ],
           "label": "Posición ofensiva",
@@ -12787,21 +12494,31 @@
          },
          {
           "type": "bonus",
-          "scopes": [
-           "evasion"
-          ],
           "value": 1,
+          "scopes": [
+           "attack"
+          ],
           "label": "Posición ofensiva"
          },
          {
           "type": "dieStep",
+          "value": -1,
           "scopes": [
            "evasion"
           ],
-          "value": -1,
+          "target": "second",
+          "floorOne": true,
           "label": "Posición ofensiva"
          }
-        ]
+        ],
+        "modifiers": [
+         {
+          "target": "endurance",
+          "value": -1
+         }
+        ],
+        "toggle": true,
+        "active": false
        }
       },
       {
@@ -12816,22 +12533,38 @@
          {
           "type": "reminder",
           "scopes": [
-           "mind",
-           "evasion"
+           "evasion",
+           "attack"
           ],
           "label": "Posición defensiva",
           "text": "Te preparas mentalmente para un ataque. Al comienzo de tu turno, puedes elegir que tus tiradas con habilidades ofensivas ven reducido su dado, pero aumenta tu aguante en 1 y bonifica en 2 tu tirada de esquiva."
          },
          {
           "type": "bonus",
+          "value": 2,
           "scopes": [
-           "mind",
            "evasion"
           ],
-          "value": 2,
+          "label": "Posición defensiva"
+         },
+         {
+          "type": "dieStep",
+          "value": -1,
+          "scopes": [
+           "attack"
+          ],
+          "target": "second",
           "label": "Posición defensiva"
          }
-        ]
+        ],
+        "modifiers": [
+         {
+          "target": "endurance",
+          "value": 1
+         }
+        ],
+        "toggle": true,
+        "active": false
        }
       },
       {
@@ -12847,14 +12580,7 @@
         "tags": [],
         "module": "cyber",
         "modifiers": [],
-        "rules": [
-         {
-          "type": "reminder",
-          "scopes": [],
-          "label": "Deuda con una corporación",
-          "text": "Debes una cantidad que el DJ decide, y es mucho más de lo que puedes pagar. Cada mes que no pagas una parte, la corporación manda a alguien a recordártelo, y cada visita es menos amable que la anterior."
-         }
-        ]
+        "rules": []
        }
       },
       {
@@ -13301,21 +13027,18 @@
          {
           "type": "reminder",
           "scopes": [
-           "investigation",
-           "medicine",
-           "mind"
+           "medicine"
           ],
           "label": "Forense",
           "text": "Requisitos: Medicina 1d6, Investigación 1d4 Puedes usar medicina en lugar de investigación para examinar la escena de un asesinato. Adicionalmente, bonifica en 1 la tirada de medicina para descubrir cómo ha fallecido un ser vivo."
          },
          {
           "type": "bonus",
-          "scopes": [
-           "investigation",
-           "medicine",
-           "mind"
-          ],
           "value": 1,
+          "scopes": [
+           "medicine"
+          ],
+          "optional": true,
           "label": "Forense"
          }
         ]
@@ -13625,15 +13348,11 @@
         "rules": [
          {
           "type": "reminder",
-          "scopes": [],
-          "label": "Kansei Dorifto",
+          "scopes": [
+           "driving"
+          ],
+          "label": "Kansei Dorifto (coche)",
           "text": "Requisitos: Conducir El vehículo en concreto es tu pasión. Cada vez que vayas a hacer una maniobra arriesgada con el vehículo, el dado pasa a ser 1d8 y además se bonifica en 1 la tirada.Puede escogerse varias veces, una vez por cada vez que hayas escogido “Conducir”-"
-         },
-         {
-          "type": "bonus",
-          "scopes": [],
-          "value": 1,
-          "label": "Kansei Dorifto"
          }
         ]
        }
@@ -13695,10 +13414,11 @@
          },
          {
           "type": "bonus",
+          "value": 2,
           "scopes": [
            "survival"
           ],
-          "value": 2,
+          "optional": true,
           "label": "Rastreador"
          }
         ]
@@ -13716,7 +13436,6 @@
          {
           "type": "reminder",
           "scopes": [
-           "crafting",
            "ranged"
           ],
           "label": "Apuntado concentrado",
@@ -13724,12 +13443,12 @@
          },
          {
           "type": "bonus",
+          "value": 2,
           "scopes": [
-           "crafting",
            "ranged"
           ],
-          "value": 2,
-          "label": "Apuntado concentrado"
+          "optional": true,
+          "label": "Apuntado concentrado (turno entero apuntando)"
          }
         ]
        }
@@ -13753,6 +13472,14 @@
          }
         ],
         "rules": [
+         {
+          "type": "reminder",
+          "scopes": [
+           "diplomacy"
+          ],
+          "label": "Animal",
+          "text": "No tienes VirtualSelf, porque nunca te lo pusieron o porque te lo arrancaste. No se te pueden lanzar hacks que actúen sobre el VirtualSelf y no apareces en un Ping. A cambio, no tienes cartera, banco ni comunicaciones: pagas con chips de datos con dinero o en especie, no puedes llevar AVS ni usar armas inteligentes, y la gente te desprecia. Contra cualquiera que sepa lo que eres, reduce tu dado de Diplomacia."
+         },
          {
           "type": "dieStep",
           "value": -1,
@@ -13938,10 +13665,11 @@
          },
          {
           "type": "bonus",
+          "value": 2,
           "scopes": [
            "society"
           ],
-          "value": 2,
+          "optional": true,
           "label": "Yo conozco a uno…"
          }
         ]
@@ -13961,6 +13689,13 @@
           "scopes": [],
           "label": "Mente de tiburón",
           "text": "Siempre que hagas una tirada para intentar ganar dinero, disminuye en 2 su dificultad."
+         },
+         {
+          "type": "difficulty",
+          "value": 2,
+          "scopes": [],
+          "optional": true,
+          "label": "Mente de tiburón (ganar dinero)"
          }
         ]
        }
@@ -13978,20 +13713,19 @@
           "type": "reminder",
           "scopes": [
            "deception",
-           "diplomacy",
-           "mind"
+           "diplomacy"
           ],
           "label": "Voz encantadora",
           "text": "Tu voz tiene un efecto hipnótico sobre las personas. Bonifica en 2 la tirada de engaño o diplomacia cuando hablas directamente a alguien a solas."
          },
          {
           "type": "bonus",
+          "value": 2,
           "scopes": [
            "deception",
-           "diplomacy",
-           "mind"
+           "diplomacy"
           ],
-          "value": 2,
+          "optional": true,
           "label": "Voz encantadora"
          }
         ]
@@ -14016,10 +13750,11 @@
          },
          {
           "type": "bonus",
+          "value": 2,
           "scopes": [
            "deception"
           ],
-          "value": 2,
+          "optional": true,
           "label": "Maestro de disfraces"
          }
         ]

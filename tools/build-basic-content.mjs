@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { applyBasicFeatOverride } from "./basic-feat-rules.mjs";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 // Folder of the manual repository (TDT). By default, a sibling folder called TDT; override with TDT_MANUAL.
@@ -87,6 +88,7 @@ for (const match of featMatches) {
       rules: inferFeatRules(name, description)
     }
   });
+  applyBasicFeatOverride(feats.at(-1));
 }
 
 const equipmentBlock = section("### Armas y armaduras", "### Listado de enemigos");

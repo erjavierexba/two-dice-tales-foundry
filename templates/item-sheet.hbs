@@ -228,7 +228,7 @@
         <textarea name="json.system.modifiers" rows="6">{{json.modifiers}}</textarea>
         <details><summary>Objetivos disponibles</summary><pre>{{targetHelp}}</pre></details>
         <h2>Reglas de tirada</h2>
-        <p class="hint">Lista JSON de reglas que aparecen en el diálogo de tirada: <code>{"type": "bonus|penalty|dieStep|advantage|disadvantage|noFumble|extraDie|difficulty|flat|damage|reminder", "value": N, "scopes": ["ranged", "attack"…], "optional": true, "label": "…", "text": "…"}</code>.</p>
+        <p class="hint">Lista JSON de reglas que aparecen en el diálogo de tirada: <code>{"type": "bonus|penalty|dieStep|advantage|disadvantage|noFumble|critical|worseDie|extraDie|difficulty|flat|damage|reminder", "value": N, "scopes": ["ranged", "attack"…], "excludeScopes": […], "target": "first|second|both", "floorOne": true, "optional": true, "label": "…", "text": "…"}</code>.</p>
         <textarea name="json.system.rules" rows="8">{{json.rules}}</textarea>
         {{#if is.implant}}
         <h2>Mejoras (JSON completo)</h2>

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { applyBonus, chooseAutomaticBonus, dieScore, resolveTdtRoll, stepDie } from "../scripts/dice.mjs";
+import { applyBonus, chooseAutomaticBonus, dieScore, resolveTdtRoll, stepDie, stepDieToOne } from "../scripts/dice.mjs";
 
 assert.equal(dieScore(4), 1);
 assert.equal(dieScore(12), 5);
@@ -45,3 +45,14 @@ assert.equal(untrainedFumble.isCritical, false);
 assert.deepEqual(applyBonus([1, 1], [6, 0], [2, 2]), [1, 1], "ni un 1 ni el valor fijo se bonifican");
 
 console.log("TDT dice tests: OK");
+
+// Cobarde, Incrédulo, Posición ofensiva: un d4 reducido pasa a ser un 1 fijo.
+assert.equal(stepDieToOne(4, -1), 0);
+assert.equal(stepDieToOne(6, -1), 4);
+assert.equal(stepDieToOne(6, -2), 0);
+assert.equal(stepDieToOne(8, 1), 10);
+
+// Golpe vital: el número del crítico se suma una vez más (4+4+4 → 4+4+4+4).
+assert.equal(resolveTdtRoll({ rawResults: [4, 4], faces: [6, 6] }).total, 12);
+assert.equal(resolveTdtRoll({ rawResults: [4, 4], faces: [6, 6], criticalExtra: 1 }).total, 16);
+assert.equal(resolveTdtRoll({ rawResults: [3, 4], faces: [6, 6], criticalExtra: 1 }).total, 7);

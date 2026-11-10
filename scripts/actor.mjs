@@ -1,5 +1,5 @@
 import { TDT } from "./config.mjs";
-import { chooseAutomaticBonus, dieScore, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepRolledDie } from "./dice.mjs";
+import { chooseAutomaticBonus, dieScore, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepDieToOne, stepRolledDie } from "./dice.mjs";
 import { collectModifiers, hasItemNamed, itemNameSet, modifierValue } from "./modifiers.mjs";
 import { moduleActive, rule } from "./settings.mjs";
 import { automaticDifficultyText, warnIfAllImmune, finalDamage, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
@@ -209,10 +209,13 @@ export class TDTActor extends Actor {
   }
 
   async _executeRoll(check, options) {
-    const stepFirst = faces => (check.first.allowZero ? stepDie(faces, options.firstStep) : stepRolledDie(faces, options.firstStep));
+    const stepFirst = faces => {
+      if (options.firstFloorOne) return stepDieToOne(faces, options.firstStep);
+      return check.first.allowZero ? stepDie(faces, options.firstStep) : stepRolledDie(faces, options.firstStep);
+    };
     const faces = [
       check.first.allowZero || check.first.faces ? stepFirst(check.first.faces) : 0,
-      stepDie(check.second.faces, options.secondStep)
+      options.secondFloorOne ? stepDieToOne(check.second.faces, options.secondStep) : stepDie(check.second.faces, options.secondStep)
     ];
     if (check.minimumFaces) for (let i = 0; i < 2; i++) if (faces[i] && faces[i] < check.minimumFaces) faces[i] = check.minimumFaces;
     if (options.linkWill && check.third?.faces) faces.push(normalizeDie(check.third.faces));
@@ -229,7 +232,19 @@ export class TDTActor extends Actor {
     for (const alternative of check.first.alternatives ?? []) firstCandidates.push({ label: alternative.label, faces: stepFirst(alternative.faces) });
     const firstResults = [];
     for (const candidate of firstCandidates) firstResults.push(await rollDie(candidate.faces, options.firstDisadvantage ? "low" : null));
-    const second = await rollDie(faces[1], options.secondAdvantage ? "high" : null);
+    // Ventaja y desventaja sobre el mismo dado se anulan.
+    const secondMode = options.secondAdvantage === Boolean(options.secondDisadvantage) ? null : options.secondAdvantage ? "high" : "low";
+    let second = await rollDie(faces[1], secondMode);
+    // Alergia, Cegato, Duro de oído: se añade 1d4 y se conservan los dos dados menores.
+    let worseSlot = null;
+    if (options.worseDie) {
+      const worse = await rollDie(options.worseDie);
+      if (worse < Math.max(firstResults[0], second)) {
+        worseSlot = second >= firstResults[0] ? 1 : 0;
+        if (worseSlot === 1) second = worse;
+        else firstResults[0] = worse;
+      }
+    }
     const third = faces.length > 2 ? await rollDie(faces[2]) : null;
     let flat = Number(options.flat || 0);
     const extraResults = [];
@@ -242,9 +257,11 @@ export class TDTActor extends Actor {
     let best = null;
     firstCandidates.forEach((candidate, index) => {
       const candidateFaces = [candidate.faces, linkedDice ? candidate.faces : faces[1], ...(faces.length > 2 ? [faces[2]] : [])];
+      if (worseSlot !== null && (worseSlot === 1 || index === 0)) candidateFaces[worseSlot] = options.worseDie;
       const raw = [firstResults[index], second, ...(third !== null ? [third] : [])];
-      const allocations = options.noBonus ? raw.map(() => 0) : chooseAutomaticBonus(raw, candidateFaces, options.bonus, { flat });
-      const result = resolveTdtRoll({ rawResults: raw, faces: candidateFaces, bonusAllocations: allocations, penalty: options.penalty, difficulty: options.difficulty, flat });
+      const criticalExtra = Number(options.criticalExtra || 0);
+      const allocations = options.noBonus ? raw.map(() => 0) : chooseAutomaticBonus(raw, candidateFaces, options.bonus, { flat, criticalExtra });
+      const result = resolveTdtRoll({ rawResults: raw, faces: candidateFaces, bonusAllocations: allocations, penalty: options.penalty, difficulty: options.difficulty, flat, criticalExtra });
       if (!best || result.total > best.result.total) best = { result, raw, allocations, faces: candidateFaces, candidate, index };
     });
     const { result } = best;
@@ -335,10 +352,12 @@ export class TDTActor extends Actor {
   _ruleLabel(entry) {
     if (entry.type === "bonus") return `bonifica en ${entry.value}`;
     if (entry.type === "penalty") return `penaliza en ${entry.value}`;
-    if (entry.type === "dieStep") return entry.value > 0 ? "aumenta el dado" : "reduce el dado";
-    if (entry.type === "disadvantage") return "tira dos veces la característica y conserva el menor";
+    if (entry.type === "dieStep") return entry.value > 0 ? "aumenta el dado" : entry.floorOne ? "reduce el dado (un d4 pasa a 1)" : "reduce el dado";
+    if (entry.type === "disadvantage") return entry.target === "second" ? "tira dos veces la habilidad y conserva el menor" : "tira dos veces la característica y conserva el menor";
     if (entry.type === "advantage") return "tira dos veces la habilidad y conserva el mayor";
     if (entry.type === "noFumble") return "ignora la pifia";
+    if (entry.type === "worseDie") return `añade 1d${entry.value || 4} y conserva los dos menores`;
+    if (entry.type === "critical") return "el crítico se suma una vez más";
     if (entry.type === "extraDie") return `añade 1d${entry.value}`;
     if (entry.type === "difficulty") return entry.value > 0 ? `baja ${entry.value} la dificultad` : `sube ${-entry.value} la dificultad`;
     if (entry.type === "flat") return `${entry.value >= 0 ? "+" : ""}${entry.value} al total`;
@@ -403,6 +422,9 @@ export class TDTActor extends Actor {
                 difficultyMod: 0,
                 firstDisadvantage: false,
                 secondAdvantage: false,
+                secondDisadvantage: false,
+                firstFloorOne: false,
+                secondFloorOne: false,
                 noFumble: false,
                 noBonus: false,
                 rerollOnes: false,
@@ -599,6 +621,14 @@ export class TDTActor extends Actor {
     if (extra.area && profile.area) damage = profile.area + Number(options.damageBonus || 0);
     if (attacks > 1 && profile.special === "leadRain") damage += 1;
     const notes = [...profile.notes];
+    // Ganador del torneo del puño de hierro: desarmado y sin ataque múltiple, Daño = puntuación de Potencia.
+    if (this.tdtFlags.has("ironFist") && item.system.skill === "brawl" && attacks === 1) {
+      const score = dieScore(this.system.attributes?.power?.value ?? this.system.attributes?.power?.die);
+      if (score > profile.damage) {
+        damage += score - profile.damage;
+        notes.push(`Puño de hierro: Daño ${score} (puntuación de Potencia).`);
+      }
+    }
     const lines = [];
     const delta = profile.damage - Number(item.system.damage || 0);
     for (const target of targets) {
@@ -607,7 +637,8 @@ export class TDTActor extends Actor {
       let targetDamage = damage;
       if (isMachine && profile.props.vsMachines) targetDamage = profile.props.vsMachines + delta;
       if (!isMachine && profile.props.vsLiving) targetDamage = profile.props.vsLiving + delta;
-      const endurance = targetEndurance(target, { shot: profile.isFirearm });
+      // Guerrero: ignora 1 punto de aguante de los enemigos.
+      const endurance = Math.max(0, targetEndurance(target, { shot: profile.isFirearm }) - (this.tdtFlags.has("warrior") ? 1 : 0));
       lines.push(this._targetLine(target, { total: result.total, defense, damage: targetDamage, endurance, minimum: profile.minimumDamage, defenseKey, isFumble: result.isFumble, options: { raw: true, area: Boolean(extra.area), stun: profile.props.stun, armorBreak: profile.props.armorBreaker, attackerFlags: [...this.tdtFlags] } }));
     }
     if (profile.props.stun) notes.push(`Aturdidora ${profile.props.stun}: si inflige ${profile.props.stun} o más, el objetivo pierde su próximo turno.`);
@@ -1057,17 +1088,26 @@ function applyRuleToOptions(entry, options, check) {
   switch (entry.type) {
     case "bonus": options.bonus += value; break;
     case "penalty": options.penalty += value; break;
-    case "dieStep":
-      if (check.linkedDice || entry.target === "both") {
-        options.firstStep += value;
-        options.secondStep += value;
-      } else if (entry.target === "first") options.firstStep += value;
-      else if (entry.target === "second" || entry.scopes?.includes(check.secondaryScope)) options.secondStep += value;
-      else options.firstStep += value;
+    case "dieStep": {
+      const both = check.linkedDice || entry.target === "both";
+      const second = both || entry.target === "second" || (entry.target !== "first" && entry.scopes?.includes(check.secondaryScope));
+      const first = both || !second;
+      if (first) options.firstStep += value;
+      if (second) options.secondStep += value;
+      if (entry.floorOne && value < 0) {
+        if (first) options.firstFloorOne = true;
+        if (second) options.secondFloorOne = true;
+      }
       break;
-    case "disadvantage": options.firstDisadvantage = true; break;
+    }
+    case "disadvantage":
+      if (entry.target === "second") options.secondDisadvantage = true;
+      else options.firstDisadvantage = true;
+      break;
     case "advantage": options.secondAdvantage = true; break;
     case "noFumble": options.noFumble = true; break;
+    case "worseDie": options.worseDie = value || 4; break;
+    case "critical": options.criticalExtra = Number(options.criticalExtra || 0) + (value || 1); break;
     case "extraDie": options.extraDice.push(value || 4); break;
     case "difficulty": options.difficultyMod += value; break;
     case "flat": options.flat = Number(options.flat || 0) + value; break;

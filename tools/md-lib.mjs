@@ -116,6 +116,8 @@ export function inferFeatRules(name, description) {
   const penaltyValues = [...description.matchAll(/penaliza(?:dor)?\s+(?:de|en)?\s*(\d+)/gi)].map(match => Number(match[1]));
   if (bonusValues.length) rules.push({ type: "bonus", scopes, value: Math.max(...bonusValues), label: name, optional: true });
   if (penaltyValues.length) rules.push({ type: "penalty", scopes, value: Math.max(...penaltyValues), label: name, optional: true });
+  // Un recordatorio sin ámbito ni reglas saldría en todas las tiradas: se omite.
+  if (rules.length === 1 && !scopes.length) return [];
   return rules;
 }
 

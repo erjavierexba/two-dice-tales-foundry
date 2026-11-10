@@ -5,7 +5,7 @@ import { evaluateFormula } from "./dice.mjs";
  */
 const LEGACY_FEAT_MODIFIERS = {
   "mastodonte": [{ target: "endurance", value: 1 }, { target: "evasionPenalty", value: 1 }],
-  "guerrero": [{ target: "endurance", value: 1 }],
+  "guerrero": [{ target: "endurance", value: 1 }, { target: "flag.warrior", value: 1 }],
   "retaco": [{ target: "endurance", value: -1 }, { target: "step.defense.evasion", value: 1 }],
   "mr burns": [{ target: "health", value: -4 }],
   "primo de zumosol": [{ target: "health", value: "zumosol" }],

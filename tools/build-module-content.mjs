@@ -54,8 +54,12 @@ function featItem(feat, module, annotations = {}) {
   const cost = costValue(feat.costText);
   const formula = costFormula(feat.costText);
   const description = feat.description || `${feat.name}.`;
-  const rules = note.rules ?? inferFeatRules(feat.name, description);
+  const rules = note.rules ? [...note.rules] : inferFeatRules(feat.name, description);
   if (note.extraRules) rules.push(...note.extraRules);
+  // Las reglas escritas a mano también llevan el texto de la dote como recordatorio.
+  if (note.rules?.length && !rules.some(entry => entry.type === "reminder")) {
+    rules.unshift({ type: "reminder", scopes: [...new Set(rules.flatMap(entry => entry.scopes ?? []))], label: feat.name, text: description });
+  }
   const system = {
     description: [feat.requirements ? `Requisitos: ${feat.requirements}.` : "", description].filter(Boolean).join("\n\n"),
     cost,
@@ -296,7 +300,38 @@ const mechaAnnotations = {
   "Módulo de captación de munición fallida": { modifiers: [flag("ammoFeedFailure")], rules: [] },
   "Blindaje frágil": { modifiers: [mod("mecha.endurance", "-(2 + categoría)"), mod("mecha.step.robustness", -1)], rules: [] },
   "Nudillos de doble tonelaje": { rules: [rule("reminder", 0, ["mecha-attack"], "Nudillos de doble tonelaje", { text: "Con los nudillos metálicos: ignoran 3 puntos más de aguante y su dado pasa a d6." })] },
-  "Motor del tren inferior imparable": { rules: [rule("penalty", 1, ["ranged-attack"], "Motor imparable (ataques a distancia)")] }
+  "Motor del tren inferior imparable": { rules: [rule("penalty", 1, ["ranged-attack"], "Motor imparable (ataques a distancia)")] },
+  // La inferencia por texto daba bonificadores sueltos con ámbitos sin sentido; se fijan a mano.
+  "Autodestrucción": { rules: [] },
+  "Gattai da!": { rules: [] },
+  "Cañón doble de riel": { rules: [rule("bonus", 1, ["mecha-attack"], "Cañón doble de riel (disparo cargado)", { optional: true })] },
+  "Componente Biológico": {
+    rules: [
+      rule("bonus", 2, ["mecha-attack", "robustness", "maneuver"], "Empatía sináptica (una vez por combate)", { optional: true }),
+      rule("bonus", 2, ["mecha"], "Conexión directa (la tirada pasa a 2d12)", { optional: true })
+    ]
+  },
+  "Puesto: Asesino": {
+    rules: [
+      rule("bonus", 2, ["robustness", "maneuver"], "Asesino (objetivo de mayor categoría)", { optional: true }),
+      rule("bonus", 3, ["mecha-attack"], "Asesino (objetivo que no te ha visto)", { optional: true }),
+      rule("bonus", 1, ["mecha-attack"], "Asesino (primer ataque contra ese enemigo)", { optional: true }),
+      rule("difficulty", 2, ["mecha-attack"], "Asesino (primer ataque contra ese enemigo)", { optional: true })
+    ]
+  },
+  "Puesto: Explorador": {
+    rules: [
+      rule("bonus", 3, ["robustness", "maneuver"], "Explorador (ataque sorpresa explorando solo o liderando)", { optional: true }),
+      rule("bonus", 2, ["perception", "mecha"], "Explorador (obtener información o rastrear)", { optional: true })
+    ]
+  },
+  "Puesto: Gladiador": {
+    rules: [
+      rule("bonus", 2, ["robustness", "maneuver", "mecha-attack"], "Gladiador (1vs1, 2vs2 o enemigo marcado)", { optional: true }),
+      rule("penalty", 2, ["mecha-attack"], "Gladiador (atacas a otro enemigo)", { optional: true })
+    ]
+  },
+  "Puesto: Técnico": { rules: [rule("bonus", 2, ["craft", "crafting"], "Técnico (kit de reparación)", { optional: true })] }
 };
 const mechaFeats = parseFeats(section(mechaMd, "### Dotes positivas", "## Compendio")).map(feat => {
   const item = featItem(feat, "mecha", mechaAnnotations);
@@ -491,7 +526,12 @@ const zombieAnnotations = {
   "Sigilo zombie": { rules: [rule("bonus", 1, ["stealth"], "Sigilo zombie (contra zombis)", { optional: true })] },
   "Sigilo zombie supremo": { rules: [rule("bonus", 3, ["stealth"], "Sigilo zombie supremo (contra zombis)", { optional: true })] },
   "Miedo por los zombies": { rules: [rule("penalty", 3, ["attack"], "Miedo por los zombis (primer ataque del combate contra un zombi)", { optional: true })] },
-  "Venganza sobre este mundo podrido": { rules: [rule("bonus", 2, [], "Venganza (murió una persona querida; 1 si fue zombificada)", { optional: true })] },
+  "Venganza sobre este mundo podrido": {
+    rules: [
+      rule("bonus", 2, [], "Venganza (murió una persona querida)", { optional: true }),
+      rule("bonus", 1, [], "Venganza (una persona querida fue zombificada o infectada)", { optional: true })
+    ]
+  },
   Bandido: { rules: [rule("bonus", 1, ["stealth", "intimidation", "deception"], "Bandido (contra otros supervivientes)", { optional: true })] },
   "Ser como tu madre buscando cosas": { rules: [rule("bonus", 3, ["investigation", "perception", "survival"], "Ser como tu madre (buscar recompensas, una vez al día)", { optional: true })] },
   "Piel dura": { rules: [rule("reminder", 0, [], "Piel dura", { text: "Aguante +1 contra ataques de ácido." })] },
