@@ -1,6 +1,6 @@
 # Two Dice Tales para Foundry VTT
 
-Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.12): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.13): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
 
 ## Instalación
 

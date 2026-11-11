@@ -189,7 +189,7 @@ export const cases = [
     })
   },
   {
-    name: "Defenderse: pifia ×2 y el mismo personaje no puede defenderse dos veces",
+    name: "Defenderse: la pifia ignora el aguante y el mismo personaje no puede defenderse dos veces",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero({ health: { value: 10, max: 10 } }), "Defensor");
       await game.user.update({ character: actor.id });
@@ -198,14 +198,15 @@ export const cases = [
       await T.roll(() => npc.npcAttack(weapon), { button: "ok" }); // «Número de ataques»: la primera opción es 1
       const message = T.lastMessage();
       const endurance = actor.system.endurance.value;
-      // Pifia: 1 + 1 = 2 contra 5 → entrante 3, + Daño 3 − aguante, ×2.
+      // Pifia: 1 + 1 = 2 contra 5 → entrante 3, + Daño 3, sin restar el aguante.
       T.dice([6, 1], [6, 1]);
       const seen = new Set(Object.values(ui.windows).map(app => app.appId));
       (await T.chatButton(message, "defend")).click();
       await T.answer({ seen });
       await T.sleep(400);
       T.diceDone();
-      const expected = Math.max(0, 3 + 3 - endurance) * 2;
+      T.ok(endurance > 0, "el defensor tiene aguante");
+      const expected = 3 + 3;
       T.eq(actor.system.health.value, 10 - expected, "vida tras la pifia");
       // Segundo clic: aviso y sin daño.
       const warnings = [];

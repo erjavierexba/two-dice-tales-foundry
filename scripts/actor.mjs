@@ -800,16 +800,15 @@ export class TDTActor extends Actor {
       return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} se defiende</header><p>${defenseTotal} supera ${attackValue}: el ataque falla.</p></div>` });
     }
     const incoming = Math.max(0, attackValue - defenseTotal);
-    const endurance = targetEndurance(this, { hack: isHack, shot: options.shot });
+    // Pifia defendiendo: el daño ignora el aguante.
+    const endurance = result.isFumble ? 0 : targetEndurance(this, { hack: isHack, shot: options.shot });
     // Weapons with a special damage against living beings or machines (Hoja vibrante, Porra eléctrica…).
     const isMachine = this.type === "mecha";
     let weaponDamage = Number(data.damage || 0);
     if (isMachine && Number(data.vsMachines)) weaponDamage = Number(data.vsMachines);
     if (!isMachine && Number(data.vsLiving)) weaponDamage = Number(data.vsLiving);
-    let damage = Math.max(0, incoming + weaponDamage - endurance);
-    // Pifia defendiendo: el daño se multiplica por 2.
-    if (result.isFumble) damage *= 2;
-    const lines = [`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${result.isFumble ? " × 2 (pifia defendiendo)" : ""} = <strong>${damage}</strong>`];
+    const damage = Math.max(0, incoming + weaponDamage - endurance);
+    const lines = [`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${result.isFumble ? " (pifia defendiendo: ignora el aguante)" : ""} = <strong>${damage}</strong>`];
     if (options.stun && damage >= options.stun) {
       if (this.tdtFlags.has("noStun") || this.items.some(item => item.type === "armor" && item.system.equipped && item.system.noStun)) lines.push("El traje aislante evita el aturdimiento.");
       else {
