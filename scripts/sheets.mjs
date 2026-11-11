@@ -7,6 +7,7 @@ import * as Cyber from "./modules/cyber.mjs";
 import * as Mecha from "./modules/mecha.mjs";
 import * as Vehicle from "./modules/vehicle.mjs";
 import { parseWeaponProperties } from "./attack.mjs";
+import { categoriesForType, pickerCategory, PICKER_CATEGORIES } from "./compendium-picker.mjs";
 
 const ActorSheetBase = foundry.appv1.sheets.ActorSheet;
 const ItemSheetBase = foundry.appv1.sheets.ItemSheet;
@@ -312,18 +313,37 @@ export class TDTActorSheet extends ActorSheetBase {
     });
     const entries = [];
     for (const pack of packs) {
-      const index = await pack.getIndex({ fields: ["type", "img", "system.category"] });
+      const index = await pack.getIndex({ fields: ["type", "img", "system.category", "system.endurance", "system.damage", "system.properties"] });
       for (const item of index) {
         if (itemType && item.type !== itemType) continue;
         if (category && item.system?.category !== category) continue;
-        entries.push({ pack, id: item._id, name: item.name, img: item.img, type: item.type });
+        entries.push({
+          pack,
+          id: item._id,
+          name: item.name,
+          img: item.img,
+          type: item.type,
+          module: packModule(pack),
+          generic: pack.metadata?.name === "basic-generic-weapons",
+          category: pickerCategory(item)
+        });
       }
     }
     entries.sort((a, b) => a.name.localeCompare(b.name, "es", { sensitivity: "base" }));
     if (!entries.length) return ui.notifications.warn("No hay objetos compatibles en los compendios activos.");
+    const categoryTabs = categoriesForType(itemType);
+    const availableModules = [...new Set(entries.map(entry => entry.module))];
+    const moduleLabel = key => key ? (TDT.modules[key] ?? key).replace(/^Módulo (de )?/, "") : "Común";
+    const categoryControls = categoryTabs.length ? `<nav class="tdt-picker-tabs" aria-label="Categoría">${categoryTabs.map((key, index) => `<button type="button" data-picker-category="${key}" class="${index === 0 ? "active" : ""}" aria-pressed="${index === 0}">${PICKER_CATEGORIES[key]}</button>`).join("")}</nav>` : "";
+    const moduleControls = availableModules.length > 1 ? `<fieldset class="tdt-picker-modules"><legend>Repositorios</legend>${availableModules.map(key => `<label><input type="checkbox" data-picker-module="${key}" checked> ${esc(moduleLabel(key))}</label>`).join("")}</fieldset>` : "";
+    const genericControl = itemType === "weapon" && entries.some(entry => entry.generic) ? `<label class="tdt-picker-switch"><input type="checkbox" name="includeGeneric"><span></span> Incluir armas generales</label>` : "";
     const content = `<form class="tdt-compendium-picker">
       <div class="tdt-list-toolbar"><i class="fas fa-magnifying-glass"></i><input type="search" name="filter" placeholder="Buscar por nombre o compendio…" autocomplete="off"></div>
-      <select name="entry" size="14" aria-label="Objeto del compendio">${entries.map((entry, index) => `<option value="${index}">${esc(entry.name)} · ${esc(entry.pack.title)}</option>`).join("")}</select>
+      ${moduleControls}
+      ${categoryControls}
+      ${genericControl}
+      <select name="entry" size="14" aria-label="Objeto del compendio">${entries.map((entry, index) => `<option value="${index}" data-picker-category="${entry.category}" data-picker-module="${entry.module}" data-picker-generic="${entry.generic}">${esc(entry.name)} · ${esc(entry.pack.title)}</option>`).join("")}</select>
+      <p class="tdt-picker-empty" hidden>No hay resultados con estos filtros.</p>
       <p class="hint">Doble clic para añadir. El objeto se copia a la ficha y después se puede editar con normalidad.</p>
     </form>`;
     const selected = await new Promise(resolve => {
@@ -331,7 +351,10 @@ export class TDTActorSheet extends ActorSheetBase {
         title: `Buscar ${TDT.itemTypes[itemType] ?? "objeto"} en compendios`,
         content,
         buttons: {
-          add: { icon: '<i class="fas fa-plus"></i>', label: "Añadir a la ficha", callback: html => resolve(Number(html[0].querySelector('[name="entry"]').value)) },
+          add: { icon: '<i class="fas fa-plus"></i>', label: "Añadir a la ficha", callback: html => {
+            const value = html[0].querySelector('[name="entry"]').value;
+            resolve(value === "" ? null : Number(value));
+          } },
           cancel: { label: "Cancelar", callback: () => resolve(null) }
         },
         default: "add",
@@ -339,21 +362,51 @@ export class TDTActorSheet extends ActorSheetBase {
           const root = html[0];
           const input = root.querySelector('[name="filter"]');
           const select = root.querySelector('[name="entry"]');
-          input.addEventListener("input", () => {
+          const generic = root.querySelector('[name="includeGeneric"]');
+          const empty = root.querySelector(".tdt-picker-empty");
+          const categoryButtons = [...root.querySelectorAll("[data-picker-category]")].filter(element => element.tagName === "BUTTON");
+          const moduleInputs = [...root.querySelectorAll("input[data-picker-module]")];
+          let activeCategory = "all";
+          const applyFilters = () => {
             const query = input.value.normalize("NFD").replace(/\p{Diacritic}/gu, "").trim().toLocaleLowerCase("es");
+            const modules = new Set(moduleInputs.filter(control => control.checked).map(control => control.dataset.pickerModule));
             let first = null;
             for (const option of select.options) {
               const text = option.textContent.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("es");
-              option.hidden = Boolean(query) && !text.includes(query);
+              const visible = (!query || text.includes(query))
+                && (activeCategory === "all" || option.dataset.pickerCategory === activeCategory)
+                && (!moduleInputs.length || modules.has(option.dataset.pickerModule))
+                && (option.dataset.pickerGeneric !== "true" || generic?.checked);
+              option.hidden = !visible;
+              option.disabled = !visible;
               if (!option.hidden && first === null) first = option;
             }
             if (first) first.selected = true;
+            else select.selectedIndex = -1;
+            empty.hidden = Boolean(first);
+            const add = html.closest(".dialog").find(".dialog-button.add")[0];
+            if (add) add.disabled = !first;
+          };
+          input.addEventListener("input", applyFilters);
+          generic?.addEventListener("change", applyFilters);
+          for (const control of moduleInputs) control.addEventListener("change", applyFilters);
+          for (const button of categoryButtons) button.addEventListener("click", () => {
+            activeCategory = button.dataset.pickerCategory;
+            for (const entry of categoryButtons) {
+              const active = entry === button;
+              entry.classList.toggle("active", active);
+              entry.setAttribute("aria-pressed", String(active));
+            }
+            applyFilters();
           });
-          select.addEventListener("dblclick", () => html.closest(".dialog").find(".dialog-button.add").trigger("click"));
+          select.addEventListener("dblclick", () => {
+            if (select.selectedIndex >= 0 && !select.options[select.selectedIndex].disabled) html.closest(".dialog").find(".dialog-button.add").trigger("click");
+          });
+          applyFilters();
           input.focus();
         },
         close: () => resolve(null)
-      }, { classes: ["tdt", "tdt-dialog", "tdt-compendium-dialog"], width: 560 }).render(true);
+      }, { classes: ["tdt", "tdt-dialog", "tdt-compendium-dialog"], width: 700 }).render(true);
     });
     if (selected === null || !entries[selected]) return;
     const entry = entries[selected];

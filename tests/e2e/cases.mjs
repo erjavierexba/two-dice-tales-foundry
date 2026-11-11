@@ -87,6 +87,36 @@ export const cases = [
     })
   },
   {
+    name: "La lupa organiza armas por categoría, repositorio y armas generales",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero());
+      await T.renderSheet(actor.sheet, "ficha para selector de armas");
+      const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+      actor.sheet.element[0].querySelector('[data-action="compendium-pick"][data-item-type="weapon"]').click();
+      const dialog = await T.waitDialog(seen);
+      const root = dialog.element[0];
+      const options = [...root.querySelector('[name="entry"]').options];
+      const visible = () => options.filter(option => !option.hidden && !option.disabled);
+      const generic = root.querySelector('[name="includeGeneric"]');
+      T.ok(generic && !generic.checked, "las armas generales empiezan ocultas");
+      T.ok(options.some(option => option.dataset.pickerGeneric === "true" && option.hidden), "el repositorio general está disponible mediante switch");
+      const cyber = root.querySelector('input[data-picker-module="cyber"]');
+      const common = root.querySelector('input[data-picker-module=""]');
+      T.ok(cyber?.checked && common?.checked, "Común y Cyberpunk pueden mostrarse juntos");
+      cyber.checked = false;
+      cyber.dispatchEvent(new Event("change", { bubbles: true }));
+      T.ok(visible().every(option => option.dataset.pickerModule !== "cyber"), "se puede ocultar Cyberpunk");
+      root.querySelector('[data-picker-category="heavy"]').click();
+      T.ok(visible().length > 0 && visible().every(option => option.dataset.pickerCategory === "heavy"), "la pestaña Pesadas filtra la lista");
+      root.querySelector('[data-picker-category="all"]').click();
+      generic.checked = true;
+      generic.dispatchEvent(new Event("change", { bubbles: true }));
+      T.ok(visible().some(option => option.dataset.pickerGeneric === "true"), "el switch muestra las armas generales");
+      await dialog.close({ force: true });
+      await actor.sheet.close();
+    })
+  },
+  {
     name: "Percepción progresa por dotes y los requisitos impiden añadir dotes inválidas",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero());

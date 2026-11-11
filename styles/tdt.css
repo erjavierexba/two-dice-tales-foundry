@@ -801,6 +801,90 @@
   margin: 0;
 }
 
+.tdt .tdt-picker-tabs {
+  display: flex;
+  gap: 5px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.tdt .tdt-picker-tabs button {
+  flex: 1 0 auto;
+  min-height: 30px;
+  padding: 4px 10px;
+  color: var(--tdt-blue);
+  border: 1px solid var(--tdt-line);
+  border-radius: 999px;
+  background: rgba(255, 253, 247, .8);
+}
+
+.tdt .tdt-picker-tabs button.active {
+  color: #fff;
+  border-color: var(--tdt-blue);
+  background: var(--tdt-blue);
+}
+
+.tdt .tdt-picker-modules {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 7px 10px;
+  border: 1px solid var(--tdt-line);
+  border-radius: 7px;
+}
+
+.tdt .tdt-picker-modules legend {
+  padding: 0 5px;
+  color: var(--tdt-blue);
+  font-weight: 700;
+}
+
+.tdt .tdt-picker-modules label,
+.tdt .tdt-picker-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.tdt .tdt-picker-switch > input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tdt .tdt-picker-switch > span {
+  position: relative;
+  width: 34px;
+  height: 18px;
+  border-radius: 10px;
+  background: #aaa398;
+  transition: background .15s ease;
+}
+
+.tdt .tdt-picker-switch > span::after {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 12px;
+  height: 12px;
+  content: "";
+  border-radius: 50%;
+  background: #fff;
+  transition: transform .15s ease;
+}
+
+.tdt .tdt-picker-switch > input:checked + span { background: var(--tdt-blue); }
+.tdt .tdt-picker-switch > input:checked + span::after { transform: translateX(16px); }
+
+.tdt .tdt-picker-empty {
+  margin: auto;
+  color: var(--tdt-muted);
+  text-align: center;
+}
+
 .tdt .tdt-compendium-picker select {
   flex: 1;
   width: 100%;
