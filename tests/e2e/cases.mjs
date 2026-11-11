@@ -612,6 +612,40 @@ export const cases = [
   }
   ,
   {
+    name: "Iniciativa: un personaje con el token hostil sigue siendo un héroe (y los nuevos nacen amistosos)",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const lucy = await T.actor("character", T.hero(), "Lucy");
+      T.eq(lucy.prototypeToken.disposition, CONST.TOKEN_DISPOSITIONS.FRIENDLY, "un personaje nuevo nace amistoso");
+      T.eq(lucy.prototypeToken.actorLink, true, "y enlazado a su ficha");
+      const agent = await T.actor("npc", { initiative: { value: 6 } }, "Agente");
+      const hostile = CONST.TOKEN_DISPOSITIONS.HOSTILE;
+      // Lucy con el token hostil, como los que crea Foundry por defecto en mundos anteriores.
+      const scene = await Scene.create({ name: "E2E iniciativa", tokens: [
+        { name: "Lucy", actorId: lucy.id, actorLink: true, disposition: hostile, x: 0, y: 0 },
+        { name: "Agente", actorId: agent.id, disposition: hostile, x: 100, y: 0 },
+        { name: "Agente", actorId: agent.id, disposition: hostile, x: 200, y: 0 }
+      ] });
+      try {
+        const combat = await Combat.create({ scene: scene.id, active: true });
+        await combat.createEmbeddedDocuments("Combatant", scene.tokens.map(token => ({ tokenId: token.id, sceneId: scene.id, actorId: token.actorId, name: token.name })));
+        T.dice([4, 4], [4, 4]); // Percepción 2d4 de Lucy: 4 + 4 y crítico = 12
+        const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+        const rolling = combat.rollAll();
+        await T.answer({ seen }); // configuración de la iniciativa
+        await T.answer({}); // tirada de Percepción
+        await rolling;
+        T.diceDone();
+        const text = T.messageText(T.lastMessage());
+        T.ok(/Héroes 12/.test(text) && /enemigos 7/.test(text), `héroes 12 contra enemigos 6 + 1: ${text}`);
+        T.ok(/Empieza el equipo de héroes/.test(text), `empiezan los héroes: ${text}`);
+        T.eq(combat.turns.map(turn => turn.name), ["Lucy", "Agente", "Agente"], "Lucy y luego los agentes");
+        await combat.delete();
+      } finally {
+        await scene.delete();
+      }
+    })
+  },
+  {
     name: "Defensa contra intrusión: Mente + Hacking, con un mínimo de 1d4 por el VirtualSelf",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero());

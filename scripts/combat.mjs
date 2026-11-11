@@ -7,12 +7,15 @@ const orderFlag = combatant => {
   return value === null || value === undefined ? null : Number(value);
 };
 
-function isHero(combatant) {
+export function isHero(combatant) {
+  // Las fichas de personaje y las de un jugador son siempre héroes: Foundry crea todos los tokens
+  // como hostiles, así que la disposición no basta para descartarlos.
+  if (combatant.actor?.type === "character") return true;
+  if (combatant.actor?.hasPlayerOwner) return true;
+  // PNJ y mechas: manda la disposición del token (un PNJ amistoso es un aliado).
   const disposition = combatant.token?.disposition;
   if (disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY) return true;
   if (disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE) return false;
-  // Sin token que lo diga: los personajes son héroes y los PNJ enemigos, tenga o no dueño jugador.
-  if (combatant.actor?.type === "character") return true;
   if (combatant.actor?.type === "npc") return false;
   return !combatant.isNPC;
 }
@@ -90,9 +93,13 @@ export class TDTCombat extends Combat {
     const heroes = this.combatants.filter(isHero);
     const enemies = this.combatants.filter(combatant => !isHero(combatant));
     if (!heroes.length && !enemies.length) return this;
+    if (!heroes.length) {
+      ui.notifications.warn("No hay ningún héroe en el combate. Añade un personaje o marca como amistoso el token de los aliados.");
+      return this;
+    }
 
     const defaultLeader = bestInitiativeCombatant(heroes, "perception");
-    const form = heroes.length ? await initiativeDialog(heroes, enemies, defaultLeader) : { source: "perception", firstHero: null, enemyBase: 6 };
+    const form = await initiativeDialog(heroes, enemies, defaultLeader);
     if (!form) return this;
     const leader = bestInitiativeCombatant(heroes, form.source);
     const allyBonus = Math.min(3, Math.max(0, heroes.length - 1));

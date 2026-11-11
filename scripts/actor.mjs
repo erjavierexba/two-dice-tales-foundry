@@ -16,6 +16,19 @@ export class TDTActor extends Actor {
   /*  Derived data                                 */
   /* -------------------------------------------- */
 
+  /** Foundry crea todos los tokens como hostiles: los personajes nacen amistosos y enlazados a su ficha. */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if (allowed === false) return false;
+    if (this.type === "character") {
+      const changes = {};
+      if (foundry.utils.getProperty(data, "prototypeToken.disposition") === undefined) changes["prototypeToken.disposition"] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+      if (foundry.utils.getProperty(data, "prototypeToken.actorLink") === undefined) changes["prototypeToken.actorLink"] = true;
+      if (Object.keys(changes).length) this.updateSource(changes);
+    }
+    return allowed;
+  }
+
   /** Recuperar vida por cualquier vía (ficha, barra del token, curación…) termina el estado de caído. */
   async _preUpdate(changed, options, user) {
     const allowed = await super._preUpdate(changed, options, user);
