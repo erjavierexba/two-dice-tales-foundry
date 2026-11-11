@@ -164,7 +164,7 @@
       "properties": "",
       "ammo": { "value": 0, "max": 0 },
       "defense": "evasion",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": { "basic": [], "general": "", "special": "", "specialEnabled": false },
       "hackDefense": "",
       "mecha": { "enabled": false, "primary": false, "module": "melee", "category": 1, "size": 0, "inventoryCost": "", "integrated": true, "multiHit": "", "multiHitMax": 0, "multiHitDamage": 0, "battery": false, "spareCharges": 0, "overloadPenalty": 0, "repairRequired": false, "repairCost": 0, "destroyed": false }
@@ -175,7 +175,7 @@
       "evasionPenalty": 0,
       "powerRequired": 0,
       "shotEndurance": 0,
-      "pristine": true,
+      "pristine": false,
       "damage": 0,
       "noStun": false
     },

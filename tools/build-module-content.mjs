@@ -116,7 +116,7 @@ const genericWeapons = genericRows.map(([name, examples, attribute, properties])
       ammo: { value: ammo, max: ammo },
       module: "",
       equipped: false,
-      condition: "pristine"
+      condition: "normal"
     }
   };
 });
@@ -134,7 +134,7 @@ const stationaryWeapons = stationaryRows.map(([name, properties]) => ({
     properties,
     ammo: { value: 10, max: 10 },
     module: "",
-    condition: "pristine"
+    condition: "normal"
   }
 }));
 addPack("basic-generic-weapons", "TDT · Armas genéricas y estacionarias", "Item", "", [...genericWeapons, ...stationaryWeapons]);
@@ -795,7 +795,7 @@ const firearms = parseTable(section(cyberMd, "### Armas de fuego", "### Armas cu
       properties,
       ammo: { value: ammo, max: ammo },
       module: "cyber",
-      condition: "pristine",
+      condition: "normal",
       upgrades: { basic: [], general: "", special: "", specialEnabled: false, available: specialFor[name] ?? "" },
       price: priceOf(name)
     }
@@ -815,7 +815,7 @@ const meleeWeapons = parseTable(section(cyberMd, "### Armas cuerpo a cuerpo", "*
     properties,
     ammo: { value: 0, max: 0 },
     module: "cyber",
-    condition: "pristine",
+    condition: "normal",
     upgrades: { basic: [], general: "", special: "", specialEnabled: false },
     price: priceOf(name)
   }
@@ -832,7 +832,7 @@ const cyberArmor = parseTable(section(cyberMd, "## Armaduras", "## Objetos"), "A
     evasionPenalty: Math.abs(Number(penalty) || 0),
     powerRequired: Number(power.match(/d(\d+)/)?.[1] ?? 0),
     shotEndurance: Number(special.match(/Aguante\s*(\d+)\s*contra disparos/i)?.[1] ?? 0),
-    pristine: true,
+    pristine: false,
     damage: 0,
     noStun: /aturdirte/i.test(special),
     module: "cyber",

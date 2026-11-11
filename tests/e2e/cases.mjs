@@ -125,14 +125,14 @@ export const cases = [
     })
   },
   {
-    name: "El resumen de armadura coincide con el Aguante efectivo",
+    name: "Las armaduras empiezan normales y el resumen coincide con el Aguante efectivo",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero());
       await T.give(actor, "basic-armor", "Armadura ligera", { "system.equipped": true });
-      T.eq(actor.system.endurance.armor, 2, "armadura ligera impoluta");
+      T.eq(actor.system.endurance.armor, 1, "armadura ligera normal");
       await T.renderSheet(actor.sheet, "ficha con armadura");
       const row = actor.sheet.element[0].querySelector('[data-item-id] .tdt-item-summary');
-      T.ok(row?.textContent.includes("Aguante +2") && row.textContent.includes("Impoluta"), `resumen efectivo: ${row?.textContent}`);
+      T.eq(row?.textContent.trim(), "Aguante +1", "resumen efectivo normal");
       await actor.sheet.close();
     })
   },

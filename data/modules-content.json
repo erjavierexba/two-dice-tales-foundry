@@ -27,7 +27,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine",
+      "condition": "normal",
       "attributeAlt": "dexterity"
      }
     },
@@ -48,7 +48,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -68,7 +68,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine",
+      "condition": "normal",
       "attributeAlt": "dexterity"
      }
     },
@@ -89,7 +89,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -109,7 +109,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -129,7 +129,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -149,7 +149,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -169,7 +169,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -189,7 +189,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -209,7 +209,7 @@
       },
       "module": "",
       "equipped": false,
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -228,7 +228,7 @@
        "max": 10
       },
       "module": "",
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -247,7 +247,7 @@
        "max": 10
       },
       "module": "",
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -266,7 +266,7 @@
        "max": 10
       },
       "module": "",
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -285,7 +285,7 @@
        "max": 10
       },
       "module": "",
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -304,7 +304,7 @@
        "max": 10
       },
       "module": "",
-      "condition": "pristine"
+      "condition": "normal"
      }
     },
     {
@@ -323,7 +323,7 @@
        "max": 10
       },
       "module": "",
-      "condition": "pristine"
+      "condition": "normal"
      }
     }
    ]
@@ -10475,7 +10475,7 @@
        "max": 12
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10502,7 +10502,7 @@
        "max": 6
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10529,7 +10529,7 @@
        "max": 20
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10556,7 +10556,7 @@
        "max": 10
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10583,7 +10583,7 @@
        "max": 4
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10610,7 +10610,7 @@
        "max": 30
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10637,7 +10637,7 @@
        "max": 1
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10664,7 +10664,7 @@
        "max": 1
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10691,7 +10691,7 @@
        "max": 0
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10718,7 +10718,7 @@
        "max": 0
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10744,7 +10744,7 @@
        "max": 0
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10771,7 +10771,7 @@
        "max": 0
       },
       "module": "cyber",
-      "condition": "pristine",
+      "condition": "normal",
       "upgrades": {
        "basic": [],
        "general": "",
@@ -10799,7 +10799,7 @@
       "evasionPenalty": 0,
       "powerRequired": 0,
       "shotEndurance": 0,
-      "pristine": true,
+      "pristine": false,
       "damage": 0,
       "noStun": false,
       "module": "cyber",
@@ -10816,7 +10816,7 @@
       "evasionPenalty": 0,
       "powerRequired": 0,
       "shotEndurance": 3,
-      "pristine": true,
+      "pristine": false,
       "damage": 0,
       "noStun": false,
       "module": "cyber",
@@ -10833,7 +10833,7 @@
       "evasionPenalty": 1,
       "powerRequired": 6,
       "shotEndurance": 4,
-      "pristine": true,
+      "pristine": false,
       "damage": 0,
       "noStun": false,
       "module": "cyber",
@@ -10850,7 +10850,7 @@
       "evasionPenalty": 1,
       "powerRequired": 6,
       "shotEndurance": 0,
-      "pristine": true,
+      "pristine": false,
       "damage": 0,
       "noStun": true,
       "module": "cyber",
@@ -10867,7 +10867,7 @@
       "evasionPenalty": 2,
       "powerRequired": 8,
       "shotEndurance": 0,
-      "pristine": true,
+      "pristine": false,
       "damage": 0,
       "noStun": false,
       "module": "cyber",
@@ -12492,7 +12492,7 @@
          "max": 12
         },
         "module": "cyber",
-        "condition": "pristine",
+        "condition": "normal",
         "upgrades": {
          "basic": [],
          "general": "",
@@ -12514,7 +12514,7 @@
         "evasionPenalty": 0,
         "powerRequired": 0,
         "shotEndurance": 3,
-        "pristine": true,
+        "pristine": false,
         "damage": 0,
         "noStun": false,
         "module": "cyber",
@@ -13002,7 +13002,7 @@
          "max": 0
         },
         "module": "cyber",
-        "condition": "pristine",
+        "condition": "normal",
         "upgrades": {
          "basic": [],
          "general": "",
@@ -13030,7 +13030,7 @@
          "max": 4
         },
         "module": "cyber",
-        "condition": "pristine",
+        "condition": "normal",
         "upgrades": {
          "basic": [],
          "general": "",
@@ -13059,7 +13059,7 @@
         },
         "module": "",
         "equipped": true,
-        "condition": "pristine"
+        "condition": "normal"
        }
       }
      ]
@@ -13404,7 +13404,7 @@
          "max": 12
         },
         "module": "cyber",
-        "condition": "pristine",
+        "condition": "normal",
         "upgrades": {
          "basic": [],
          "general": "",
@@ -13426,7 +13426,7 @@
         "evasionPenalty": 0,
         "powerRequired": 0,
         "shotEndurance": 0,
-        "pristine": true,
+        "pristine": false,
         "damage": 0,
         "noStun": false,
         "module": "cyber",
@@ -13731,7 +13731,7 @@
          "max": 10
         },
         "module": "cyber",
-        "condition": "pristine",
+        "condition": "normal",
         "upgrades": {
          "basic": [],
          "general": "",
@@ -13753,7 +13753,7 @@
         "evasionPenalty": 1,
         "powerRequired": 6,
         "shotEndurance": 4,
-        "pristine": true,
+        "pristine": false,
         "damage": 0,
         "noStun": false,
         "module": "cyber",
@@ -14081,7 +14081,7 @@
          "max": 12
         },
         "module": "cyber",
-        "condition": "pristine",
+        "condition": "normal",
         "upgrades": {
          "basic": [],
          "general": "",
@@ -14103,7 +14103,7 @@
         "evasionPenalty": 0,
         "powerRequired": 0,
         "shotEndurance": 0,
-        "pristine": true,
+        "pristine": false,
         "damage": 0,
         "noStun": false,
         "module": "cyber",

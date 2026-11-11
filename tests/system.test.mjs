@@ -17,6 +17,8 @@ assert.equal(system.version, pkg.version, "system.json y package.json deben comp
 assert.equal(system.compatibility.minimum, "13");
 assert.ok(system.relationships?.recommends?.some(entry => entry.id === "dice-so-nice"), "Dice So Nice debe figurar como integración recomendada");
 assert.equal(template.Item.implant.installed, false, "los implantes del inventario no empiezan instalados");
+assert.equal(template.Item.weapon.condition, "normal", "las armas nuevas empiezan en estado normal");
+assert.equal(template.Item.armor.pristine, false, "las armaduras nuevas no empiezan impolutas");
 assert.equal(template.Item.weapon.mecha.repairRequired, false);
 assert.equal(template.Item.weapon.mecha.destroyed, false);
 for (const path of [...system.esmodules, ...system.styles]) assert.ok(await exists(path), `Falta ${path}`);
@@ -95,4 +97,8 @@ console.log(`TDT system checks: OK (${relative(process.cwd(), root)})`);
   const modules = JSON.parse(await read("data/modules-content.json"));
   const implants = modules.packs.find(pack => pack.name === "cyber-implants").documents;
   assert.ok(implants.every(item => item.system.installed === true), "los implantes del compendio vienen instalados");
+  const weapons = modules.packs.flatMap(pack => pack.documents).filter(item => item.type === "weapon");
+  const armor = modules.packs.flatMap(pack => pack.documents).filter(item => item.type === "armor");
+  assert.ok(weapons.every(item => (item.system.condition ?? "normal") === "normal"), "las armas de los módulos empiezan normales");
+  assert.ok(armor.every(item => (item.system.pristine ?? false) === false), "las armaduras de los módulos no empiezan impolutas");
 }
