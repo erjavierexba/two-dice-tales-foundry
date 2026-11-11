@@ -1636,3 +1636,6 @@
   width: auto;
   min-width: 0;
 }
+
+/* Compendios de módulos desactivados (ver renderCompendiumDirectory en tdt.mjs). */
+.tdt-hidden { display: none !important; }

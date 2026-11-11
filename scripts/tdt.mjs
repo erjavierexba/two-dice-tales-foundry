@@ -66,17 +66,20 @@ Hooks.once("ready", () => {
 
 Hooks.on("renderChatMessageHTML", (message, html) => activateChatListeners(message, html));
 
-/** Compendiums of disabled modules are hidden from the sidebar. */
+/**
+ * Compendiums of disabled modules are hidden from the sidebar. A class (not an inline style) is used
+ * because Foundry's search filter rewrites the inline display of every entry after rendering.
+ */
 Hooks.on("renderCompendiumDirectory", (app, html) => {
   const root = html instanceof HTMLElement ? html : html?.[0];
   if (!root) return;
   for (const pack of game.packs) {
-    if (packEnabled(pack)) continue;
-    for (const element of root.querySelectorAll(`[data-pack="${pack.collection}"], [data-entry-id="${pack.collection}"]`)) element.style.display = "none";
+    const hidden = !packEnabled(pack);
+    for (const element of root.querySelectorAll(`[data-pack="${pack.collection}"], [data-entry-id="${pack.collection}"]`)) element.classList.toggle("tdt-hidden", hidden);
   }
   for (const folder of root.querySelectorAll(".directory-item.folder")) {
-    const visible = [...folder.querySelectorAll(".directory-item:not(.folder)")].some(element => element.style.display !== "none");
-    if (!visible && folder.querySelector(".directory-item:not(.folder)")) folder.style.display = "none";
+    const entries = [...folder.querySelectorAll(".directory-item:not(.folder)")];
+    folder.classList.toggle("tdt-hidden", entries.length > 0 && entries.every(element => element.classList.contains("tdt-hidden")));
   }
 });
 

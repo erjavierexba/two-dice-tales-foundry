@@ -14,6 +14,32 @@ export const cases = [
     })
   },
   {
+    name: "La barra lateral oculta los compendios desactivados aunque se filtre",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      // Foundry reescribe el display de cada entrada al aplicar el filtro de búsqueda tras el render.
+      const entry = id => ui.compendium.element?.querySelector(`[data-pack="${id}"], [data-entry-id="${id}"]`);
+      const visible = id => getComputedStyle(entry(id)).display !== "none";
+      const rerender = async () => {
+        ui.sidebar.changeTab("compendium", "primary");
+        await ui.compendium.render({ force: true });
+        const start = Date.now();
+        while (!entry("tdt.basic-feats") && Date.now() - start < 5000) await T.sleep(50);
+        T.ok(entry("tdt.basic-feats") && entry("tdt.basic-weapons"), "la barra lateral muestra los compendios");
+        await T.sleep(1000); // el filtro de búsqueda se aplica después del render
+      };
+      await game.settings.set("tdt", "rule.specificWeapons", false);
+      try {
+        await rerender();
+        T.eq(visible("tdt.basic-weapons"), false, "armas específicas ocultas");
+        T.eq(visible("tdt.basic-feats"), true, "dotes básicas visibles");
+      } finally {
+        await game.settings.set("tdt", "rule.specificWeapons", true);
+      }
+      await rerender();
+      T.eq(visible("tdt.basic-weapons"), true, "armas específicas visibles otra vez");
+    })
+  },
+  {
     name: "Todos los documentos de los compendios se cargan sin errores de validación",
     run: async ({ gm }) => gm.evaluate(async () => {
       let total = 0;
