@@ -87,9 +87,9 @@ console.log(`TDT system checks: OK (${relative(process.cwd(), root)})`);
   assert.ok(byName("Gordo").system.rules.some(entry => entry.type === "disadvantage" && entry.target === "second"), "Gordo tira dos veces la habilidad");
 }
 
-// Los implantes del compendio llegan sin instalar (se instalan en clínica o con Cibernética).
+// Los implantes del compendio llegan instalados: el DJ decide si hace falta clínica o tirada.
 {
   const modules = JSON.parse(await read("data/modules-content.json"));
   const implants = modules.packs.find(pack => pack.name === "cyber-implants").documents;
-  assert.ok(implants.every(item => item.system.installed === false), "los implantes del compendio no vienen instalados");
+  assert.ok(implants.every(item => item.system.installed === true), "los implantes del compendio vienen instalados");
 }

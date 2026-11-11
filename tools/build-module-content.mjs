@@ -734,7 +734,7 @@ const implants = headedBlocks(section(cyberMd, "## Implantes", "### Mejoras de i
       module: "cyber",
       cc,
       tier: tierFromCost(cc),
-      installed: false,
+      installed: true, // llega instalado: el DJ decide si hace falta clínica o tirada
       upgrades,
       exclusiveUpgrades: Boolean(note.exclusive),
       slots: 1,
@@ -756,7 +756,7 @@ for (const block of headedBlocks(section(cyberMd, "### Implantes supremos", "## 
       module: "cyber",
       cc: 0,
       tier: "supreme",
-      installed: false,
+      installed: true,
       upgrades: [],
       supreme: { enabled: true, costDice, used: false, kind },
       modifiers: [],
@@ -965,8 +965,6 @@ const characters = headedBlocks(section(cyberMd, "## Personajes de ejemplo", "##
   const items = featNames.map(findFeat);
   for (const [implantName, options] of plan.implants) {
     const implant = structuredClone(implants.find(entry => entry.name === implantName));
-    // Los personajes de ejemplo llevan sus implantes ya instalados (los del compendio no).
-    implant.system.installed = true;
     if (options.slots) implant.system.slots = options.slots;
     for (const upgradeEntry of implant.system.upgrades) if (options.upgrades?.includes(upgradeEntry.name)) upgradeEntry.installed = true;
     items.push(implant);

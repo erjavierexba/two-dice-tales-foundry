@@ -381,7 +381,8 @@ export const cases = [
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero({ money: 10000 }));
       const arm = await T.give(actor, "cyber-implants", "Brazo robótico");
-      T.eq(arm.system.installed, false, "empieza sin instalar");
+      T.eq(arm.system.installed, true, "del compendio llega instalado (lo administra el DJ)");
+      await arm.update({ "system.installed": false }); // el DJ decide que pase por la clínica
       const installing = actor.installImplant(arm);
       await T.answer({ button: "ok" }); // la primera opción es la clínica
       await installing;

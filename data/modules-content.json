@@ -9899,7 +9899,7 @@
       "module": "cyber",
       "cc": 3,
       "tier": "minor",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Cableado",
@@ -9945,7 +9945,7 @@
       "module": "cyber",
       "cc": 3,
       "tier": "minor",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Armas ocultas",
@@ -10041,7 +10041,7 @@
       "module": "cyber",
       "cc": 7,
       "tier": "major",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Exoesqueleto interno",
@@ -10097,7 +10097,7 @@
       "module": "cyber",
       "cc": 4,
       "tier": "moderate",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Visión térmica",
@@ -10167,7 +10167,7 @@
       "module": "cyber",
       "cc": 4,
       "tier": "moderate",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Amortiguadores reforzados",
@@ -10234,7 +10234,7 @@
       "module": "cyber",
       "cc": 5,
       "tier": "moderate",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Coagulante sintético",
@@ -10290,7 +10290,7 @@
       "module": "cyber",
       "cc": 3,
       "tier": "minor",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Filtro tóxico",
@@ -10328,7 +10328,7 @@
       "module": "cyber",
       "cc": 3,
       "tier": "minor",
-      "installed": false,
+      "installed": true,
       "upgrades": [
        {
         "name": "Filtro de ruido",
@@ -10371,7 +10371,7 @@
       "module": "cyber",
       "cc": 0,
       "tier": "supreme",
-      "installed": false,
+      "installed": true,
       "upgrades": [],
       "supreme": {
        "enabled": true,
@@ -10393,7 +10393,7 @@
       "module": "cyber",
       "cc": 0,
       "tier": "supreme",
-      "installed": false,
+      "installed": true,
       "upgrades": [],
       "supreme": {
        "enabled": true,
@@ -10415,7 +10415,7 @@
       "module": "cyber",
       "cc": 0,
       "tier": "supreme",
-      "installed": false,
+      "installed": true,
       "upgrades": [],
       "supreme": {
        "enabled": true,
@@ -10437,7 +10437,7 @@
       "module": "cyber",
       "cc": 0,
       "tier": "supreme",
-      "installed": false,
+      "installed": true,
       "upgrades": [],
       "supreme": {
        "enabled": true,
