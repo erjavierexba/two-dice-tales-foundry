@@ -210,7 +210,8 @@ export function currencySettings() {
   return {
     enabled: Boolean(get("currencyEnabled")) || moduleActive("cyber"),
     name: String(get("currencyName") || "monedas"),
-    hasSubunits: Boolean(get("currencyHasSubunits")),
+    // El módulo cyberpunk usa euros sin céntimos.
+    hasSubunits: Boolean(get("currencyHasSubunits")) && !moduleActive("cyber"),
     subunitName: String(get("currencySubunitName") || "submonedas")
   };
 }

@@ -149,17 +149,18 @@
             <label>Ya usado <input type="checkbox" name="system.supreme.used" {{checked system.supreme.used}}></label>
             {{/if}}
           </fieldset>
-          <fieldset class="wide"><legend>Mejoras <button type="button" data-action="upgrade-add" title="Añadir mejora"><i class="fas fa-plus"></i></button></legend>
+          <fieldset class="wide tdt-upgrades"><legend>Mejoras</legend>
             {{#each upgradeRows as |upgrade|}}
-            <div class="tdt-upgrade-row">
-              <input name="system.upgrades.{{upgrade.index}}.name" value="{{upgrade.name}}">
+            <div class="tdt-upgrade-row tdt-implant-upgrade">
+              <input name="system.upgrades.{{upgrade.index}}.name" value="{{upgrade.name}}" aria-label="Nombre de la mejora">
               <label>CC <input type="number" min="0" name="system.upgrades.{{upgrade.index}}.cc" value="{{upgrade.cc}}"></label>
               <label>Instalada <input type="checkbox" name="system.upgrades.{{upgrade.index}}.installed" {{checked upgrade.installed}}></label>
-              <button type="button" data-action="upgrade-delete" data-index="{{upgrade.index}}"><i class="fas fa-trash"></i></button>
-              {{#if upgrade.description}}<small>{{upgrade.description}}</small>{{/if}}
+              <button type="button" data-action="upgrade-delete" data-index="{{upgrade.index}}" title="Borrar mejora"><i class="fas fa-trash"></i></button>
+              {{#if upgrade.description}}<details><summary>Descripción</summary><p>{{upgrade.description}}</p></details>{{/if}}
             </div>
             {{else}}<p class="hint">Sin mejoras.</p>
             {{/each}}
+            <button type="button" class="tdt-add-row" data-action="upgrade-add"><i class="fas fa-plus"></i> Añadir mejora</button>
           </fieldset>
         {{/if}}
 

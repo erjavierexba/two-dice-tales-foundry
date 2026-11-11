@@ -476,7 +476,8 @@ export class TDTActor extends Actor {
     const stateClass = result.isFumble ? "fumble" : result.isCritical ? "critical" : result.success === true ? "success" : result.success === false ? "failure" : "";
     const dieText = (index, label) => {
       if (!faces[index]) return `<span>${label ?? "+1"}</span>`;
-      return `<span>d${faces[index]}: <strong>${result.rawResults[index]}</strong>${allocations[index] ? ` + ${allocations[index]} = <strong>${result.adjusted[index]}</strong>` : ""}</span>`;
+      const name = index === 0 ? check.first?.label : index === 1 ? check.second?.label : "Extra";
+      return `<span>${name ? `<em class="tdt-die-name">${esc(name)}</em>` : ""}d${faces[index]}: <strong>${result.rawResults[index]}</strong>${allocations[index] ? ` + ${allocations[index]} = <strong>${result.adjusted[index]}</strong>` : ""}</span>`;
     };
     const bonusSpent = allocations.reduce((sum, value) => sum + value, 0);
     const alternatives = result.alternatives ? `<div class="tdt-roll-note">Pilotos: ${result.alternatives.map(entry => `${esc(entry.label)} d${entry.faces}: ${entry.value}`).join(" · ")} — se usa <strong>${esc(result.chosen)}</strong></div>` : "";

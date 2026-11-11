@@ -69,7 +69,7 @@
         <label><span>Aguante</span><input type="number" name="system.endurance.base" value="{{system.endurance.base}}"></label>
         <label><span>XP al derrotarlo</span><input type="number" name="system.experience.value" value="{{system.experience.value}}"></label>
         <label><span>Iniciativa de bando</span><input type="number" name="system.initiative.value" value="{{system.initiative.value}}" placeholder="6"></label>
-        <label><span>Habilidades (texto)</span><input name="system.npcStats.skills" value="{{system.npcStats.skills}}"></label>
+        <label class="tdt-wide"><span>Habilidades (texto)</span><input name="system.npcStats.skills" value="{{system.npcStats.skills}}"></label>
       </section>
       <section class="tdt-section">
         <h2>Fuente de villano</h2>
@@ -129,8 +129,8 @@
       </section>
 
       <section class="tdt-section tdt-secondary-grid">
-        <article class="tdt-stat-card accent">
-          <span>Aguante</span><strong>{{system.endurance.value}}</strong>
+        <article class="tdt-stat-card tdt-endurance-card">
+          <span><i class="fas fa-shield-halved"></i> Aguante</span><strong>{{system.endurance.value}}</strong>
           <small>Natural {{system.endurance.natural}} + armadura {{system.endurance.armor}}{{#if modules.cyber}} · disparos {{system.endurance.vsShots}}{{/if}}</small>
         </article>
         <article class="tdt-stat-card">
@@ -203,7 +203,7 @@
         <button type="button" data-action="filter-clear" title="Limpiar filtro" hidden><i class="fas fa-xmark"></i></button>
       </div>
       {{#each sections as |section|}}
-      <section class="tdt-section tdt-items-section">
+      <section class="tdt-section tdt-items-section{{#unless section.count}} is-empty{{/unless}}">
         <div class="tdt-section-title"><h2>{{section.label}} <small class="tdt-count">{{section.count}}</small></h2><div class="tdt-section-actions"><button type="button" data-action="section-toggle" title="Plegar o desplegar" aria-expanded="true"><i class="fas fa-chevron-up"></i></button><button type="button" data-action="compendium-pick" data-item-type="{{section.type}}" title="Buscar en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="{{section.type}}" title="Crear"><i class="fas fa-plus"></i></button></div></div>
         <ol class="item-list tdt-item-list">
           {{#each section.items as |item|}}
@@ -401,7 +401,7 @@
       <section class="tdt-section">
         <div class="tdt-section-title"><h2>Hacking</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="hack" data-module="cyber" title="Buscar hack en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="hack" title="Crear hack"><i class="fas fa-plus"></i></button></div></div>
         <p>
-          {{#if cyber.stats.slots}}{{cyber.stats.source}}: {{cyber.stats.usedSlots}}/{{cyber.stats.slots}} ranuras ocupadas · Usos de hack {{cyber.stats.usesLeft}}/{{cyber.stats.usesMax}}{{#if cyber.stats.hackPenalty}} · penaliza {{cyber.stats.hackPenalty}}{{/if}}{{else}}Sin AVS ni terminal externo equipado: no puedes hackear.{{/if}}
+          {{#if cyber.stats.slots}}{{cyber.stats.source}}: {{cyber.stats.usedSlots}}/{{cyber.stats.slots}} ranuras ocupadas · Usos de hack {{cyber.stats.usesLeft}}/{{cyber.stats.usesMax}}{{#if cyber.stats.hackPenalty}} · penaliza {{cyber.stats.hackPenalty}}{{/if}}{{else}}<span class="tdt-warning-pill"><i class="fas fa-triangle-exclamation"></i> Sin AVS ni terminal externo equipado: no puedes hackear</span>{{/if}}
           · Sobrecarga neural {{system.cyber.neuralOverload}}/{{cyber.overloadLimit}}
           {{#if cyber.stats.wiredCapable}} · Cable{{/if}}{{#if cyber.stats.longRange}} · Alcance larga{{/if}}{{#if cyber.stats.firewall}} · Extrafirewall{{/if}}
         </p>
