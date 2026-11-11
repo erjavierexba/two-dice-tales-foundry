@@ -497,6 +497,33 @@ export const cases = [
     })
   },
   {
+    name: "Cyberpunk: chips para cualquier habilidad o defensa e instalación gratuita del DJ",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero({ defenses: { evasion: { die: 4 } }, skills: { ranged: { die: 0 } }, money: 0 }));
+      const chip = await T.give(actor, "cyber-gear", "Chip de habilidad", { "system.loaded": true, "system.chipTarget": "ranged" });
+      T.eq(actor.system.skills.ranged.value, 4, "el chip mejora Puntería sin entrenamiento a d4");
+      await T.renderSheet(chip.sheet, "selector del chip");
+      const values = new Set([...chip.sheet.element[0].querySelector('[name="system.chipTarget"]').options].map(option => option.value));
+      for (const key of Object.keys(game.tdt.config.skills)) T.ok(values.has(key), `chip disponible para ${key}`);
+      for (const key of ["driving", "evasion", "fortitude", "will"]) T.ok(values.has(key), `chip disponible para ${key}`);
+      await chip.sheet.close();
+      await chip.update({ "system.chipTarget": "evasion" });
+      T.eq(actor.system.defenses.evasion.value, 6, "el mismo selector permite Esquiva");
+      await T.renderSheet(actor.sheet, "fuente de la mejora del chip");
+      const evasion = actor.sheet.element[0].querySelector('[data-roll-defense="evasion"]').closest("article").textContent.replace(/\s+/g, " ");
+      T.ok(evasion.includes("Efectivo d6 por Chip de habilidad"), `fuente visible: ${evasion}`);
+      await actor.sheet.close();
+
+      const implant = await T.give(actor, "cyber-implants", "Brazo robótico");
+      await implant.update({ "system.installed": false });
+      const installing = actor.installImplant(implant);
+      await T.answer({ fields: { choice: "free" } });
+      await installing;
+      T.eq([actor.items.get(implant.id).system.installed, actor.system.money], [true, 0], "el DJ instala gratis y sin tirada");
+      T.ok(T.messageText(T.lastMessage()).includes("sin coste ni tirada"), "la decisión queda registrada en el chat");
+    })
+  },
+  {
     name: "Conducir: característica + 1d4; Kansei Dorifto lo sube a d8 y bonifica 1",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero());

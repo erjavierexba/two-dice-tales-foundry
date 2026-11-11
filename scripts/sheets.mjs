@@ -46,7 +46,8 @@ function sheetConfig() {
     hackDefenseChoices: TDT.hackDefenses,
     moduleChoices: { "": "Básico", ...TDT.modules },
     skillChoices: Object.fromEntries(Object.entries(TDT.skills).filter(([key]) => skillVisible(key))),
-    chipTargets: { "": "—", ...Object.fromEntries(Object.entries(TDT.skills).filter(([key]) => skillVisible(key))), driving: "Conducir (dote)", evasion: "Esquiva", fortitude: "Fortaleza", will: "Voluntad" }
+    // Chips can target every skill, including skills hidden by the current module mix, plus driving and defenses.
+    chipTargets: { "": "—", ...TDT.skills, driving: "Conducir (dote)", evasion: "Esquiva", fortitude: "Fortaleza", will: "Voluntad" }
   };
 }
 
@@ -136,11 +137,16 @@ export class TDTActorSheet extends ActorSheetBase {
       fallDamage: !context.isNPC
     };
     context.quickActions.visible = Object.values(context.quickActions).some(Boolean);
+    const modifierSources = target => actor._tdtMods?.sources?.[target] ?? [];
+    const chipSources = target => actor.items
+      .filter(item => item.type === "gear" && item.system.category === "skillChip" && item.system.loaded && item.system.chipTarget === target)
+      .map(item => item.name);
+    const sourceText = (...sources) => [...new Set(sources.flat().filter(Boolean))].join(", ");
     context.skills = Object.entries(system.skills)
       .filter(([key]) => skillVisible(key))
-      .map(([key, skill]) => ({ key, ...skill, stepped: Number(skill.value) !== Number(skill.die) }));
-    context.attributes = Object.entries(system.attributes).map(([key, attribute]) => ({ key, ...attribute, stepped: Number(attribute.value) !== Number(attribute.die) }));
-    context.defenses = Object.entries(system.defenses).map(([key, defense]) => ({ key, ...defense, stepped: Number(defense.value) !== Number(defense.die) }));
+      .map(([key, skill]) => ({ key, ...skill, stepped: Number(skill.value) !== Number(skill.die), source: sourceText(modifierSources(`step.skill.${key}`), chipSources(key)) }));
+    context.attributes = Object.entries(system.attributes).map(([key, attribute]) => ({ key, ...attribute, stepped: Number(attribute.value) !== Number(attribute.die), source: sourceText(modifierSources(`step.attribute.${key}`)) }));
+    context.defenses = Object.entries(system.defenses).map(([key, defense]) => ({ key, ...defense, stepped: Number(defense.value) !== Number(defense.die), source: sourceText(modifierSources(`step.defense.${key}`), chipSources(key)) }));
     const decorate = item => ({ id: item.id, name: item.name, img: item.img, type: item.type, system: item.system, summary: itemSummary(item, actor), active: item.system.equipped || item.system.loaded || item.system.installed || item.system.active });
     const ofType = type => actor.items.filter(item => item.type === type).sort((a, b) => (a.sort || 0) - (b.sort || 0)).map(decorate);
     const sections = [

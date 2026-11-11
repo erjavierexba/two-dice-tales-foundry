@@ -715,7 +715,8 @@ const methods = {
     const choice = await choiceDialog(`Instalar ${implant.name}`, "¿Dónde se instala?", [
       { id: "clinic", label: "Clínica (1.000 € por punto de CC)" },
       { id: "alley", label: "Clínica de callejón (mitad de precio; 1d4: con un 1 sale averiado)" },
-      { id: "self", label: "Tirada de Cibernética de un personaje" }
+      { id: "self", label: "Tirada de Cibernética de un personaje" },
+      { id: "free", label: "Instalación gratuita (decisión del DJ; sin coste ni tirada)" }
     ]);
     if (!choice) return;
     let malfunction = false;
@@ -737,6 +738,7 @@ const methods = {
     }
     if (price) await this.update({ "system.money": Number(this.system.money || 0) - price });
     await implant.update({ "system.installed": true, "system.malfunction": malfunction });
+    if (choice === "free") say(this, "Instalación gratuita", `<p>El DJ instala ${esc(implant.name)} a ${esc(this.name)} sin coste ni tirada.</p>`);
     const stats = this.system.cyberStats;
     if (stats?.excess > 0) say(this, "Exceso de carga", `<p>${esc(this.name)} tiene ahora ${stats.excess} de exceso (carga ${stats.load} / CC ${stats.cc}).</p>`);
   },

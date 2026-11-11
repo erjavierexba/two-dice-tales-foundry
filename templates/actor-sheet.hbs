@@ -122,7 +122,7 @@
           <article class="tdt-stat-card">
             <span class="tdt-stat-label">{{attribute.label}}</span>
             <select name="system.attributes.{{attribute.key}}.die">{{selectOptions ../config.rolledDieChoices selected=attribute.die}}</select>
-            {{#if attribute.stepped}}<small class="tdt-stepped">Efectivo d{{attribute.value}}</small>{{/if}}
+            {{#if attribute.stepped}}<small class="tdt-stepped">Efectivo d{{attribute.value}}{{#if attribute.source}} por {{attribute.source}}{{/if}}</small>{{/if}}
           </article>
           {{/each}}
         </div>
@@ -141,7 +141,7 @@
         <article class="tdt-stat-card">
           <button type="button" class="tdt-roll-label" data-roll-defense="{{defense.key}}"><i class="fas fa-shield-halved"></i> {{defense.label}}</button>
           <select name="system.defenses.{{defense.key}}.die">{{selectOptions ../config.rolledDieChoices selected=defense.die}}</select>
-          {{#if defense.stepped}}<small class="tdt-stepped">Efectivo d{{defense.value}}{{#if defense.chip}} (chip){{/if}}</small>{{/if}}
+          {{#if defense.stepped}}<small class="tdt-stepped">Efectivo d{{defense.value}}{{#if defense.source}} por {{defense.source}}{{/if}}</small>{{/if}}
           {{#if defense.armorPenalty}}<small>Armadura: −{{defense.armorPenalty}}</small>{{/if}}
         </article>
         {{/each}}
@@ -189,7 +189,7 @@
             <button type="button" data-roll-skill="{{skill.key}}"><i class="fas fa-dice-d20"></i> {{skill.label}}{{#if skill.chip}} <i class="fas fa-microchip" title="Chip de habilidad"></i>{{/if}}</button>
             <select name="system.skills.{{skill.key}}.attribute">{{selectOptions ../config.attributeChoices selected=skill.attribute}}</select>
             <select name="system.skills.{{skill.key}}.die">{{selectOptions ../config.dieChoices selected=skill.die}}</select>
-            {{#if skill.stepped}}<small class="tdt-stepped">d{{skill.value}}</small>{{/if}}
+            {{#if skill.stepped}}<small class="tdt-stepped">d{{skill.value}}{{#if skill.source}} por {{skill.source}}{{/if}}</small>{{/if}}
           </div>
           {{/each}}
         </div>
