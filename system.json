@@ -2,7 +2,8 @@
   "id": "tdt",
   "title": "Two Dice Tales",
   "description": "Sistema oficial de Two Dice Tales para Foundry Virtual Tabletop.",
-  "version": "0.4.16",
+  "background": "systems/tdt/assets/branding/system-background.png",
+  "version": "0.4.17",
   "compatibility": {
     "minimum": "13",
     "verified": "13.348"

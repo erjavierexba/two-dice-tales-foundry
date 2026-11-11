@@ -56,7 +56,7 @@ Hooks.once("ready", () => {
   game.settings.set("tdt", "welcomeShown", true);
   ChatMessage.create({
     whisper: [game.user.id],
-    content: `<div class="tdt-chat-card tdt-welcome"><header>Two Dice Tales</header>
+    content: `<div class="tdt-chat-card tdt-welcome"><header class="tdt-welcome-brand"><img src="systems/tdt/assets/branding/tdt-mark.svg" alt=""><span>Two Dice Tales<small>Un sistema · infinitas historias</small></span></header>
       <p>El sistema está listo. Crea un <strong>Actor</strong> de tipo Personaje o PNJ y pulsa los dados de su ficha para empezar.</p>
       <p>Los módulos opcionales (fantástico, mechas, superpoderes, zombis y cyberpunk) y las reglas opcionales se activan en <em>Configuración → Configurar ajustes → Two Dice Tales</em>.${modules.length ? ` Activos: ${modules.map(key => TDT.modules[key]).join(", ")}.` : ""}</p>
       <p>Todo el contenido está en los compendios. Si prefieres tenerlo en el mundo:</p>

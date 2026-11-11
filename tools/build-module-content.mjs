@@ -25,22 +25,22 @@ const cyberMd = read("modulos_opcionales/5 - Módulo cyberpunk.md");
 const basicContent = JSON.parse(fs.readFileSync(path.join(here, "../data/basic-content.json"), "utf8"));
 
 const IMG = {
-  feat: "icons/svg/upgrade.svg",
-  disadvantage: "icons/svg/downgrade.svg",
-  weapon: "icons/svg/sword.svg",
-  armor: "icons/svg/shield.svg",
-  gear: "icons/svg/item-bag.svg",
-  vehicle: "icons/svg/wing.svg",
-  race: "icons/svg/mystery-man.svg",
-  spell: "icons/svg/explosion.svg",
-  power: "icons/svg/lightning.svg",
-  implant: "icons/svg/clockwork.svg",
-  hack: "icons/svg/daze.svg",
-  chip: "icons/svg/card-hand.svg",
-  npc: "icons/svg/mystery-man.svg",
-  machine: "icons/svg/cowled.svg",
-  zombie: "icons/svg/skull.svg",
-  mecha: "icons/svg/castle.svg"
+  feat: "systems/tdt/assets/icons/feat.svg",
+  disadvantage: "systems/tdt/assets/icons/disadvantage.svg",
+  weapon: "systems/tdt/assets/icons/weapon.svg",
+  armor: "systems/tdt/assets/icons/armor.svg",
+  gear: "systems/tdt/assets/icons/gear.svg",
+  vehicle: "systems/tdt/assets/icons/vehicle.svg",
+  race: "systems/tdt/assets/icons/race.svg",
+  spell: "systems/tdt/assets/icons/spell.svg",
+  power: "systems/tdt/assets/icons/power.svg",
+  implant: "systems/tdt/assets/icons/implant.svg",
+  hack: "systems/tdt/assets/icons/hack.svg",
+  chip: "systems/tdt/assets/icons/chip.svg",
+  npc: "systems/tdt/assets/icons/npc.svg",
+  machine: "systems/tdt/assets/icons/machine.svg",
+  zombie: "systems/tdt/assets/icons/zombie.svg",
+  mecha: "systems/tdt/assets/icons/mecha.svg"
 };
 
 const rule = (type, value, scopes, label, extra = {}) => ({ type, value, scopes, label, ...extra });

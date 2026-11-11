@@ -27,11 +27,27 @@ const moduleContent = JSON.parse(fs.readFileSync(path.join(systemRoot, "data/mod
 
 const foundryId = (namespace, name) => crypto.createHash("sha256").update(`${namespace}:${name}`).digest("hex").slice(0, 16);
 
+const IMAGE_ROOT = "systems/tdt/assets/icons";
+
 function basicImage(item) {
-  if (item.type === "feat") return item.system.category === "disadvantage" ? "icons/svg/downgrade.svg" : "icons/svg/upgrade.svg";
-  if (item.type === "weapon") return "icons/svg/sword.svg";
-  if (item.type === "armor") return "icons/svg/shield.svg";
-  return item.system.category === "vehicle" ? "icons/svg/wing.svg" : "icons/svg/item-bag.svg";
+  if (item.type === "feat") return `${IMAGE_ROOT}/${item.system.category === "disadvantage" ? "disadvantage" : "feat"}.svg`;
+  if (item.type === "gear" && item.system.category === "vehicle") return `${IMAGE_ROOT}/vehicle.svg`;
+  if (item.type === "gear" && item.system.category === "skillChip") return `${IMAGE_ROOT}/chip.svg`;
+  return `${IMAGE_ROOT}/${item.type === "race" ? "race" : item.type || "gear"}.svg`;
+}
+
+function brandedImage(item) {
+  const custom = item.img && !item.img.startsWith("icons/svg/");
+  return custom ? item.img : basicImage(item);
+}
+
+function actorImage(actor) {
+  if (actor.img && !actor.img.startsWith("icons/svg/")) return actor.img;
+  if (actor.type === "mecha") return `${IMAGE_ROOT}/mecha.svg`;
+  if (actor.type === "character") return `${IMAGE_ROOT}/character.svg`;
+  if (actor.img?.includes("skull")) return `${IMAGE_ROOT}/zombie.svg`;
+  if (actor.img?.includes("cowled")) return `${IMAGE_ROOT}/machine.svg`;
+  return `${IMAGE_ROOT}/npc.svg`;
 }
 
 const stats = (packName, documentName, id) => ({
@@ -47,7 +63,7 @@ function itemDocument(item, packName, namespace = packName) {
     _id: id,
     name: item.name,
     type: item.type,
-    img: item.img ?? basicImage(item),
+    img: brandedImage(item),
     system: item.system,
     effects: [],
     folder: null,
@@ -66,7 +82,7 @@ function actorDocument(actor, packName) {
     return document;
   });
   const friendly = actor.type !== "npc";
-  const img = actor.img ?? "icons/svg/mystery-man.svg";
+  const img = actorImage(actor);
   return {
     _id: id,
     name: actor.name,

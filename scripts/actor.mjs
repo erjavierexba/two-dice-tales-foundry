@@ -10,6 +10,11 @@ import * as Zombie from "./modules/zombie.mjs";
 import * as Cyber from "./modules/cyber.mjs";
 
 const ATTACK_SKILLS = new Set(["melee", "brawl", "ranged"]);
+const ACTOR_IMAGES = {
+  character: "systems/tdt/assets/icons/character.svg",
+  npc: "systems/tdt/assets/icons/npc.svg",
+  mecha: "systems/tdt/assets/icons/mecha.svg"
+};
 
 export class TDTActor extends Actor {
   /* -------------------------------------------- */
@@ -20,10 +25,13 @@ export class TDTActor extends Actor {
   async _preCreate(data, options, user) {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
-    if (this.type === "character") {
+    {
       const changes = {};
-      if (foundry.utils.getProperty(data, "prototypeToken.disposition") === undefined) changes["prototypeToken.disposition"] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
-      if (foundry.utils.getProperty(data, "prototypeToken.actorLink") === undefined) changes["prototypeToken.actorLink"] = true;
+      if (foundry.utils.getProperty(data, "img") === undefined) changes.img = ACTOR_IMAGES[this.type] ?? ACTOR_IMAGES.character;
+      if (this.type === "character") {
+        if (foundry.utils.getProperty(data, "prototypeToken.disposition") === undefined) changes["prototypeToken.disposition"] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+        if (foundry.utils.getProperty(data, "prototypeToken.actorLink") === undefined) changes["prototypeToken.actorLink"] = true;
+      }
       if (Object.keys(changes).length) this.updateSource(changes);
     }
     return allowed;

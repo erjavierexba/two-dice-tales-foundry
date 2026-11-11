@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">Monograma Two Dice Tales</title>
+  <rect width="512" height="512" rx="96" fill="#0E2530"/>
+  <g fill="none" stroke-linejoin="round">
+    <path d="m62 154 132-76 132 76v152l-132 76-132-76z" fill="#123B45" stroke="#E1A94B" stroke-width="14"/>
+    <path d="m194 78 132 76-132 76-132-76m132 76v152" stroke="#F7F1E3" stroke-width="10"/>
+    <path d="m216 280 99-57 99 57v114l-99 57-99-57z" fill="#E1A94B" stroke="#0E2530" stroke-width="14"/>
+    <path d="m315 223 99 57-99 57-99-57m99 57v114" stroke="#0E2530" stroke-width="10"/>
+  </g>
+</svg>

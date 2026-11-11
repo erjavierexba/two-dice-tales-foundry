@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="360" viewBox="0 0 1200 360" role="img" aria-labelledby="title desc">
+  <title id="title">Two Dice Tales</title>
+  <desc id="desc">Logotipo horizontal con dos dados entrelazados.</desc>
+  <g fill="none" stroke-linejoin="round">
+    <path d="M74 112 178 52l104 60v120l-104 60-104-60z" fill="#123B45" stroke="#E1A94B" stroke-width="10"/>
+    <path d="m178 52 104 60-104 60-104-60m104 60v120" stroke="#F7F1E3" stroke-width="7" opacity=".92"/>
+    <circle cx="126" cy="111" r="10" fill="#F7F1E3" stroke="none"/>
+    <circle cx="224" cy="111" r="10" fill="#F7F1E3" stroke="none"/>
+    <circle cx="178" cy="216" r="10" fill="#E1A94B" stroke="none"/>
+    <path d="m207 205 83-48 83 48v96l-83 48-83-48z" fill="#E1A94B" stroke="#0E2530" stroke-width="10"/>
+    <path d="m290 157 83 48-83 48-83-48m83 48v96" stroke="#0E2530" stroke-width="7"/>
+    <circle cx="248" cy="205" r="9" fill="#0E2530" stroke="none"/>
+    <circle cx="331" cy="205" r="9" fill="#0E2530" stroke="none"/>
+    <circle cx="290" cy="281" r="9" fill="#0E2530" stroke="none"/>
+  </g>
+  <g fill="#0E2530">
+    <text x="416" y="166" font-family="Cinzel, Georgia, serif" font-size="102" font-weight="700" letter-spacing="4">TWO DICE</text>
+    <text x="416" y="282" font-family="Cinzel, Georgia, serif" font-size="102" font-weight="700" letter-spacing="13">TALES</text>
+  </g>
+  <path d="M420 310h650" stroke="#E1A94B" stroke-width="8"/>
+</svg>

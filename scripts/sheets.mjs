@@ -14,15 +14,15 @@ const esc = value => foundry.utils.escapeHTML(String(value ?? ""));
 const clamp = (value, min, max) => Math.min(max, Math.max(min, Number(value) || 0));
 
 const ITEM_IMAGES = {
-  feat: "icons/svg/upgrade.svg",
-  weapon: "icons/svg/sword.svg",
-  armor: "icons/svg/shield.svg",
-  gear: "icons/svg/item-bag.svg",
-  race: "icons/svg/mystery-man.svg",
-  spell: "icons/svg/explosion.svg",
-  power: "icons/svg/lightning.svg",
-  implant: "icons/svg/clockwork.svg",
-  hack: "icons/svg/daze.svg"
+  feat: "systems/tdt/assets/icons/feat.svg",
+  weapon: "systems/tdt/assets/icons/weapon.svg",
+  armor: "systems/tdt/assets/icons/armor.svg",
+  gear: "systems/tdt/assets/icons/gear.svg",
+  race: "systems/tdt/assets/icons/race.svg",
+  spell: "systems/tdt/assets/icons/spell.svg",
+  power: "systems/tdt/assets/icons/power.svg",
+  implant: "systems/tdt/assets/icons/implant.svg",
+  hack: "systems/tdt/assets/icons/hack.svg"
 };
 
 function modulesContext() {
