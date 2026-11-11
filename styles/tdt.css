@@ -1551,7 +1551,9 @@
 }
 .tdt.tdt-dialog .dialog-content .form-group { margin: 4px 0; }
 .tdt.tdt-dialog .dialog-content p { margin: 4px 0; }
+.tdt.tdt-dialog .dialog-content { flex: 1 1 auto; }
 .tdt.tdt-dialog .dialog-buttons {
+  flex: 0 0 auto;
   margin-top: 10px;
   gap: 8px;
 }
@@ -1607,4 +1609,30 @@
   font-style: normal;
   font-weight: 700;
   text-transform: uppercase;
+}
+
+/* Fichas de objeto: los desplegables usan todo el hueco para que no se corte el texto. */
+.tdt .tdt-item-fields label > select { flex: 1 1 130px; width: auto; min-width: 0; max-width: 200px; }
+
+/* Pares «actual / máximo» (Munición, Usos) en una sola línea. */
+.tdt .tdt-item-fields label > span:has(> input[type="number"]) {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.tdt .tdt-item-fields label > span > input[type="number"] { width: 58px; }
+
+/* Pestaña Automatización: los ejemplos largos de JSON hacen salto de línea. */
+.tdt .tdt-item-sheet .hint code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.tdt .tdt-item-sheet details { margin: 4px 0 12px; }
+.tdt .tdt-item-sheet details summary { color: var(--tdt-blue); font-weight: 700; cursor: pointer; }
+
+/* Filas de botones de acción: comparten línea en vez de apilarse a lo ancho. */
+.tdt .tdt-button-row button {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
 }
