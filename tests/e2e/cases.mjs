@@ -125,6 +125,18 @@ export const cases = [
     })
   },
   {
+    name: "El resumen de armadura coincide con el Aguante efectivo",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero());
+      await T.give(actor, "basic-armor", "Armadura ligera", { "system.equipped": true });
+      T.eq(actor.system.endurance.armor, 2, "armadura ligera impoluta");
+      await T.renderSheet(actor.sheet, "ficha con armadura");
+      const row = actor.sheet.element[0].querySelector('[data-item-id] .tdt-item-summary');
+      T.ok(row?.textContent.includes("Aguante +2") && row.textContent.includes("Impoluta"), `resumen efectivo: ${row?.textContent}`);
+      await actor.sheet.close();
+    })
+  },
+  {
     name: "Tirada básica y crítico (dobles suman otra vez)",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero({ skills: { athletics: { die: 6 } } }));

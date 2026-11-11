@@ -60,8 +60,19 @@ function itemSummary(item, actor) {
       if (actor?.type === "npc" && system.attackDifficulty) parts.unshift(`Ataque ${system.attackDifficulty}`);
       return parts.join(" · ");
     }
-    case "armor":
-      return `Aguante +${system.endurance}${Number(system.damage) ? ` (−${system.damage})` : ""}${system.shotEndurance ? ` · ${system.shotEndurance} disparos` : ""}`;
+    case "armor": {
+      const damage = Number(system.damage || 0);
+      const base = Math.max(0, Number(system.endurance || 0) - damage);
+      const pristine = moduleActive("cyber") && system.pristine && base > 0 ? 1 : 0;
+      const effective = base + pristine;
+      const shotBase = Number(system.shotEndurance || 0);
+      const effectiveShot = (shotBase ? Math.max(0, shotBase - damage) : base) + pristine;
+      const parts = [`Aguante +${effective}`];
+      if (shotBase && effectiveShot !== effective) parts.push(`disparos +${effectiveShot}`);
+      if (pristine) parts.push("Impoluta");
+      if (!effective && Number(system.endurance || 0) > 0) parts.push("Rota");
+      return parts.join(" · ");
+    }
     case "feat":
       return `${system.cost >= 0 ? "+" : ""}${system.cost}${system.incremental ? ` · Incremental ${system.incremental}` : ""}`;
     case "gear":
