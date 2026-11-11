@@ -8,6 +8,7 @@ import * as Mecha from "./modules/mecha.mjs";
 import * as Vehicle from "./modules/vehicle.mjs";
 import { parseWeaponProperties } from "./attack.mjs";
 import { categoriesForType, pickerCategory, PICKER_CATEGORIES } from "./compendium-picker.mjs";
+import { CHIP_KINDS, chipKindOf, chipTargetsFor } from "./chips.mjs";
 
 const ActorSheetBase = foundry.appv1.sheets.ActorSheet;
 const ItemSheetBase = foundry.appv1.sheets.ItemSheet;
@@ -678,6 +679,10 @@ export class TDTItemSheet extends ItemSheetBase {
       context.upgradeRows = (Array.isArray(system.upgrades) ? system.upgrades : []).map((upgrade, index) => ({ ...upgrade, index }));
     }
     if (item.type === "gear" && system.category === "vehicle") context.vehicle = Vehicle.vehicleProfile(item);
+    if (item.type === "gear" && system.category === "skillChip") {
+      const kind = chipKindOf(system);
+      context.chip = { kind, kinds: CHIP_KINDS, targets: chipTargetsFor(kind), targetLabel: kind === "defense" ? "Defensa" : "Habilidad" };
+    }
     if (item.type === "spell") {
       const owner = item.parent;
       const feats = owner ? Fantasy.knownCircleParts(owner).feats : new Set();

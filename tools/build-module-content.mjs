@@ -854,10 +854,10 @@ const cyberObjects = parseTable(section(cyberMd, "## Objetos", "## Construcción
   }
 }));
 const chips = [
-  ["Chip de habilidad", 4000, "Sube un paso el dado de una habilidad mientras está cargado (sin habilidad: d4; con d12: bonifica 1). Elige la habilidad en la ficha del chip."],
-  ["Chip de habilidad de combate", 8000, "Chip de Puntería, Combate con armas cac, Maniobra de lucha o Hacking. Elige la habilidad en la ficha del chip."],
-  ["Chip de defensa", 12000, "Sube un paso Esquiva, Fortaleza o Voluntad mientras está cargado. Elige la defensa en la ficha del chip."]
-].map(([name, price, description]) => ({ name, type: "gear", img: IMG.chip, system: { description: `${description} Ocupa una ranura del AVS, pero no cuenta para los usos de hacks. Cargarlo en combate gasta el turno entero.`, category: "skillChip", chipTarget: "", loaded: false, module: "cyber", quantity: 1, price } }));
+  ["Chip de habilidad", "skill", 4000, "Sube un paso el dado de una habilidad mientras está cargado (sin habilidad: d4; con d12: bonifica 1). Elige la habilidad en la ficha del chip."],
+  ["Chip de combate", "combat", 8000, "Chip de Puntería, Combate con armas cac, Maniobra de lucha o Hacking. Elige la habilidad en la ficha del chip."],
+  ["Chip de defensa", "defense", 12000, "Sube un paso Esquiva, Fortaleza o Voluntad mientras está cargado. Elige la defensa en la ficha del chip."]
+].map(([name, chipKind, price, description]) => ({ name, type: "gear", img: IMG.chip, system: { description: `${description} Ocupa una ranura del AVS, pero no cuenta para los usos de hacks. Cargarlo en combate gasta el turno entero.`, category: "skillChip", chipKind, chipTarget: "", loaded: false, module: "cyber", quantity: 1, price } }));
 const vehicles = parseTable(section(cyberMd, "## Vehículos", "**·Analógico"), "Vehículo").map(([name, drive, passengers, driving, health, endurance, special]) => ({
   name,
   type: "gear",

@@ -87,7 +87,8 @@
         {{#if is.gear}}
           <label>Categoría <select name="system.category">{{selectOptions config.gearCategories selected=system.category}}</select></label>
           {{#if (eq system.category "skillChip")}}
-          <label>Habilidad o defensa <select name="system.chipTarget">{{selectOptions config.chipTargets selected=system.chipTarget}}</select></label>
+          <label>Tipo de chip <select name="system.chipKind">{{selectOptions chip.kinds selected=chip.kind}}</select></label>
+          <label>{{chip.targetLabel}} <select name="system.chipTarget">{{selectOptions chip.targets selected=system.chipTarget}}</select></label>
           {{#if (eq system.chipTarget "driving")}}
           <label title="Cargado, da la dote Conducir para esta categoría. Vacío: cualquier vehículo.">Categoría de Conducir <input name="system.chipVehicle" value="{{system.chipVehicle}}" placeholder="Coche/furgoneta"></label>
           {{/if}}

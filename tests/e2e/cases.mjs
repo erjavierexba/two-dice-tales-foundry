@@ -521,22 +521,36 @@ export const cases = [
     })
   },
   {
-    name: "Cyberpunk: chips para cualquier habilidad o defensa e instalación gratuita del DJ",
+    name: "Cyberpunk: chips de habilidad, combate y defensa con selector capado e instalación gratuita del DJ",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero({ defenses: { evasion: { die: 4 } }, skills: { ranged: { die: 0 } }, money: 0 }));
-      const chip = await T.give(actor, "cyber-gear", "Chip de habilidad", { "system.loaded": true, "system.chipTarget": "ranged" });
+      const optionsOf = async chip => {
+        await T.renderSheet(chip.sheet, `selector de ${chip.name}`);
+        const values = [...chip.sheet.element[0].querySelector('[name="system.chipTarget"]').options].map(option => option.value).filter(Boolean);
+        await chip.sheet.close();
+        return values;
+      };
+      const combatSkills = ["ranged", "melee", "brawl", "hacking"];
+      const skillChip = await T.give(actor, "cyber-gear", "Chip de habilidad");
+      const skillOptions = await optionsOf(skillChip);
+      for (const key of Object.keys(game.tdt.config.skills).filter(key => !combatSkills.includes(key))) T.ok(skillOptions.includes(key), `chip de habilidad disponible para ${key}`);
+      T.ok(skillOptions.includes("driving"), "chip de habilidad disponible para Conducir");
+      for (const key of [...combatSkills, "evasion", "fortitude", "will"]) T.ok(!skillOptions.includes(key), `el chip de habilidad no ofrece ${key}`);
+
+      const combatChip = await T.give(actor, "cyber-gear", "Chip de combate", { "system.loaded": true, "system.chipTarget": "ranged" });
+      T.eq((await optionsOf(combatChip)).sort(), [...combatSkills].sort(), "el chip de combate solo ofrece sus cuatro habilidades");
       T.eq(actor.system.skills.ranged.value, 4, "el chip mejora Puntería sin entrenamiento a d4");
-      await T.renderSheet(chip.sheet, "selector del chip");
-      const values = new Set([...chip.sheet.element[0].querySelector('[name="system.chipTarget"]').options].map(option => option.value));
-      for (const key of Object.keys(game.tdt.config.skills)) T.ok(values.has(key), `chip disponible para ${key}`);
-      for (const key of ["driving", "evasion", "fortitude", "will"]) T.ok(values.has(key), `chip disponible para ${key}`);
-      await chip.sheet.close();
-      await chip.update({ "system.chipTarget": "evasion" });
-      T.eq(actor.system.defenses.evasion.value, 6, "el mismo selector permite Esquiva");
+
+      const defenseChip = await T.give(actor, "cyber-gear", "Chip de defensa", { "system.loaded": true, "system.chipTarget": "evasion" });
+      T.eq((await optionsOf(defenseChip)).sort(), ["evasion", "fortitude", "will"], "el chip de defensa solo ofrece las tres defensas");
+      T.eq(actor.system.defenses.evasion.value, 6, "el chip de defensa sube Esquiva");
       await T.renderSheet(actor.sheet, "fuente de la mejora del chip");
       const evasion = actor.sheet.element[0].querySelector('[data-roll-defense="evasion"]').closest("article").textContent.replace(/\s+/g, " ");
-      T.ok(evasion.includes("Efectivo d6 por Chip de habilidad"), `fuente visible: ${evasion}`);
+      T.ok(evasion.includes("Efectivo d6 por Chip de defensa"), `fuente visible: ${evasion}`);
       await actor.sheet.close();
+
+      await combatChip.update({ "system.chipKind": "defense" });
+      T.eq(actor.items.get(combatChip.id).system.chipTarget, "", "cambiar el tipo borra un destino que ya no vale");
 
       const implant = await T.give(actor, "cyber-implants", "Brazo robótico");
       await implant.update({ "system.installed": false });

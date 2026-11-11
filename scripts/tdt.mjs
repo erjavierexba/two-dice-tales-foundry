@@ -10,6 +10,7 @@ import { activeModules, lockCyberCurrencySetting, moduleActive, registerSettings
 import { activateChatListeners, registerSocket } from "./chat.mjs";
 import { checkItemRequirements, requirementFailureMessage } from "./requirements.mjs";
 import { migrateLegacyCurrency } from "./economy.mjs";
+import { chipTargetAllowed } from "./chips.mjs";
 
 Hooks.once("init", () => {
   console.log("TDT | Inicializando Two Dice Tales");
@@ -51,6 +52,14 @@ Hooks.on("preCreateActor", (actor, data, options, userId) => {
 });
 
 /** A feat/power with unmet mechanical requirements never enters an actor, regardless of the UI used. */
+Hooks.on("preUpdateItem", (item, changed) => {
+  if (item.type !== "gear") return;
+  const kind = foundry.utils.getProperty(changed, "system.chipKind");
+  if (kind === undefined) return;
+  const target = foundry.utils.getProperty(changed, "system.chipTarget") ?? item.system.chipTarget;
+  if (!chipTargetAllowed(kind, target)) foundry.utils.setProperty(changed, "system.chipTarget", "");
+});
+
 Hooks.on("preCreateItem", (item, data, options, userId) => {
   const actor = item.parent;
   if (!actor || actor.documentName !== "Actor" || !["feat", "power"].includes(item.type) || options?.tdtIgnoreRequirements) return true;

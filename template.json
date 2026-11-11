@@ -182,6 +182,7 @@
       "templates": ["base"],
       "category": "misc",
       "loaded": false,
+      "chipKind": "skill",
       "chipTarget": "",
       "chipVehicle": "",
       "inventoryCost": "",
