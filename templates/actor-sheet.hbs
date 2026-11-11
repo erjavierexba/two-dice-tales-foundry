@@ -25,7 +25,7 @@
       </div>
       {{#if quickActions.visible}}
       <div class="tdt-quick-actions" aria-label="Acciones rápidas">
-        {{#if quickActions.rest}}<button type="button" data-actor-method="rest" title="Descanso largo: recupera maná, energía y usos diarios"><i class="fas fa-bed"></i><span>Descansar</span></button>{{/if}}
+        {{#if quickActions.rest}}<button type="button" data-actor-method="rest" title="Descanso largo: cura 1 PV (+1 si te tratan, +1 con Manos sanadoras) y recupera maná, energía y usos diarios"><i class="fas fa-bed"></i><span>Descansar</span></button>{{/if}}
         {{#if quickActions.newScene}}<button type="button" data-actor-method="newScene" title="Descanso pequeño: reinicia usos por escena y hacks"><i class="fas fa-mug-hot"></i><span>Descanso pequeño</span></button>{{/if}}
         {{#if quickActions.fallDamage}}<button type="button" data-actor-method="fallDamage" title="Daño por caída"><i class="fas fa-person-falling"></i><span>Caída</span></button>{{/if}}
       </div>

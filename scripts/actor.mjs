@@ -984,12 +984,51 @@ export class TDTActor extends Actor {
   /*  Rest, scenes and resources                   */
   /* -------------------------------------------- */
 
-  async rest() {
+  _restDialog() {
+    return new Promise(resolve => {
+      new Dialog({
+        title: `Descansar: ${this.name}`,
+        content: `<form>
+          <p>Descansar cura 1 PV y recupera maná, energía y usos diarios.</p>
+          <div class="form-group"><label>Alguien te trata las heridas (+1 PV)</label><input type="checkbox" name="treated"></div>
+          <div class="form-group"><label>Quien te trata tiene Manos sanadoras (+1 PV)</label><input type="checkbox" name="healerHands"></div>
+        </form>`,
+        buttons: {
+          ok: { icon: '<i class="fas fa-bed"></i>', label: "Descansar", callback: html => {
+            const form = html[0].querySelector("form");
+            resolve({ treated: form.treated.checked, healerHands: form.healerHands.checked });
+          } },
+          cancel: { label: "Cancelar", callback: () => resolve(null) }
+        },
+        default: "ok",
+        render: html => {
+          const form = html[0].querySelector("form");
+          const sync = () => {
+            form.healerHands.disabled = !form.treated.checked;
+            if (!form.treated.checked) form.healerHands.checked = false;
+          };
+          form.treated.addEventListener("change", sync);
+          sync();
+        },
+        close: () => resolve(null)
+      }, { classes: ["tdt", "tdt-dialog"] }).render(true);
+    });
+  }
+
+  /**
+   * Long rest. Heals 1 PV, +1 if someone treats you and +1 more if that person has Manos sanadoras.
+   * @param {{treated?: boolean, healerHands?: boolean}} [options] Skips the dialog when given.
+   */
+  async rest(options) {
+    const care = (options && typeof options === "object") ? options : await this._restDialog();
+    if (!care) return null;
+    const treated = Boolean(care.treated);
+    const healerHands = treated && Boolean(care.healerHands);
     const updates = {};
     const lines = [];
     const health = Number(this.system.health.value || 0);
     const healthMax = Number(this.system.health.effectiveMax ?? this.system.health.max ?? health);
-    const healing = hasItemNamed(this, "Manos sanadoras", "feat") ? 2 : 1;
+    const healing = 1 + (treated ? 1 : 0) + (healerHands ? 1 : 0);
     const recovered = Math.max(0, Math.min(healing, healthMax - health));
     if (recovered) {
       updates["system.health.value"] = health + recovered;
@@ -997,7 +1036,8 @@ export class TDTActor extends Actor {
         updates["system.dying.active"] = false;
         updates["system.dying.difficulty"] = 0;
       }
-      lines.push(`Recupera ${recovered} PV${healing > 1 ? " gracias a Manos sanadoras" : ""}.`);
+      const reasons = ["1 por descansar", treated ? "+1 por el tratamiento" : "", healerHands ? "+1 por Manos sanadoras" : ""].filter(Boolean).join(", ");
+      lines.push(`Recupera ${recovered} PV (${reasons}).`);
     } else lines.push("La vida ya estaba al máximo.");
     if (moduleActive("fantasy")) {
       updates["system.fantasy.mana.value"] = this.system.fantasy.manaMax ?? 0;

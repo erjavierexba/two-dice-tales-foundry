@@ -438,8 +438,34 @@ export const cases = [
       T.eq(actor.system.fantasy.incremental.difficulty, 2, "el primer Incremental 2 se paga con la reserva");
       await cast();
       T.eq(actor.system.fantasy.incremental.difficulty, 4, "el segundo sube la dificultad en 2");
-      await actor.rest();
+      await actor.rest({});
       T.eq([actor.system.fantasy.incremental.difficulty, actor.system.fantasy.incremental.reserveUsed], [2, 0], "el descanso reinicia el contador");
+    })
+  },
+  {
+    name: "Descanso: 1 PV, +1 si te tratan y +1 si quien trata tiene Manos sanadoras",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero());
+      await actor.update({ "system.health.value": 2 });
+      await actor.rest({});
+      T.eq(actor.system.health.value, 3, "solo descansar cura 1");
+      await actor.rest({ treated: true });
+      T.eq(actor.system.health.value, 5, "con tratamiento cura 2");
+      await actor.rest({ treated: true, healerHands: true });
+      T.eq(actor.system.health.value, 8, "con tratamiento y Manos sanadoras cura 3");
+      await actor.rest({ healerHands: true });
+      T.eq(actor.system.health.value, 9, "Manos sanadoras sin tratamiento no suma");
+      // Desde el diálogo del botón.
+      await actor.update({ "system.health.value": 1 });
+      const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+      const pending = actor.rest();
+      await T.answer({ fields: { treated: true, healerHands: true }, button: "ok", seen });
+      await pending;
+      T.eq(actor.system.health.value, 4, "el diálogo aplica los dos extras");
+      T.ok(/Recupera 3 PV/.test(T.messageText(T.lastMessage())), "el chat lo cuenta");
+      await actor.update({ "system.health.value": 10 });
+      await actor.rest({ treated: true });
+      T.eq(actor.system.health.value, 10, "no pasa del máximo");
     })
   },
   {
