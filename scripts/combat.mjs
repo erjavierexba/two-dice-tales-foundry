@@ -11,6 +11,9 @@ function isHero(combatant) {
   const disposition = combatant.token?.disposition;
   if (disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY) return true;
   if (disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE) return false;
+  // Sin token que lo diga: los personajes son héroes y los PNJ enemigos, tenga o no dueño jugador.
+  if (combatant.actor?.type === "character") return true;
+  if (combatant.actor?.type === "npc") return false;
   return !combatant.isNPC;
 }
 

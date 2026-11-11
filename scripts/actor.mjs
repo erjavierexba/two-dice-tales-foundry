@@ -16,6 +16,18 @@ export class TDTActor extends Actor {
   /*  Derived data                                 */
   /* -------------------------------------------- */
 
+  /** Recuperar vida por cualquier vía (ficha, barra del token, curación…) termina el estado de caído. */
+  async _preUpdate(changed, options, user) {
+    const allowed = await super._preUpdate(changed, options, user);
+    if (allowed === false) return false;
+    const health = foundry.utils.getProperty(changed, "system.health.value");
+    if (health !== undefined && Number(health) > 0 && this.system.dying?.active && foundry.utils.getProperty(changed, "system.dying.active") === undefined) {
+      foundry.utils.setProperty(changed, "system.dying.active", false);
+      foundry.utils.setProperty(changed, "system.dying.difficulty", 0);
+    }
+    return allowed;
+  }
+
   prepareDerivedData() {
     super.prepareDerivedData();
     const system = this.system;

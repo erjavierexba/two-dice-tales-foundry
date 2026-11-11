@@ -965,6 +965,8 @@ const characters = headedBlocks(section(cyberMd, "## Personajes de ejemplo", "##
   const items = featNames.map(findFeat);
   for (const [implantName, options] of plan.implants) {
     const implant = structuredClone(implants.find(entry => entry.name === implantName));
+    // Los personajes de ejemplo llevan sus implantes ya instalados (los del compendio no).
+    implant.system.installed = true;
     if (options.slots) implant.system.slots = options.slots;
     for (const upgradeEntry of implant.system.upgrades) if (options.upgrades?.includes(upgradeEntry.name)) upgradeEntry.installed = true;
     items.push(implant);
