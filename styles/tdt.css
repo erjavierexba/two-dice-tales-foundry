@@ -1508,3 +1508,15 @@
 .tdt-excess.absorbed { color: #8a6313; background: rgba(213, 162, 60, .2); }
 .tdt-excess.snap { color: #fff; background: #a63029; }
 .tdt-excess.misaligned { color: #fff; background: #12232a; border: 2px solid #1d8a9c; }
+
+/* Diálogos: margen interior para que el texto no quede pegado al borde. */
+.tdt.tdt-dialog .window-content {
+  padding: 10px 14px 12px;
+  overflow-y: auto;
+}
+.tdt.tdt-dialog .dialog-content .form-group { margin: 4px 0; }
+.tdt.tdt-dialog .dialog-content p { margin: 4px 0; }
+.tdt.tdt-dialog .dialog-buttons {
+  margin-top: 10px;
+  gap: 8px;
+}
