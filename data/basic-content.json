@@ -2527,18 +2527,19 @@
       "name": "Golpes del maestro",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Maniobras de lucha 1d10 Al comienzo de tu turno, puedes hacer una prueba de mente\\+maniobras de lucha dificultad 10, si la superas, no dividas los dados para un ataque múltiple. Si la fallas, esta ronda tienes el dado de maniobras de lucha reducido (reduciendo el número de ataques disponibles también).",
+        "description": "Requisitos: Maniobra de lucha 1d10 Al comienzo de tu turno, puedes hacer una prueba de mente\\+maniobra de lucha dificultad 10, si la superas, no dividas los dados para un ataque múltiple. Si la fallas, esta ronda tienes el dado de maniobra de lucha reducido (reduciendo el número de ataques disponibles también).",
         "cost": 9,
-        "requirements": "Maniobras de lucha 1d10",
+        "requirements": "Maniobra de lucha 1d10",
         "category": "advantage",
         "rules": [
           {
             "type": "reminder",
             "scopes": [
+              "brawl",
               "mind"
             ],
             "label": "Golpes del maestro",
-            "text": "Requisitos: Maniobras de lucha 1d10 Al comienzo de tu turno, puedes hacer una prueba de mente\\+maniobras de lucha dificultad 10, si la superas, no dividas los dados para un ataque múltiple. Si la fallas, esta ronda tienes el dado de maniobras de lucha reducido (reduciendo el número de ataques disponibles también)."
+            "text": "Requisitos: Maniobra de lucha 1d10 Al comienzo de tu turno, puedes hacer una prueba de mente\\+maniobra de lucha dificultad 10, si la superas, no dividas los dados para un ataque múltiple. Si la fallas, esta ronda tienes el dado de maniobra de lucha reducido (reduciendo el número de ataques disponibles también)."
           }
         ]
       }
@@ -2547,9 +2548,9 @@
       "name": "Golpe vital",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Puntería 1d12 o maniobras de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16.",
+        "description": "Requisitos: Puntería 1d12 o maniobra de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16.",
         "cost": 8,
-        "requirements": "Puntería 1d12 o maniobras de lucha 1d12 o combate cac 1d12",
+        "requirements": "Puntería 1d12 o maniobra de lucha 1d12 o combate cac 1d12",
         "category": "advantage",
         "rules": [
           {
@@ -2558,7 +2559,7 @@
               "attack"
             ],
             "label": "Golpe vital",
-            "text": "Requisitos: Puntería 1d12 o maniobras de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16."
+            "text": "Requisitos: Puntería 1d12 o maniobra de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16."
           },
           {
             "type": "critical",
@@ -2575,9 +2576,9 @@
       "name": "Guerrero",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Maniobras de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles.",
+        "description": "Requisitos: Maniobra de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles.",
         "cost": 12,
-        "requirements": "Maniobras de lucha 1d8, combate con armas cac 1d8, puntería 1d8",
+        "requirements": "Maniobra de lucha 1d8, combate con armas cac 1d8, puntería 1d8",
         "category": "advantage",
         "rules": [
           {
@@ -2586,7 +2587,7 @@
               "attack"
             ],
             "label": "Guerrero",
-            "text": "Requisitos: Maniobras de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles."
+            "text": "Requisitos: Maniobra de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles."
           }
         ],
         "modifiers": [
@@ -2664,9 +2665,9 @@
       "name": "Practicante marcial",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Maniobras de lucha 1d6 Tu entrenamiento te ha llevado a mejorar en destreza a la hora del combate cuerpo a cuerpo desarmado, bonifica en 2 la esquiva en caso de que te ataquen usando maniobra de lucha como habilidad.",
+        "description": "Requisitos: Maniobra de lucha 1d6 Tu entrenamiento te ha llevado a mejorar en destreza a la hora del combate cuerpo a cuerpo desarmado, bonifica en 2 la esquiva en caso de que te ataquen usando maniobra de lucha como habilidad.",
         "cost": 4,
-        "requirements": "Maniobras de lucha 1d6",
+        "requirements": "Maniobra de lucha 1d6",
         "category": "advantage",
         "rules": [
           {
@@ -2675,7 +2676,7 @@
               "evasion"
             ],
             "label": "Practicante marcial",
-            "text": "Requisitos: Maniobras de lucha 1d6 Tu entrenamiento te ha llevado a mejorar en destreza a la hora del combate cuerpo a cuerpo desarmado, bonifica en 2 la esquiva en caso de que te ataquen usando maniobra de lucha como habilidad."
+            "text": "Requisitos: Maniobra de lucha 1d6 Tu entrenamiento te ha llevado a mejorar en destreza a la hora del combate cuerpo a cuerpo desarmado, bonifica en 2 la esquiva en caso de que te ataquen usando maniobra de lucha como habilidad."
           },
           {
             "type": "bonus",
@@ -2807,9 +2808,9 @@
       "name": "Punto débil",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Maniobras de lucha 1d8, Practicante marcial Cuando intenten atacarte con maniobra de lucha y falla, puedes aprovechar la inercia del esquive para dar un contraataque. Este ataque es cualquier acción de maniobra de lucha y se hace con el dado de maniobras de lucha reducido. Si tienes Agarre o Boxing para la respectiva maniobra, en su lugar no reduces el dado, pero no obtienes la bonificación. Especial: Si tienes la dote de “Parry” no tienes que reducir el dado de maniobras de lucha y aparte obtienes un bonifica en 1.",
+        "description": "Requisitos: Maniobra de lucha 1d8, Practicante marcial Cuando intenten atacarte con maniobra de lucha y falla, puedes aprovechar la inercia del esquive para dar un contraataque. Este ataque es cualquier acción de maniobra de lucha y se hace con el dado de maniobra de lucha reducido. Si tienes Agarre o Boxing para la respectiva maniobra, en su lugar no reduces el dado, pero no obtienes la bonificación. Especial: Si tienes la dote de “Parry” no tienes que reducir el dado de maniobra de lucha y aparte obtienes un bonifica en 1.",
         "cost": 6,
-        "requirements": "Maniobras de lucha 1d8, Practicante marcial",
+        "requirements": "Maniobra de lucha 1d8, Practicante marcial",
         "category": "advantage",
         "rules": [
           {
@@ -2818,7 +2819,7 @@
               "brawl"
             ],
             "label": "Punto débil",
-            "text": "Requisitos: Maniobras de lucha 1d8, Practicante marcial Cuando intenten atacarte con maniobra de lucha y falla, puedes aprovechar la inercia del esquive para dar un contraataque. Este ataque es cualquier acción de maniobra de lucha y se hace con el dado de maniobras de lucha reducido. Si tienes Agarre o Boxing para la respectiva maniobra, en su lugar no reduces el dado, pero no obtienes la bonificación. Especial: Si tienes la dote de “Parry” no tienes que reducir el dado de maniobras de lucha y aparte obtienes un bonifica en 1."
+            "text": "Requisitos: Maniobra de lucha 1d8, Practicante marcial Cuando intenten atacarte con maniobra de lucha y falla, puedes aprovechar la inercia del esquive para dar un contraataque. Este ataque es cualquier acción de maniobra de lucha y se hace con el dado de maniobra de lucha reducido. Si tienes Agarre o Boxing para la respectiva maniobra, en su lugar no reduces el dado, pero no obtienes la bonificación. Especial: Si tienes la dote de “Parry” no tienes que reducir el dado de maniobra de lucha y aparte obtienes un bonifica en 1."
           },
           {
             "type": "dieStep",
@@ -3577,7 +3578,7 @@
       "name": "Oso",
       "type": "npc",
       "system": {
-        "description": "Atletismo 8, supervivencia 6.",
+        "description": "Atletismo 6, supervivencia 6.",
         "health": {
           "value": 18,
           "max": 18
@@ -3587,7 +3588,7 @@
           "value": 4
         },
         "npcStats": {
-          "evasion": 5,
+          "evasion": 6,
           "fortitude": 8,
           "will": 4,
           "perception": 8,
@@ -3601,7 +3602,7 @@
           "type": "weapon",
           "system": {
             "damage": 3,
-            "attackDifficulty": 8,
+            "attackDifficulty": 7,
             "properties": "Daño 3\\",
             "ammo": {
               "value": 0,
@@ -3775,9 +3776,9 @@
           "name": "Cuchillo",
           "type": "weapon",
           "system": {
-            "damage": 2,
+            "damage": 3,
             "attackDifficulty": 9,
-            "properties": "dual, Daño 2",
+            "properties": "dual, Daño 3",
             "ammo": {
               "value": 0,
               "max": 0
@@ -3790,9 +3791,9 @@
           "name": "Pistola con silenciador",
           "type": "weapon",
           "system": {
-            "damage": 3,
+            "damage": 4,
             "attackDifficulty": 9,
-            "properties": "dual, Daño 3, munición 10",
+            "properties": "dual, Daño 4, munición 10",
             "ammo": {
               "value": 10,
               "max": 10
@@ -3902,7 +3903,7 @@
           "will": 3,
           "perception": 7,
           "traits": "",
-          "variants": "Capitán pirata: PV 14, Aguante 3, Voluntad 6, Cimitarra(9, Daño 3\\), fuente de villano 8. Pirata borracho: ataque con pistola 6 y Voluntad 2."
+          "variants": "Capitán pirata: PV 14, Aguante 3, Voluntad 6, Cimitarra(9, Daño 6\\), fuente de villano 8. Pirata borracho: ataque con pistola 6 y Voluntad 2."
         }
       },
       "items": [
@@ -3910,9 +3911,9 @@
           "name": "Cimitarra",
           "type": "weapon",
           "system": {
-            "damage": 2,
+            "damage": 5,
             "attackDifficulty": 8,
-            "properties": "Daño 2",
+            "properties": "Daño 5",
             "ammo": {
               "value": 0,
               "max": 0
@@ -3925,9 +3926,9 @@
           "name": "Pistola",
           "type": "weapon",
           "system": {
-            "damage": 3,
+            "damage": 4,
             "attackDifficulty": 8,
-            "properties": "Daño 3, munición 1",
+            "properties": "Daño 4, munición 1",
             "ammo": {
               "value": 1,
               "max": 1
@@ -3957,7 +3958,7 @@
           "will": 5,
           "perception": 9,
           "traits": "Representa a un agente equipado, pero no militarizado.",
-          "variants": "Sin protección: Aguante 1. Con chaleco antibalas: Aguante 5 contra disparos y explosiones, Aguante 3 contra cuerpo a cuerpo. Antidisturbios: Aguante 5, Porra(7, Daño 2\\), escudo que bonifica en 1 su esquiva contra ataques frontales."
+          "variants": "Sin protección: Aguante 1. Con chaleco antibalas: Aguante 5 contra disparos y explosiones, Aguante 3 contra cuerpo a cuerpo. Antidisturbios: Aguante 5, Porra(7, Daño 3\\), escudo que bonifica en 1 su esquiva contra ataques frontales."
         }
       },
       "items": [
@@ -3965,9 +3966,9 @@
           "name": "Porra",
           "type": "weapon",
           "system": {
-            "damage": 2,
+            "damage": 3,
             "attackDifficulty": 6,
-            "properties": "Daño 2",
+            "properties": "Daño 3",
             "ammo": {
               "value": 0,
               "max": 0
@@ -3980,9 +3981,9 @@
           "name": "Pistola",
           "type": "weapon",
           "system": {
-            "damage": 3,
+            "damage": 4,
             "attackDifficulty": 8,
-            "properties": "Daño 3, munición 10",
+            "properties": "Daño 4, munición 10",
             "ammo": {
               "value": 10,
               "max": 10
@@ -4020,9 +4021,9 @@
           "name": "Cuchillo",
           "type": "weapon",
           "system": {
-            "damage": 2,
+            "damage": 3,
             "attackDifficulty": 8,
-            "properties": "dual, Daño 2",
+            "properties": "dual, Daño 3",
             "ammo": {
               "value": 0,
               "max": 0
@@ -4035,9 +4036,9 @@
           "name": "Pistola",
           "type": "weapon",
           "system": {
-            "damage": 3,
+            "damage": 4,
             "attackDifficulty": 8,
-            "properties": "dual, Daño 3, munición 10",
+            "properties": "dual, Daño 4, munición 10",
             "ammo": {
               "value": 10,
               "max": 10
@@ -4050,9 +4051,9 @@
           "name": "Rifle",
           "type": "weapon",
           "system": {
-            "damage": 5,
+            "damage": 6,
             "attackDifficulty": 9,
-            "properties": "Daño 5, munición 20\\",
+            "properties": "Daño 6, munición 20\\",
             "ammo": {
               "value": 20,
               "max": 20
@@ -4082,7 +4083,7 @@
           "will": 3,
           "perception": 4,
           "traits": "",
-          "variants": "Maleante armado: Pistola(7, Daño 3, munición 10). Matón grande: PV 10, Aguante 2, Navajazo(7, Daño 2\\). Asustado: Voluntad 2 y huye si cae un aliado cercano."
+          "variants": "Maleante armado: Pistola(7, Daño 4, munición 10). Matón grande: PV 10, Aguante 2, Navajazo(7, Daño 3\\). Asustado: Voluntad 2 y huye si cae un aliado cercano."
         }
       },
       "items": [
@@ -4090,9 +4091,9 @@
           "name": "Navajazo",
           "type": "weapon",
           "system": {
-            "damage": 2,
+            "damage": 3,
             "attackDifficulty": 6,
-            "properties": "Daño 2",
+            "properties": "Daño 3",
             "ammo": {
               "value": 0,
               "max": 0
@@ -4105,9 +4106,9 @@
           "name": "Pistola",
           "type": "weapon",
           "system": {
-            "damage": 3,
+            "damage": 4,
             "attackDifficulty": 6,
-            "properties": "Daño 3, munición 10, raro",
+            "properties": "Daño 4, munición 10, raro",
             "ammo": {
               "value": 10,
               "max": 10

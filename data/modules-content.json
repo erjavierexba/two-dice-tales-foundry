@@ -3127,7 +3127,7 @@
      "type": "feat",
      "img": "icons/svg/upgrade.svg",
      "system": {
-      "description": "Coste en puntos de inventario: 6 x categoría.\n\nEres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas cac o maniobras de lucha del piloto pueden ser usadas en el mecha.",
+      "description": "Coste en puntos de inventario: 6 x categoría.\n\nEres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas cac o maniobra de lucha del piloto pueden ser usadas en el mecha.",
       "cost": 6,
       "costFormula": "6 x categoría",
       "requirements": "",
@@ -3139,10 +3139,11 @@
        {
         "type": "reminder",
         "scopes": [
-         "melee"
+         "melee",
+         "brawl"
         ],
         "label": "Uno con la máquina",
-        "text": "Eres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas cac o maniobras de lucha del piloto pueden ser usadas en el mecha."
+        "text": "Eres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas cac o maniobra de lucha del piloto pueden ser usadas en el mecha."
        }
       ],
       "inventoryCost": "6 x categoría"
@@ -6439,7 +6440,7 @@
      "type": "power",
      "img": "icons/svg/lightning.svg",
      "system": {
-      "description": "Tiras un proyectil gélido que explota al impactar, en un rango de contacto, puedes tirar maniobras de lucha o combate cac y añadir el Daño del ataque al del orbe gélido. Este ataque tiene un rango medio y Daño 3.\nCuando impacta contra el suelo. genera una pequeña área congelada. Todas las criaturas que entren al círculo o estén en el círculo hacen una prueba de acrobacias dificultad 5 más la sobrecarga aplicada para no caerse. Caerse en el hielo implica que no pueden moverse a no ser que gasten su turno entero en intentar levantarse, haciendo otra prueba de acrobacias.",
+      "description": "Tiras un proyectil gélido que explota al impactar, en un rango de contacto, puedes tirar maniobra de lucha o combate cac y añadir el Daño del ataque al del orbe gélido. Este ataque tiene un rango medio y Daño 3.\nCuando impacta contra el suelo. genera una pequeña área congelada. Todas las criaturas que entren al círculo o estén en el círculo hacen una prueba de acrobacias dificultad 5 más la sobrecarga aplicada para no caerse. Caerse en el hielo implica que no pueden moverse a no ser que gasten su turno entero en intentar levantarse, haciendo otra prueba de acrobacias.",
       "module": "powers",
       "branch": "Frío",
       "complexity": "simple",
@@ -6678,7 +6679,7 @@
      "type": "power",
      "img": "icons/svg/lightning.svg",
      "system": {
-      "description": "Tiras un proyectil ígneo que explota al impactar, en un rango de contacto, puedes tirar maniobras de lucha o combate cac y añadir el Daño del ataque al del orbe ígneo. Este ataque tiene un rango medio y Daño 3. Cuando impacta contra seres vivos, la propiedad “Daño” se duplica.",
+      "description": "Tiras un proyectil ígneo que explota al impactar, en un rango de contacto, puedes tirar maniobra de lucha o combate cac y añadir el Daño del ataque al del orbe ígneo. Este ataque tiene un rango medio y Daño 3. Cuando impacta contra seres vivos, la propiedad “Daño” se duplica.",
       "module": "powers",
       "branch": "Llama",
       "complexity": "simple",
