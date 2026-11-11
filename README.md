@@ -1,6 +1,6 @@
 # Two Dice Tales para Foundry VTT
 
-Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.23): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.24): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
 
 Incluye identidad visual propia para Foundry: arte panorámico del sistema, logotipo, monograma y una familia de iconos para actores, objetos y compendios. Los originales editables están en `assets/branding/` y `assets/icons/`.
 

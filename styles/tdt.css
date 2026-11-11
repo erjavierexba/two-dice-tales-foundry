@@ -801,23 +801,36 @@
 
 .tdt .tdt-picker-tabs {
   display: flex;
-  gap: 5px;
-  overflow-x: auto;
-  padding-bottom: 2px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 2px;
+  margin: 0;
+  padding: 0 4px;
+  border-bottom: 2px solid var(--tdt-blue);
 }
 
 .tdt .tdt-picker-tabs button {
-  flex: 1 0 auto;
-  min-height: 30px;
-  padding: 4px 10px;
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  margin: 0 0 -2px;
+  padding: 3px 12px;
+  font-size: var(--font-size-12, 12px);
+  line-height: 1.4;
   color: var(--tdt-blue);
-  border: 1px solid var(--tdt-line);
-  border-radius: 999px;
-  background: rgba(255, 253, 247, .8);
+  border: 1px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-radius: 4px 4px 0 0;
+  background: transparent;
+  box-shadow: none;
 }
+
+.tdt .tdt-picker-tabs button:hover { background: rgba(255, 253, 247, .8); border-color: var(--tdt-line); border-bottom-color: transparent; }
 
 .tdt .tdt-picker-tabs button.active {
   color: #fff;
+  font-weight: 700;
   border-color: var(--tdt-blue);
   background: var(--tdt-blue);
 }
