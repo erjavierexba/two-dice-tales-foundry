@@ -16,8 +16,8 @@ export const BASIC_FEAT_OVERRIDES = {
   // Desventajas
   "Alergia": { rules: [r("worseDie", 4, [], { ...O, label: "Alergia (en presencia del alérgeno)" })] },
   "Cabeza hueca": { rules: [r("disadvantage", 1, ["mind"], { target: "first" })] },
-  "Cegato": { rules: [r("worseDie", 4, ["perception"], { ...O, label: "Cegato (percepción visual)" })] },
-  "Duro de oído": { rules: [r("worseDie", 4, ["perception"], { ...O, label: "Duro de oído (percepción auditiva)" })] },
+  "Cegato": { rules: [r("worseDie", 4, ["perception"], { ...O, sense: "visual", label: "Cegato (percepción visual)" })] },
+  "Duro de oído": { rules: [r("worseDie", 4, ["perception"], { ...O, sense: "auditory", label: "Duro de oído (percepción auditiva)" })] },
   "Cobarde": { rules: [r("dieStep", -1, ["will"], { ...O, target: "first", floorOne: true, label: "Cobarde (voluntad contra el miedo)" })] },
   "Feo de cojones": { rules: [r("dieStep", -1, ["diplomacy"], { target: "second", label: "Feo de cojones (te ven en persona)" })] },
   "Gordo": { rules: [r("disadvantage", 1, ["athletics"], { ...O, target: "second", label: "Gordo (esfuerzo de tiempo medio)" })] },
@@ -37,7 +37,7 @@ export const BASIC_FEAT_OVERRIDES = {
   "Paranoico": { rules: [r("dieStep", 1, ["will"], { ...O, target: "second", label: "Paranoico (te engañan o te hacen diplomacia)" })] },
   "Perroflauta": { rules: [r("disadvantage", 1, [], { ...O, target: "second", label: "Perroflauta (tarea de tiempo medio)" })] },
   "Pésimo para los negocios": { rules: [r("disadvantage", 1, [], { ...O, target: "second", label: "Pésimo para los negocios (ganar dinero)" })] },
-  "Sordo como una tapia": { rules: [], reminderScopes: ["perception"] },
+  "Sordo como una tapia": { rules: [], reminderScopes: ["perception"], reminderSense: "auditory" },
 
   // Ventajas sociales y de conocimiento
   "100tifico": { rules: [r("bonus", 2, ["science", "profession"], O)] },
@@ -106,18 +106,20 @@ export const BASIC_FEAT_OVERRIDES = {
   },
 
   // Percepción
-  "Oído fino": { rules: [r("dieStep", 1, ["perception"], { ...O, label: "Oído fino (percepción auditiva)" })] },
-  "Vista de cazador": { rules: [r("dieStep", 1, ["perception"], { ...O, label: "Vista de cazador (percepción visual)" })] },
+  "Oído fino": { modifiers: [mod("step.perception.auditory", 1)], rules: [], reminderScopes: ["perception"], reminderSense: "auditory" },
+  "Vista de cazador": { modifiers: [mod("step.perception.visual", 1)], rules: [], reminderScopes: ["perception"], reminderSense: "visual" },
   "Murciélago": {
+    modifiers: [mod("step.perception.auditory", 1)],
+    reminderSense: "auditory",
     rules: [
-      r("dieStep", 1, ["perception"], { ...O, label: "Murciélago (percepción auditiva)" }),
-      r("difficulty", 2, ["perception"], { ...O, label: "Murciélago (localizar el sonido)" })
+      r("difficulty", 2, ["perception"], { ...O, sense: "auditory", label: "Murciélago (localizar el sonido)" })
     ]
   },
   "Vista de águila": {
+    modifiers: [mod("step.perception.visual", 1)],
+    reminderSense: "visual",
     rules: [
-      r("dieStep", 1, ["perception"], { ...O, label: "Vista de águila (percepción visual)" }),
-      r("difficulty", 2, ["perception"], { ...O, label: "Vista de águila (niebla u obstáculo parcial)" })
+      r("difficulty", 2, ["perception"], { ...O, sense: "visual", label: "Vista de águila (niebla u obstáculo parcial)" })
     ]
   },
 
@@ -183,7 +185,7 @@ export function applyBasicFeatOverride(item) {
   const description = system.description ?? "";
   const rules = override.rules.map(entry => ({ ...entry, label: entry.label ?? item.name }));
   const reminderScopes = override.reminderScopes ?? [...new Set(rules.flatMap(entry => entry.scopes ?? []))];
-  system.rules = [{ type: "reminder", scopes: reminderScopes, label: item.name, text: description }, ...rules];
+  system.rules = [{ type: "reminder", scopes: reminderScopes, label: item.name, text: description, ...(override.reminderSense ? { sense: override.reminderSense } : {}) }, ...rules];
   if (override.modifiers) system.modifiers = override.modifiers.map(entry => ({ ...entry }));
   if (override.toggle) {
     system.toggle = true;

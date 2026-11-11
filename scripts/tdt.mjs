@@ -8,6 +8,7 @@ import * as dice from "./dice.mjs";
 import { importBasicContent, importContent, packEnabled } from "./content.mjs";
 import { activeModules, moduleActive, registerSettings, rule } from "./settings.mjs";
 import { activateChatListeners, registerSocket } from "./chat.mjs";
+import { checkItemRequirements, requirementFailureMessage } from "./requirements.mjs";
 
 Hooks.once("init", () => {
   console.log("TDT | Inicializando Two Dice Tales");
@@ -46,6 +47,16 @@ Hooks.on("preCreateActor", (actor, data, options, userId) => {
     return false;
   }
   return true;
+});
+
+/** A feat/power with unmet mechanical requirements never enters an actor, regardless of the UI used. */
+Hooks.on("preCreateItem", (item, data, options, userId) => {
+  const actor = item.parent;
+  if (!actor || actor.documentName !== "Actor" || !["feat", "power"].includes(item.type) || options?.tdtIgnoreRequirements) return true;
+  const result = checkItemRequirements(actor, item.toObject());
+  if (result.ok) return true;
+  if (game.user.id === userId) ui.notifications.warn(requirementFailureMessage(item, result));
+  return false;
 });
 
 Hooks.once("ready", () => {

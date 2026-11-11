@@ -9,7 +9,11 @@ const LEGACY_FEAT_MODIFIERS = {
   "retaco": [{ target: "endurance", value: -1 }, { target: "step.defense.evasion", value: 1 }],
   "mr burns": [{ target: "health", value: -4 }],
   "primo de zumosol": [{ target: "health", value: "zumosol" }],
-  "me llaman “el pupas”": [{ target: "flag.pupas", value: 1 }]
+  "me llaman “el pupas”": [{ target: "flag.pupas", value: 1 }],
+  "oído fino": [{ target: "step.perception.auditory", value: 1 }],
+  "murciélago": [{ target: "step.perception.auditory", value: 1 }],
+  "vista de cazador": [{ target: "step.perception.visual", value: 1 }],
+  "vista de águila": [{ target: "step.perception.visual", value: 1 }]
 };
 
 /** Whether an item currently grants its modifiers. */

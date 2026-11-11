@@ -85,6 +85,9 @@ console.log(`TDT system checks: OK (${relative(process.cwd(), root)})`);
   assert.deepEqual(byName("Retaco").system.modifiers.find(entry => entry.target === "step.defense.evasion")?.value, 1);
   assert.equal(byName("Posición ofensiva").system.toggle, true);
   assert.ok(byName("Gordo").system.rules.some(entry => entry.type === "disadvantage" && entry.target === "second"), "Gordo tira dos veces la habilidad");
+  assert.deepEqual(byName("Oído fino").system.modifiers, [{ target: "step.perception.auditory", value: 1 }]);
+  assert.deepEqual(byName("Vista de cazador").system.modifiers, [{ target: "step.perception.visual", value: 1 }]);
+  assert.ok(!byName("Murciélago").system.rules.some(entry => entry.type === "dieStep"), "Murciélago no duplica su mejora pasiva en el diálogo");
 }
 
 // Los implantes del compendio llegan instalados: el DJ decide si hace falta clínica o tirada.

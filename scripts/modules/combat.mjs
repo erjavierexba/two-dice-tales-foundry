@@ -21,8 +21,9 @@ export function distributeTeamOrder(heroes, enemies, heroesFirst = true) {
 
 export function initiativeDice(actor, source = "perception") {
   if (!actor) return [0, 0];
-  if (source === "perception") {
-    const faces = Number(actor.system.perception?.faces || actor.system.perception?.die || 4);
+  if (source === "perception" || source === "perceptionVisual" || source === "perceptionAuditory") {
+    const key = source === "perceptionAuditory" ? "auditoryFaces" : source === "perceptionVisual" ? "visualFaces" : "faces";
+    const faces = Number(actor.system.perception?.[key] || actor.system.perception?.faces || actor.system.perception?.die || 4);
     return [faces, faces];
   }
   const skill = actor.system.skills?.[source];

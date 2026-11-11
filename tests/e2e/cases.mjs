@@ -87,6 +87,44 @@ export const cases = [
     })
   },
   {
+    name: "Percepción progresa por dotes y los requisitos impiden añadir dotes inválidas",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero());
+      T.eq([actor.system.perception.visualFaces, actor.system.perception.auditoryFaces], [4, 4], "Percepción inicial");
+
+      const bat = await T.give(actor, "basic-feats", "Murciélago");
+      T.eq(bat, undefined, "Murciélago queda bloqueado sin Oído fino");
+      T.ok(T.notes.some(note => note.message.includes("Oído fino")), "se explica el requisito incumplido");
+
+      await T.give(actor, "basic-feats", "Oído fino");
+      T.eq([actor.system.perception.visualFaces, actor.system.perception.auditoryFaces], [4, 6], "Oído fino solo mejora la percepción auditiva");
+      await T.give(actor, "basic-feats", "Vista de cazador");
+      T.eq([actor.system.perception.visualFaces, actor.system.perception.auditoryFaces], [6, 6], "vista y oído progresan por separado");
+      await T.give(actor, "basic-feats", "Murciélago");
+      T.eq([actor.system.perception.visualFaces, actor.system.perception.auditoryFaces], [6, 8], "Murciélago solo progresa la rama auditiva");
+
+      T.dice([4, 3], [4, 2]);
+      const general = await T.roll(() => actor.rollPerception(), { fields: { perceptionSense: "general" } });
+      T.diceDone();
+      T.eq(general.value.total, 5, "la percepción general permanece en 2d4");
+
+      T.dice([8, 5], [8, 3]);
+      const { value } = await T.roll(() => actor.rollPerception(), { fields: { perceptionSense: "auditory" } });
+      T.diceDone();
+      T.eq(value.total, 8, "el selector auditivo usa 2d8");
+
+      T.dice([6, 4], [6, 2]);
+      const visual = await T.roll(() => actor.rollPerception(), { fields: { perceptionSense: "visual" } });
+      T.diceDone();
+      T.eq(visual.value.total, 6, "el selector visual usa 2d6");
+
+      const shortSighted = await T.actor("character", T.hero());
+      await T.give(shortSighted, "basic-feats", "Cegato");
+      const hunter = await T.give(shortSighted, "basic-feats", "Vista de cazador");
+      T.eq(hunter, undefined, "Vista de cazador es incompatible con Cegato");
+    })
+  },
+  {
     name: "Tirada básica y crítico (dobles suman otra vez)",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero({ skills: { athletics: { die: 6 } } }));
@@ -169,7 +207,7 @@ export const cases = [
   {
     name: "Golpe vital: el crítico al atacar se suma una vez más",
     run: async ({ gm }) => gm.evaluate(async () => {
-      const actor = await T.actor("character", T.hero({ skills: { melee: { die: 6 } } }));
+      const actor = await T.actor("character", T.hero({ skills: { melee: { die: 6 }, ranged: { die: 12 } } }));
       await T.give(actor, "basic-feats", "Golpe vital");
       const weapon = await T.give(actor, "basic-weapons", "Cuchillo de combate", { "system.equipped": true });
       T.dice([6, 4], [6, 4]);
@@ -249,12 +287,12 @@ export const cases = [
   {
     name: "Guerrero ignora 1 de aguante del objetivo",
     run: async ({ gm }) => gm.evaluate(async () => {
-      const actor = await T.actor("character", T.hero({ skills: { melee: { die: 6 } } }));
+      const actor = await T.actor("character", T.hero({ skills: { melee: { die: 8 }, brawl: { die: 8 }, ranged: { die: 8 } } }));
       await T.give(actor, "basic-feats", "Guerrero");
       const weapon = await T.give(actor, "basic-weapons", "Cuchillo de combate", { "system.equipped": true });
       const target = await T.actor("npc", { endurance: { base: 2, value: 2 }, npcStats: { evasion: 5, fortitude: 5, will: 5, perception: 5 } }, "Blindado");
       T.targets([target]);
-      T.dice([6, 4], [6, 5]);
+      T.dice([6, 4], [8, 5]);
       await T.roll(() => actor.rollWeapon(weapon));
       T.diceDone();
       const text = T.messageText(T.lastMessage());

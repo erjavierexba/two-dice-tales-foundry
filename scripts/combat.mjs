@@ -21,7 +21,11 @@ export function isHero(combatant) {
 }
 
 function availableSources(heroes) {
-  const sources = [{ id: "perception", label: "Percepción" }];
+  const sources = [
+    { id: "perception", label: "Percepción general" },
+    { id: "perceptionVisual", label: "Percepción visual" },
+    { id: "perceptionAuditory", label: "Percepción sonora" }
+  ];
   for (const [id, label] of Object.entries(TDT.skills)) {
     if (heroes.some(combatant => Number(combatant.actor?.system.skills?.[id]?.value || 0) > 0)) sources.push({ id, label });
   }
@@ -108,8 +112,8 @@ export class TDTCombat extends Combat {
       const extraRules = allyBonus ? [{ type: "bonus", value: allyBonus, label: `${heroes.length - 1} aliados en la iniciativa conjunta` }] : [];
       const dice = initiativeDice(leader.actor, form.source);
       const label = `Iniciativa del equipo: ${leader.name} (${dice.filter(Boolean).map(faces => `d${faces}`).join(" + ")})`;
-      const result = form.source === "perception"
-        ? await leader.actor.rollPerception({ label, scopes: ["initiative"], extraRules })
+      const result = form.source.startsWith("perception")
+        ? await leader.actor.rollPerception({ label, sense: form.source === "perceptionAuditory" ? "auditory" : form.source === "perceptionVisual" ? "visual" : "general", scopes: ["initiative"], extraRules })
         : await leader.actor.rollSkill(form.source, { label, scopes: ["initiative"], extraRules });
       if (!result) return this;
       heroScore = result.total;

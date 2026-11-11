@@ -82,7 +82,10 @@ export class TDTActor extends Actor {
       if (chip && defense.value !== 12) defense.value = stepRolledDie(defense.value, 1);
       defense.chip = chip;
     }
-    system.perception.faces = stepRolledDie(4, value("step.perception"));
+    const perceptionBase = value("step.perception");
+    system.perception.auditoryFaces = stepRolledDie(4, perceptionBase + value("step.perception.auditory"));
+    system.perception.visualFaces = stepRolledDie(4, perceptionBase + value("step.perception.visual"));
+    system.perception.faces = stepRolledDie(4, perceptionBase);
 
     const armor = this.items.filter(item => item.type === "armor" && item.system.equipped);
     const cyberOn = moduleActive("cyber");
@@ -195,18 +198,27 @@ export class TDTActor extends Actor {
   }
 
   async rollPerception(options = {}) {
-    const faces = this.system.perception?.faces ?? 4;
+    const selectedSense = ["general", "visual", "auditory"].includes(options.sense) ? options.sense : "general";
+    const senses = {
+      general: { label: "General", faces: this.system.perception?.faces ?? 4 },
+      visual: { label: "Visual", faces: this.system.perception?.visualFaces ?? 4 },
+      auditory: { label: "Sonoro", faces: this.system.perception?.auditoryFaces ?? 4 }
+    };
     return this.rollCheck({
       kind: "perception",
       label: options.label ?? "Percepción",
       scopes: ["perception", ...(options.scopes ?? [])],
       primaryScope: "perception",
       secondaryScope: "perception",
-      first: { label: "Percepción", faces },
-      second: { label: "Percepción", faces },
+      first: { label: "Percepción", faces: senses[selectedSense].faces },
+      second: { label: "Percepción", faces: senses[selectedSense].faces },
+      senseFaces: Object.fromEntries(Object.entries(senses).map(([key, sense]) => [key, sense.faces])),
+      senseLabels: Object.fromEntries(Object.entries(senses).map(([key, sense]) => [key, sense.label])),
       linkedDice: true,
       difficulty: options.difficulty ?? 0,
       extraRules: options.extraRules ?? [],
+      extraFields: `<div class="form-group"><label>Tipo de percepción</label><select name="perceptionSense"><option value="general" ${selectedSense === "general" ? "selected" : ""}>General</option><option value="visual" ${selectedSense === "visual" ? "selected" : ""}>Visual</option><option value="auditory" ${selectedSense === "auditory" ? "selected" : ""}>Sonoro</option></select></div>`,
+      readExtra: (_form, data) => ({ perceptionSense: data.get("perceptionSense") || selectedSense }),
       reroll: { method: "rollPerception", args: [stripOptions(options)] },
       silent: options.silent
     }, options.preset);
@@ -242,13 +254,16 @@ export class TDTActor extends Actor {
   }
 
   async _executeRoll(check, options) {
+    const senseFaces = check.senseFaces?.[options.extra?.perceptionSense];
+    const firstBaseFaces = senseFaces ?? check.first.faces;
+    const secondBaseFaces = senseFaces ?? check.second.faces;
     const stepFirst = faces => {
       if (options.firstFloorOne) return stepDieToOne(faces, options.firstStep);
       return check.first.allowZero ? stepDie(faces, options.firstStep) : stepRolledDie(faces, options.firstStep);
     };
     const faces = [
-      check.first.allowZero || check.first.faces ? stepFirst(check.first.faces) : 0,
-      options.secondFloorOne ? stepDieToOne(check.second.faces, options.secondStep) : stepDie(check.second.faces, options.secondStep)
+      check.first.allowZero || firstBaseFaces ? stepFirst(firstBaseFaces) : 0,
+      options.secondFloorOne ? stepDieToOne(secondBaseFaces, options.secondStep) : stepDie(secondBaseFaces, options.secondStep)
     ];
     if (check.minimumFaces) for (let i = 0; i < 2; i++) if (faces[i] && faces[i] < check.minimumFaces) faces[i] = check.minimumFaces;
     if (options.linkWill && check.third?.faces) faces.push(normalizeDie(check.third.faces));
@@ -412,9 +427,9 @@ export class TDTActor extends Actor {
     const reminders = allRules.filter(entry => entry.type === "reminder");
     const featControls = mechanicalRules.length ? `
       <fieldset class="tdt-roll-feats"><legend>Reglas aplicables</legend>
-        ${mechanicalRules.map((entry, index) => `<label title="Desmarca la regla si su condición no se cumple en esta acción."><input type="checkbox" class="tdt-feat-rule" data-rule-index="${index}" ${entry.optional ? "" : "checked"}> ${esc(entry.label)} <small>(${this._ruleLabel(entry)})</small></label>`).join("")}
+        ${mechanicalRules.map((entry, index) => `<label ${entry.sense ? `data-rule-sense="${esc(entry.sense)}"` : ""} title="Desmarca la regla si su condición no se cumple en esta acción."><input type="checkbox" class="tdt-feat-rule" data-rule-index="${index}" ${entry.optional ? "" : "checked"}> ${esc(entry.label)} <small>(${this._ruleLabel(entry)})</small></label>`).join("")}
       </fieldset>` : "";
-    const reminderControls = reminders.length ? `<details class="tdt-roll-reminders"><summary>Recordatorios (${reminders.length})</summary>${reminders.map(entry => `<p><strong>${esc(entry.label)}:</strong> ${esc(entry.text)}</p>`).join("")}</details>` : "";
+    const reminderControls = reminders.length ? `<details class="tdt-roll-reminders"><summary>Recordatorios</summary>${reminders.map(entry => `<p ${entry.sense ? `data-rule-sense="${esc(entry.sense)}"` : ""}><strong>${esc(entry.label)}:</strong> ${esc(entry.text)}</p>`).join("")}</details>` : "";
     const dieModifierControls = check.linkedDice
       ? `<div class="form-group"><label>Modificar ambos dados</label><select name="firstStep">${stepOptions(0)}</select></div>`
       : `<div class="form-group"><label>Modificar ${esc(check.first.label)}</label><select name="firstStep">${stepOptions(0)}</select></div>
@@ -474,6 +489,7 @@ export class TDTActor extends Actor {
               };
               for (const input of form.querySelectorAll(".tdt-feat-rule:checked")) {
                 const entry = mechanicalRules[Number(input.dataset.ruleIndex)];
+                if (entry.sense && entry.sense !== options.extra?.perceptionSense) continue;
                 applyRuleToOptions(entry, options, check);
               }
               // Hero point and SATR only affect the first roll; later attacks of a multiple attack use followUpBonus.
@@ -486,6 +502,16 @@ export class TDTActor extends Actor {
           cancel: { label: "Cancelar", callback: () => resolve(null) }
         },
         default: "roll",
+        render: html => {
+          const root = html[0];
+          const select = root.querySelector('[name="perceptionSense"]');
+          if (!select) return;
+          const update = () => {
+            for (const label of root.querySelectorAll("[data-rule-sense]")) label.hidden = label.dataset.ruleSense !== select.value;
+          };
+          select.addEventListener("change", update);
+          update();
+        },
         close: () => resolve(null)
       }, { classes: ["tdt", "tdt-dialog"] }).render(true);
     });
@@ -507,6 +533,7 @@ export class TDTActor extends Actor {
       <div class="tdt-chat-card">
         <header>${esc(check.label)}${rerollButton}</header>
         ${check.subtitle ? `<div class="tdt-roll-note">${esc(check.subtitle)}</div>` : ""}
+        ${check.senseLabels?.[outcome.options.extra?.perceptionSense] ? `<div class="tdt-roll-note">Tipo: ${esc(check.senseLabels[outcome.options.extra.perceptionSense])}</div>` : ""}
         <div class="tdt-dice-line">${dieText(0)}${dieText(1, "+1 sin habilidad")}${faces.length > 2 ? dieText(2) : ""}</div>
         ${alternatives}
         ${bonusSpent ? `<div class="tdt-auto-bonus"><i class="fas fa-wand-magic-sparkles"></i> Bono repartido automáticamente: +${bonusSpent}</div>` : ""}

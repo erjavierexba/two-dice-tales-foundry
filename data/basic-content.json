@@ -79,6 +79,7 @@
               "perception"
             ],
             "optional": true,
+            "sense": "visual",
             "label": "Cegato (percepción visual)"
           }
         ]
@@ -139,6 +140,7 @@
               "perception"
             ],
             "optional": true,
+            "sense": "auditory",
             "label": "Duro de oído (percepción auditiva)"
           }
         ]
@@ -508,7 +510,8 @@
               "perception"
             ],
             "label": "Sordo como una tapia",
-            "text": "Estás sordo bro. Fallas críticamente todas las tiradas de percepción sonora."
+            "text": "Estás sordo bro. Fallas críticamente todas las tiradas de percepción sonora.",
+            "sense": "auditory"
           }
         ]
       }
@@ -1620,16 +1623,8 @@
               "perception"
             ],
             "label": "Murciélago",
-            "text": "Requisitos: Oído fino A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.).Adicionalmente, detectar exactamente de donde viene el sonido baja su dificultad en 2."
-          },
-          {
-            "type": "dieStep",
-            "value": 1,
-            "scopes": [
-              "perception"
-            ],
-            "optional": true,
-            "label": "Murciélago (percepción auditiva)"
+            "text": "Requisitos: Oído fino A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.).Adicionalmente, detectar exactamente de donde viene el sonido baja su dificultad en 2.",
+            "sense": "auditory"
           },
           {
             "type": "difficulty",
@@ -1638,7 +1633,14 @@
               "perception"
             ],
             "optional": true,
+            "sense": "auditory",
             "label": "Murciélago (localizar el sonido)"
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "step.perception.auditory",
+            "value": 1
           }
         ]
       }
@@ -1730,16 +1732,14 @@
               "perception"
             ],
             "label": "Oído fino",
-            "text": "Prohibido en caso de coger Sordo como una tapia. A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.)."
-          },
+            "text": "Prohibido en caso de coger Sordo como una tapia. A la hora de usar la percepción auditiva, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.).",
+            "sense": "auditory"
+          }
+        ],
+        "modifiers": [
           {
-            "type": "dieStep",
-            "value": 1,
-            "scopes": [
-              "perception"
-            ],
-            "optional": true,
-            "label": "Oído fino (percepción auditiva)"
+            "target": "step.perception.auditory",
+            "value": 1
           }
         ]
       }
@@ -2101,16 +2101,8 @@
               "perception"
             ],
             "label": "Vista de águila",
-            "text": "Requisitos: Vista de cazador A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.). Adicionalmente, ver entre la niebla u otra obstaculización parcial baja su dificultad en 2."
-          },
-          {
-            "type": "dieStep",
-            "value": 1,
-            "scopes": [
-              "perception"
-            ],
-            "optional": true,
-            "label": "Vista de águila (percepción visual)"
+            "text": "Requisitos: Vista de cazador A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d6 a 2d8.). Adicionalmente, ver entre la niebla u otra obstaculización parcial baja su dificultad en 2.",
+            "sense": "visual"
           },
           {
             "type": "difficulty",
@@ -2119,7 +2111,14 @@
               "perception"
             ],
             "optional": true,
+            "sense": "visual",
             "label": "Vista de águila (niebla u obstáculo parcial)"
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "step.perception.visual",
+            "value": 1
           }
         ]
       }
@@ -2139,16 +2138,14 @@
               "perception"
             ],
             "label": "Vista de cazador",
-            "text": "Prohibido en caso de coger Cegato. A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.)"
-          },
+            "text": "Prohibido en caso de coger Cegato. A la hora de usar la percepción visual, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6.)",
+            "sense": "visual"
+          }
+        ],
+        "modifiers": [
           {
-            "type": "dieStep",
-            "value": 1,
-            "scopes": [
-              "perception"
-            ],
-            "optional": true,
-            "label": "Vista de cazador (percepción visual)"
+            "target": "step.perception.visual",
+            "value": 1
           }
         ]
       }

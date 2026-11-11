@@ -317,6 +317,8 @@ export const TDT = {
     "step.defense.fortitude": "Dado de Fortaleza",
     "step.defense.will": "Dado de Voluntad",
     "step.perception": "Dados de Percepción",
+    "step.perception.auditory": "Dados de Percepción auditiva",
+    "step.perception.visual": "Dados de Percepción visual",
     "mecha.endurance": "Aguante del mecha",
     "mecha.health": "Salud del mecha",
     "mecha.inventory": "Puntos de inventario",

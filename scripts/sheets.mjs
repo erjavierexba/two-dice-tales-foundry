@@ -348,7 +348,7 @@ export class TDTActorSheet extends ActorSheetBase {
     const entry = entries[selected];
     const document = await entry.pack.getDocument(entry.id);
     const [created] = await this._onDropItemCreate(document.toObject(), event);
-    ui.notifications.info(`${created?.name ?? entry.name} añadido a ${this.actor.name}.`);
+    if (created) ui.notifications.info(`${created.name} añadido a ${this.actor.name}.`);
   }
 
   async _deleteItem(event) {

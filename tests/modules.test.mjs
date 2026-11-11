@@ -100,10 +100,12 @@ assert.deepEqual(Vehicle.drivingFeat(driver, "Coches"), { trained: true, kansei:
 assert.deepEqual(distributeTeamOrder(["J1", "J2"], ["E1", "E2", "E3", "E4"], true), ["J1", "E1", "E2", "J2", "E3", "E4"]);
 assert.deepEqual(distributeTeamOrder(["J1", "J2", "J3"], ["E1", "E2", "E3", "E4", "E5"], true), ["J1", "E1", "E2", "J2", "E3", "E4", "J3", "E5"]);
 assert.deepEqual(distributeTeamOrder(["J1", "J2"], ["E1", "E2", "E3", "E4"], false), ["E1", "J1", "E2", "E3", "J2", "E4"]);
-const slow = { name: "Lento", actor: { system: { perception: { faces: 6 } } } };
-const alert = { name: "Alerta", actor: { system: { perception: { faces: 10 } } } };
-assert.deepEqual(initiativeDice(alert.actor), [10, 10]);
-assert.equal(bestInitiativeCombatant([slow, alert]), alert);
+const slow = { name: "Lento", actor: { system: { perception: { faces: 4, visualFaces: 6, auditoryFaces: 10 } } } };
+const alert = { name: "Alerta", actor: { system: { perception: { faces: 4, visualFaces: 10, auditoryFaces: 6 } } } };
+assert.deepEqual(initiativeDice(alert.actor, "perceptionVisual"), [10, 10]);
+assert.deepEqual(initiativeDice(alert.actor, "perceptionAuditory"), [6, 6]);
+assert.equal(bestInitiativeCombatant([slow, alert], "perceptionVisual"), alert);
+assert.equal(bestInitiativeCombatant([slow, alert], "perceptionAuditory"), slow);
 
 /* Weapon properties of the new modules */
 const baton = parseWeaponProperties("Dual, Daño 3, Aturdidora 4. Contra robots y máquinas, **Daño 7**.");
