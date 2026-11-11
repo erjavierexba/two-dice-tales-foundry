@@ -8,6 +8,7 @@ import * as Fantasy from "./modules/fantasy.mjs";
 import * as Mecha from "./modules/mecha.mjs";
 import * as Zombie from "./modules/zombie.mjs";
 import * as Cyber from "./modules/cyber.mjs";
+import { normalizeMoney } from "./economy.mjs";
 
 const ATTACK_SKILLS = new Set(["melee", "brawl", "ranged"]);
 const ACTOR_IMAGES = {
@@ -32,6 +33,8 @@ export class TDTActor extends Actor {
         if (foundry.utils.getProperty(data, "prototypeToken.disposition") === undefined) changes["prototypeToken.disposition"] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
         if (foundry.utils.getProperty(data, "prototypeToken.actorLink") === undefined) changes["prototypeToken.actorLink"] = true;
       }
+      const money = foundry.utils.getProperty(data, "system.money");
+      if (money !== undefined) changes["system.money"] = normalizeMoney(money);
       if (Object.keys(changes).length) this.updateSource(changes);
     }
     return allowed;
@@ -46,6 +49,8 @@ export class TDTActor extends Actor {
       foundry.utils.setProperty(changed, "system.dying.active", false);
       foundry.utils.setProperty(changed, "system.dying.difficulty", 0);
     }
+    const money = foundry.utils.getProperty(changed, "system.money");
+    if (money !== undefined) foundry.utils.setProperty(changed, "system.money", normalizeMoney(money));
     return allowed;
   }
 

@@ -6,9 +6,10 @@ import "./actor-modules.mjs";
 import { TDTActorSheet, TDTItemSheet, TDTMechaSheet } from "./sheets.mjs";
 import * as dice from "./dice.mjs";
 import { importBasicContent, importContent, packEnabled } from "./content.mjs";
-import { activeModules, moduleActive, registerSettings, rule } from "./settings.mjs";
+import { activeModules, lockCyberCurrencySetting, moduleActive, registerSettings, rule } from "./settings.mjs";
 import { activateChatListeners, registerSocket } from "./chat.mjs";
 import { checkItemRequirements, requirementFailureMessage } from "./requirements.mjs";
+import { migrateLegacyCurrency } from "./economy.mjs";
 
 Hooks.once("init", () => {
   console.log("TDT | Inicializando Two Dice Tales");
@@ -59,9 +60,10 @@ Hooks.on("preCreateItem", (item, data, options, userId) => {
   return false;
 });
 
-Hooks.once("ready", () => {
+Hooks.once("ready", async () => {
   registerSocket();
   if (!game.user.isGM) return;
+  await migrateLegacyCurrency();
   const modules = activeModules();
   if (game.settings.get("tdt", "welcomeShown")) return;
   game.settings.set("tdt", "welcomeShown", true);
@@ -73,6 +75,11 @@ Hooks.once("ready", () => {
       <p>Todo el contenido está en los compendios. Si prefieres tenerlo en el mundo:</p>
       <button type="button" class="tdt-chat-button" data-tdt-action="import-content"><i class="fas fa-box-open"></i> Importar contenido de los módulos activos</button></div>`
   });
+});
+
+Hooks.on("renderSettingsConfig", (_app, html) => {
+  const root = html instanceof HTMLElement ? html : html?.[0];
+  lockCyberCurrencySetting(root);
 });
 
 Hooks.on("renderChatMessageHTML", (message, html) => activateChatListeners(message, html));

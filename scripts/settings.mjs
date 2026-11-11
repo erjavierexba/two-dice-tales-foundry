@@ -113,18 +113,6 @@ export const ECONOMY_SETTINGS = {
     hint: "Nombre de la unidad principal, por ejemplo euros, créditos o monedas de oro.",
     type: String,
     default: "euros"
-  },
-  currencyHasSubunits: {
-    name: "Economía: usar submonedas",
-    hint: "Añade una segunda cantidad para fracciones de la moneda principal.",
-    type: Boolean,
-    default: true
-  },
-  currencySubunitName: {
-    name: "Economía: nombre de la submoneda",
-    hint: "Nombre de la unidad menor, por ejemplo céntimos.",
-    type: String,
-    default: "céntimos"
   }
 };
 
@@ -171,6 +159,13 @@ export function registerSettings() {
     type: Boolean,
     default: false
   });
+  game.settings.register(SYSTEM, "decimalCurrencyMigrated", {
+    name: "Moneda decimal migrada",
+    scope: "world",
+    config: false,
+    type: Boolean,
+    default: false
+  });
 }
 
 function rerenderSheets() {
@@ -209,11 +204,19 @@ export function currencySettings() {
   };
   return {
     enabled: Boolean(get("currencyEnabled")) || moduleActive("cyber"),
-    name: String(get("currencyName") || "monedas"),
-    // El módulo cyberpunk usa euros sin céntimos.
-    hasSubunits: Boolean(get("currencyHasSubunits")) && !moduleActive("cyber"),
-    subunitName: String(get("currencySubunitName") || "submonedas")
+    name: String(get("currencyName") || "monedas")
   };
+}
+
+/** Cyberpunk requires money: show the setting checked and immutable while that module is active. */
+export function lockCyberCurrencySetting(root) {
+  if (!moduleActive("cyber")) return;
+  const input = root?.querySelector?.('input[name="tdt.currencyEnabled"]');
+  if (!input) return;
+  input.checked = true;
+  input.disabled = true;
+  input.closest(".form-group")?.classList.add("tdt-setting-forced");
+  input.title = "Cyberpunk necesita la economía activa";
 }
 
 /** A skill is visible if it is a base skill, or its module is active, and it isn't replaced by the only active module. */

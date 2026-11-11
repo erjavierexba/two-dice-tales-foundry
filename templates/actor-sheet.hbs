@@ -150,7 +150,7 @@
       <section class="tdt-resource-row tdt-character-economy">
         <label><span>Experiencia disponible</span><input type="number" name="system.experience.value" value="{{system.experience.value}}"></label>
         <label><span>Experiencia gastada</span><input type="number" name="system.experience.spent" value="{{system.experience.spent}}"></label>
-        {{#if currency.enabled}}<label class="tdt-money"><span>{{currency.name}}</span><input type="number" min="0" name="system.money" value="{{system.money}}">{{#if currency.hasSubunits}}<span class="tdt-money-separator">+</span><input type="number" min="0" max="99" name="system.moneyMinor" value="{{system.moneyMinor}}" title="{{currency.subunitName}}"><small>{{currency.subunitName}}</small>{{/if}}</label>{{/if}}
+        {{#if currency.enabled}}<label class="tdt-money"><span>{{currency.name}}</span><input type="number" min="0" step="0.01" name="system.money" value="{{system.money}}"></label>{{/if}}
       </section>
       {{/if}}
 

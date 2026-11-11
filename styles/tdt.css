@@ -560,8 +560,6 @@
 
 .tdt .tdt-money > span:first-child { flex: 1 1 100%; font-weight: 700; text-transform: capitalize; }
 .tdt .tdt-money input[type="number"] { width: 70px; }
-.tdt .tdt-money .tdt-money-separator { color: var(--tdt-muted); font-weight: 800; }
-.tdt .tdt-money small { color: var(--tdt-muted); }
 
 .tdt .tdt-character-economy {
   grid-template-columns: repeat(3, minmax(0, 1fr));

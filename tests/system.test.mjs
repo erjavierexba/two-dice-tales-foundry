@@ -45,7 +45,10 @@ for (const [name, source] of [["actor", actorTemplate], ["mecha", mechaTemplate]
 assert.match(actorTemplate, /data-action="item-chat"/);
 assert.match(actorTemplate, /data-action="item-use"/);
 assert.match(actorTemplate, /data-action="compendium-pick"/);
-assert.match(actorTemplate, /name="system\.moneyMinor"/);
+assert.match(actorTemplate, /<input(?=[^>]*name="system\.money")(?=[^>]*step="0\.01")/);
+assert.doesNotMatch(actorTemplate, /moneyMinor/);
+assert.equal(template.Actor.templates.base.money, 0);
+assert.ok(!("moneyMinor" in template.Actor.templates.base), "la ficha ya no guarda una submoneda separada");
 assert.match(actorTemplate, /tdt-hero-point/);
 assert.match(actorTemplate, /tdt-character-economy/);
 assert.match(actorTemplate, /name="system\.initiative\.value"/);

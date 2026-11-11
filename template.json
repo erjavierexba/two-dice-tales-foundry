@@ -54,7 +54,6 @@
         "dying": { "active": false, "difficulty": 0 },
         "conditions": { "nextEvasionPenalty": 0, "satr": false, "absorbed": false },
         "money": 0,
-        "moneyMinor": 0,
         "npcStats": {
           "evasion": 5,
           "fortitude": 5,

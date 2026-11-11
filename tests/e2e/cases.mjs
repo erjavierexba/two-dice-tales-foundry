@@ -70,6 +70,30 @@ export const cases = [
     })
   },
   {
+    name: "La moneda es decimal y Cyberpunk la mantiene activa y bloqueada",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero({ money: 12.345 }));
+      T.eq(actor.system.money, 12.35, "el saldo inicial se redondea a dos decimales");
+      await actor.update({ "system.money": 18.999 });
+      T.eq(actor.system.money, 19, "las modificaciones también se normalizan");
+
+      await T.renderSheet(actor.sheet, "ficha con moneda decimal");
+      const money = actor.sheet.element[0].querySelector('[name="system.money"]');
+      T.ok(money && money.step === "0.01", "la ficha acepta céntimos");
+      T.ok(!actor.sheet.element[0].querySelector('[name="system.moneyMinor"]'), "no existe una submoneda separada");
+      await actor.sheet.close();
+
+      const settings = game.settings.sheet;
+      await T.renderSheet(settings, "configuración del sistema");
+      const settingsRoot = settings.element instanceof HTMLElement ? settings.element : settings.element[0];
+      settingsRoot.querySelector('[data-tab="system"]')?.click();
+      await T.sleep(250);
+      const currency = settingsRoot.querySelector('input[name="tdt.currencyEnabled"]');
+      T.ok(currency?.checked && currency.disabled, "Cyberpunk fuerza la moneda activa y deshabilita el interruptor");
+      await settings.close();
+    })
+  },
+  {
     name: "Las fichas de cada tipo de objeto se abren sin errores",
     run: async ({ gm }) => gm.evaluate(async () => {
       const samples = [["basic-feats", "Gordo"], ["basic-weapons", "Katana"], ["basic-armor", null], ["basic-gear", null], ["fantasy-races", "Enano"], ["fantasy-circles", null], ["powers-powers", "Superfuerza"], ["cyber-implants", "Brazo robótico"], ["cyber-hacks", "Chispazo intravenoso"]];
@@ -486,14 +510,14 @@ export const cases = [
   {
     name: "Implante en clínica: cobra 1.000 € por punto de CC y queda instalado",
     run: async ({ gm }) => gm.evaluate(async () => {
-      const actor = await T.actor("character", T.hero({ money: 10000 }));
+      const actor = await T.actor("character", T.hero({ money: 10000.75 }));
       const arm = await T.give(actor, "cyber-implants", "Brazo robótico");
       T.eq(arm.system.installed, true, "del compendio llega instalado (lo administra el DJ)");
       await arm.update({ "system.installed": false }); // el DJ decide que pase por la clínica
       const installing = actor.installImplant(arm);
       await T.answer({ button: "ok" }); // la primera opción es la clínica
       await installing;
-      T.eq([actor.items.get(arm.id).system.installed, actor.system.money], [true, 7000], "instalado y 3.000 € menos");
+      T.eq([actor.items.get(arm.id).system.installed, actor.system.money], [true, 7000.75], "instalado y 3.000 € menos sin perder los céntimos");
     })
   },
   {
