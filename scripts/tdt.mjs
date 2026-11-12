@@ -3,7 +3,9 @@ import { TDTActor } from "./actor.mjs";
 import { TDTCombat } from "./combat.mjs";
 import { TDTTokenDocument } from "./token.mjs";
 import "./actor-modules.mjs";
-import { TDTActorSheet, TDTItemSheet, TDTMechaSheet } from "./sheets.mjs";
+import "./actor-experience.mjs";
+import "./actor-vehicle.mjs";
+import { TDTActorSheet, TDTItemSheet, TDTMechaSheet, TDTVehicleSheet } from "./sheets.mjs";
 import * as dice from "./dice.mjs";
 import { importBasicContent, importContent, packEnabled } from "./content.mjs";
 import { activeModules, lockCyberCurrencySetting, moduleActive, registerSettings, rule } from "./settings.mjs";
@@ -11,6 +13,10 @@ import { activateChatListeners, registerSocket } from "./chat.mjs";
 import { checkItemRequirements, requirementFailureMessage } from "./requirements.mjs";
 import { migrateLegacyCurrency } from "./economy.mjs";
 import { chipTargetAllowed } from "./chips.mjs";
+import { registerDataModels } from "./data-models.mjs";
+import { actionGroups, runHubEntry, TDTActionHub } from "./action-hub.mjs";
+import { registerGMScreenSettings, TDTGMScreen } from "./gm-screen.mjs";
+import { registerDiceSoNice } from "./dice-so-nice.mjs";
 
 Hooks.once("init", () => {
   console.log("TDT | Inicializando Two Dice Tales");
@@ -18,22 +24,32 @@ Hooks.once("init", () => {
   CONFIG.Actor.documentClass = TDTActor;
   CONFIG.Combat.documentClass = TDTCombat;
   CONFIG.Token.documentClass = TDTTokenDocument;
+  registerDataModels();
   registerSettings();
+  registerGMScreenSettings();
+  registerDiceSoNice();
 
   const Actors = foundry.documents.collections.Actors;
   const Items = foundry.documents.collections.Items;
-  Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
+  for (const core of [foundry.appv1?.sheets?.ActorSheet, foundry.applications.sheets.ActorSheetV2]) if (core) Actors.unregisterSheet("core", core);
   Actors.registerSheet("tdt", TDTActorSheet, { types: ["character", "npc"], makeDefault: true, label: "Ficha de TDT" });
   Actors.registerSheet("tdt", TDTMechaSheet, { types: ["mecha"], makeDefault: true, label: "Ficha de mecha de TDT" });
-  Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
+  Actors.registerSheet("tdt", TDTVehicleSheet, { types: ["vehicle", "emplacement"], makeDefault: true, label: "Ficha de vehículo de TDT" });
+  for (const core of [foundry.appv1?.sheets?.ItemSheet, foundry.applications.sheets.ItemSheetV2]) if (core) Items.unregisterSheet("core", core);
   Items.registerSheet("tdt", TDTItemSheet, { types: Object.keys(TDT.itemTypes), makeDefault: true, label: "Objeto de TDT" });
 
   // Labels of the document types in the creation dialogs.
-  CONFIG.Actor.typeLabels = { character: "Personaje", npc: "PNJ", mecha: "Mecha" };
+  CONFIG.Actor.typeLabels = { character: "Personaje", npc: "PNJ", mecha: "Mecha", vehicle: "Vehículo", emplacement: "Arma estacionaria" };
   CONFIG.Item.typeLabels = { ...TDT.itemTypes };
+
+  foundry.applications.handlebars.loadTemplates({ "tdt-action-groups": "systems/tdt/templates/parts/action-groups.hbs" });
 
   game.tdt = {
     config: TDT,
+    actionHub: () => TDTActionHub.toggle(),
+    gmScreen: () => TDTGMScreen.open(),
+    actionGroups,
+    runHubEntry,
     dice,
     importContent,
     importBasicContent,
@@ -84,6 +100,15 @@ Hooks.once("ready", async () => {
       <p>Todo el contenido está en los compendios. Si prefieres tenerlo en el mundo:</p>
       <button type="button" class="tdt-chat-button" data-tdt-action="import-content"><i class="fas fa-box-open"></i> Importar contenido de los módulos activos</button></div>`
   });
+});
+
+/** Buttons in the token controls: the action hub for everyone, the GM screen for the GM. */
+Hooks.on("getSceneControlButtons", controls => {
+  const tokens = controls.tokens ?? controls.token;
+  if (!tokens?.tools) return;
+  const order = Object.keys(tokens.tools).length;
+  tokens.tools.tdtActions = { name: "tdtActions", order: order + 1, title: "Acciones (TDT)", icon: "fas fa-dice", button: true, onChange: () => TDTActionHub.toggle() };
+  if (game.user.isGM) tokens.tools.tdtGMScreen = { name: "tdtGMScreen", order: order + 2, title: "Pantalla del DJ (TDT)", icon: "fas fa-book-open-reader", button: true, onChange: () => TDTGMScreen.open() };
 });
 
 Hooks.on("renderSettingsConfig", (_app, html) => {

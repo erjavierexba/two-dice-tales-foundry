@@ -4,7 +4,8 @@ import { itemNameSet } from "./modifiers.mjs";
 import { currencySettings, moduleActive, rule } from "./settings.mjs";
 import { automaticDifficultyText, warnIfAllImmune, parseWeaponProperties, targetDefense, targetEndurance } from "./attack.mjs";
 import { esc, payload, requestDamage } from "./chat.mjs";
-import { TDTActor, choiceDialog, currentTargets, numberDialog } from "./actor.mjs";
+import { TDTActor, currentTargets } from "./actor.mjs";
+import { choiceDialog, confirmDialog as confirmHtml, numberDialog, tdtDialog } from "./dialogs.mjs";
 import * as Fantasy from "./modules/fantasy.mjs";
 import * as Mecha from "./modules/mecha.mjs";
 import * as Zombie from "./modules/zombie.mjs";
@@ -16,9 +17,7 @@ const say = (actor, title, body, extra = {}) => ChatMessage.create({ speaker: Ch
 const notesList = notes => (notes.filter(Boolean).length ? `<ul class="tdt-roll-notes">${notes.filter(Boolean).map(note => `<li>${esc(note)}</li>`).join("")}</ul>` : "");
 const getItem = (actor, item) => (typeof item === "string" ? actor.items.get(item) : item);
 
-function confirmDialog(title, text) {
-  return Dialog.confirm({ title, content: `<p>${esc(text)}</p>`, options: { classes: ["tdt", "tdt-dialog"] } });
-}
+const confirmDialog = (title, text) => confirmHtml(title, `<p>${esc(text)}</p>`);
 
 /** Lines against every target of an attack-like roll. */
 function targetLines(actor, outcome, targets, { defenseKey = "evasion", damage = 0, endurance = target => targetEndurance(target), minimum = 0, afterEndurance = 0, options = { raw: true } } = {}) {
@@ -28,6 +27,21 @@ function targetLines(actor, outcome, targets, { defenseKey = "evasion", damage =
     lines.push(actor._targetLine(target, { total: outcome.result.total, difficultyMod: outcome.result.difficultyMod, defense, damage, endurance: endurance(target), minimum, afterEndurance, defenseKey, options }));
   }
   return lines;
+}
+
+/**
+ * A vehicle the actor drives: an inventory vehicle (gear item id) or a vehicle actor (the actor or its UUID).
+ * @returns {{name: string, profile: object, ref: string, document: object}|null}
+ */
+function vehicleSource(actor, ref) {
+  let document = ref;
+  if (typeof ref === "string") document = ref.includes(".") ? fromUuidSync(ref) : actor.items.get(ref);
+  if (document?.documentName === "Actor") {
+    if (document.type !== "vehicle") return null;
+    return { name: document.name, profile: Vehicle.vehicleProfile(document), ref: document.uuid, document };
+  }
+  if (!document || document.type !== "gear" || document.system.category !== "vehicle") return null;
+  return { name: document.name, profile: Vehicle.vehicleProfile(document), ref: document.id, document };
 }
 
 const methods = {
@@ -42,13 +56,15 @@ const methods = {
     const mind = this.system.attributes.mind;
     if (Number(dexterity.value) === Number(mind.value)) return "dexterity";
     const order = Number(mind.value) > Number(dexterity.value) ? ["mind", "dexterity"] : ["dexterity", "mind"];
+    if (this._tdtFast) return order[0];
     return choiceDialog("Conducir", "¿Con qué característica conduces?", order.map(key => ({ id: key, label: `${this.system.attributes[key].label} (d${this.system.attributes[key].value})` })));
   },
 
   async driveVehicle(itemRef, options = {}) {
-    const item = getItem(this, itemRef);
-    if (!item || item.type !== "gear" || item.system.category !== "vehicle") return null;
-    const vehicle = Vehicle.vehicleProfile(item);
+    const source = vehicleSource(this, itemRef);
+    if (!source || !this.system.attributes) return null;
+    const item = { name: source.name };
+    const vehicle = source.profile;
     const feat = Vehicle.drivingFeat(this, vehicle.category);
     if (!feat.trained && vehicle.autopilot && !options.preset) {
       return say(this, `Piloto automático: ${item.name}`, `<p>El vehículo realiza la maniobra con un valor fijo de <strong>${vehicle.autopilot}</strong>.</p>`);
@@ -61,25 +77,29 @@ const methods = {
     if (vehicle.modifier > 0) extraRules.push({ type: "bonus", value: vehicle.modifier, label: item.name });
     if (vehicle.modifier < 0) extraRules.push({ type: "penalty", value: -vehicle.modifier, label: item.name });
     if (feat.kansei) extraRules.push({ type: "bonus", value: 1, label: "Kansei Dorifto" });
+    extraRules.push(...(options.extraRules ?? []));
     return this.rollCheck({
       kind: "vehicle",
-      label: `Conducir: ${item.name}`,
+      label: options.label ?? `Conducir: ${item.name}`,
       subtitle: `${vehicle.category} · ${vehicle.passengers} pasajeros · PV ${vehicle.health.value}/${vehicle.health.max} · Aguante ${vehicle.endurance}`,
-      scopes: ["vehicle", "driving", attributeKey],
+      scopes: ["vehicle", "driving", attributeKey, ...(options.scopes ?? [])],
       primaryScope: attributeKey,
       secondaryScope: "driving",
       first: { label: attribute.label, faces: attribute.value },
       second: { label: feat.kansei ? "Kansei Dorifto" : "Conducir", faces: feat.kansei ? 8 : 4 },
       difficulty: options.difficulty ?? 0,
       extraRules,
-      reroll: { method: "driveVehicle", args: [item.id, { attribute: attributeKey }] }
+      reroll: options.label ? null : { method: "driveVehicle", args: [source.ref, { attribute: attributeKey }] },
+      silent: options.silent,
+      after: options.after
     }, options.preset);
   },
 
   async ramVehicle(itemRef, options = {}) {
-    const item = getItem(this, itemRef);
-    if (!item || item.type !== "gear" || item.system.category !== "vehicle") return null;
-    const vehicle = Vehicle.vehicleProfile(item);
+    const source = vehicleSource(this, itemRef);
+    if (!source || !this.system.attributes) return null;
+    const item = { name: source.name };
+    const vehicle = source.profile;
     const feat = Vehicle.drivingFeat(this, vehicle.category);
     if (!feat.trained) return ui.notifications.warn(`Necesitas la dote Conducir (${vehicle.category}) para embestir con ${item.name}.`);
     const targets = currentTargets();
@@ -106,7 +126,7 @@ const methods = {
       difficulty: single ?? 0,
       automaticDifficulty: automaticDifficultyText(targets, defenseKey),
       extraRules,
-      reroll: { method: "ramVehicle", args: [item.id, { attribute: attributeKey }] },
+      reroll: { method: "ramVehicle", args: [source.ref, { attribute: attributeKey }] },
       after: outcome => ({ html: `<div class="tdt-roll-weapon"><strong>Daño:</strong> ${vehicle.crashDamage} · Embestida</div>${targetLines(this, outcome, targets, { defenseKey, damage: vehicle.crashDamage }).map(line => line.html).join("")}` })
     }, options.preset);
   },
@@ -267,18 +287,14 @@ const methods = {
     let overload = 0;
     let variable = 0;
     if (!options.preset && (Number(system.overload) || system.variableCost)) {
-      const form = await new Promise(resolve => {
-        new Dialog({
-          title: power.name,
-          content: `<form>${system.variableCost ? `<div class="form-group"><label>Energía a gastar</label><input type="number" name="variable" min="0" value="1"></div>` : ""}
-            ${Number(system.overload) ? `<div class="form-group"><label>Sobrecarga (0 a ${system.overload})</label><input type="number" name="overload" min="0" max="${system.overload}" value="0"><p class="hint">Cada punto cuesta 1 de energía más. En ataques suma Daño; en controles reduce la dificultad.</p></div>` : ""}</form>`,
-          buttons: {
-            ok: { label: "Usar", callback: html => resolve({ overload: Number(html[0].querySelector('[name="overload"]')?.value || 0), variable: Number(html[0].querySelector('[name="variable"]')?.value || 0) }) },
-            cancel: { label: "Cancelar", callback: () => resolve(null) }
-          },
-          default: "ok",
-          close: () => resolve(null)
-        }, { classes: ["tdt", "tdt-dialog"] }).render(true);
+      const form = await tdtDialog({
+        title: power.name,
+        content: `${system.variableCost ? `<div class="form-group"><label>Energía a gastar</label><input type="number" name="variable" min="0" value="1"></div>` : ""}
+          ${Number(system.overload) ? `<div class="form-group"><label>Sobrecarga (0 a ${system.overload})</label><input type="number" name="overload" min="0" max="${system.overload}" value="0"><p class="hint">Cada punto cuesta 1 de energía más. En ataques suma Daño; en controles reduce la dificultad.</p></div>` : ""}`,
+        buttons: [
+          { action: "ok", label: "Usar", icon: "fas fa-bolt", default: true, callback: root => ({ overload: Number(root.elements.overload?.value || 0), variable: Number(root.elements.variable?.value || 0) }) },
+          { action: "cancel", label: "Cancelar" }
+        ]
       });
       if (!form) return null;
       overload = Math.max(0, Math.min(Number(system.overload), form.overload));
@@ -429,7 +445,7 @@ const methods = {
     const useCyber = cyber && (!zombie || (await choiceDialog("Construcción", "¿Qué sistema de materiales usas?", [{ id: "cyber", label: "Cyberpunk (armas, genéricos, construcción)" }, { id: "zombie", label: "Zombis (materiales)" }])) === "cyber");
     const recipes = useCyber ? TDT.cyberRecipes : TDT.zombieRecipes;
     const weapons = this.items.filter(item => item.type === "weapon");
-    const content = `<form>
+    const content = `
       <div class="form-group"><label>Acción</label><select name="mode"><option value="craft">Fabricar o construir</option><option value="repair">Reparar arma (sube un estado)</option>${useCyber ? `<option value="dismantle">Desguazar</option><option value="armor">Reparar armadura (1 material de construcción por punto)</option><option value="implant">Reparar implante averiado (Construir, o Cibernética con +2 de dificultad)</option>` : ""}</select></div>
       <div class="form-group"><label>Receta</label><select name="recipe">${recipes.map(recipe => `<option value="${recipe.key}">${esc(recipe.label)}${useCyber ? ` (${recipe.weapons}/${recipe.generic}/${recipe.construction} · ${recipe.difficulty})` : ` (${recipe.materials})`}</option>`).join("")}</select></div>
       <div class="form-group"><label>Arma (reparar)</label><select name="weapon"><option value="">—</option>${weapons.map(item => `<option value="${item.id}">${esc(item.name)} (${TDT.weaponConditions[item.system.condition || "normal"]})</option>`).join("")}</select></div>
@@ -437,19 +453,14 @@ const methods = {
       ${useCyber ? `<div class="form-group"><label>Implante (reparar)</label><select name="implant"><option value="">—</option>${this.items.filter(item => item.type === "implant" && item.system.malfunction && !item.system.supreme?.enabled).map(item => `<option value="${item.id}">${esc(item.name)}</option>`).join("")}</select></div>` : ""}
       ${useCyber ? `<div class="form-group"><label>Armadura (reparar)</label><select name="armor"><option value="">—</option>${this.items.filter(item => item.type === "armor").map(item => `<option value="${item.id}">${esc(item.name)} (−${item.system.damage || 0})</option>`).join("")}</select></div>` : `<div class="form-group"><label>Dificultad (DJ)</label><input type="number" name="difficulty" value="6"></div>`}
       <div class="form-group"><label>Característica</label><select name="attribute"><option value="mind">Mente</option><option value="dexterity">Destreza</option><option value="power">Potencia</option></select></div>
-      <div class="form-group"><label>Tengo las herramientas adecuadas</label><input type="checkbox" name="tools" checked></div>
-    </form>`;
-    const form = await new Promise(resolve => {
-      new Dialog({
-        title: "Construir, reparar o desguazar",
-        content,
-        buttons: {
-          ok: { label: "Continuar", callback: html => resolve(Object.fromEntries(new FormData(html[0].querySelector("form")))) },
-          cancel: { label: "Cancelar", callback: () => resolve(null) }
-        },
-        default: "ok",
-        close: () => resolve(null)
-      }, { classes: ["tdt", "tdt-dialog"] }).render(true);
+      <div class="form-group"><label>Tengo las herramientas adecuadas</label><input type="checkbox" name="tools" checked></div>`;
+    const form = await tdtDialog({
+      title: "Construir, reparar o desguazar",
+      content,
+      buttons: [
+        { action: "ok", label: "Continuar", icon: "fas fa-hammer", default: true, callback: root => Object.fromEntries(new FormData(root)) },
+        { action: "cancel", label: "Cancelar" }
+      ]
     });
     if (!form) return;
     const recipe = recipes.find(entry => entry.key === form.recipe);

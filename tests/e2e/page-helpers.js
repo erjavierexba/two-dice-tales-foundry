@@ -1,4 +1,4 @@
-/* global game, ui, Dialog, Actor, ChatMessage, foundry */
+/* global game, ui, Actor, ChatMessage, foundry */
 // Utilidades que se inyectan en la página de Foundry (window.T) para las pruebas e2e.
 (() => {
   const T = {};
@@ -53,7 +53,7 @@
     ...overrides
   });
   T.renderSheet = async (sheet, label) => {
-    sheet.render(true);
+    sheet.render({ force: true });
     const start = Date.now();
     while (!sheet.rendered && Date.now() - start < 5000) await sleep(50);
     T.ok(sheet.rendered, label);
@@ -96,7 +96,7 @@
     await ChatMessage.deleteDocuments(game.messages.map(message => message.id));
     T.targets([]);
     // Cerrar sin esperar a la animación (en Chrome sin ventana puede no terminar nunca).
-    for (const app of Object.values(ui.windows)) if (app instanceof Dialog) await Promise.race([app.close({ force: true }), sleep(200)]);
+    for (const app of openDialogs()) await Promise.race([app.close({ force: true }), sleep(200)]);
   };
 
   /* ---------- Objetivos (sin canvas: el sistema solo lee token.actor) ---------- */
@@ -106,11 +106,13 @@
   };
 
   /* ---------- Diálogos ---------- */
-  const openDialogs = () => Object.values(ui.windows).filter(app => app instanceof Dialog && app.rendered);
+  const DialogV2 = foundry.applications.api.DialogV2;
+  const openDialogs = () => [...foundry.applications.instances.values()].filter(app => app instanceof DialogV2 && app.rendered);
+  T.openDialogIds = () => new Set(openDialogs().map(app => app.id));
   T.waitDialog = async (seen = new Set(), timeout = 5000) => {
     const start = Date.now();
     while (Date.now() - start < timeout) {
-      const dialog = openDialogs().find(app => !seen.has(app.appId) && app.element?.[0]?.querySelector(".dialog-buttons"));
+      const dialog = openDialogs().find(app => !seen.has(app.id) && app.element?.querySelector(".form-footer"));
       if (dialog) return dialog;
       await sleep(25);
     }
@@ -122,7 +124,7 @@
    */
   T.answer = async ({ check = [], uncheck = [], fields = {}, button = null, seen } = {}) => {
     const dialog = await T.waitDialog(seen);
-    const root = dialog.element[0];
+    const root = dialog.element;
     const labels = [...root.querySelectorAll(".tdt-roll-feats label")];
     const rules = labels.map(label => ({ text: label.textContent.trim().replace(/\s+/g, " "), checked: label.querySelector("input").checked }));
     const find = text => {
@@ -138,9 +140,9 @@
       if (input.type === "checkbox") input.checked = Boolean(value);
       else input.value = String(value);
     }
-    const buttons = [...root.querySelectorAll(".dialog-buttons button")];
-    const target = button ? buttons.find(entry => entry.dataset.button === button || entry.textContent.trim() === button) : buttons[0];
-    if (!target) throw new Error(`El diálogo «${dialog.title}» no tiene el botón ${button}: ${buttons.map(entry => entry.dataset.button).join(", ")}`);
+    const buttons = [...root.querySelectorAll(".form-footer button")];
+    const target = button ? buttons.find(entry => entry.dataset.action === button || entry.textContent.trim() === button) : buttons[0];
+    if (!target) throw new Error(`El diálogo «${dialog.title}» no tiene el botón ${button}: ${buttons.map(entry => entry.dataset.action).join(", ")}`);
     const info = { title: dialog.title, rules, reminders: [...root.querySelectorAll(".tdt-roll-reminders p")].map(p => p.textContent.trim()) };
     target.click();
     await sleep(50);
@@ -148,7 +150,7 @@
   };
   /** Runs an action that opens a roll dialog, answers it and returns { value, dialog }. */
   T.roll = async (action, answer = {}) => {
-    const seen = new Set(openDialogs().map(app => app.appId));
+    const seen = T.openDialogIds();
     const promise = action();
     const dialog = await T.answer({ ...answer, seen });
     const value = await promise;

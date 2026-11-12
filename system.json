@@ -3,7 +3,7 @@
   "title": "Two Dice Tales",
   "description": "Sistema oficial de Two Dice Tales para Foundry Virtual Tabletop.",
   "background": "systems/tdt/assets/branding/system-background.png",
-  "version": "0.4.25",
+  "version": "0.5.0",
   "compatibility": {
     "minimum": "13",
     "verified": "13.348"
@@ -23,7 +23,8 @@
     "recommends": [
       {
         "id": "dice-so-nice",
-        "type": "module"
+        "type": "module",
+        "reason": "Dados 3D. TDT colorea el dado de característica (azul) y el de habilidad (rojo)."
       }
     ]
   },
@@ -44,7 +45,9 @@
     "Actor": {
       "character": {},
       "npc": {},
-      "mecha": {}
+      "mecha": {},
+      "vehicle": {},
+      "emplacement": {}
     },
     "Item": {
       "feat": {},
@@ -506,6 +509,22 @@
           "module": "cyber"
         }
       }
+    },
+    {
+      "name": "macros",
+      "label": "TDT · Macros",
+      "path": "packs/macros",
+      "type": "Macro",
+      "system": "tdt",
+      "ownership": {
+        "PLAYER": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      },
+      "flags": {
+        "tdt": {
+          "module": ""
+        }
+      }
     }
   ],
   "grid": {
@@ -526,7 +545,8 @@
         "basic-armor",
         "basic-gear",
         "basic-npcs",
-        "basic-generic-weapons"
+        "basic-generic-weapons",
+        "macros"
       ],
       "sort": 0
     },

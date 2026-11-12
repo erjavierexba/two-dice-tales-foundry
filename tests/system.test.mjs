@@ -10,7 +10,25 @@ const exists = async path => access(join(root, path)).then(() => true, () => fal
 
 const system = JSON.parse(await read("system.json"));
 const pkg = JSON.parse(await read("package.json"));
-const template = JSON.parse(await read("template.json"));
+const defaults = await import(join(root, "scripts/data-defaults.mjs"));
+// Same shape as the old template.json: templates merged in order, then the type's own fields.
+const merge = (target, source) => {
+  for (const [key, value] of Object.entries(source)) {
+    if (value && typeof value === "object" && !Array.isArray(value)) target[key] = merge(target[key] && typeof target[key] === "object" ? target[key] : {}, value);
+    else target[key] = value;
+  }
+  return target;
+};
+const build = (templates, types) => Object.fromEntries(Object.entries(types).map(([type, entry]) => {
+  const data = {};
+  for (const name of entry.templates ?? []) merge(data, structuredClone(templates[name]));
+  return [type, merge(data, structuredClone(entry.data ?? {}))];
+}));
+const template = {
+  Actor: { types: Object.keys(defaults.ACTOR_TYPES), templates: defaults.ACTOR_TEMPLATES, ...build(defaults.ACTOR_TEMPLATES, defaults.ACTOR_TYPES) },
+  Item: { types: Object.keys(defaults.ITEM_TYPES), templates: defaults.ITEM_TEMPLATES, ...build(defaults.ITEM_TEMPLATES, defaults.ITEM_TYPES) }
+};
+assert.ok(!(await exists("template.json")), "los datos se definen con TypeDataModel (scripts/data-defaults.mjs), no con template.json");
 
 assert.equal(system.id, "tdt");
 assert.equal(system.version, pkg.version, "system.json y package.json deben compartir versión");
@@ -25,7 +43,8 @@ for (const path of [...system.esmodules, ...system.styles]) assert.ok(await exis
 for (const pack of system.packs) assert.ok(await exists(pack.path), `Falta el compendio ${pack.path}`);
 for (const [document, config] of Object.entries(system.documentTypes)) {
   const declared = new Set(template[document]?.types ?? []);
-  for (const type of Object.keys(config)) assert.ok(declared.has(type), `${document}.${type} no está en template.json`);
+  for (const type of Object.keys(config)) assert.ok(declared.has(type), `${document}.${type} no está en scripts/data-defaults.mjs`);
+  for (const type of declared) assert.ok(type in config, `${document}.${type} falta en documentTypes de system.json`);
 }
 
 for (const file of await readdir(join(root, "scripts"), { recursive: true })) {
@@ -37,7 +56,7 @@ for (const file of await readdir(join(root, "scripts"), { recursive: true })) {
 const actorTemplate = await read("templates/actor-sheet.hbs");
 const mechaTemplate = await read("templates/mecha-sheet.hbs");
 for (const [name, source] of [["actor", actorTemplate], ["mecha", mechaTemplate]]) {
-  const itemRows = source.match(/<li class="item tdt-item" data-item-id=/g) ?? [];
+  const itemRows = source.match(/<li class="item tdt-item draggable" data-item-id=/g) ?? [];
   const rawRows = source.match(/<li data-item-id=/g) ?? [];
   assert.ok(itemRows.length > 0, `${name}: no hay filas de objetos arrastrables`);
   assert.equal(rawRows.length, 0, `${name}: quedan filas incompatibles con el drag & drop de Foundry`);
@@ -52,15 +71,19 @@ assert.ok(!("moneyMinor" in template.Actor.templates.base), "la ficha ya no guar
 assert.match(actorTemplate, /tdt-hero-point/);
 assert.match(actorTemplate, /tdt-character-economy/);
 assert.match(actorTemplate, /name="system\.initiative\.value"/);
-assert.match(actorTemplate, /data-actor-method="driveVehicle"/);
-assert.match(actorTemplate, /data-actor-method="damageVehicle"/);
+assert.match(actorTemplate, /data-action="actor-method" data-method="driveVehicle"/);
+assert.match(actorTemplate, /data-action="actor-method" data-method="damageVehicle"/);
 assert.match(mechaTemplate, /data-action="activate-tab" data-tab="inventory"/);
-assert.match(mechaTemplate, /data-actor-method="mechaRepairWeapon"/);
+assert.match(mechaTemplate, /data-action="actor-method" data-method="mechaRepairWeapon"/);
 assert.match(mechaTemplate, /data-action="compendium-pick"/);
 
 const chat = await read("scripts/chat.mjs");
 assert.doesNotMatch(chat, /data\?\.action === "update"/);
-assert.match(chat, /Dialog\.confirm/);
+assert.match(chat, /confirmDialog\(/);
+for (const file of ["actor.mjs", "actor-modules.mjs", "sheets.mjs", "chat.mjs", "combat.mjs"]) {
+  const source = await read(`scripts/${file}`);
+  assert.doesNotMatch(source, /new Dialog\(|Dialog\.confirm|appv1\.sheets\.(Actor|Item)Sheet\b(?!\?)/, `${file}: quedan restos de ApplicationV1`);
+}
 
 const actor = await read("scripts/actor.mjs");
 assert.match(actor, /rolls:\s*outcome\.rolls/, "las tiradas deben publicarse como Roll de Foundry para Dice So Nice");

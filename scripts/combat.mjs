@@ -1,3 +1,4 @@
+import { tdtDialog } from "./dialogs.mjs";
 import { TDT } from "./config.mjs";
 import { esc } from "./chat.mjs";
 import { bestInitiativeCombatant, distributeTeamOrder, initiativeDice } from "./modules/combat.mjs";
@@ -36,29 +37,22 @@ function initiativeDialog(heroes, enemies, defaultLeader) {
   const configured = Math.max(0, ...enemies.map(combatant => Number(combatant.actor?.system.initiative?.value || 0)));
   const enemyBase = configured || 6;
   const sources = availableSources(heroes);
-  return new Promise(resolve => {
-    new Dialog({
-      title: "Iniciativa conjunta de TDT",
-      content: `<form class="tdt-team-initiative">
-        <p>Solo tira el integrante con los mejores dados. El resto aporta <strong>bonifica 1</strong>, hasta 3.</p>
-        <div class="form-group"><label>Tirada del equipo</label><select name="source">${sources.map(source => `<option value="${source.id}">${esc(source.label)}</option>`).join("")}</select></div>
-        <div class="form-group"><label>Primer héroe si gana el equipo</label><select name="firstHero">${heroes.map(combatant => `<option value="${combatant.id}" ${combatant.id === defaultLeader?.id ? "selected" : ""}>${esc(combatant.name)}</option>`).join("")}</select></div>
-        ${enemies.length ? `<div class="form-group"><label>Iniciativa enemiga base</label><input type="number" name="enemyBase" min="0" value="${enemyBase}"><p class="hint">Se añadirá +1 por enemigo adicional, máximo +3.</p></div>` : ""}
-      </form>`,
-      buttons: {
-        roll: { icon: '<i class="fas fa-users"></i>', label: "Tirar por el equipo", callback: html => {
-          const root = html[0];
-          resolve({
-            source: root.querySelector('[name="source"]').value,
-            firstHero: root.querySelector('[name="firstHero"]').value,
-            enemyBase: Number(root.querySelector('[name="enemyBase"]')?.value || 0)
-          });
-        } },
-        cancel: { label: "Cancelar", callback: () => resolve(null) }
-      },
-      default: "roll",
-      close: () => resolve(null)
-    }, { classes: ["tdt", "tdt-dialog"] }).render(true);
+  return tdtDialog({
+    title: "Iniciativa conjunta de TDT",
+    content: `<div class="tdt-team-initiative">
+      <p>Solo tira el integrante con los mejores dados. El resto aporta <strong>bonifica 1</strong>, hasta 3.</p>
+      <div class="form-group"><label>Tirada del equipo</label><select name="source">${sources.map(source => `<option value="${source.id}">${esc(source.label)}</option>`).join("")}</select></div>
+      <div class="form-group"><label>Primer héroe si gana el equipo</label><select name="firstHero">${heroes.map(combatant => `<option value="${combatant.id}" ${combatant.id === defaultLeader?.id ? "selected" : ""}>${esc(combatant.name)}</option>`).join("")}</select></div>
+      ${enemies.length ? `<div class="form-group"><label>Iniciativa enemiga base</label><input type="number" name="enemyBase" min="0" value="${enemyBase}"><p class="hint">Se añadirá +1 por enemigo adicional, máximo +3.</p></div>` : ""}
+    </div>`,
+    buttons: [
+      { action: "roll", label: "Tirar por el equipo", icon: "fas fa-users", default: true, callback: form => ({
+        source: form.elements.source.value,
+        firstHero: form.elements.firstHero.value,
+        enemyBase: Number(form.elements.enemyBase?.value || 0)
+      }) },
+      { action: "cancel", label: "Cancelar" }
+    ]
   });
 }
 

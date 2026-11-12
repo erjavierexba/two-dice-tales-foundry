@@ -12,6 +12,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { ACTOR_TYPES, ITEM_TYPES } from "../scripts/data-defaults.mjs";
 
 const require = createRequire(import.meta.url);
 const CLASSIC_LEVEL = process.env.CLASSIC_LEVEL ?? "/home/javi/ExecApps/FoundryVTT/FoundryVTT/resources/app/node_modules/classic-level";
@@ -144,13 +145,31 @@ function tableDocument(table, packName) {
   };
 }
 
+function macroDocument(macro, packName) {
+  const id = foundryId(packName, macro.name);
+  return {
+    _id: id,
+    name: macro.name,
+    type: "script",
+    img: macro.img,
+    command: macro.command,
+    scope: "global",
+    author: null,
+    folder: null,
+    sort: 0,
+    ownership: { default: 0 },
+    flags: { tdt: { content: true } },
+    _stats: stats(packName, "Macro", id)
+  };
+}
+
 async function writePack(name, documentName, documents) {
   const packPath = path.join(systemRoot, "packs", name);
   fs.mkdirSync(packPath, { recursive: true });
   const db = new ClassicLevel(packPath, { keyEncoding: "utf8", valueEncoding: "json" });
   await db.open();
   await db.clear();
-  const collection = { Actor: "actors", Item: "items", RollTable: "tables" }[documentName];
+  const collection = { Actor: "actors", Item: "items", RollTable: "tables", Macro: "macros" }[documentName];
   const operations = [];
   const ids = new Set();
   for (const source of documents) {
@@ -183,11 +202,16 @@ define("basic-armor", "TDT · Armaduras básicas", "Item", "", basicItems.filter
 define("basic-gear", "TDT · Objetos y vehículos", "Item", "", basicItems.filter(item => item.type === "gear"));
 define("basic-npcs", "TDT · PNJ básicos", "Actor", "", basicContent.actors);
 for (const pack of moduleContent.packs) define(pack.name, pack.label, pack.type, pack.module, pack.documents);
+define("macros", "TDT · Macros", "Macro", "", [
+  { name: "Acciones", img: "icons/svg/dice-target.svg", command: "game.tdt.actionHub();" },
+  { name: "Pantalla del DJ", img: "icons/svg/book.svg", command: "game.tdt.gmScreen();" }
+]);
 
 for (const pack of packDefinitions) {
   const documents = pack.documents.map(document => {
     if (pack.type === "Actor") return actorDocument(document, pack.name);
     if (pack.type === "RollTable") return tableDocument(document, pack.name);
+    if (pack.type === "Macro") return macroDocument(document, pack.name);
     return itemDocument(document, pack.name);
   });
   await writePack(pack.name, pack.type, documents);
@@ -220,8 +244,8 @@ systemJson.packFolders = Object.entries(folderNames).map(([module, name], index)
   sort: index
 }));
 systemJson.documentTypes = {
-  Actor: { character: {}, npc: {}, mecha: {} },
-  Item: { feat: {}, weapon: {}, armor: {}, gear: {}, race: {}, spell: {}, power: {}, implant: {}, hack: {} }
+  Actor: Object.fromEntries(Object.keys(ACTOR_TYPES).map(type => [type, {}])),
+  Item: Object.fromEntries(Object.keys(ITEM_TYPES).map(type => [type, {}]))
 };
 systemJson.socket = true;
 fs.writeFileSync(systemJsonPath, `${JSON.stringify(systemJson, null, 2)}\n`);

@@ -18,8 +18,10 @@ export async function login(browser, userName, { context = null } = {}) {
   const ctx = context ?? await browser.createBrowserContext();
   const page = await ctx.newPage();
   const errors = [];
+  const warnings = [];
   page.on("pageerror", error => errors.push(String(error?.stack ?? error)));
   page.on("console", message => {
+    if (message.type() === "warning") warnings.push(message.text());
     if (message.type() !== "error") return;
     const text = message.text();
     if (/Failed to load resource/.test(text)) return; // se registra con la URL en «response»
@@ -48,5 +50,5 @@ export async function login(browser, userName, { context = null } = {}) {
     const state = await page.evaluate(() => ({ url: location.href, hasGame: Boolean(globalThis.game), title: document.title, body: document.body?.innerText?.slice(0, 500) })).catch(() => ({}));
     throw new Error(`Foundry no terminó de cargar para ${userName}: ${JSON.stringify(state)}\nErrores:\n${errors.join("\n")}`);
   }
-  return { page, errors, context: ctx };
+  return { page, errors, warnings, context: ctx };
 }

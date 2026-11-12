@@ -72,6 +72,12 @@ try {
       if (session.player) await session.player.evaluate(() => T.targets([])).catch(() => {});
     }
   }
+  // ApplicationV1 desaparece en Foundry 16: el sistema no puede usarlo en ninguna parte.
+  const legacy = [...new Set(gmSession.warnings.filter(text => /V1 Application framework|appv1|template\.json/i.test(text)))];
+  if (legacy.length) {
+    failures++;
+    console.log(`  ✗ Avisos de APIs obsoletas en la consola del DJ:\n      ${legacy.join("\n      ")}`);
+  } else console.log("  ✓ Sin avisos de ApplicationV1 ni de template.json");
   console.log(failures ? `\n${failures} de ${selected.length} pruebas e2e han fallado.` : `\nTDT e2e: ${selected.length} pruebas OK.`);
 } catch (error) {
   failures++;

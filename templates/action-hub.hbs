@@ -1,0 +1,12 @@
+<div class="tdt-action-hub">
+  {{#if actor}}
+  <header class="tdt-hub-header">
+    <img src="{{actor.img}}" alt="">
+    <strong>{{actor.name}}</strong>
+    <button type="button" data-action="hub-sheet" title="Abrir ficha"><i class="fas fa-id-card"></i></button>
+  </header>
+  {{/if}}
+  <div class="tdt-hub-body">
+    {{> "tdt-action-groups" groups=groups actor=actor}}
+  </div>
+</div>

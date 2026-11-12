@@ -1,0 +1,579 @@
+/**
+ * Default system data of every document type (formerly template.json).
+ * Pure data: imported by the TypeDataModels and by the Node tests.
+ */
+
+export const ACTOR_TEMPLATES = {
+  "base": {
+    "description": "",
+    "biography": {
+      "age": "",
+      "profession": "",
+      "notes": ""
+    },
+    "attributes": {
+      "power": {
+        "label": "Potencia",
+        "die": 4
+      },
+      "dexterity": {
+        "label": "Destreza",
+        "die": 4
+      },
+      "mind": {
+        "label": "Mente",
+        "die": 4
+      },
+      "social": {
+        "label": "Social",
+        "die": 4
+      }
+    },
+    "health": {
+      "value": 10,
+      "max": 10
+    },
+    "endurance": {
+      "base": 0,
+      "value": 1
+    },
+    "heroPoint": 0,
+    "experience": {
+      "value": 20,
+      "spent": 0,
+      "log": []
+    },
+    "creation": {
+      "done": false
+    },
+    "defenses": {
+      "fortitude": {
+        "label": "Fortaleza",
+        "attribute": "power",
+        "die": 6
+      },
+      "evasion": {
+        "label": "Esquiva",
+        "attribute": "dexterity",
+        "die": 6
+      },
+      "will": {
+        "label": "Voluntad",
+        "attribute": "mind",
+        "die": 6
+      }
+    },
+    "perception": {
+      "die": 4
+    },
+    "skills": {
+      "acrobatics": {
+        "label": "Acrobacias",
+        "die": 0,
+        "attribute": "dexterity"
+      },
+      "athletics": {
+        "label": "Atletismo",
+        "die": 0,
+        "attribute": "power"
+      },
+      "science": {
+        "label": "Ciencia",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "melee": {
+        "label": "Combate con armas CaC",
+        "die": 0,
+        "attribute": "power"
+      },
+      "crafting": {
+        "label": "Construir",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "deception": {
+        "label": "Engaño",
+        "die": 0,
+        "attribute": "social"
+      },
+      "performance": {
+        "label": "Interpretación",
+        "die": 0,
+        "attribute": "social"
+      },
+      "intimidation": {
+        "label": "Intimidación",
+        "die": 0,
+        "attribute": "social"
+      },
+      "investigation": {
+        "label": "Investigación",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "brawl": {
+        "label": "Maniobra de lucha",
+        "die": 0,
+        "attribute": "power"
+      },
+      "medicine": {
+        "label": "Medicina",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "profession": {
+        "label": "Profesión",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "ranged": {
+        "label": "Puntería",
+        "die": 0,
+        "attribute": "dexterity"
+      },
+      "religion": {
+        "label": "Religión",
+        "die": 0,
+        "attribute": "social"
+      },
+      "stealth": {
+        "label": "Sigilo",
+        "die": 0,
+        "attribute": "dexterity"
+      },
+      "society": {
+        "label": "Sociedad",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "survival": {
+        "label": "Supervivencia",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "diplomacy": {
+        "label": "Diplomacia",
+        "die": 0,
+        "attribute": "social"
+      },
+      "arcana": {
+        "label": "Arcano",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "nature": {
+        "label": "Naturaleza",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "superpower": {
+        "label": "Superpoder",
+        "die": 0,
+        "attribute": "social"
+      },
+      "hacking": {
+        "label": "Hacking",
+        "die": 0,
+        "attribute": "mind"
+      },
+      "cybernetics": {
+        "label": "Cibernética",
+        "die": 0,
+        "attribute": "mind"
+      }
+    },
+    "initiative": {
+      "value": 0
+    },
+    "dying": {
+      "active": false,
+      "difficulty": 0
+    },
+    "conditions": {
+      "nextEvasionPenalty": 0,
+      "satr": false,
+      "absorbed": false
+    },
+    "money": 0,
+    "npcStats": {
+      "evasion": 5,
+      "fortitude": 5,
+      "will": 5,
+      "perception": 5,
+      "traits": "",
+      "variants": "",
+      "skills": "",
+      "hacking": 4,
+      "hackEndurance": "",
+      "shotEndurance": "",
+      "machine": false,
+      "noVirtualSelf": false,
+      "implants": false,
+      "excess": 0,
+      "group": 1,
+      "groupStartHealth": 0,
+      "villain": {
+        "value": 0,
+        "max": 0,
+        "extraTurnUsed": false
+      },
+      "hackDifficulty": 0
+    },
+    "fantasy": {
+      "magicMode": "simple",
+      "magicAttribute": "mind",
+      "magicSkill": "arcana",
+      "hasFocus": true,
+      "mana": {
+        "value": 0
+      },
+      "incremental": {
+        "difficulty": 2,
+        "reserveUsed": 0
+      },
+      "concentration": ""
+    },
+    "powers": {
+      "energy": {
+        "value": 20
+      },
+      "weakPoint": {
+        "text": "",
+        "bonus": 0
+      }
+    },
+    "zombie": {
+      "zombification": 0,
+      "zombificationChecks": 0,
+      "zombixToday": false,
+      "searchUsedToday": false,
+      "hunger": 0,
+      "daysWithoutFood": 0,
+      "lastHungerDifficulty": 0,
+      "food": 0,
+      "materials": 0,
+      "terror": {
+        "active": false,
+        "difficulty": 5,
+        "source": "",
+        "hidden": false
+      }
+    },
+    "cyber": {
+      "ccLost": 0,
+      "hackUses": 0,
+      "neuralOverload": 0,
+      "materials": {
+        "weapons": 0,
+        "generic": 0,
+        "construction": 0
+      },
+      "reputation": []
+    }
+  }
+};
+
+/** Shared by vehicles and stationary weapons (emplacements): a machine with crew and mounted weapons. */
+ACTOR_TEMPLATES.machine = {
+  "description": "",
+  "health": { "value": 12, "max": 12 },
+  "endurance": { "value": 8 },
+  "evasion": null,
+  "driver": "",
+  "crew": [],
+  "price": 0,
+  "notes": ""
+};
+
+export const ACTOR_TYPES = {
+  "character": {
+    "templates": [
+      "base"
+    ],
+    "data": {}
+  },
+  "npc": {
+    "templates": [
+      "base"
+    ],
+    "data": {}
+  },
+  "mecha": {
+    "templates": [],
+    "data": {
+      "description": "",
+      "category": 1,
+      "pilot": "",
+      "copilot": "",
+      "health": {
+        "value": 15,
+        "max": 15
+      },
+      "endurance": {
+        "base": 8,
+        "value": 8
+      },
+      "modules": {
+        "melee": 4,
+        "blaster": 4,
+        "special": 4
+      },
+      "inventory": {
+        "bonus": 0,
+        "spent": 0,
+        "max": 50
+      },
+      "notes": "",
+      "brokenParts": "",
+      "biography": {
+        "notes": ""
+      }
+    }
+  },
+  "vehicle": {
+    "templates": [
+      "machine"
+    ],
+    "data": {
+      "category": "",
+      "attribute": "dexterity",
+      "passengers": 0,
+      "modifier": 0,
+      "crashDamage": 0,
+      "autopilot": 0,
+      "analog": false,
+      "flying": false
+    }
+  },
+  "emplacement": {
+    "templates": [
+      "machine"
+    ],
+    "data": {}
+  }
+};
+
+export const ITEM_TEMPLATES = {
+  "base": {
+    "description": "",
+    "quantity": 1,
+    "equipped": false,
+    "module": "",
+    "modifiers": [],
+    "rules": [],
+    "uses": {
+      "value": 0,
+      "max": 0,
+      "per": "day",
+      "reroll": false
+    },
+    "price": 0
+  }
+};
+
+export const ITEM_TYPES = {
+  "feat": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "cost": 0,
+      "costFormula": "",
+      "requirements": "",
+      "category": "advantage",
+      "tags": [],
+      "incremental": 0,
+      "sacrifice": 0,
+      "attack": {
+        "enabled": false,
+        "damage": 0,
+        "range": "medium",
+        "defense": "evasion",
+        "area": false
+      },
+      "toggle": false,
+      "active": false,
+      "inventoryCost": ""
+    }
+  },
+  "weapon": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "damage": 1,
+      "attackDifficulty": 0,
+      "skill": "brawl",
+      "attribute": "power",
+      "attributeAlt": "",
+      "range": "contact",
+      "properties": "",
+      "ammo": {
+        "value": 0,
+        "max": 0
+      },
+      "defense": "evasion",
+      "condition": "normal",
+      "upgrades": {
+        "basic": [],
+        "general": "",
+        "special": "",
+        "specialEnabled": false,
+        "available": []
+      },
+      "hackDefense": "",
+      "mecha": {
+        "enabled": false,
+        "primary": false,
+        "module": "melee",
+        "category": 1,
+        "size": 0,
+        "inventoryCost": "",
+        "integrated": true,
+        "multiHit": "",
+        "multiHitMax": 0,
+        "multiHitDamage": 0,
+        "battery": false,
+        "spareCharges": 0,
+        "overloadPenalty": 0,
+        "repairRequired": false,
+        "repairCost": 0,
+        "destroyed": false
+      }
+    }
+  },
+  "armor": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "endurance": 1,
+      "evasionPenalty": 0,
+      "powerRequired": 0,
+      "shotEndurance": 0,
+      "pristine": false,
+      "damage": 0,
+      "noStun": false
+    }
+  },
+  "gear": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "category": "misc",
+      "loaded": false,
+      "chipKind": "skill",
+      "chipTarget": "",
+      "chipVehicle": "",
+      "inventoryCost": "",
+      "vehicle": {
+        "category": "",
+        "attribute": "dexterity",
+        "passengers": 0,
+        "modifier": 0,
+        "health": {
+          "value": 0,
+          "max": 0
+        },
+        "endurance": 0,
+        "crashDamage": 0,
+        "autopilot": 0,
+        "analog": false,
+        "flying": false
+      }
+    }
+  },
+  "race": {
+    "templates": [
+      "base"
+    ],
+    "data": {}
+  },
+  "spell": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "marks": [],
+      "shared": [],
+      "attack": {
+        "enabled": false,
+        "extraPotency": 0,
+        "manyTargets": false,
+        "defense": "evasion"
+      },
+      "variablePolarity": "",
+      "counterweight": false,
+      "subtractExpert": false
+    }
+  },
+  "power": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "branch": "",
+      "complexity": "simple",
+      "energyCost": 0,
+      "variableCost": false,
+      "permanent": false,
+      "overload": 0,
+      "cursed": false,
+      "requirements": "",
+      "attack": {
+        "enabled": false,
+        "damage": 0,
+        "range": "medium",
+        "defense": "evasion",
+        "overloadDamage": true
+      },
+      "toggle": false,
+      "active": false
+    }
+  },
+  "implant": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "cc": 0,
+      "tier": "minor",
+      "installed": false,
+      "malfunction": false,
+      "offline": false,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "supreme": {
+        "enabled": false,
+        "costDice": "",
+        "used": false,
+        "kind": ""
+      }
+    }
+  },
+  "hack": {
+    "templates": [
+      "base"
+    ],
+    "data": {
+      "defense": "evasion",
+      "requirement": 0,
+      "damage": 0,
+      "properties": "",
+      "loaded": false,
+      "wired": false,
+      "device": false,
+      "implantsOnly": false,
+      "neuralOverload": false,
+      "duration": "",
+      "area": false,
+      "singleAttack": false,
+      "nonLethal": false,
+      "machineEnduranceZero": false,
+      "ignoreHumanEndurance": false
+    }
+  }
+};

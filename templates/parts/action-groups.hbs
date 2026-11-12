@@ -1,0 +1,20 @@
+{{#each groups as |group|}}
+<section class="tdt-hub-group" data-group-key="{{group.key}}">
+  <h3><i class="fas {{group.icon}}"></i> {{group.label}}</h3>
+  <ul class="tdt-hub-list">
+    {{#each group.entries as |entry|}}
+    <li class="tdt-hub-entry{{#if entry.danger}} danger{{/if}}">
+      <button type="button" class="tdt-hub-main" data-action="hub-run" data-payload="{{entry.payload}}" title="Clic: tirar · Mayús+clic: tirada rápida">
+        {{#if entry.img}}<img src="{{entry.img}}" alt="">{{/if}}
+        <span class="tdt-hub-label">{{entry.label}}</span>
+        {{#if entry.hint}}<small>{{entry.hint}}</small>{{/if}}
+      </button>
+      {{#each entry.multi as |multi|}}<button type="button" class="tdt-hub-multi" data-action="hub-run" data-payload="{{multi.payload}}" title="Ataque múltiple {{multi.label}} (la habilidad baja un paso por ataque extra)">{{multi.label}}</button>{{/each}}
+    </li>
+    {{/each}}
+  </ul>
+</section>
+{{else}}
+<p class="tdt-hub-empty">{{#if actor}}No hay acciones disponibles.{{else}}Selecciona un token que controles o asigna un personaje a tu usuario.{{/if}}</p>
+{{/each}}
+<p class="hint tdt-hub-help"><kbd>Mayús</kbd>+clic tira con las opciones por defecto, sin diálogo.</p>

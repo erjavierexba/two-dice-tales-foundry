@@ -4,9 +4,9 @@
 <button type="button" data-action="item-edit" title="Editar"><i class="fas fa-pen"></i></button>
 <button type="button" data-action="item-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
 {{/inline}}
-<form class="{{cssClass}} tdt-actor-sheet tdt-mecha-sheet" autocomplete="off">
+<div class="tdt-actor-sheet tdt-mecha-sheet">
   <header class="sheet-header tdt-header">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="Cambiar imagen de {{actor.name}}" alt="Imagen de {{actor.name}}">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" data-action="editImage" title="Cambiar imagen de {{actor.name}}" alt="Imagen de {{actor.name}}">
     <div class="tdt-identity">
       <span class="tdt-kicker">Mecha · Two Dice Tales</span>
       <input class="tdt-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre">
@@ -30,9 +30,9 @@
   </header>
 
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="main" role="tab" tabindex="0"><i class="fas fa-robot"></i><span>Mecha</span></a>
-    <a class="item" data-tab="inventory" role="tab" tabindex="0"><i class="fas fa-toolbox"></i><span>Inventario <b>{{itemCount}}</b></span></a>
-    <a class="item" data-tab="bio" role="tab" tabindex="0"><i class="fas fa-book-open"></i><span>Notas</span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="main" role="tab" tabindex="0"><i class="fas fa-robot"></i><span>Mecha</span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="inventory" role="tab" tabindex="0"><i class="fas fa-toolbox"></i><span>Inventario <b>{{itemCount}}</b></span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="bio" role="tab" tabindex="0"><i class="fas fa-book-open"></i><span>Notas</span></a>
   </nav>
 
   <section class="sheet-body">
@@ -54,15 +54,15 @@
       </section>
       <section class="tdt-section tdt-secondary-grid">
         <article class="tdt-stat-card">
-          <button type="button" class="tdt-roll-label" data-mecha-roll="robustness"><i class="fas fa-shield"></i> Robustez</button>
+          <button type="button" class="tdt-roll-label" data-action="mecha-roll" data-stat="robustness"><i class="fas fa-shield"></i> Robustez</button>
           <strong>d{{system.dice.robustness}}</strong><small>+ Potencia o Fortaleza del piloto</small>
         </article>
         <article class="tdt-stat-card">
-          <button type="button" class="tdt-roll-label" data-mecha-roll="maneuver"><i class="fas fa-person-running"></i> Maniobra táctica</button>
+          <button type="button" class="tdt-roll-label" data-action="mecha-roll" data-stat="maneuver"><i class="fas fa-person-running"></i> Maniobra táctica</button>
           <strong>{{#if system.dice.maneuver}}d{{system.dice.maneuver}}{{else}}+1{{/if}}</strong><small>+ Destreza del piloto</small>
         </article>
         <article class="tdt-stat-card">
-          <button type="button" class="tdt-roll-label" data-mecha-roll="perception"><i class="fas fa-eye"></i> Percepción</button>
+          <button type="button" class="tdt-roll-label" data-action="mecha-roll" data-stat="perception"><i class="fas fa-eye"></i> Percepción</button>
           <strong>{{#if system.aiCameras}}2d10{{else}}Piloto{{/if}}</strong>
         </article>
         <article class="tdt-stat-card"><span>Desplazamiento</span><strong>{{system.dice.displacement}}</strong></article>
@@ -75,8 +75,8 @@
             <span>{{module.label}}</span>
             <strong>d{{module.die}}</strong>
             <div class="tdt-button-row">
-              <button type="button" data-module-key="{{module.key}}" data-module-step="-1" title="Bajar"><i class="fas fa-minus"></i></button>
-              <button type="button" data-module-key="{{module.key}}" data-module-step="1" title="Subir{{#if module.nextCost}} ({{module.nextCost}} de inventario){{/if}}"><i class="fas fa-plus"></i></button>
+              <button type="button" data-module-key="{{module.key}}" data-action="module-step" data-module-step="-1" title="Bajar"><i class="fas fa-minus"></i></button>
+              <button type="button" data-module-key="{{module.key}}" data-action="module-step" data-module-step="1" title="Subir{{#if module.nextCost}} ({{module.nextCost}} de inventario){{/if}}"><i class="fas fa-plus"></i></button>
             </div>
             {{#if module.nextCost}}<small>Siguiente: {{module.nextCost}} pts</small>{{/if}}
           </article>
@@ -88,13 +88,13 @@
         <div class="tdt-section-title"><h2>Armas</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="weapon" data-module="mecha" title="Buscar arma en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="weapon" title="Crear arma"><i class="fas fa-plus"></i></button></div></div>
         <ol class="item-list tdt-item-list">
           {{#each weapons as |item|}}
-          <li class="item tdt-item" data-item-id="{{item.id}}">
+          <li class="item tdt-item draggable" data-item-id="{{item.id}}">
             <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
             <span class="tdt-item-summary">{{lookup ../config.mechaModules item.system.mecha.module}} · {{item.summary}} · {{item.cost}} pts{{#if item.system.mecha.primary}} · principal{{/if}}{{#if item.system.mecha.destroyed}} · DESTRUIDA{{else}}{{#if item.system.mecha.repairRequired}} · AVERIADA{{else}}{{#if item.system.mecha.overloadPenalty}} · penaliza {{item.system.mecha.overloadPenalty}}{{/if}}{{/if}}{{/if}}</span>
             <button type="button" data-action="weapon-roll" title="Atacar" {{#if item.system.mecha.destroyed}}disabled{{else}}{{#if item.system.mecha.repairRequired}}disabled{{/if}}{{/if}}><i class="fas fa-dice"></i></button>
-            {{#if item.reloadable}}<button type="button" data-actor-method="mechaReload" title="Recargar"><i class="fas fa-battery-full"></i></button>{{/if}}
-            {{#if item.overloadable}}<button type="button" data-actor-method="mechaOverload" title="Sobrecargar"><i class="fas fa-radiation"></i></button>{{/if}}
-            {{#if item.system.mecha.repairCost}}<button type="button" data-actor-method="mechaRepairWeapon" title="Reparar con kit ({{item.system.mecha.repairCost}} cargas)"><i class="fas fa-screwdriver-wrench"></i></button>{{/if}}
+            {{#if item.reloadable}}<button type="button" data-action="actor-method" data-method="mechaReload" title="Recargar"><i class="fas fa-battery-full"></i></button>{{/if}}
+            {{#if item.overloadable}}<button type="button" data-action="actor-method" data-method="mechaOverload" title="Sobrecargar"><i class="fas fa-radiation"></i></button>{{/if}}
+            {{#if item.system.mecha.repairCost}}<button type="button" data-action="actor-method" data-method="mechaRepairWeapon" title="Reparar con kit ({{item.system.mecha.repairCost}} cargas)"><i class="fas fa-screwdriver-wrench"></i></button>{{/if}}
             <button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Equipada"><i class="fas fa-hand-fist"></i></button>
             {{> itemControls}}
           </li>
@@ -121,7 +121,7 @@
         <div class="tdt-section-title"><h2>Inventario</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="gear" data-module="mecha" title="Buscar equipo en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="gear" data-category="mecha" title="Crear objeto"><i class="fas fa-plus"></i></button></div></div>
         <ol class="item-list tdt-item-list">
           {{#each gear as |item|}}
-          <li class="item tdt-item" data-item-id="{{item.id}}">
+          <li class="item tdt-item draggable" data-item-id="{{item.id}}">
             <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
             <span class="tdt-item-summary">{{item.summary}} · {{item.cost}} pts</span>
             <button type="button" data-action="item-toggle" class="{{#if item.system.equipped}}equipped{{/if}}" title="Instalado"><i class="fas fa-plug"></i></button>
@@ -136,7 +136,7 @@
         <p class="hint">Las dotes de piloto van en la ficha del piloto; el mecha las usa automáticamente.</p>
         <ol class="item-list tdt-item-list">
           {{#each feats as |item|}}
-          <li class="item tdt-item" data-item-id="{{item.id}}">
+          <li class="item tdt-item draggable" data-item-id="{{item.id}}">
             <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
             <span class="tdt-item-summary">{{item.summary}}</span>
             {{> itemControls}}
@@ -154,4 +154,4 @@
       </section>
     </div>
   </section>
-</form>
+</div>

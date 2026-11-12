@@ -1,6 +1,6 @@
 # Two Dice Tales para Foundry VTT
 
-Sistema de juego de TDT para Foundry VTT 13 (versión 0.4.25): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+Sistema de juego de TDT para Foundry VTT 13 (versión 0.5.0): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
 
 Incluye identidad visual propia para Foundry: arte panorámico del sistema, logotipo, monograma y una familia de iconos para actores, objetos y compendios. Los originales editables están en `assets/branding/` y `assets/icons/`.
 
@@ -14,12 +14,17 @@ https://github.com/erjavierexba/two-dice-tales-foundry/raw/main/system.json
 
 ## Módulo básico
 
-- Actores de tipo Personaje y PNJ (y Mecha con el módulo de mechas).
+- Actores de tipo Personaje, PNJ, Vehículo y Arma estacionaria (y Mecha con el módulo de mechas).
 - Características, habilidades, Percepción, defensas, vida, aguante, experiencia y punto de héroe.
 - Tiradas activas y reactivas con cambio de dado, reparto automático del bonificador, penalización, dificultad, críticos y pifias.
 - Ataques desde armas, aguante por Potencia y armaduras, aplicación de daño y ataque múltiple.
 - Reglas contextuales de las dotes en el diálogo de tirada (bonifica, penaliza, cambios de dado, dificultad, recordatorios).
 - Villanos con fuente de villano, escape magistral y turno extra (se reinicia al empezar cada combate).
+- Experiencia: durante la creación los dados se eligen libremente; al pulsar *Terminar creación* quedan bloqueados y solo suben con *Mejorar* (por característica, dado defensivo o habilidad, o desde el menú general), que muestra el coste y no deja mejorar sin XP suficiente. El buscador de dotes tiene la casilla *Gastar experiencia*. Cada compra queda en el historial de la biografía y la última se puede deshacer.
+- Pestaña *Acciones* en la ficha y ventana de acciones (botón de dados en los controles de token o macro *Acciones*): ataques con botones de ataque múltiple (×2, ×3…), defensas, habilidades entrenadas, hacks, poderes, magia y vehículos. Mayús+clic tira con las opciones por defecto, sin diálogo.
+- Vehículos y armas estacionarias con ficha propia: tripulación (arrastra personajes o PNJ; el primero conduce u opera), maniobra y embestida con el Conducir del conductor, armas montadas que dispara cualquier tripulante con su Puntería, carga y destrucción a 0 PV. Si al vehículo le atacan en marcha, el conductor esquiva con Conducir; aparcado, usa su Esquiva fija. El DJ puede crear la ficha desde un vehículo del inventario.
+- Pantalla del DJ (botón en los controles de token o macro *Pantalla del DJ*): dificultades, tiradas, combate, distancias y villanos; las reglas opcionales y los módulos activos de la partida; el grupo con su vida y XP (dar XP, descanso y descanso pequeño para todos); y contadores para planes maestros, alarmas o cuentas atrás.
+- Dice So Nice (recomendado, no obligatorio): si está activo, el dado de característica sale azul y el de habilidad rojo. Se desactiva en los ajustes.
 
 ## Configuración
 
@@ -68,7 +73,7 @@ En *Configurar ajustes → Two Dice Tales* hay dos grupos de opciones.
 
 ## Compendios
 
-El sistema trae 28 compendios, agrupados en carpetas por módulo, con las dotes, las armas, el equipo, los enemigos y los PNJ de cada módulo. También incluye los mechas y pilotos de ejemplo, los personajes de ejemplo del cyberpunk y las tablas de zombis.
+El sistema trae 29 compendios, agrupados en carpetas por módulo, con las dotes, las armas, el equipo, los enemigos y los PNJ de cada módulo. También incluye los mechas y pilotos de ejemplo, los personajes de ejemplo del cyberpunk, las tablas de zombis y las macros *Acciones* y *Pantalla del DJ*.
 
 Para copiar al mundo el contenido de los módulos activos, usa el botón del mensaje de bienvenida o ejecuta `game.tdt.importContent()`.
 
@@ -89,7 +94,7 @@ node tools/build-packs.mjs            # packs/ y system.json
 Pruebas:
 
 ```bash
-npm test          # unitarias (dados, módulos, datos)
+npm test          # unitarias (dados, módulos, experiencia, datos)
 npm run test:e2e  # e2e en un Foundry real
 ```
 

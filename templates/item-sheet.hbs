@@ -1,6 +1,6 @@
-<form class="{{cssClass}} tdt-item-sheet" autocomplete="off">
+<div class="tdt-item-sheet">
   <header class="sheet-header tdt-header">
-    <img class="profile-img" src="{{item.img}}" data-edit="img" title="Cambiar imagen de {{item.name}}" alt="Imagen de {{item.name}}">
+    <img class="profile-img" src="{{item.img}}" data-edit="img" data-action="editImage" title="Cambiar imagen de {{item.name}}" alt="Imagen de {{item.name}}">
     <div class="tdt-identity">
       <span class="tdt-kicker">{{typeLabel}} · Two Dice Tales</span>
       <input class="tdt-name" name="name" type="text" value="{{item.name}}">
@@ -8,9 +8,9 @@
   </header>
 
   <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="item" data-tab="details"><i class="fas fa-sliders"></i><span>Detalles</span></a>
-    <a class="item" data-tab="description"><i class="fas fa-align-left"></i><span>Descripción</span></a>
-    <a class="item" data-tab="automation"><i class="fas fa-gears"></i><span>Automatización</span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="details"><i class="fas fa-sliders"></i><span>Detalles</span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="description"><i class="fas fa-align-left"></i><span>Descripción</span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="automation"><i class="fas fa-gears"></i><span>Automatización</span></a>
   </nav>
 
   <section class="sheet-body">
@@ -240,4 +240,4 @@
       </section>
     </div>
   </section>
-</form>
+</div>

@@ -1,7 +1,33 @@
 const numberAfter = (text, pattern, fallback = 0) => Number(String(text).match(pattern)?.[1] ?? fallback) || 0;
 
-/** Normalized vehicle data, with a fallback for old compendium entries that only stored prose. */
+/** Actor types that are machines with crew: vehicles and stationary weapons. */
+export const MACHINE_TYPES = new Set(["vehicle", "emplacement"]);
+
+export function isMachineActor(actor) {
+  return MACHINE_TYPES.has(actor?.type);
+}
+
+/** Normalized data of a vehicle actor. */
+function actorProfile(actor) {
+  const system = actor.system ?? {};
+  const endurance = Number(system.endurance?.value || 0);
+  return {
+    category: String(system.category || "vehículo"),
+    attribute: system.attribute || "dexterity",
+    passengers: Number(system.passengers || 0),
+    modifier: Number(system.modifier || 0),
+    health: { value: Number(system.health?.value || 0), max: Number(system.health?.max || 0) },
+    endurance,
+    crashDamage: Number(system.crashDamage || 0) || endurance,
+    autopilot: Number(system.autopilot || 0),
+    analog: Boolean(system.analog),
+    flying: Boolean(system.flying)
+  };
+}
+
+/** Normalized vehicle data (a vehicle actor or a vehicle item), with a fallback for old entries that only stored prose. */
 export function vehicleProfile(item) {
+  if (item?.documentName === "Actor") return actorProfile(item);
   const system = item.system ?? {};
   const vehicle = system.vehicle ?? {};
   const text = String(system.description ?? "").replace(/\\-/g, "-");
@@ -46,4 +72,31 @@ function chipCovers(chipCategory, normalized) {
   if (!wanted || normalized === "vehículo") return true;
   const parts = value => value.split("/").map(part => part.trim()).filter(Boolean);
   return parts(wanted).some(part => normalized.includes(part)) || parts(normalized).some(part => wanted.includes(part));
+}
+
+/**
+ * Vehicle data stored by a vehicle item (gear), as the system of a vehicle actor.
+ * Used to turn an inventory vehicle into its own sheet.
+ */
+export function actorDataFromItem(item) {
+  const profile = vehicleProfile(item);
+  return {
+    name: item.name,
+    type: "vehicle",
+    img: "systems/tdt/assets/icons/vehicle.svg",
+    system: {
+      description: item.system.description ?? "",
+      category: profile.category === "vehículo" ? "" : profile.category,
+      attribute: profile.attribute,
+      passengers: profile.passengers,
+      modifier: profile.modifier,
+      health: { value: profile.health.value || profile.health.max, max: profile.health.max },
+      endurance: { value: profile.endurance },
+      crashDamage: profile.crashDamage,
+      autopilot: profile.autopilot,
+      analog: profile.analog,
+      flying: profile.flying,
+      price: Number(item.system.price || 0)
+    }
+  };
 }

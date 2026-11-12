@@ -1,5 +1,7 @@
 import { DIE_SIZES } from "../dice.mjs";
 
+const MACHINE_TYPES = new Set(["vehicle", "emplacement"]);
+
 /** Split the larger side as evenly as possible while preserving player/enemy alternation. */
 export function distributeTeamOrder(heroes, enemies, heroesFirst = true) {
   const players = [...heroes];
@@ -35,7 +37,8 @@ export function bestInitiativeCombatant(combatants, source = "perception") {
   const score = combatant => initiativeDice(combatant.actor, source)
     .sort((a, b) => b - a)
     .map(faces => Math.max(0, DIE_SIZES.indexOf(faces) + 1));
-  return [...combatants].filter(combatant => combatant.actor).sort((a, b) => {
+  // Vehicles and stationary weapons don't roll: their crew does.
+  return [...combatants].filter(combatant => combatant.actor && !MACHINE_TYPES.has(combatant.actor.type)).sort((a, b) => {
     const left = score(a);
     const right = score(b);
     return (right[0] - left[0]) || (right[1] - left[1]) || a.name.localeCompare(b.name, "es");

@@ -219,9 +219,22 @@ export function targetImmune(actor, defense = "evasion") {
   return text === "" || text === "-" || Number(text) <= 0;
 }
 
+const MACHINE_ACTOR_TYPES = new Set(["vehicle", "emplacement"]);
+
+/** Mechas, vehicles, stationary weapons and NPCs marked as machines (for "Daño X contra máquinas"). */
+export function isMachineTarget(actor) {
+  return actor?.type === "mecha" || MACHINE_ACTOR_TYPES.has(actor?.type) || Boolean(actor?.system?.npcStats?.machine);
+}
+
 /** Defense value of a target actor against an attack, as a fixed number (NPC) or null (character: opposed, or immune NPC). */
 export function targetDefense(actor, defense = "evasion") {
   if (!actor) return null;
+  // Vehicles and stationary weapons: a fixed Esquiva when set (parked, or a turret); otherwise the driver dodges.
+  if (MACHINE_ACTOR_TYPES.has(actor.type)) {
+    if (!["evasion", "fortitude"].includes(defense)) return null;
+    const value = actor.system.evasion;
+    return value === null || value === undefined || value === "" ? null : Number(value);
+  }
   if (actor.type === "npc") {
     if (defense === "hacking") return Number(actor.system.npcStats?.hacking || 4) || 4;
     if (defense === "gm") return Number(actor.system.npcStats?.hackDifficulty || 0) || null;
@@ -259,9 +272,10 @@ export function automaticDifficultyText(targets, defense = "evasion") {
 export function targetEndurance(actor, { hack = false, shot = false, ignoreHuman = false, machineZero = false } = {}) {
   if (!actor) return 0;
   const system = actor.system;
-  const isMachine = actor.type === "mecha" || Boolean(system.npcStats?.machine);
+  const isMachine = isMachineTarget(actor);
   if (hack && machineZero && isMachine) return 0;
   if (hack && ignoreHuman && !isMachine) return 0;
+  if (MACHINE_ACTOR_TYPES.has(actor.type)) return Number(system.endurance?.value || 0);
   if (actor.type === "npc") {
     if (hack && system.npcStats?.hackEndurance !== "" && system.npcStats?.hackEndurance !== null && system.npcStats?.hackEndurance !== undefined) return Number(system.npcStats.hackEndurance) || 0;
     if (shot && system.npcStats?.shotEndurance !== "" && system.npcStats?.shotEndurance !== null && system.npcStats?.shotEndurance !== undefined) return Number(system.npcStats.shotEndurance) || 0;

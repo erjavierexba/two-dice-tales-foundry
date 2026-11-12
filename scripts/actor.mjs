@@ -2,19 +2,24 @@ import { TDT } from "./config.mjs";
 import { chooseAutomaticBonus, dieScore, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepDieToOne, stepRolledDie } from "./dice.mjs";
 import { collectModifiers, hasItemNamed, itemNameSet, modifierValue } from "./modifiers.mjs";
 import { moduleActive, rule } from "./settings.mjs";
-import { automaticDifficultyText, warnIfAllImmune, finalDamage, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
+import { automaticDifficultyText, warnIfAllImmune, finalDamage, isMachineTarget, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
 import { esc, payload, requestDamage } from "./chat.mjs";
 import * as Fantasy from "./modules/fantasy.mjs";
 import * as Mecha from "./modules/mecha.mjs";
 import * as Zombie from "./modules/zombie.mjs";
 import * as Cyber from "./modules/cyber.mjs";
 import { normalizeMoney } from "./economy.mjs";
+import { choiceDialog, numberDialog, tdtDialog } from "./dialogs.mjs";
+import { previousDie, stepsBought } from "./experience.mjs";
+import { paintRoll } from "./dice-so-nice.mjs";
 
 const ATTACK_SKILLS = new Set(["melee", "brawl", "ranged"]);
 const ACTOR_IMAGES = {
   character: "systems/tdt/assets/icons/character.svg",
   npc: "systems/tdt/assets/icons/npc.svg",
-  mecha: "systems/tdt/assets/icons/mecha.svg"
+  mecha: "systems/tdt/assets/icons/mecha.svg",
+  vehicle: "systems/tdt/assets/icons/vehicle.svg",
+  emplacement: "systems/tdt/assets/icons/machine.svg"
 };
 
 export class TDTActor extends Actor {
@@ -273,21 +278,21 @@ export class TDTActor extends Actor {
     if (check.minimumFaces) for (let i = 0; i < 2; i++) if (faces[i] && faces[i] < check.minimumFaces) faces[i] = check.minimumFaces;
     if (options.linkWill && check.third?.faces) faces.push(normalizeDie(check.third.faces));
     const rolls = [];
-    const rollDie = async (dieFaces, mode) => {
+    const rollDie = async (dieFaces, mode, slot = "extra") => {
       if (!dieFaces) return 1;
       const reroll = options.rerollOnes ? "rr1" : "";
       const formula = mode === "low" ? `2d${dieFaces}${reroll}kl` : mode === "high" ? `2d${dieFaces}${reroll}kh` : `1d${dieFaces}${reroll}`;
       const roll = await new Roll(formula).evaluate();
-      rolls.push(roll);
+      rolls.push(paintRoll(roll, slot));
       return roll.total;
     };
     const firstCandidates = [{ label: check.first.label, faces: faces[0] }];
     for (const alternative of check.first.alternatives ?? []) firstCandidates.push({ label: alternative.label, faces: stepFirst(alternative.faces) });
     const firstResults = [];
-    for (const candidate of firstCandidates) firstResults.push(await rollDie(candidate.faces, options.firstDisadvantage ? "low" : null));
+    for (const candidate of firstCandidates) firstResults.push(await rollDie(candidate.faces, options.firstDisadvantage ? "low" : null, "attribute"));
     // Ventaja y desventaja sobre el mismo dado se anulan.
     const secondMode = options.secondAdvantage === Boolean(options.secondDisadvantage) ? null : options.secondAdvantage ? "high" : "low";
-    let second = await rollDie(faces[1], secondMode);
+    let second = await rollDie(faces[1], secondMode, "skill");
     // Alergia, Cegato, Duro de oído: se añade 1d4 y se conservan los dos dados menores.
     let worseSlot = null;
     if (options.worseDie) {
@@ -420,6 +425,19 @@ export class TDTActor extends Actor {
     return "recordatorio";
   }
 
+  /**
+   * Runs an action with every roll dialog answered with its defaults (shift-click in the action hub).
+   * Questions that are not roll dialogs (which characteristic, how many attacks…) are still asked.
+   */
+  async quickRoll(action) {
+    this._tdtFast = true;
+    try {
+      return await action();
+    } finally {
+      this._tdtFast = false;
+    }
+  }
+
   _rollOptionsDialog(check) {
     const stepOptions = selected => [-2, -1, 0, 1, 2]
       .map(value => `<option value="${value}" ${value === selected ? "selected" : ""}>${value > 0 ? "+" : ""}${value}</option>`)
@@ -444,7 +462,7 @@ export class TDTActor extends Actor {
     const willControl = check.third?.faces
       ? `<div class="form-group"><label>Vincula voluntad (+d${check.third.faces})</label><input type="checkbox" name="linkWill"><p class="hint">Añade el dado de Voluntad del piloto; después hay que pasar el drenaje de voluntad.</p></div>` : "";
     const content = `
-      <form class="tdt-roll-dialog">
+      <div class="tdt-roll-dialog">
         <p><strong>${esc(check.label)}</strong>${check.subtitle ? `<br><small>${esc(check.subtitle)}</small>` : ""}</p>
         ${dieModifierControls}
         <div class="form-group"><label>Bonificador disponible (+0 a +3)</label><input name="bonus" type="number" min="0" max="3" value="0"><p class="hint">Se reparte automáticamente entre los dados para obtener el mejor resultado.</p></div>
@@ -456,69 +474,30 @@ export class TDTActor extends Actor {
         <div class="form-group"><label>Visibilidad</label><select name="rollMode">${modeOptions}</select></div>
         ${featControls}
         ${reminderControls}
-      </form>`;
-    return new Promise(resolve => {
-      new Dialog({
-        title: `Tirada de ${check.label}`,
-        content,
-        buttons: {
-          roll: {
-            icon: '<i class="fas fa-dice"></i>',
-            label: "Tirar",
-            callback: html => {
-              const form = html[0].querySelector("form");
-              const data = new FormData(form);
-              const options = {
-                firstStep: Number(data.get("firstStep") || 0),
-                secondStep: check.linkedDice ? Number(data.get("firstStep") || 0) : Number(data.get("secondStep") || 0),
-                bonus: Math.max(0, Number(data.get("bonus") || 0)),
-                penalty: Math.max(0, Number(data.get("penalty") || 0)),
-                difficulty: Math.max(0, Number(data.get("difficulty") || 0)),
-                difficultyMod: 0,
-                firstDisadvantage: false,
-                secondAdvantage: false,
-                secondDisadvantage: false,
-                firstFloorOne: false,
-                secondFloorOne: false,
-                noFumble: false,
-                noBonus: false,
-                rerollOnes: false,
-                extraDice: [],
-                damageBonus: 0,
-                consumed: [],
-                appliedRules: [],
-                linkWill: Boolean(data.get("linkWill")),
-                heroPoint: Boolean(data.get("heroPoint")),
-                rollMode: data.get("rollMode"),
-                extra: check.readExtra ? check.readExtra(form, data) : {}
-              };
-              for (const input of form.querySelectorAll(".tdt-feat-rule:checked")) {
-                const entry = mechanicalRules[Number(input.dataset.ruleIndex)];
-                if (entry.sense && entry.sense !== options.extra?.perceptionSense) continue;
-                applyRuleToOptions(entry, options, check);
-              }
-              // Hero point and SATR only affect the first roll; later attacks of a multiple attack use followUpBonus.
-              options.followUpBonus = options.noBonus ? 0 : Math.min(3, Math.max(0, options.bonus - Number(options.satrBonus || 0)));
-              options.bonus = options.noBonus ? 0 : Math.min(3, options.bonus) + (options.heroPoint ? 2 : 0);
-              if (options.difficulty) options.difficulty = Math.max(0, options.difficulty - options.difficultyMod);
-              resolve(options);
-            }
-          },
-          cancel: { label: "Cancelar", callback: () => resolve(null) }
-        },
-        default: "roll",
-        render: html => {
-          const root = html[0];
-          const select = root.querySelector('[name="perceptionSense"]');
-          if (!select) return;
-          const update = () => {
-            for (const label of root.querySelectorAll("[data-rule-sense]")) label.hidden = label.dataset.ruleSense !== select.value;
-          };
-          select.addEventListener("change", update);
-          update();
-        },
-        close: () => resolve(null)
-      }, { classes: ["tdt", "tdt-dialog"] }).render(true);
+      </div>`;
+    const read = form => readRollForm(form, check, mechanicalRules);
+    // Quick roll (shift-click in the action hub): the same defaults the dialog would show, without showing it.
+    if (check.fast || this._tdtFast) {
+      const form = document.createElement("form");
+      form.innerHTML = content;
+      return Promise.resolve(read(form));
+    }
+    return tdtDialog({
+      title: `Tirada de ${check.label}`,
+      content,
+      buttons: [
+        { action: "roll", label: "Tirar", icon: "fas fa-dice", default: true, callback: read },
+        { action: "cancel", label: "Cancelar" }
+      ],
+      render: form => {
+        const select = form.querySelector('[name="perceptionSense"]');
+        if (!select) return;
+        const update = () => {
+          for (const label of form.querySelectorAll("[data-rule-sense]")) label.hidden = label.dataset.ruleSense !== select.value;
+        };
+        select.addEventListener("change", update);
+        update();
+      }
     });
   }
 
@@ -563,8 +542,10 @@ export class TDTActor extends Actor {
   }
 
   async rollWeapon(item, options = {}) {
-    if (typeof item === "string") item = this.items.get(item);
+    // A mounted weapon of a vehicle or a stationary weapon is referenced by its UUID.
+    if (typeof item === "string") item = item.includes(".") ? fromUuidSync(item) : this.items.get(item);
     if (!item) return null;
+    if (["vehicle", "emplacement"].includes(this.type)) return this.fireMountedWeapon(item, options);
     if (this.type === "npc") return this.npcAttack(item, options);
     if (this.type === "mecha") return this.rollMechaWeapon(item, options);
     const profile = this.weaponProfile(item);
@@ -599,7 +580,7 @@ export class TDTActor extends Actor {
     const secondFaces = skill?.value ?? 0;
     const maxAttacks = profile.props.singleAttack ? 1 : Math.max(1, secondFaces ? [4, 6, 8, 10, 12].indexOf(secondFaces) + 1 : 1);
     const extraFields = [
-      maxAttacks > 1 ? `<div class="form-group"><label>Número de ataques</label><select name="attacks">${Array.from({ length: maxAttacks }, (_, i) => `<option value="${i + 1}">${i + 1}${i ? ` (habilidad −${i})` : ""}</option>`).join("")}</select></div>` : "",
+      maxAttacks > 1 ? `<div class="form-group"><label>Número de ataques</label><select name="attacks">${Array.from({ length: maxAttacks }, (_, i) => `<option value="${i + 1}" ${i + 1 === Number(options.attacks || 1) ? "selected" : ""}>${i + 1}${i ? ` (habilidad −${i})` : ""}</option>`).join("")}</select></div>` : "",
       profile.pointBlank ? `<div class="form-group"><label>A quemarropa (distancia corta o menos): Daño ${profile.pointBlank}</label><input type="checkbox" name="pointBlank"></div>` : "",
       profile.area ? `<div class="form-group"><label>Ataque de área (Área ${profile.area} como Daño)</label><input type="checkbox" name="area"></div>` : "",
       profile.concentrated ? `<p class="hint">Golpe concentrado: con un solo ataque, Daño ${profile.concentrated}.</p>` : "",
@@ -641,7 +622,7 @@ export class TDTActor extends Actor {
       const check = {
         ...baseCheck,
         label: attacks > 1 ? `Ataque ${attack + 1}/${attacks}: ${item.name}` : baseCheck.label,
-        reroll: { method: "rollWeapon", args: [item.id, { attribute: attributeKey }] },
+        reroll: { method: "rollWeapon", args: [item.parent === this ? item.id : item.uuid, { attribute: attributeKey }] },
         after: outcome => this._weaponAfter(item, profile, outcome, { attacks, defenseKey, targets, reroll: Boolean(options.preset) })
       };
       lastResult = await this.rollCheck(check, attackOptions);
@@ -664,6 +645,7 @@ export class TDTActor extends Actor {
     const dice = key => Number(this.system.attributes[key].value) || 4;
     if (dice(main) === dice(alt)) return main;
     const order = dice(alt) > dice(main) ? [alt, main] : [main, alt];
+    if (this._tdtFast) return order[0];
     return choiceDialog(`Ataque: ${item.name}`, "¿Con qué característica atacas?", order.map(key => ({ id: key, label: `${this.system.attributes[key].label} (d${dice(key)})` })));
   }
 
@@ -701,7 +683,7 @@ export class TDTActor extends Actor {
     const delta = profile.damage - Number(item.system.damage || 0);
     for (const target of targets) {
       const defense = targetDefense(target, defenseKey);
-      const isMachine = target.type === "mecha" || target.system.npcStats?.machine;
+      const isMachine = isMachineTarget(target);
       let targetDamage = damage;
       if (isMachine && profile.props.vsMachines) targetDamage = profile.props.vsMachines + delta;
       if (!isMachine && profile.props.vsLiving) targetDamage = profile.props.vsLiving + delta;
@@ -740,6 +722,11 @@ export class TDTActor extends Actor {
       if (target.type === "character") {
         const data = { attackValue: total + mod, damage, defense: defenseKey, attackerUuid: this.uuid, attackerName: this.name, options };
         return { hit: null, html: `<div class="tdt-target-line"><strong>${esc(target.name)}</strong>: tirada enfrentada. <button type="button" class="tdt-chat-button" data-tdt-action="defend" data-payload="${payload(data)}">Defenderse (${esc(defenseLabel)})</button></div>` };
+      }
+      // A moving vehicle dodges with its driver's Conducir.
+      if (target.type === "vehicle" && target.system.driver && defenseKey === "evasion") {
+        const data = { attackValue: total + mod, damage, defense: defenseKey, attackerUuid: this.uuid, attackerName: this.name, defenderUuid: target.uuid, options };
+        return { hit: null, html: `<div class="tdt-target-line"><strong>${esc(target.name)}</strong>: el conductor esquiva. <button type="button" class="tdt-chat-button" data-tdt-action="defend" data-payload="${payload(data)}">Esquivar con el vehículo (Conducir)</button></div>` };
       }
       return { hit: null, html: `<div class="tdt-target-line"><strong>${esc(target.name)}</strong>: sin valor de ${esc(defenseLabel)} (lo decide el DJ).</div>` };
     }
@@ -840,6 +827,7 @@ export class TDTActor extends Actor {
       return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)}: Animal</header><p>No tiene VirtualSelf: el hack no le afecta. Si el hack actúa directamente sobre sus implantes, lo decide el DJ.</p></div>` });
     }
     const rollOptions = { label: `Defensa contra ${data.weaponName ?? data.attackerName ?? "ataque"}${suffix}`, difficulty: Number(data.attackValue) + 1, scopes: isHack ? ["hack-defense"] : [] };
+    if (["vehicle", "emplacement"].includes(this.type)) return this._machineDefendOnce(data, rollOptions);
     let result;
     if (this.type === "mecha") result = await this.rollMechaStat(defense === "fortitude" ? "robustness" : "maneuver", rollOptions);
     else if (isHack) result = await this.rollHackDefense(defense, rollOptions);
@@ -856,7 +844,7 @@ export class TDTActor extends Actor {
     // Pifia defendiendo: el daño ignora el aguante.
     const endurance = result.isFumble ? 0 : targetEndurance(this, { hack: isHack, shot: options.shot });
     // Weapons with a special damage against living beings or machines (Hoja vibrante, Porra eléctrica…).
-    const isMachine = this.type === "mecha";
+    const isMachine = isMachineTarget(this);
     let weaponDamage = Number(data.damage || 0);
     if (isMachine && Number(data.vsMachines)) weaponDamage = Number(data.vsMachines);
     if (!isMachine && Number(data.vsLiving)) weaponDamage = Number(data.vsLiving);
@@ -887,6 +875,35 @@ export class TDTActor extends Actor {
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} recibe el golpe</header><p>${lines.join("<br>")}</p></div>` });
     if (damage > 0) await this.applyDamage(damage, { raw: true, fumble: result.isFumble });
     else if (result.isFumble && this.type === "mecha") await this._mechaDamageCheck(0, { fumble: true });
+  }
+
+  /**
+   * A vehicle or a stationary weapon receives an attack: a fixed Esquiva when it has one, otherwise the
+   * driver dodges with Conducir. Hacks against machines are the GM's call (analog vehicles are immune).
+   */
+  async _machineDefendOnce(data, rollOptions) {
+    const options = data.options ?? {};
+    const say = text => ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)}</header><p>${text}</p></div>` });
+    if (options.hack) return say(this.system.analog ? "Es analógico: no se puede hackear." : "Hackear un vehículo o un arma estacionaria lo resuelve el DJ (defensa DJ).");
+    const attackValue = Number(data.attackValue);
+    const fixed = targetDefense(this, data.defense || "evasion");
+    let defenseTotal;
+    let fumble = false;
+    if (fixed !== null) defenseTotal = fixed;
+    else if (this.type === "vehicle" && this.system.driver) {
+      const result = await this._vehicleDefense(rollOptions);
+      if (!result) return null;
+      defenseTotal = result.total + Number(result.difficultyMod || 0);
+      fumble = result.isFumble;
+    } else return say(`Sin ${this.type === "vehicle" ? "conductor ni " : ""}Esquiva fija: el DJ decide si el ataque acierta.`);
+    if (defenseTotal > attackValue && !fumble) return say(`${fixed !== null ? `Esquiva ${fixed}` : defenseTotal} frente a ${attackValue}: el ataque falla.`);
+    const incoming = fixed !== null ? Math.max(0, attackValue - fixed) : Math.max(0, attackValue - defenseTotal);
+    const endurance = fumble ? 0 : targetEndurance(this);
+    const weaponDamage = Number(data.vsMachines) || Number(data.damage || 0);
+    const damage = Math.max(0, incoming + weaponDamage - endurance);
+    await say(`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${fumble ? " (pifia esquivando: ignora el aguante)" : ""} = <strong>${damage}</strong>`);
+    if (damage > 0) await requestDamage(this, damage, { raw: true });
+    return true;
   }
 
   /* -------------------------------------------- */
@@ -926,6 +943,9 @@ export class TDTActor extends Actor {
     if (notes.length) ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)}</header><p>${notes.map(esc).join("<br>")}</p></div>`, whisper: ChatMessage.getWhisperRecipients("GM") });
     if (this.type === "mecha") await this._mechaDamageCheck(damage, { fumble: Boolean(options.fumble) });
     if (this.type === "character" && health === 0 && damage > 0) await this._fallDown(damage - before, options);
+    if (["vehicle", "emplacement"].includes(this.type) && health === 0 && before > 0) {
+      await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} queda destruido</header><p>A 0 PV deja de funcionar. ${this.type === "vehicle" ? "Si iba en marcha, quien va dentro puede sufrir daño por el choque (DJ)." : "Hay que repararlo antes de volver a usarlo."}</p></div>` });
+    }
     return damage;
   }
 
@@ -1037,33 +1057,23 @@ export class TDTActor extends Actor {
   /* -------------------------------------------- */
 
   _restDialog() {
-    return new Promise(resolve => {
-      new Dialog({
-        title: `Descansar: ${this.name}`,
-        content: `<form>
-          <p>Descansar cura 1 PV y recupera maná, energía y usos diarios.</p>
-          <div class="form-group"><label>Alguien te trata las heridas (+1 PV)</label><input type="checkbox" name="treated"></div>
-          <div class="form-group"><label>Quien te trata tiene Manos sanadoras (+1 PV)</label><input type="checkbox" name="healerHands"></div>
-        </form>`,
-        buttons: {
-          ok: { icon: '<i class="fas fa-bed"></i>', label: "Descansar", callback: html => {
-            const form = html[0].querySelector("form");
-            resolve({ treated: form.treated.checked, healerHands: form.healerHands.checked });
-          } },
-          cancel: { label: "Cancelar", callback: () => resolve(null) }
-        },
-        default: "ok",
-        render: html => {
-          const form = html[0].querySelector("form");
-          const sync = () => {
-            form.healerHands.disabled = !form.treated.checked;
-            if (!form.treated.checked) form.healerHands.checked = false;
-          };
-          form.treated.addEventListener("change", sync);
-          sync();
-        },
-        close: () => resolve(null)
-      }, { classes: ["tdt", "tdt-dialog"] }).render(true);
+    return tdtDialog({
+      title: `Descansar: ${this.name}`,
+      content: `<p>Descansar cura 1 PV y recupera maná, energía y usos diarios.</p>
+        <div class="form-group"><label>Alguien te trata las heridas (+1 PV)</label><input type="checkbox" name="treated"></div>
+        <div class="form-group"><label>Quien te trata tiene Manos sanadoras (+1 PV)</label><input type="checkbox" name="healerHands"></div>`,
+      buttons: [
+        { action: "ok", label: "Descansar", icon: "fas fa-bed", default: true, callback: form => ({ treated: form.elements.treated.checked, healerHands: form.elements.healerHands.checked }) },
+        { action: "cancel", label: "Cancelar" }
+      ],
+      render: form => {
+        const sync = () => {
+          form.elements.healerHands.disabled = !form.elements.treated.checked;
+          if (!form.elements.treated.checked) form.elements.healerHands.checked = false;
+        };
+        form.elements.treated.addEventListener("change", sync);
+        sync();
+      }
     });
   }
 
@@ -1156,24 +1166,38 @@ export class TDTActor extends Actor {
   /*  Character creation check                     */
   /* -------------------------------------------- */
 
-  async checkCreation() {
+  /**
+   * Checks the creation rules. Dice raised with experience (the history of "Mejorar") don't count as free increments.
+   * @returns {{info: string[], issues: string[]}}
+   */
+  creationReport() {
     const system = this.system;
     const advanced = rule("advancedCreation");
     const unlimited = advanced && advanced !== "normal";
     const issues = [];
     const info = [];
+    const log = system.experience?.log ?? [];
     const steps = die => Math.max(0, [4, 6, 8, 10, 12].indexOf(normalizeDie(die)));
-    const attributeIncrements = Object.values(system.attributes).reduce((sum, attribute) => sum + steps(attribute.die), 0);
+    // Die before the improvements bought with experience.
+    const baseDie = (kind, key, die) => {
+      let current = normalizeDie(die);
+      for (let i = stepsBought(log, kind, key); i > 0; i--) current = Number(previousDie(kind, current)) || 0;
+      return kind === "skill" ? current : current || 4;
+    };
+    const attributes = Object.entries(system.attributes).map(([key, attribute]) => baseDie("attribute", key, attribute.die));
+    const skills = Object.entries(system.skills).map(([key, skill]) => baseDie("skill", key, skill.die));
+    const defenses = Object.entries(system.defenses).map(([key, defense]) => baseDie("defense", key, defense.die));
+    const attributeIncrements = attributes.reduce((sum, die) => sum + steps(die), 0);
     info.push(`Incrementos de características: ${attributeIncrements} / 4.`);
     if (!unlimited && attributeIncrements !== 4) issues.push("Las características deben usar exactamente 4 incrementos.");
-    if (!unlimited && Object.values(system.attributes).some(attribute => Number(attribute.die) > 8)) issues.push("Ninguna característica puede pasar de d8 al crear.");
+    if (!unlimited && attributes.some(die => die > 8)) issues.push("Ninguna característica puede pasar de d8 al crear.");
     let skillPoints = 15 + modifierValue(this._tdtMods, "skillPoints");
     if (moduleActive("fantasy") && rule("races")) skillPoints -= 5;
-    const skillIncrements = Object.entries(system.skills).reduce((sum, [, skill]) => sum + (normalizeDie(skill.die) ? steps(skill.die) + 1 : 0), 0);
+    const skillIncrements = skills.reduce((sum, die) => sum + (normalizeDie(die) ? steps(die) + 1 : 0), 0);
     info.push(`Incrementos de habilidades: ${skillIncrements} / ${skillPoints}.`);
     if (!unlimited && skillIncrements !== skillPoints) issues.push(`Las habilidades deben usar exactamente ${skillPoints} incrementos.`);
-    if (!unlimited && Object.values(system.skills).some(skill => Number(skill.die) > 8)) issues.push("Ninguna habilidad puede pasar de d8 al crear.");
-    const defenseDice = Object.values(system.defenses).map(defense => Number(defense.die)).sort((a, b) => a - b).join("/");
+    if (!unlimited && skills.some(die => die > 8)) issues.push("Ninguna habilidad puede pasar de d8 al crear.");
+    const defenseDice = [...defenses].sort((a, b) => a - b).join("/");
     const validDefense = defenseDice === "6/6/6" || (rule("defenseSwap") && defenseDice === "4/6/8");
     info.push(`Dados defensivos: ${defenseDice}.`);
     if (!unlimited && !validDefense) issues.push(rule("defenseSwap") ? "Los dados defensivos deben ser d6/d6/d6 o d8/d6/d4." : "Los dados defensivos deben ser d6/d6/d6.");
@@ -1183,11 +1207,18 @@ export class TDTActor extends Actor {
     if (advanced === "elite") xp += 100;
     const featCost = this.items.filter(item => item.type === "feat").reduce((sum, item) => sum + Number(item.system.cost || 0), 0);
     info.push(`Experiencia inicial: ${xp}. Coste neto de dotes: ${featCost}.`);
+    const bought = log.filter(entry => entry.kind !== "feat").reduce((sum, entry) => sum + Number(entry.cost || 0), 0);
+    if (bought) info.push(`Mejoras compradas con experiencia: ${bought} XP.`);
     if (moduleActive("cyber")) {
       const stats = system.cyberStats;
       info.push(`CC ${stats.cc}, carga ${stats.load}, exceso ${stats.excess}.`);
       if (this.items.some(item => item.type === "implant" && item.system.supreme?.enabled)) issues.push("Los implantes supremos no se pueden escoger al crear el personaje.");
     }
+    return { info, issues };
+  }
+
+  async checkCreation() {
+    const { info, issues } = this.creationReport();
     const content = `<div class="tdt-chat-card"><header>Comprobación de creación: ${esc(this.name)}</header>
       <ul>${info.map(line => `<li>${esc(line)}</li>`).join("")}</ul>
       ${issues.length ? `<p><strong>Revisar:</strong></p><ul>${issues.map(line => `<li>${esc(line)}</li>`).join("")}</ul>` : "<p><strong>Todo correcto.</strong></p>"}</div>`;
@@ -1198,6 +1229,46 @@ export class TDTActor extends Actor {
 /* -------------------------------------------- */
 /*  Helpers                                      */
 /* -------------------------------------------- */
+
+/** Reads the roll dialog (shown or detached) into the options of a roll. */
+function readRollForm(form, check, mechanicalRules) {
+  const data = new FormData(form);
+  const options = {
+    firstStep: Number(data.get("firstStep") || 0),
+    secondStep: check.linkedDice ? Number(data.get("firstStep") || 0) : Number(data.get("secondStep") || 0),
+    bonus: Math.max(0, Number(data.get("bonus") || 0)),
+    penalty: Math.max(0, Number(data.get("penalty") || 0)),
+    difficulty: Math.max(0, Number(data.get("difficulty") || 0)),
+    difficultyMod: 0,
+    firstDisadvantage: false,
+    secondAdvantage: false,
+    secondDisadvantage: false,
+    firstFloorOne: false,
+    secondFloorOne: false,
+    noFumble: false,
+    noBonus: false,
+    rerollOnes: false,
+    extraDice: [],
+    damageBonus: 0,
+    consumed: [],
+    appliedRules: [],
+    linkWill: Boolean(data.get("linkWill")),
+    heroPoint: Boolean(data.get("heroPoint")),
+    rollMode: data.get("rollMode") || game.settings.get("core", "rollMode"),
+    extra: check.readExtra ? check.readExtra(form, data) : {}
+  };
+  for (const input of form.querySelectorAll(".tdt-feat-rule")) {
+    if (!input.checked) continue;
+    const entry = mechanicalRules[Number(input.dataset.ruleIndex)];
+    if (entry.sense && entry.sense !== options.extra?.perceptionSense) continue;
+    applyRuleToOptions(entry, options, check);
+  }
+  // Hero point and SATR only affect the first roll; later attacks of a multiple attack use followUpBonus.
+  options.followUpBonus = options.noBonus ? 0 : Math.min(3, Math.max(0, options.bonus - Number(options.satrBonus || 0)));
+  options.bonus = options.noBonus ? 0 : Math.min(3, options.bonus) + (options.heroPoint ? 2 : 0);
+  if (options.difficulty) options.difficulty = Math.max(0, options.difficulty - options.difficultyMod);
+  return options;
+}
 
 function applyRuleToOptions(entry, options, check) {
   const value = Number(entry.value || 0);
@@ -1253,34 +1324,6 @@ export function currentTargets() {
   return [...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean);
 }
 
-export function choiceDialog(title, prompt, choices) {
-  return new Promise(resolve => {
-    new Dialog({
-      title,
-      content: `<form><div class="form-group"><label>${esc(prompt)}</label><select name="choice">${choices.map(choice => `<option value="${esc(choice.id)}">${esc(choice.label)}</option>`).join("")}</select></div></form>`,
-      buttons: {
-        ok: { label: "Aceptar", callback: html => resolve(html[0].querySelector('[name="choice"]').value) },
-        cancel: { label: "Cancelar", callback: () => resolve(null) }
-      },
-      default: "ok",
-      close: () => resolve(null)
-    }, { classes: ["tdt", "tdt-dialog"] }).render(true);
-  });
-}
-
-export function numberDialog(title, prompt, initial = 0) {
-  return new Promise(resolve => {
-    new Dialog({
-      title,
-      content: `<form><div class="form-group"><label>${esc(prompt)}</label><input type="number" name="value" value="${Number(initial)}"></div></form>`,
-      buttons: {
-        ok: { label: "Aceptar", callback: html => resolve(Number(html[0].querySelector('[name="value"]').value)) },
-        cancel: { label: "Cancelar", callback: () => resolve(null) }
-      },
-      default: "ok",
-      close: () => resolve(null)
-    }, { classes: ["tdt", "tdt-dialog"] }).render(true);
-  });
-}
+export { choiceDialog, numberDialog };
 
 export { itemNameSet, hasItemNamed, perfectSuccess };

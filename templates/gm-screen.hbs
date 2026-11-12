@@ -1,0 +1,79 @@
+{{#*inline "refTable"}}
+<section class="tdt-gm-card">
+  <h3><i class="fas {{icon}}"></i> {{title}}</h3>
+  {{#if note}}<p class="hint">{{note}}</p>{{/if}}
+  <table class="tdt-gm-table">
+    <thead><tr>{{#each table.head as |cell|}}<th>{{cell}}</th>{{/each}}</tr></thead>
+    <tbody>{{#each table.rows as |row|}}<tr>{{#each row as |cell|}}<td>{{cell}}</td>{{/each}}</tr>{{/each}}</tbody>
+  </table>
+</section>
+{{/inline}}
+<div class="tdt-gm-screen">
+  <nav class="tdt-gm-tabs">
+    {{#each tabs as |tab|}}<button type="button" class="{{#if tab.active}}active{{/if}}" data-action="gm-tab" data-tab="{{tab.key}}"><i class="fas {{tab.icon}}"></i> {{tab.label}}{{#if tab.count}} <b>{{tab.count}}</b>{{/if}}</button>{{/each}}
+  </nav>
+  <div class="tdt-gm-body">
+    {{#if (eq tab "rules")}}
+    <div class="tdt-gm-grid">
+      {{#each core as |section|}}{{> refTable section}}{{/each}}
+    </div>
+    {{/if}}
+
+    {{#if (eq tab "game")}}
+    <p class="tdt-gm-modules">Módulos activos: <strong>{{#if activeModules.length}}{{#each activeModules as |label|}}{{label}}{{#unless @last}}, {{/unless}}{{/each}}{{else}}solo el básico{{/if}}</strong>. Se cambian en Configuración → Two Dice Tales.</p>
+    <div class="tdt-gm-grid">
+      <section class="tdt-gm-card">
+        <h3><i class="fas fa-sliders"></i> Reglas opcionales activas</h3>
+        {{#if optional.length}}
+        <dl class="tdt-gm-rules">{{#each optional as |entry|}}<dt>{{lookup entry 0}}</dt><dd>{{lookup entry 1}}</dd>{{/each}}</dl>
+        {{else}}<p class="hint">Ninguna regla opcional activa.</p>{{/if}}
+      </section>
+      {{#each modules as |section|}}{{> refTable section}}{{/each}}
+    </div>
+    {{/if}}
+
+    {{#if (eq tab "table")}}
+    <div class="tdt-gm-grid">
+      <section class="tdt-gm-card">
+        <h3><i class="fas fa-users"></i> Grupo</h3>
+        <ul class="tdt-gm-party">
+          {{#each party as |member|}}
+          <li data-uuid="{{member.uuid}}" class="{{#if member.dying}}dying{{/if}}">
+            <img src="{{member.img}}" alt=""><a data-action="party-open" role="button" tabindex="0">{{member.name}}</a>
+            <span title="Vida"><i class="fas fa-heart"></i> {{member.health}}</span>
+            <span title="Experiencia disponible">{{member.xp}} XP</span>
+            {{#if member.hero}}<i class="fas fa-star" title="Tiene punto de héroe"></i>{{/if}}
+            <button type="button" data-action="party-xp" data-uuid="{{member.uuid}}" title="Dar experiencia a {{member.name}}"><i class="fas fa-plus"></i> XP</button>
+          </li>
+          {{else}}<li class="empty">No hay personajes.</li>
+          {{/each}}
+        </ul>
+        <div class="tdt-gm-buttons">
+          <button type="button" data-action="party-xp"><i class="fas fa-arrow-up"></i> XP a todos</button>
+          <button type="button" data-action="party-scene"><i class="fas fa-mug-hot"></i> Descanso pequeño</button>
+          <button type="button" data-action="party-rest"><i class="fas fa-bed"></i> Descanso</button>
+        </div>
+        <p class="hint">XP por sesión: corta 3–5, normal 5–7, clímax 6–10. El descanso de grupo cura 1 PV sin tratamiento; para tratar heridas, usa la ficha.</p>
+      </section>
+      <section class="tdt-gm-card">
+        <h3><i class="fas fa-clock"></i> Contadores <button type="button" class="tdt-gm-add" data-action="counter-add" title="Nuevo contador"><i class="fas fa-plus"></i></button></h3>
+        <ul class="tdt-gm-counters">
+          {{#each counters as |counter|}}
+          <li data-counter="{{counter.id}}">
+            <div class="tdt-gm-counter-head"><strong>{{counter.name}}</strong><span>{{counter.value}}/{{counter.max}}</span></div>
+            <div class="tdt-gm-segments" role="meter" aria-label="{{counter.name}}" aria-valuemin="0" aria-valuemax="{{counter.max}}" aria-valuenow="{{counter.value}}">{{#each counter.segments as |filled|}}<span class="{{#if filled}}filled{{/if}}"></span>{{/each}}</div>
+            <div class="tdt-gm-buttons">
+              <button type="button" data-action="counter-step" data-step="-1" title="Restar"><i class="fas fa-minus"></i></button>
+              <button type="button" data-action="counter-step" data-step="1" title="Sumar"><i class="fas fa-plus"></i></button>
+              <button type="button" data-action="counter-chat" title="Mostrar en el chat"><i class="fas fa-comment-dots"></i></button>
+              <button type="button" data-action="counter-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
+            </div>
+          </li>
+          {{else}}<li class="empty">Sin contadores. Úsalos para el plan maestro de un villano, alarmas, persecuciones o cuentas atrás.</li>
+          {{/each}}
+        </ul>
+      </section>
+    </div>
+    {{/if}}
+  </div>
+</div>

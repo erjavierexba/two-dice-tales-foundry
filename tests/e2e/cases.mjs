@@ -6,10 +6,10 @@
 
 export const cases = [
   {
-    name: "El mundo carga el sistema y sus 28 compendios",
+    name: "El mundo carga el sistema y sus 29 compendios",
     run: async ({ gm }) => gm.evaluate(() => {
       T.eq(game.system.id, "tdt", "sistema");
-      T.eq(game.packs.filter(pack => pack.metadata.packageName === "tdt").length, 28, "compendios");
+      T.eq(game.packs.filter(pack => pack.metadata.packageName === "tdt").length, 29, "compendios");
       T.ok(game.tdt, "API game.tdt");
     })
   },
@@ -54,7 +54,7 @@ export const cases = [
         }
       }
       T.eq(broken, [], "documentos rotos");
-      T.eq(total, 557, "documentos totales");
+      T.eq(total, 559, "documentos totales");
     })
   },
   {
@@ -78,9 +78,9 @@ export const cases = [
       T.eq(actor.system.money, 19, "las modificaciones también se normalizan");
 
       await T.renderSheet(actor.sheet, "ficha con moneda decimal");
-      const money = actor.sheet.element[0].querySelector('[name="system.money"]');
+      const money = actor.sheet.element.querySelector('[name="system.money"]');
       T.ok(money && money.step === "0.01", "la ficha acepta céntimos");
-      T.ok(!actor.sheet.element[0].querySelector('[name="system.moneyMinor"]'), "no existe una submoneda separada");
+      T.ok(!actor.sheet.element.querySelector('[name="system.moneyMinor"]'), "no existe una submoneda separada");
       await actor.sheet.close();
 
       const settings = game.settings.sheet;
@@ -115,10 +115,10 @@ export const cases = [
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero());
       await T.renderSheet(actor.sheet, "ficha para selector de armas");
-      const seen = new Set(Object.values(ui.windows).map(app => app.appId));
-      actor.sheet.element[0].querySelector('[data-action="compendium-pick"][data-item-type="weapon"]').click();
+      const seen = T.openDialogIds();
+      actor.sheet.element.querySelector('[data-action="compendium-pick"][data-item-type="weapon"]').click();
       const dialog = await T.waitDialog(seen);
-      const root = dialog.element[0];
+      const root = dialog.element;
       const options = [...root.querySelector('[name="entry"]').options];
       const visible = () => options.filter(option => !option.hidden && !option.disabled);
       const generic = root.querySelector('[name="includeGeneric"]');
@@ -185,7 +185,7 @@ export const cases = [
       await T.give(actor, "basic-armor", "Armadura ligera", { "system.equipped": true });
       T.eq(actor.system.endurance.armor, 1, "armadura ligera normal");
       await T.renderSheet(actor.sheet, "ficha con armadura");
-      const row = actor.sheet.element[0].querySelector('[data-item-id] .tdt-item-summary');
+      const row = actor.sheet.element.querySelector('[data-item-id] .tdt-item-summary');
       T.eq(row?.textContent.trim(), "Aguante +1", "resumen efectivo normal");
       await actor.sheet.close();
     })
@@ -330,7 +330,7 @@ export const cases = [
       const endurance = actor.system.endurance.value;
       // Pifia: 1 + 1 = 2 contra 5 → entrante 3, + Daño 3, sin restar el aguante.
       T.dice([6, 1], [6, 1]);
-      const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+      const seen = T.openDialogIds();
       (await T.chatButton(message, "defend")).click();
       await T.answer({ seen });
       await T.sleep(400);
@@ -526,7 +526,7 @@ export const cases = [
       const actor = await T.actor("character", T.hero({ defenses: { evasion: { die: 4 } }, skills: { ranged: { die: 0 } }, money: 0 }));
       const optionsOf = async chip => {
         await T.renderSheet(chip.sheet, `selector de ${chip.name}`);
-        const values = [...chip.sheet.element[0].querySelector('[name="system.chipTarget"]').options].map(option => option.value).filter(Boolean);
+        const values = [...chip.sheet.element.querySelector('[name="system.chipTarget"]').options].map(option => option.value).filter(Boolean);
         await chip.sheet.close();
         return values;
       };
@@ -545,7 +545,7 @@ export const cases = [
       T.eq((await optionsOf(defenseChip)).sort(), ["evasion", "fortitude", "will"], "el chip de defensa solo ofrece las tres defensas");
       T.eq(actor.system.defenses.evasion.value, 6, "el chip de defensa sube Esquiva");
       await T.renderSheet(actor.sheet, "fuente de la mejora del chip");
-      const evasion = actor.sheet.element[0].querySelector('[data-roll-defense="evasion"]').closest("article").textContent.replace(/\s+/g, " ");
+      const evasion = actor.sheet.element.querySelector('[data-action="roll-defense"][data-defense="evasion"]').closest("article").textContent.replace(/\s+/g, " ");
       T.ok(evasion.includes("Efectivo d6 por Chip de defensa"), `fuente visible: ${evasion}`);
       await actor.sheet.close();
 
@@ -629,7 +629,7 @@ export const cases = [
       T.eq(actor.system.health.value, 9, "Manos sanadoras sin tratamiento no suma");
       // Desde el diálogo del botón.
       await actor.update({ "system.health.value": 1 });
-      const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+      const seen = T.openDialogIds();
       const pending = actor.rest();
       await T.answer({ fields: { treated: true, healerHands: true }, button: "ok", seen });
       await pending;
@@ -682,7 +682,7 @@ export const cases = [
       T.diceDone();
       const message = T.lastMessage();
       T.dice([6, 5], [6, 6]);
-      const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+      const seen = T.openDialogIds();
       const rerolling = actor.rerollFromMessage(message);
       await T.answer({ fields: { choice: "hero" }, button: "ok", seen }); // la repetición reutiliza las opciones: no hay segundo diálogo
       await rerolling;
@@ -743,7 +743,7 @@ export const cases = [
       const combat = await Combat.create({ active: true });
       await combat.createEmbeddedDocuments("Combatant", [a, b, foe].map(actor => ({ actorId: actor.id, name: actor.name })));
       T.dice([4, 4], [4, 1]); // 2d4 de Percepción: 4 + 1 = 5 (el bonifica 1 del aliado no cabe: ni en el 4 ni en el 1)
-      const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+      const seen = T.openDialogIds();
       const rolling = combat.rollAll();
       await T.answer({ seen }); // configuración de la iniciativa
       await T.answer({}); // tirada de Percepción
@@ -774,7 +774,7 @@ export const cases = [
         const combat = await Combat.create({ scene: scene.id, active: true });
         await combat.createEmbeddedDocuments("Combatant", scene.tokens.map(token => ({ tokenId: token.id, sceneId: scene.id, actorId: token.actorId, name: token.name })));
         T.dice([4, 4], [4, 4]); // Percepción 2d4 de Lucy: 4 + 4 y crítico = 12
-        const seen = new Set(Object.values(ui.windows).map(app => app.appId));
+        const seen = T.openDialogIds();
         const rolling = combat.rollAll();
         await T.answer({ seen }); // configuración de la iniciativa
         await T.answer({}); // tirada de Percepción
@@ -798,6 +798,196 @@ export const cases = [
       const { value } = await T.roll(() => actor.rollHackDefense("hacking", { difficulty: 6 }));
       T.diceDone();
       T.eq(value.total, 5, "Mente d6 + Hacking d4 mínimo");
+    })
+  },
+  {
+    name: "Experiencia: mejorar gasta XP, no deja si no alcanza, se deshace y las dotes se compran",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero({ creation: { done: true }, experience: { value: 20, spent: 0, log: [] } }), "Aprendiz");
+      await actor.improve("skill", "athletics");
+      T.eq(actor.system.skills.athletics.die, 4, "Atletismo sin dado → d4");
+      T.eq(actor.system.experience.value, 16, "cuesta 4");
+      await actor.improve("attribute", "power");
+      T.eq([actor.system.attributes.power.die, actor.system.experience.value, actor.system.experience.spent], [8, 0, 20], "Potencia d6 → d8 por 16");
+      await actor.improve("attribute", "mind");
+      T.eq(actor.system.attributes.mind.die, 6, "sin XP no mejora");
+      T.ok(T.notes.some(note => /cuesta 16 XP y solo tienes 0/.test(note.message)), "avisa de que no alcanza");
+      const seen = T.openDialogIds();
+      const undo = actor.undoExperience();
+      await T.answer({ seen });
+      await undo;
+      T.eq([actor.system.attributes.power.die, actor.system.experience.value, actor.system.experience.log.length], [6, 16, 1], "deshacer devuelve el dado y la XP");
+      const feat = await actor.buyFeat({ name: "Dote E2E", type: "feat", system: { cost: 4 } });
+      T.ok(feat, "dote comprada");
+      T.eq(actor.system.experience.value, 12, "la dote cuesta su XP");
+      T.eq(await actor.buyFeat({ name: "Dote cara", type: "feat", system: { cost: 30 } }), null, "una dote demasiado cara no entra");
+      T.ok(!actor.items.getName("Dote cara"), "no se crea la dote cara");
+      await T.renderSheet(actor.sheet, "ficha abierta");
+      const root = actor.sheet.element;
+      T.ok(!root.querySelector('select[name="system.attributes.power.die"]'), "terminada la creación, los dados no se editan");
+      T.ok(root.querySelector('[data-action="improve"]'), "botones de mejorar");
+      await actor.sheet.close();
+    })
+  },
+  {
+    name: "Vehículos: tripulación, maniobra del conductor, armas montadas y esquiva con el vehículo",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const driver = await T.actor("character", T.hero(), "Conductora");
+      await driver.createEmbeddedDocuments("Item", [{ name: "Conducir (coche)", type: "feat", system: {} }]);
+      const gunner = await T.actor("character", T.hero({ skills: { ranged: { die: 6 } } }), "Artillero");
+      const car = await T.actor("vehicle", { category: "coche", health: { value: 20, max: 20 }, endurance: { value: 5 } }, "Coche E2E");
+      await car.addMachineCrew(driver.uuid);
+      await car.addMachineCrew(gunner.uuid);
+      T.eq([car.system.driver, car.system.crew], [driver.uuid, [gunner.uuid]], "la primera conduce, el segundo es tripulación");
+      T.eq(car.img, "systems/tdt/assets/icons/vehicle.svg", "icono de vehículo");
+
+      T.dice([6, 5], [4, 3]);
+      const maneuver = await T.roll(() => car.vehicleManeuver());
+      T.diceDone();
+      T.eq(maneuver.value.total, 8, "Destreza d6 + Conducir d4");
+
+      const [weapon] = await car.createEmbeddedDocuments("Item", [{ name: "Ametralladora montada", type: "weapon", system: { skill: "ranged", attribute: "dexterity", damage: 4 } }]);
+      const target = await T.actor("npc", { npcStats: { evasion: 5 }, endurance: { base: 0, value: 0 }, health: { value: 20, max: 20 } }, "Blanco");
+      T.targets([target]);
+      T.dice([6, 5], [6, 3]);
+      await T.roll(() => car.rollWeapon(weapon.id, { gunner: gunner.uuid }));
+      T.diceDone();
+      const shot = T.messageText(T.lastMessage());
+      T.ok(/Ametralladora montada/.test(shot) && /Blanco/.test(shot) && /= 7/.test(shot), `el artillero dispara con su Puntería: ${shot}`);
+      T.eq(T.lastMessage().speaker.alias, "Artillero", "la tirada es del artillero");
+
+      // Un personaje ataca al coche: el conductor esquiva con Conducir.
+      T.targets([car]);
+      T.dice([6, 5], [6, 3]);
+      await T.roll(() => gunner.rollWeapon(weapon.uuid));
+      T.diceDone();
+      T.ok(/Esquivar con el vehículo/.test(T.messageText(T.lastMessage())), "botón para esquivar con el vehículo");
+
+      T.dice([6, 3], [4, 2]);
+      await T.roll(() => car.defendAgainst({ attackValue: 9, damage: 3, defense: "evasion", attackerName: "Matón" }));
+      T.diceDone();
+      T.eq(car.system.health.value, 18, "entrante 4 + Daño 3 − Aguante 5 = 2");
+
+      await car.update({ "system.evasion": 8 });
+      await car.defendAgainst({ attackValue: 7, damage: 6, defense: "evasion", attackerName: "Matón" });
+      T.eq(car.system.health.value, 18, "aparcado con Esquiva 8: un 7 falla");
+      await car.defendAgainst({ attackValue: 10, damage: 6, defense: "evasion", attackerName: "Matón" });
+      T.eq(car.system.health.value, 15, "entrante 2 + Daño 6 − Aguante 5 = 3");
+
+      await T.renderSheet(car.sheet, "ficha de vehículo");
+      T.eq(car.sheet.element.querySelectorAll(".tdt-crew-member").length, 2, "dos tripulantes en la ficha");
+      T.ok(car.sheet.element.querySelector('[data-action="weapon-roll"]'), "arma montada en la ficha");
+      await car.sheet.close();
+
+      await car.applyDamage(100, { raw: true });
+      T.ok(/queda destruido/.test(T.messageText(T.lastMessage())), "a 0 PV queda destruido");
+    })
+  },
+  {
+    name: "Armas estacionarias y fichas de vehículo creadas desde el inventario",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const turret = await T.actor("emplacement", { evasion: 6, endurance: { value: 4 } }, "Torreta E2E");
+      await T.renderSheet(turret.sheet, "ficha de arma estacionaria");
+      T.ok(/Arma estacionaria/.test(turret.sheet.element.textContent), "tipo en la cabecera");
+      await turret.sheet.close();
+      await turret.defendAgainst({ attackValue: 9, damage: 2, defense: "evasion", attackerName: "Matón" });
+      T.eq(turret.system.health.value, 11, "entrante 3 + Daño 2 − Aguante 4 = 1");
+
+      const owner = await T.actor("character", T.hero(), "Motera");
+      const [bike] = await owner.createEmbeddedDocuments("Item", [{ name: "Moto E2E", type: "gear", system: { category: "vehicle", vehicle: { category: "moto", modifier: 1, passengers: 1, health: { value: 10, max: 10 }, endurance: 4 } } }]);
+      const actor = await owner.vehicleSheetFromItem(bike.id);
+      T.created.push(actor);
+      T.eq([actor.type, actor.system.category, actor.system.health.max, actor.system.endurance.value, actor.system.modifier, actor.system.driver], ["vehicle", "moto", 10, 4, 1, owner.uuid], "datos copiados del objeto");
+      await actor.sheet.close();
+    })
+  },
+  {
+    name: "Acciones: agrupa las tiradas, ofrece ataque múltiple y Mayús tira sin diálogo",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero({ skills: { ranged: { die: 6 }, athletics: { die: 4 } } }), "Hub");
+      await actor.createEmbeddedDocuments("Item", [{ name: "Pistola E2E", type: "weapon", system: { skill: "ranged", attribute: "dexterity", damage: 3, equipped: true } }]);
+      const groups = game.tdt.actionGroups(actor);
+      const keys = groups.map(group => group.key);
+      T.ok(["attacks", "defenses", "skills", "resources"].every(key => keys.includes(key)), `grupos: ${keys}`);
+      const attack = groups.find(group => group.key === "attacks").entries[0];
+      T.eq(attack.multi.map(multi => multi.label), ["×2"], "Puntería d6: hasta 2 ataques");
+      T.eq(groups.find(group => group.key === "skills").entries.map(entry => entry.label), ["Puntería", "Atletismo"], "habilidades entrenadas, de mayor a menor");
+      const seen = T.openDialogIds();
+      T.dice([6, 4], [4, 2]);
+      const athletics = groups.find(group => group.key === "skills").entries[1];
+      const result = await game.tdt.runHubEntry(athletics.payload, { fast: true });
+      T.diceDone();
+      T.eq(result.total, 6, "tirada rápida de Atletismo");
+      T.eq([...T.openDialogIds()].filter(id => !seen.has(id)), [], "sin diálogo");
+      T.dice([6, 4], [4, 2], [6, 5], [4, 2]);
+      await game.tdt.runHubEntry(attack.multi[0].payload, { fast: true });
+      T.diceDone();
+      T.ok(/Ataque 2\/2/.test(T.messageText(T.lastMessage())), "×2 hace dos ataques con la habilidad reducida");
+      await T.renderSheet(actor.sheet, "ficha");
+      actor.sheet.changeTab("actions", "primary");
+      T.ok(actor.sheet.element.querySelectorAll('.tab.actions [data-action="hub-run"]').length >= 8, "pestaña de acciones");
+      await actor.sheet.close();
+      await game.tdt.actionHub();
+      await T.sleep(300);
+      T.ok(foundry.applications.instances.get("tdt-action-hub")?.rendered, "ventana de acciones");
+      await game.tdt.actionHub();
+    })
+  },
+  {
+    name: "Pantalla del DJ: se adapta a los módulos, da XP y lleva contadores",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const { referenceSections } = await import("/systems/tdt/scripts/gm-screen.mjs");
+      const cyber = game.settings.get("tdt", "module.cyber");
+      await game.settings.set("tdt", "module.cyber", true);
+      try {
+        T.ok(referenceSections().modules.some(section => /cyberpunk/i.test(section.title)), "con cyberpunk, su referencia");
+        await game.settings.set("tdt", "module.cyber", false);
+        T.ok(!referenceSections().modules.some(section => /cyberpunk/i.test(section.title)), "sin cyberpunk, nada");
+      } finally {
+        await game.settings.set("tdt", "module.cyber", cyber);
+      }
+      const hero = await T.actor("character", T.hero({ experience: { value: 3, spent: 0, log: [] } }), "Jugadora");
+      await game.tdt.gmScreen();
+      await T.sleep(300);
+      const screen = foundry.applications.instances.get("tdt-gm-screen");
+      T.ok(screen?.rendered && /Persona común/.test(screen.element.textContent), "tabla de dificultades");
+      const seen = T.openDialogIds();
+      const giving = screen._giveXp(hero.uuid);
+      await T.answer({ seen, fields: { value: 5 } });
+      await giving;
+      T.eq(hero.system.experience.value, 8, "+5 XP");
+      await game.settings.set("tdt", "counters", []);
+      const adding = screen._addCounter();
+      await T.answer({ seen: T.openDialogIds(), fields: { name: "Plan maestro", max: 3 } });
+      await adding;
+      const [counter] = game.settings.get("tdt", "counters");
+      await screen._stepCounter(counter.id, 1);
+      await screen._stepCounter(counter.id, 5);
+      T.eq(game.settings.get("tdt", "counters")[0].value, 3, "no pasa del máximo");
+      await game.settings.set("tdt", "counters", []);
+      await screen.close();
+      const macros = await game.packs.get("tdt.macros").getDocuments();
+      T.eq(macros.map(macro => macro.name).sort(), ["Acciones", "Pantalla del DJ"], "macros");
+    })
+  },
+  {
+    name: "Dice So Nice (opcional): el dado de característica y el de habilidad llevan colores distintos",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero({ skills: { athletics: { die: 6 } } }), "Dados");
+      T.dice([6, 4], [6, 2]);
+      await T.roll(() => actor.rollSkill("athletics"));
+      T.diceDone();
+      T.ok(T.lastMessage().rolls.every(roll => !roll.dice[0].options.appearance), "sin Dice So Nice no se toca nada");
+      const had = game.modules.has("dice-so-nice");
+      if (!had) game.modules.set("dice-so-nice", { id: "dice-so-nice", active: true });
+      try {
+        T.dice([6, 4], [6, 2]);
+        await T.roll(() => actor.rollSkill("athletics"));
+        T.diceDone();
+        T.eq(T.lastMessage().rolls.map(roll => roll.dice[0].options.appearance?.colorset), ["tdt-attribute", "tdt-skill"], "colores por dado");
+      } finally {
+        if (!had) game.modules.delete("dice-so-nice");
+      }
     })
   }
 ];

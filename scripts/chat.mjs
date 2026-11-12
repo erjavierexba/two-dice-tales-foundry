@@ -1,3 +1,5 @@
+import { confirmDialog } from "./dialogs.mjs";
+
 const SOCKET = "system.tdt";
 
 export const esc = value => foundry.utils.escapeHTML(String(value ?? ""));
@@ -12,10 +14,7 @@ export function registerSocket() {
       const amount = Number(data.amount);
       if (!actor || actor.documentName !== "Actor" || !Number.isFinite(amount) || amount < 0 || amount > 1000) return;
       const options = sanitizeDamageOptions(data.options);
-      const approved = await Dialog.confirm({
-        title: "Solicitud de daño",
-        content: `<p>¿Aplicar <strong>${amount}</strong> de daño a <strong>${esc(actor.name)}</strong>?</p><p class="hint">La solicitud procede de otro cliente y necesita confirmación del DJ.</p>`
-      }, { classes: ["tdt", "tdt-dialog"] });
+      const approved = await confirmDialog("Solicitud de daño", `<p>¿Aplicar <strong>${amount}</strong> de daño a <strong>${esc(actor.name)}</strong>?</p><p class="hint">La solicitud procede de otro cliente y necesita confirmación del DJ.</p>`);
       if (approved) await actor.applyDamage(amount, options);
     } else if (data?.action === "markChatAction") {
       const message = game.messages.get(data.messageId);
@@ -163,6 +162,12 @@ async function recordChatAction(message, actionId) {
 }
 
 function defendersFor(data) {
+  // An attack against a vehicle: whoever controls its driver dodges with it.
+  if (data.defenderUuid) {
+    const machine = fromUuidSync(data.defenderUuid);
+    const driver = machine?.system?.driver ? fromUuidSync(machine.system.driver) : null;
+    return machine && (driver?.isOwner || machine.isOwner) ? [machine] : [];
+  }
   const candidates = new Set();
   for (const token of canvas?.tokens?.controlled ?? []) if (token.actor) candidates.add(token.actor);
   for (const token of game.user.targets ?? []) if (token.actor?.isOwner) candidates.add(token.actor);

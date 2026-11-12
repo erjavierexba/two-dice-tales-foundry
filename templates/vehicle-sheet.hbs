@@ -1,0 +1,130 @@
+{{#*inline "itemControls"}}
+<button type="button" data-action="item-chat" title="Mostrar en el chat"><i class="fas fa-comment-dots"></i></button>
+<button type="button" data-action="item-edit" title="Editar"><i class="fas fa-pen"></i></button>
+<button type="button" data-action="item-delete" title="Eliminar"><i class="fas fa-trash"></i></button>
+{{/inline}}
+<div class="tdt-actor-sheet tdt-vehicle-sheet">
+  <header class="sheet-header tdt-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" data-action="editImage" title="Cambiar imagen de {{actor.name}}" alt="Imagen de {{actor.name}}">
+    <div class="tdt-identity">
+      <span class="tdt-kicker">{{actorTypeLabel}} · Two Dice Tales</span>
+      <input class="tdt-name" name="name" type="text" value="{{actor.name}}" placeholder="Nombre">
+      <div class="tdt-crew-strip">
+        <label><span>{{driverLabel}}</span><select name="system.driver">{{selectOptions driverChoices selected=system.driver}}</select></label>
+        {{#if isVehicle}}<label><span>Categoría (Conducir)</span><input type="text" name="system.category" value="{{system.category}}" placeholder="coche/furgoneta, moto…"></label>{{/if}}
+      </div>
+    </div>
+    <div class="tdt-health-block {{#if destroyed}}danger{{/if}}">
+      <span><i class="fas fa-shield-heart"></i> {{#if destroyed}}DESTRUIDO{{else}}INTEGRIDAD{{/if}}</span>
+      <div><input type="number" name="system.health.value" value="{{system.health.value}}" min="0"> / <strong>{{system.health.max}}</strong></div>
+      <div class="tdt-health-meter" role="meter" aria-label="Integridad" aria-valuemin="0" aria-valuemax="{{system.health.max}}" aria-valuenow="{{system.health.value}}"><span style="width: {{healthPercent}}%"></span></div>
+      <small>Aguante {{system.endurance.value}}{{#if hasEvasion}} · Esquiva {{system.evasion}}{{/if}}</small>
+      <div class="tdt-health-actions"><button type="button" data-action="damage" title="Aplicar daño"><i class="fas fa-heart-crack"></i></button><button type="button" data-action="heal" title="Reparar"><i class="fas fa-screwdriver-wrench"></i></button></div>
+    </div>
+  </header>
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    <a class="item" data-action="tab" data-group="primary" data-tab="main" role="tab" tabindex="0"><i class="fas {{#if isVehicle}}fa-car-side{{else}}fa-crosshairs{{/if}}"></i><span>{{actorTypeLabel}}</span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="cargo" role="tab" tabindex="0"><i class="fas fa-box"></i><span>Carga <b>{{cargo.length}}</b></span></a>
+    <a class="item" data-action="tab" data-group="primary" data-tab="bio" role="tab" tabindex="0"><i class="fas fa-book-open"></i><span>Notas</span></a>
+  </nav>
+
+  <section class="sheet-body">
+    <div class="tab main" data-group="primary" data-tab="main">
+      <section class="tdt-section">
+        <div class="tdt-section-title"><h2>Tripulación <small class="tdt-count">{{crewCount}}{{#if isVehicle}}{{#if system.passengers}} / {{system.passengers}}{{/if}}{{/if}}</small></h2></div>
+        <ol class="item-list tdt-item-list tdt-crew-list">
+          {{#if driver}}
+          <li class="tdt-crew-member is-driver" data-uuid="{{driver.uuid}}">
+            <img src="{{driver.img}}" alt=""><a data-action="open-actor" role="button" tabindex="0">{{driver.name}}</a>
+            <span class="tdt-item-summary">{{driverLabel}}{{#if isVehicle}}{{#unless driverTrained}} · sin la dote Conducir{{#if system.autopilot}} (piloto automático {{system.autopilot}}){{/if}}{{/unless}}{{/if}}</span>
+            <button type="button" data-action="crew-remove" title="Bajar del {{#if isVehicle}}vehículo{{else}}arma{{/if}}"><i class="fas fa-person-walking-arrow-right"></i></button>
+          </li>
+          {{/if}}
+          {{#each crew as |member|}}
+          <li class="tdt-crew-member" data-uuid="{{member.uuid}}">
+            <img src="{{member.img}}" alt=""><a data-action="open-actor" role="button" tabindex="0">{{member.name}}</a>
+            <span class="tdt-item-summary">Tripulación</span>
+            <button type="button" data-action="crew-driver" title="Hacer {{../driverLabel}}"><i class="fas fa-arrow-up"></i></button>
+            <button type="button" data-action="crew-remove" title="Bajar"><i class="fas fa-person-walking-arrow-right"></i></button>
+          </li>
+          {{/each}}
+          {{#unless crewCount}}<li class="empty">Arrastra aquí personajes o PNJ. El primero {{#if isVehicle}}conduce{{else}}opera el arma{{/if}}; el resto puede disparar las armas montadas.</li>{{/unless}}
+        </ol>
+      </section>
+
+      {{#if isVehicle}}
+      <section class="tdt-section tdt-secondary-grid">
+        <article class="tdt-stat-card">
+          <button type="button" class="tdt-roll-label" data-action="machine-maneuver"><i class="fas fa-car-side"></i> Maniobra</button>
+          <strong>Conducir</strong><small>Destreza o Mente del conductor{{#if modifierText}} · {{modifierText}}{{/if}}</small>
+        </article>
+        <article class="tdt-stat-card">
+          <button type="button" class="tdt-roll-label" data-action="machine-ram"><i class="fas fa-car-burst"></i> Embestir</button>
+          <strong>Daño {{#if system.crashDamage}}{{system.crashDamage}}{{else}}{{system.endurance.value}}{{/if}}</strong><small>Contra el objetivo marcado</small>
+        </article>
+        <article class="tdt-stat-card"><span>Esquiva</span><strong>{{#if hasEvasion}}{{system.evasion}}{{else}}Conducir{{/if}}</strong><small>{{#if hasEvasion}}Fija{{else}}El conductor esquiva con el vehículo{{/if}}</small></article>
+      </section>
+      {{/if}}
+
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Armas montadas <small class="tdt-count">{{weapons.length}}</small></h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="weapon" title="Buscar arma en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="weapon" title="Crear arma"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each weapons as |item|}}
+          <li class="item tdt-item draggable" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}{{#if item.system.properties}} · {{item.system.properties}}{{/if}}</span>
+            <button type="button" data-action="weapon-roll" title="Disparar (tira quien lo maneje)"><i class="fas fa-dice"></i></button>
+            {{#if item.reloadable}}<button type="button" data-action="actor-method" data-method="reloadWeapon" title="Recargar"><i class="fas fa-rotate"></i></button>{{/if}}
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">Sin armas montadas. Arrastra un arma o búscala en los compendios.</li>
+          {{/each}}
+        </ol>
+        <p class="hint">Quien dispara usa su propia Puntería; si hay varios tripulantes que controlas, eliges quién.</p>
+      </section>
+
+      <section class="tdt-section">
+        <h2>Datos</h2>
+        <div class="tdt-machine-grid">
+          <label><span>PV máximos</span><input type="number" name="system.health.max" value="{{system.health.max}}" min="1"></label>
+          <label><span>Aguante</span><input type="number" name="system.endurance.value" value="{{system.endurance.value}}" min="0"></label>
+          <label><span>Esquiva fija</span><input type="number" name="system.evasion" value="{{system.evasion}}" min="0" placeholder="{{#if isVehicle}}Conducir{{else}}DJ{{/if}}"></label>
+          {{#if isVehicle}}
+          <label><span>Modificador de conducción</span><input type="number" name="system.modifier" value="{{system.modifier}}"></label>
+          <label><span>Pasajeros</span><input type="number" name="system.passengers" value="{{system.passengers}}" min="0"></label>
+          <label><span>Daño al embestir</span><input type="number" name="system.crashDamage" value="{{system.crashDamage}}" min="0" placeholder="Aguante"></label>
+          <label><span>Piloto automático</span><input type="number" name="system.autopilot" value="{{system.autopilot}}" min="0"></label>
+          <label class="tdt-check"><input type="checkbox" name="system.flying" {{checked system.flying}}><span>Vuela</span></label>
+          <label class="tdt-check"><input type="checkbox" name="system.analog" {{checked system.analog}}><span>Analógico (no hackeable)</span></label>
+          {{/if}}
+          <label><span>Precio</span><input type="number" name="system.price" value="{{system.price}}" min="0"></label>
+        </div>
+        <p class="hint">{{#if isVehicle}}Deja la Esquiva fija vacía para que el conductor esquive con Conducir. Ponla cuando el vehículo esté aparcado o no tenga conductor.{{else}}Sin Esquiva fija, el DJ decide si un ataque acierta.{{/if}}</p>
+      </section>
+    </div>
+
+    <div class="tab cargo" data-group="primary" data-tab="cargo">
+      <section class="tdt-section tdt-items-section">
+        <div class="tdt-section-title"><h2>Carga</h2><div class="tdt-section-actions"><button type="button" data-action="compendium-pick" data-item-type="gear" title="Buscar objeto en compendios"><i class="fas fa-magnifying-glass"></i></button><button type="button" data-action="item-create" data-item-type="gear" title="Crear objeto"><i class="fas fa-plus"></i></button></div></div>
+        <ol class="item-list tdt-item-list">
+          {{#each cargo as |item|}}
+          <li class="item tdt-item draggable" data-item-id="{{item.id}}">
+            <img src="{{item.img}}" alt=""><a data-action="item-edit" role="button" tabindex="0">{{item.name}}</a>
+            <span class="tdt-item-summary">{{item.summary}}</span>
+            {{> itemControls}}
+          </li>
+          {{else}}<li class="empty">El maletero está vacío. Arrastra objetos aquí para guardarlos.</li>
+          {{/each}}
+        </ol>
+      </section>
+    </div>
+
+    <div class="tab bio" data-group="primary" data-tab="bio">
+      <section class="tdt-section tdt-mecha-notes">
+        <label><span>Descripción</span><textarea name="system.description" placeholder="Modelo, aspecto, reglas especiales…">{{system.description}}</textarea></label>
+        <label><span>Notas</span><textarea name="system.notes" placeholder="Daños, modificaciones, dónde está aparcado…">{{system.notes}}</textarea></label>
+      </section>
+    </div>
+  </section>
+</div>
