@@ -619,6 +619,9 @@ const cyberAnnotations = {
   Animal: { modifiers: [flag("animal")], rules: [rule("dieStep", -1, ["diplomacy"], "Animal (contra quien sepa lo que eres)", { target: "second", optional: true })] },
   "Antecedentes penales": { rules: [rule("dieStep", -1, ["diplomacy"], "Antecedentes penales (policía o seguridad que te ha leído la nuca)", { target: "second", optional: true })] },
   "Chip pirata": { modifiers: [flag("pirateChip")], rules: [] },
+  "Fiel a la marca": { rules: [rule("penalty", 1, [], "Fiel a la marca (llevas implantes de otra marca)", { optional: true })] },
+  // El −2 lo sufre quien opera, no quien tiene la fobia: solo queda el recordatorio en Voluntad.
+  "Fobia al bisturí": { rules: [{ type: "reminder", scopes: ["will"], label: "Fobia al bisturí", text: "Antes de que te instalen, quiten o reparen un implante: Voluntad contra 8. Si fallas, te niegas; si superas, quien te opera penaliza en 2 su Cibernética." }] },
   "Cabeza fría": { rules: [rule("bonus", 2, ["excess"], "Cabeza fría")] },
   Chatarrero: { modifiers: [flag("scrapper")], rules: [] },
   "Fantasma en la red": { modifiers: [flag("netGhost")], rules: [] },
@@ -682,11 +685,12 @@ const upgradeAnnotations = {
   "Brazo de titanio": { rules: [rule("difficulty", 2, ["athletics", "brawl"], "Brazo de titanio (aplicar fuerza)", { optional: true }), rule("damage", 2, ["unarmed"], "Brazo de titanio (puñetazo)", { optional: true })] },
   "Exoesqueleto interno": { modifiers: [mod("armor", -2), mod("endurance", 2)] },
   Servomotores: { modifiers: [flag("servomotors")] },
-  "Zoom óptico": { rules: [rule("bonus", 2, ["perception"], "Zoom óptico (ver a distancia larga o más)", { optional: true })] },
+  "Zoom óptico": { rules: [rule("bonus", 2, ["perception"], "Zoom óptico (ver a distancia larga o más)", { optional: true, sense: "visual" })] },
   "Sincronización ojo-arma": { modifiers: [flag("eyeWeaponSync")] },
   "Amortiguadores reforzados": { modifiers: [flag("legsReinforced")] },
   "Muelles de salto": { rules: [rule("bonus", 2, ["athletics"], "Muelles de salto (saltar)", { optional: true })] },
   "Médula de alto rendimiento": { modifiers: [flag("marrowHigh")] },
+  "Lector de constantes": { rules: [rule("bonus", 1, ["perception"], "Lector de constantes (notar si alguien miente o está nervioso)", { optional: true, sense: "visual" })] },
   "Filtro tóxico": { rules: [rule("bonus", 2, ["fortitude"], "Filtro tóxico (gases y venenos inhalados)", { optional: true })] },
   "Filtro de ruido": { modifiers: [flag("noiseFilter")] },
   "Coagulante sintético": { modifiers: [flag("noBleeding")] }
@@ -712,7 +716,13 @@ const implantAnnotations = {
   Exoesqueleto: { modifiers: [mod("armor", 2)] },
   "Piernas cibernéticas": { modifiers: [flag("legs")], rules: [rule("bonus", 1, ["athletics"], "Piernas cibernéticas (correr)", { optional: true })] },
   "Médula ósea acelerada": { modifiers: [flag("marrow"), flag("marrowDeath")] },
-  "Oído de alto rango": { rules: [rule("bonus", 2, ["perception"], "Oído de alto rango (Percepción auditiva)", { optional: true })] }
+  "Oído de alto rango": { rules: [rule("bonus", 2, ["perception"], "Oído de alto rango (Percepción auditiva)", { optional: true, sense: "auditory" })] },
+  "Nariz sintética": { rules: [rule("bonus", 2, ["perception"], "Nariz sintética (Percepción por olfato)", { optional: true, sense: "olfactory" })] },
+  "Oído interno giroscópico": { rules: [rule("bonus", 1, ["acrobatics"], "Oído interno giroscópico (mantener el equilibrio)", { optional: true })] },
+  "Bolsillo subdérmico": { rules: [rule("bonus", 2, ["stealth"], "Bolsillo subdérmico (ocultar el objeto)", { optional: true })] },
+  "Cuerdas vocales moduladas": { rules: [rule("bonus", 2, ["deception"], "Cuerdas vocales moduladas (suplantar por la voz)", { optional: true })] },
+  "Piel cromática": { rules: [rule("bonus", 1, ["society", "diplomacy"], "Piel cromática (si el DJ lo permite)", { optional: true })] },
+  "Dedos herramienta": { rules: [{ type: "reminder", scopes: ["crafting"], label: "Dedos herramienta", text: "En arreglos pequeños no cuentas como «sin herramientas»: sin el −2 de Construir." }] }
 };
 const implants = headedBlocks(section(cyberMd, "## Implantes", "### Mejoras de implantes"), 4).map(block => {
   const ccText = field(block.body, "Coste de CC");

@@ -95,6 +95,8 @@ export class TDTActor extends Actor {
     const perceptionBase = value("step.perception");
     system.perception.auditoryFaces = stepRolledDie(4, perceptionBase + value("step.perception.auditory"));
     system.perception.visualFaces = stepRolledDie(4, perceptionBase + value("step.perception.visual"));
+    system.perception.olfactoryFaces = stepRolledDie(4, perceptionBase + value("step.perception.olfactory"));
+    system.perception.tasteFaces = stepRolledDie(4, perceptionBase + value("step.perception.taste"));
     system.perception.faces = stepRolledDie(4, perceptionBase);
 
     const armor = this.items.filter(item => item.type === "armor" && item.system.equipped);
@@ -208,11 +210,13 @@ export class TDTActor extends Actor {
   }
 
   async rollPerception(options = {}) {
-    const selectedSense = ["general", "visual", "auditory"].includes(options.sense) ? options.sense : "general";
+    const selectedSense = ["general", "visual", "auditory", "olfactory", "taste"].includes(options.sense) ? options.sense : "general";
     const senses = {
       general: { label: "General", faces: this.system.perception?.faces ?? 4 },
       visual: { label: "Visual", faces: this.system.perception?.visualFaces ?? 4 },
-      auditory: { label: "Sonoro", faces: this.system.perception?.auditoryFaces ?? 4 }
+      auditory: { label: "Sonora", faces: this.system.perception?.auditoryFaces ?? 4 },
+      olfactory: { label: "Olfativa", faces: this.system.perception?.olfactoryFaces ?? 4 },
+      taste: { label: "Gustativa", faces: this.system.perception?.tasteFaces ?? 4 }
     };
     return this.rollCheck({
       kind: "perception",
@@ -227,7 +231,7 @@ export class TDTActor extends Actor {
       linkedDice: true,
       difficulty: options.difficulty ?? 0,
       extraRules: options.extraRules ?? [],
-      extraFields: `<div class="form-group"><label>Tipo de percepción</label><select name="perceptionSense"><option value="general" ${selectedSense === "general" ? "selected" : ""}>General</option><option value="visual" ${selectedSense === "visual" ? "selected" : ""}>Visual</option><option value="auditory" ${selectedSense === "auditory" ? "selected" : ""}>Sonoro</option></select></div>`,
+      extraFields: `<div class="form-group"><label>Tipo de percepción</label><select name="perceptionSense"><option value="general" ${selectedSense === "general" ? "selected" : ""}>General</option><option value="visual" ${selectedSense === "visual" ? "selected" : ""}>Visual</option><option value="auditory" ${selectedSense === "auditory" ? "selected" : ""}>Sonora</option><option value="olfactory" ${selectedSense === "olfactory" ? "selected" : ""}>Olfativa</option><option value="taste" ${selectedSense === "taste" ? "selected" : ""}>Gustativa</option></select></div>`,
       readExtra: (_form, data) => ({ perceptionSense: data.get("perceptionSense") || selectedSense }),
       reroll: { method: "rollPerception", args: [stripOptions(options)] },
       silent: options.silent

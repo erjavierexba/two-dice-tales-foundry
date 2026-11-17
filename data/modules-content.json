@@ -9413,6 +9413,22 @@
      }
     },
     {
+     "name": "Cromo de segunda mano",
+     "type": "feat",
+     "img": "systems/tdt/assets/icons/disadvantage.svg",
+     "system": {
+      "description": "Tus implantes vienen de un desguace, y se nota. Al comienzo de cada sesión, tira 1d4: con un 1, uno de tus implantes (a elección del DJ) queda averiado (ver Estado del equipo).",
+      "cost": -4,
+      "costFormula": "",
+      "requirements": "",
+      "category": "disadvantage",
+      "tags": [],
+      "module": "cyber",
+      "modifiers": [],
+      "rules": []
+     }
+    },
+    {
      "name": "Deuda con una corporación",
      "type": "feat",
      "img": "systems/tdt/assets/icons/disadvantage.svg",
@@ -9426,6 +9442,61 @@
       "module": "cyber",
       "modifiers": [],
       "rules": []
+     }
+    },
+    {
+     "name": "Fiel a la marca",
+     "type": "feat",
+     "img": "systems/tdt/assets/icons/disadvantage.svg",
+     "system": {
+      "description": "Solo te fías del cromo de una corporación (la que elijas con el DJ), y el resto te parece basura para pobres. No aceptas implantes de otra marca, y si te los ponen a la fuerza, penaliza en 1 todas tus tiradas hasta que te los quiten.",
+      "cost": -2,
+      "costFormula": "",
+      "requirements": "",
+      "category": "disadvantage",
+      "tags": [],
+      "module": "cyber",
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "reminder",
+        "scopes": [],
+        "label": "Fiel a la marca",
+        "text": "Solo te fías del cromo de una corporación (la que elijas con el DJ), y el resto te parece basura para pobres. No aceptas implantes de otra marca, y si te los ponen a la fuerza, penaliza en 1 todas tus tiradas hasta que te los quiten."
+       },
+       {
+        "type": "penalty",
+        "value": 1,
+        "scopes": [],
+        "label": "Fiel a la marca (llevas implantes de otra marca)",
+        "optional": true
+       }
+      ]
+     }
+    },
+    {
+     "name": "Fobia al bisturí",
+     "type": "feat",
+     "img": "systems/tdt/assets/icons/disadvantage.svg",
+     "system": {
+      "description": "Quieres cromo, pero te desmayas al ver una camilla. Cada vez que alguien vaya a instalarte, quitarte o repararte un implante, tira Voluntad de dificultad 8. Si fallas, te niegas o sales corriendo; si lo superas, te dejas, pero no paras de moverte: quien te opera penaliza en 2 su tirada de Cibernética.",
+      "cost": -3,
+      "costFormula": "",
+      "requirements": "",
+      "category": "disadvantage",
+      "tags": [],
+      "module": "cyber",
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "will"
+        ],
+        "label": "Fobia al bisturí",
+        "text": "Antes de que te instalen, quiten o reparen un implante: Voluntad contra 8. Si fallas, te niegas; si superas, quien te opera penaliza en 2 su Cibernética."
+       }
+      ]
      }
     },
     {
@@ -9680,6 +9751,31 @@
       "machineEnduranceZero": false,
       "ignoreHumanEndurance": false,
       "price": 10000
+     }
+    },
+    {
+     "name": "Frenazo",
+     "type": "hack",
+     "img": "systems/tdt/assets/icons/hack.svg",
+     "system": {
+      "description": "Le clavas los frenos a un vehículo con algún componente conectado. Si va en marcha, quien lo conduce tira Conducir de dificultad 8 (si es un enemigo, decide el DJ). Si falla, el vehículo se estampa contra lo que tenga delante: recibe su Daño de estampar, y cada ocupante recibe la mitad. Los vehículos analógicos no se pueden frenar así. En una persecución, un vehículo frenado se queda atrás.",
+      "module": "cyber",
+      "defense": "gm",
+      "requirement": 6,
+      "damage": 0,
+      "properties": "Dispositivo",
+      "loaded": false,
+      "wired": false,
+      "device": true,
+      "implantsOnly": false,
+      "neuralOverload": false,
+      "duration": "",
+      "area": false,
+      "singleAttack": false,
+      "nonLethal": false,
+      "machineEnduranceZero": false,
+      "ignoreHumanEndurance": false,
+      "price": 5000
      }
     },
     {
@@ -10157,7 +10253,28 @@
            "perception"
           ],
           "label": "Zoom óptico (ver a distancia larga o más)",
-          "optional": true
+          "optional": true,
+          "sense": "visual"
+         }
+        ]
+       },
+       {
+        "name": "Lector de constantes",
+        "key": "lector de constantes",
+        "cc": 2,
+        "installed": false,
+        "description": "Ves el pulso y la temperatura de quien miras a distancia corta o menos. Bonifica en 1 tus tiradas para notar si alguien miente o está nervioso.",
+        "modifiers": [],
+        "rules": [
+         {
+          "type": "bonus",
+          "value": 1,
+          "scopes": [
+           "perception"
+          ],
+          "label": "Lector de constantes (notar si alguien miente o está nervioso)",
+          "optional": true,
+          "sense": "visual"
          }
         ]
        },
@@ -10381,10 +10498,324 @@
          "perception"
         ],
         "label": "Oído de alto rango (Percepción auditiva)",
-        "optional": true
+        "optional": true,
+        "sense": "auditory"
        }
       ],
       "price": 15000
+     }
+    },
+    {
+     "name": "Sentido camarógrafo",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nUn sensor en la nuca que capta el parpadeo de los objetivos y las emisiones de las cámaras.\n* Siempre sabes si una cámara o un dron te está grabando en este momento, hasta distancia media. Notas más o menos de qué dirección viene, pero no dónde está exactamente.\n* Si alguien usa Apagón de cámaras cerca de ti, sabes al instante si ha funcionado.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Nariz sintética",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nUn olfato de perro de rastreo metido en una nariz humana.\n* Bonifica en 2 tus tiradas de Percepción por olfato.\n* Reconoces el olor de explosivos, drogas, sangre y gases antes de que hagan efecto.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "bonus",
+        "value": 2,
+        "scopes": [
+         "perception"
+        ],
+        "label": "Nariz sintética (Percepción por olfato)",
+        "optional": true,
+        "sense": "olfactory"
+       }
+      ],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Papilas de laboratorio",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 1.\n\nUn analizador químico en la lengua.\n* Con probar algo sabes si lleva veneno, droga o sedante. No te protege de sus efectos: solo te enteras.",
+      "module": "cyber",
+      "cc": 1,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 5000
+     }
+    },
+    {
+     "name": "Contador Geiger subdérmico",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 1.\n\nPara quien pasa demasiado tiempo en el yermo.\n* Un cosquilleo bajo la piel te avisa si hay radiación cerca, y se vuelve más fuerte cuanto más intensa es.",
+      "module": "cyber",
+      "cc": 1,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 5000
+     }
+    },
+    {
+     "name": "Reloj interno",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 1.\n\nUn reloj y una brújula conectados a tu VirtualSelf.\n* Sabes siempre qué hora es y dónde está el norte, y recuerdas el camino que has hecho. En interiores no te pierdes nunca.",
+      "module": "cyber",
+      "cc": 1,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 5000
+     }
+    },
+    {
+     "name": "Termostato subdérmico",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nUna red de resistencias y disipadores bajo la piel.\n* El frío y el calor extremos no te afectan, siempre que no sean letales.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Regulador del sueño",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nUn temporizador que apaga y enciende tu cerebro.\n* Te duermes y te despiertas cuando quieres, y 4 horas de sueño te descansan como 8. No te cura más que un descanso normal.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Oído interno giroscópico",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nUn giroscopio en lugar del oído interno.\n* Nunca te mareas.\n* Bonifica en 1 tus tiradas de Acrobacias para mantener el equilibrio, también en vehículos en marcha.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "bonus",
+        "value": 1,
+        "scopes": [
+         "acrobatics"
+        ],
+        "label": "Oído interno giroscópico (mantener el equilibrio)",
+        "optional": true
+       }
+      ],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Bolsillo subdérmico",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 1.\n\nUn hueco bajo la piel del antebrazo o del muslo.\n* Puedes guardar en él un objeto pequeño, como un chip, una llave o una tarjeta. Un cacheo normal no lo encuentra; un escáner o un Lector de nuca, quizá (DJ).\n* Si hace falta tirar para ocultar el objeto, bonifica en 2 tu tirada de Sigilo.",
+      "module": "cyber",
+      "cc": 1,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "bonus",
+        "value": 2,
+        "scopes": [
+         "stealth"
+        ],
+        "label": "Bolsillo subdérmico (ocultar el objeto)",
+        "optional": true
+       }
+      ],
+      "price": 5000
+     }
+    },
+    {
+     "name": "Cuerdas vocales moduladas",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nUnas cuerdas vocales sintéticas que pueden sonar como cualquiera.\n* Puedes imitar una voz que hayas oído durante al menos un minuto.\n* Bonifica en 2 tus tiradas de Engaño para hacerte pasar por alguien solo con la voz.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "bonus",
+        "value": 2,
+        "scopes": [
+         "deception"
+        ],
+        "label": "Cuerdas vocales moduladas (suplantar por la voz)",
+        "optional": true
+       }
+      ],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Piel cromática",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 1.\n\nPigmentos controlados por tu VirtualSelf.\n* Cambias el color y el dibujo de tu piel o de tus tatuajes cuando quieres. Es solo estético, pero en ambientes donde se lleve el DJ puede bonificar en 1 tus tiradas de Sociedad o Diplomacia.",
+      "module": "cyber",
+      "cc": 1,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "bonus",
+        "value": 1,
+        "scopes": [
+         "society",
+         "diplomacy"
+        ],
+        "label": "Piel cromática (si el DJ lo permite)",
+        "optional": true
+       }
+      ],
+      "price": 5000
+     }
+    },
+    {
+     "name": "Dedos herramienta",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nLas puntas de tus dedos esconden un destornillador, una linterna y una ganzúa.\n* Para arreglos pequeños nunca cuentas como \"sin herramientas\", así que no tienes el −2 de Construir. Para trabajos grandes sigue haciendo falta un taller.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [
+       {
+        "type": "reminder",
+        "scopes": [
+         "crafting"
+        ],
+        "label": "Dedos herramienta",
+        "text": "En arreglos pequeños no cuentas como «sin herramientas»: sin el −2 de Construir."
+       }
+      ],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Caja negra",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nUna grabadora conectada a tus ojos y oídos.\n* Grabas en audio y vídeo lo que ves y oyes. Para sacar la grabación hay que conectarte por cable.\n* La mayor parte de corporaciones piden esta instalación como requisito a guardias de seguridad y VIPs.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 10000
+     }
+    },
+    {
+     "name": "Chivato de red",
+     "type": "implant",
+     "img": "systems/tdt/assets/icons/implant.svg",
+     "system": {
+      "description": "Coste de CC: 2.\n\nRequisitos: AVS\nUn registro de conexiones que te avisa de lo que el VirtualSelf de serie calla.\n* Te enteras cuando alguien te hace Ping o intenta una intrusión en tu VirtualSelf, aunque te defiendas con éxito. No sabes quién ha sido, solo que lo han intentado.",
+      "module": "cyber",
+      "cc": 2,
+      "tier": "minor",
+      "installed": true,
+      "upgrades": [],
+      "exclusiveUpgrades": false,
+      "slots": 1,
+      "modifiers": [],
+      "rules": [],
+      "price": 10000
      }
     },
     {
@@ -11002,6 +11433,66 @@
       "module": "cyber",
       "quantity": 1,
       "price": 3000
+     }
+    },
+    {
+     "name": "Granada de humo",
+     "type": "gear",
+     "img": "systems/tdt/assets/icons/gear.svg",
+     "system": {
+      "description": "Explosivo lanzable con Área 6. Durante 3 rondas (más si no corre el aire), quien esté dentro del humo o detrás de él tiene cobertura mediana contra ataques a distancia. La visión térmica ve a través.",
+      "category": "consumable",
+      "module": "cyber",
+      "quantity": 1,
+      "price": 500
+     }
+    },
+    {
+     "name": "Granada aturdidora",
+     "type": "gear",
+     "img": "systems/tdt/assets/icons/gear.svg",
+     "system": {
+      "description": "Explosivo lanzable con Área 6 y sin daño. Quien esté dentro del área tira Fortaleza de dificultad 8 (si es un enemigo, compara su Fortaleza con 8): si falla, queda aturdido y pierde su próximo turno. El Filtro de ruido te hace inmune.",
+      "category": "consumable",
+      "module": "cyber",
+      "quantity": 1,
+      "price": 1500
+     }
+    },
+    {
+     "name": "Carga de brecha",
+     "type": "gear",
+     "img": "systems/tdt/assets/icons/gear.svg",
+     "system": {
+      "description": "Explosivo para abrir paso. Colocarla en una puerta o una pared lleva tu turno, y explota cuando quieras, por VirtualSelf. Hace Daño 10, Antiestructura a lo que tiene pegado, y Daño 4 a quien esté a distancia muy corta al otro lado. Nadie en el edificio deja de oírla.",
+      "category": "misc",
+      "module": "cyber",
+      "quantity": 1,
+      "price": 3000
+     }
+    },
+    {
+     "name": "Dron de reconocimiento",
+     "type": "gear",
+     "img": "systems/tdt/assets/icons/gear.svg",
+     "system": {
+      "description": "Dron de apoyo sin arma, con el que ves mejor a distancia (ver Drones).",
+      "category": "misc",
+      "module": "cyber",
+      "quantity": 1,
+      "price": 6000
+     }
+    },
+    {
+     "name": "Dron de combate",
+     "type": "gear",
+     "img": "systems/tdt/assets/icons/gear.svg",
+     "system": {
+      "description": "Dron de apoyo con una ametralladora ligera (ver Drones).",
+      "category": "misc",
+      "module": "cyber",
+      "quantity": 1,
+      "price": 12000
      }
     },
     {
@@ -13319,7 +13810,28 @@
              "perception"
             ],
             "label": "Zoom óptico (ver a distancia larga o más)",
-            "optional": true
+            "optional": true,
+            "sense": "visual"
+           }
+          ]
+         },
+         {
+          "name": "Lector de constantes",
+          "key": "lector de constantes",
+          "cc": 2,
+          "installed": false,
+          "description": "Ves el pulso y la temperatura de quien miras a distancia corta o menos. Bonifica en 1 tus tiradas para notar si alguien miente o está nervioso.",
+          "modifiers": [],
+          "rules": [
+           {
+            "type": "bonus",
+            "value": 1,
+            "scopes": [
+             "perception"
+            ],
+            "label": "Lector de constantes (notar si alguien miente o está nervioso)",
+            "optional": true,
+            "sense": "visual"
            }
           ]
          },
@@ -14029,7 +14541,8 @@
            "perception"
           ],
           "label": "Oído de alto rango (Percepción auditiva)",
-          "optional": true
+          "optional": true,
+          "sense": "auditory"
          }
         ],
         "price": 15000

@@ -13,7 +13,9 @@ const LEGACY_FEAT_MODIFIERS = {
   "oído fino": [{ target: "step.perception.auditory", value: 1 }],
   "murciélago": [{ target: "step.perception.auditory", value: 1 }],
   "vista de cazador": [{ target: "step.perception.visual", value: 1 }],
-  "vista de águila": [{ target: "step.perception.visual", value: 1 }]
+  "vista de águila": [{ target: "step.perception.visual", value: 1 }],
+  "catador de vinos": [{ target: "step.perception.olfactory", value: 1 }, { target: "step.perception.taste", value: 1 }],
+  "buscador de trufas": [{ target: "step.perception.olfactory", value: 2 }]
 };
 
 /** Whether an item currently grants its modifiers. */

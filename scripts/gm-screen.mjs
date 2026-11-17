@@ -48,10 +48,20 @@ export function referenceSections() {
       ["Ataque múltiple", `Jugadores: la habilidad baja un paso por ataque extra (hasta d4). Enemigos: −${Number(rule("enemyMultiAttack")) || 2} de dificultad por ataque, no por debajo de 3.`],
       ["Caído", "A 0 PV, el daño sobrante es la dificultad. Fortaleza cada turno: éxito −2, fallo +2. 0–1 estable, 10–11 muerte."],
       ["Ayudar", "Tarea sencilla: bonifica 1. Compleja: el ayudante tira a −4; éxito bonifica 1, fallo penaliza 1."],
-      ["Cobertura", "Reduce la dificultad de Esquiva o Fortaleza: ligera 1, mediana 3, total 5."],
+      ["Cobertura", "Reduce la dificultad de Esquiva o Fortaleza: ligera 1, mediana 3, total 5. Si el cubierto es un enemigo, su Esquiva o Fortaleza sube lo mismo."],
       ["Descanso", "Cura 1 PV; +1 si te tratan, +1 si quien trata tiene Manos sanadoras."]
     ]) },
     { title: "Distancias", icon: "fa-ruler", table: table(["Contacto", "Muy corta", "Corta", "Media", "Media-larga", "Larga", "Muy larga", "Extrema"], [["CaC", "3 m", "6 m", "12 m", "30 m", "60 m", "240 m", "2 km"]]) },
+    { title: "Persecuciones", icon: "fa-car-side", table: table(["Paso", "Regla"], [
+      ["Distancia", "Muy cerca · cerca · medio · lejos · muy lejos. Pasar de muy cerca: pillado. Pasar de muy lejos: escapado."],
+      ["Umbrales", "El DJ fija un umbral menor y uno mayor por rival. Conducir por debajo del menor: empeora un rango. Igual o por encima del mayor: mejora uno."],
+      ["Una acción por tramo", "El grupo elige una sola acción para el vehículo; luego, una tirada de conducción. (C) = solo el conductor."],
+      ["Aceleración (C)", "Bonifica 1 la tirada de conducción."],
+      ["Pinchar rueda", "Dificultad normal +2 por rango más allá de muy cerca. Acierto: umbrales −1 el resto de la persecución; por 5 o más, −2."],
+      ["Buscar atajo", "Mente + Supervivencia. Éxito: bonifica 3 la conducción; fallo: penaliza 3."],
+      ["Crear obstáculo", "Más fácil que pinchar una rueda; puede estorbar a todos (DJ)."],
+      ["Maximum drifto (C)", "Solo huyendo. Umbrales +2 este tramo. Llegas al mayor: te alejas dos rangos. Si no, se acercan dos."]
+    ]) },
     { title: "Villanos y punto de héroe", icon: "fa-skull", table: table(["Recurso", "Regla"], [
       ["Fuente de villano (8–20)", "1 punto: +2 a una dificultad. 2: +4 a una defensa o al aguante. 3: turno extra (una vez por combate)."],
       ["Escape magistral", "Con al menos 4 puntos, el villano escapa; el resto queda como dificultad para perseguirlo."],
@@ -94,10 +104,12 @@ export function referenceSections() {
   if (moduleActive("cyber")) {
     const removal = TDT.implantRemovalDifficulty ?? {};
     modules.push({ title: TDT.modules.cyber, icon: "fa-microchip", table: table(["Regla", "Efecto"], [
-      ["Compatibilidad (CC)", "10 + puntuación de Social × 5. Implantes: menor 2–3, moderado 4–6, mayor 7–9, extremo 10–12."],
+      ["Compatibilidad (CC)", "10 + puntuación de Social × 5. Implantes: menor 1–3, moderado 4–6, mayor 7–9, extremo 10–12."],
       ["Exceso de carga", "Voluntad contra 4 + exceso. Fallo: absorto (pierde el turno). Fallo por 4 o más, o pifia: ataca al más cercano."],
       ["Desalineado", "Con exceso 10 o más, fallar cualquier tirada de exceso: el personaje pasa al DJ. No hay vuelta atrás."],
       ["Quitar implantes", `Cibernética contra ${[removal.minor, removal.moderate, removal.major, removal.extreme].filter(Boolean).join("/")} según el tipo.`],
+      ["Nivel de alerta (0–10)", "+1 fallo de Sigilo/Engaño, rastro o cámara; +2 pifia, testigo o disparo; +3 alarma. 3 sospecha, 6 alarma, 10 cierre total."],
+      ["Nodos de subred", "Hacking contra la subred (+2 protegido, +3 núcleo). Fallo: alerta +1. Fallo por 4 o pifia: Chispazo y fuera, alerta +2."],
       ["Defensas de hacks", Object.values(TDT.hackDefenses).join(", ") + ". Enemigos contra intrusión: su Hacking, o 4."]
     ]) });
   }

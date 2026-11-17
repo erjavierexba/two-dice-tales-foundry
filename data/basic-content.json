@@ -640,6 +640,44 @@
       }
     },
     {
+      "name": "Buscador de trufas",
+      "type": "feat",
+      "system": {
+        "description": "Requisitos: Catador de vinos Encontrarías una trufa enterrada bajo medio metro de tierra, y también los calcetines que tu compañero escondió hace tres semanas. A la hora de usar la percepción olfativa, incrementa dos veces ambos dados para percepción (sin otras dotes, 2d6 a 2d10). El problema es que los malos olores te tumban: cuando la causa sea un mal olor, penaliza en 2 tus tiradas de fortaleza y voluntad.",
+        "cost": 3,
+        "requirements": "Catador de vinos",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception",
+              "fortitude",
+              "will"
+            ],
+            "label": "Buscador de trufas",
+            "text": "Requisitos: Catador de vinos Encontrarías una trufa enterrada bajo medio metro de tierra, y también los calcetines que tu compañero escondió hace tres semanas. A la hora de usar la percepción olfativa, incrementa dos veces ambos dados para percepción (sin otras dotes, 2d6 a 2d10). El problema es que los malos olores te tumban: cuando la causa sea un mal olor, penaliza en 2 tus tiradas de fortaleza y voluntad."
+          },
+          {
+            "type": "penalty",
+            "value": 2,
+            "scopes": [
+              "fortitude",
+              "will"
+            ],
+            "optional": true,
+            "label": "Buscador de trufas (contra un mal olor)"
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "step.perception.olfactory",
+            "value": 2
+          }
+        ]
+      }
+    },
+    {
       "name": "Conducir",
       "type": "feat",
       "system": {
@@ -686,6 +724,36 @@
             ],
             "optional": true,
             "label": "Carterista de la pista"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Catador de vinos",
+      "type": "feat",
+      "system": {
+        "description": "Notas afrutadas, un fondo de roble y un leve toque a calcetín usado. A la hora de usar la percepción olfativa, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6). También se aplica cuando usas el paladar para percibir algo.",
+        "cost": 3,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "perception"
+            ],
+            "label": "Catador de vinos",
+            "text": "Notas afrutadas, un fondo de roble y un leve toque a calcetín usado. A la hora de usar la percepción olfativa, incrementa ambos dados para percepción (sin otras dotes, 2d4 a 2d6). También se aplica cuando usas el paladar para percibir algo."
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "step.perception.olfactory",
+            "value": 1
+          },
+          {
+            "target": "step.perception.taste",
+            "value": 1
           }
         ]
       }

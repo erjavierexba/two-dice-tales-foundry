@@ -108,6 +108,14 @@ export const BASIC_FEAT_OVERRIDES = {
   // Percepción
   "Oído fino": { modifiers: [mod("step.perception.auditory", 1)], rules: [], reminderScopes: ["perception"], reminderSense: "auditory" },
   "Vista de cazador": { modifiers: [mod("step.perception.visual", 1)], rules: [], reminderScopes: ["perception"], reminderSense: "visual" },
+  "Catador de vinos": { modifiers: [mod("step.perception.olfactory", 1), mod("step.perception.taste", 1)], rules: [], reminderScopes: ["perception"] },
+  "Buscador de trufas": {
+    modifiers: [mod("step.perception.olfactory", 2)],
+    reminderScopes: ["perception", "fortitude", "will"],
+    rules: [
+      r("penalty", 2, ["fortitude", "will"], { ...O, label: "Buscador de trufas (contra un mal olor)" })
+    ]
+  },
   "Murciélago": {
     modifiers: [mod("step.perception.auditory", 1)],
     reminderSense: "auditory",
