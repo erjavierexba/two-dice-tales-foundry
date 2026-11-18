@@ -70,13 +70,13 @@ function inferFeatRules(name, description) {
 }
 
 const feats = [];
-const featBlock = section("### Desventajas", "### Inventario");
+const featBlock = section("### Compendio de desventajas", "### Inventario");
 const featMatches = [...featBlock.matchAll(/^####\s+(.+?)\s+\(Coste:\s*([+-]?\d+)\)\s*$([\s\S]*?)(?=^####\s|^###\s|(?![\s\S]))/gm)];
 for (const match of featMatches) {
   const name = clean(match[1]);
   const cost = Number(match[2]);
   const description = clean(match[3]);
-  const requirements = clean(match[3].match(/\*\*Requisitos:\*\*\s*([^\n]+)/i)?.[1] ?? "");
+  const requirements = clean(match[3].match(/\*\*Requisitos:\*\*\s*([^\n]+)/i)?.[1] ?? "").replace(/[.]$/, "");
   feats.push({
     name,
     type: "feat",
@@ -119,13 +119,14 @@ const weapons = weaponRows.map(([name, primary, properties]) => {
 });
 
 const armorRows = parseTable(section("####  Armaduras", "### Objetos"), "Tipo de armadura");
-const armors = armorRows.map(([name, endurance, evasionPenalty, powerRequired]) => ({
+const armors = armorRows.map(([name, endurance, evasionEffect, powerRequired]) => ({
   name: `Armadura ${name.toLowerCase()}`,
   type: "armor",
   system: {
     description: `Potencia necesaria: ${powerRequired}`,
     endurance: Number(endurance),
-    evasionPenalty: Math.abs(Number(evasionPenalty) || 0),
+    evasionPenalty: 0,
+    evasionReduction: /reduce/i.test(evasionEffect) ? 1 : 0,
     powerRequired: Number(powerRequired.match(/d(\d+)/)?.[1] ?? 0),
     quantity: 1,
     equipped: false

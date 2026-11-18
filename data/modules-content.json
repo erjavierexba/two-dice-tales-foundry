@@ -32,7 +32,7 @@
      }
     },
     {
-     "name": "Cac ligera",
+     "name": "CaC ligera",
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
@@ -53,7 +53,7 @@
      }
     },
     {
-     "name": "Cac media",
+     "name": "CaC media",
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
@@ -74,7 +74,7 @@
      }
     },
     {
-     "name": "Cac pesada",
+     "name": "CaC pesada",
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
@@ -1375,7 +1375,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Generas un ataque mágico apuntando a un objetivo. Este ataque es de alcance medio y puede ejecutar ataques múltiples. Tiene la propiedad Daño 3, pero al adquirir este dote, debes elegir el elemento que expulsas con tu proyectil mágico.",
+      "description": "Generas un ataque mágico apuntando a un objetivo. Este ataque es de alcance medio y puede ejecutar ataques múltiples. Tiene la propiedad Daño 3, pero al adquirir esta dote, debes elegir el elemento que expulsas con tu proyectil mágico.",
       "cost": 4,
       "costFormula": "",
       "requirements": "",
@@ -1511,7 +1511,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Curas a un objetivo con el que estés en contacto, curando 2 puntos de vida. Si fallas la tirada de la etiqueta Incremental por más de 4 o sacas una pifia, en lugar de curar, infringe 1 punto de daño, ignorando el aguante. Si un objetivo está inconsciente porque está caído, antes de añadirle los puntos de vida debe pasar la tirada de caído con la dificultad reducida en 4. Si la pasa, restaura los 2 puntos de vida y vuelve a la consciencia, si la falla simplemente conserva esta reducción para la siguiente tirada una vez más.",
+      "description": "Curas a un objetivo con el que estés en contacto, curando 2 puntos de vida. Si fallas la tirada de la etiqueta Incremental por más de 4 o sacas una pifia, en lugar de curar, inflige 1 punto de daño, ignorando el aguante. Si un objetivo está inconsciente porque está caído, antes de añadirle los puntos de vida debe pasar la tirada de caído con la dificultad reducida en 4. Si la pasa, restaura los 2 puntos de vida y vuelve a la consciencia, si la falla simplemente conserva esta reducción para la siguiente tirada una vez más.",
       "cost": 4,
       "costFormula": "",
       "requirements": "",
@@ -1531,7 +1531,7 @@
          "mind"
         ],
         "label": "Magia restauradora",
-        "text": "Curas a un objetivo con el que estés en contacto, curando 2 puntos de vida. Si fallas la tirada de la etiqueta Incremental por más de 4 o sacas una pifia, en lugar de curar, infringe 1 punto de daño, ignorando el aguante. Si un objetivo está inconsciente porque está caído, antes de añadirle los puntos de vida debe pasar la tirada de caído con la dificultad reducida en 4. Si la pasa, restaura los 2 puntos de vida y vuelve a la consciencia, si la falla simplemente conserva esta reducción para la siguiente tirada una vez más."
+        "text": "Curas a un objetivo con el que estés en contacto, curando 2 puntos de vida. Si fallas la tirada de la etiqueta Incremental por más de 4 o sacas una pifia, en lugar de curar, inflige 1 punto de daño, ignorando el aguante. Si un objetivo está inconsciente porque está caído, antes de añadirle los puntos de vida debe pasar la tirada de caído con la dificultad reducida en 4. Si la pasa, restaura los 2 puntos de vida y vuelve a la consciencia, si la falla simplemente conserva esta reducción para la siguiente tirada una vez más."
        }
       ],
       "incremental": 2
@@ -1744,7 +1744,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Reduce todas las pruebas que requieran potencia o destreza de un objetivo en 2 durante un turno. Para infringir este efecto debe hacerse una prueba contra la voluntad enemiga.",
+      "description": "Penaliza en 2 todas las pruebas que requieran Potencia o Destreza del objetivo durante un turno. Para aplicar este efecto, debe hacerse una prueba contra la Voluntad enemiga.",
       "cost": 4,
       "costFormula": "",
       "requirements": "",
@@ -1764,7 +1764,18 @@
          "will"
         ],
         "label": "Ralentizar",
-        "text": "Reduce todas las pruebas que requieran potencia o destreza de un objetivo en 2 durante un turno. Para infringir este efecto debe hacerse una prueba contra la voluntad enemiga."
+        "text": "Penaliza en 2 todas las pruebas que requieran Potencia o Destreza del objetivo durante un turno. Para aplicar este efecto, debe hacerse una prueba contra la Voluntad enemiga."
+       },
+       {
+        "type": "penalty",
+        "scopes": [
+         "power",
+         "dexterity",
+         "will"
+        ],
+        "value": 2,
+        "label": "Ralentizar",
+        "optional": true
        }
       ],
       "incremental": 2
@@ -1965,7 +1976,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Requisitos: Potencia 1d6.\n\nEntras en un estado berseker. Cada vez que intentes infligir un golpe, añade 1d4 a la tirada, pero cuando algún daño vaya a afectar a tus puntos de vida, añadele 1d4. No puedes usar ninguna dote que tenga la etiqueta Concentración.",
+      "description": "Requisitos: Potencia 1d6.\n\nEntras en un estado berseker. Cada vez que intentes infligir un golpe, añade 1d4 a la tirada, pero cuando algún daño vaya a afectar a tus puntos de vida, añádele 1d4. No puedes usar ninguna dote que tenga la etiqueta Concentración.",
       "cost": 8,
       "costFormula": "",
       "requirements": "Potencia 1d6",
@@ -2752,7 +2763,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Coste en puntos de inventario: 2.\n\nPuedes detectar a tus aliados en un gran radio. A discreción del director de juego, el sensor podría detectar diferentes tipos de cosas. Si vuelves a adquirir este dote, puedes preguntarle al mecha para detectar algo a placer.",
+      "description": "Coste en puntos de inventario: 2.\n\nPuedes detectar a tus aliados en un gran radio. A discreción del DJ, el sensor puede detectar otros tipos de elementos. Si vuelves a adquirir esta dote, puedes configurar el mecha para detectar un tipo adicional.",
       "cost": 2,
       "costFormula": "",
       "requirements": "",
@@ -2786,7 +2797,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Coste en puntos de inventario: 2 x categoría.\n\nSignifica “combinémonos”, puedes fusionarte con cualquier otro mecha de tu mismo tamaño que también tenga esta dote, provocando que aumente la categoría del mecha y ganando la dote “copiloto”. Si se combinan 2 mechas de categoría 6, surge de forma temporal un mecha de categoría 7:\n| Categoría | Robustez | Maniobra táctica | Aguante | Salud | Puntos de inventario | Desplazamiento | Velocidad de crucero(km/h) | Tamaño (m) |\n| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n| 7 | d12 | d4 | 24 | 50 | 200 | d4+1 | 200 | 60 |\nSi es de tamaños diferentes, el mecha de mayor tamaño gana bonifica 1 en todas las tiradas junto con la dote “copiloto”. También aumenta su aguante en 1.\nEn cualquier caso, el mecha resultante obtiene todas las armas de los mechas que lo componen pero cambiando la categoría de esta si procede. Si ambos mechas tenían una misma arma, las tiradas con este arma ganan bonifica 2.\nEsta función requiere un drenaje voluntad por turno para ser mantenida la forma, pero al ser combinado, los puntos de vida se suman de los mechas componentes. Al disolverse, ambos mechas obtienen la mitad de puntos de vida restante. En cualquier caso, no puede volver a combinarse por 1 día.",
+      "description": "Coste en puntos de inventario: 2 x categoría.\n\nSignifica “combinémonos”, puedes fusionarte con cualquier otro mecha de tu mismo tamaño que también tenga esta dote, provocando que aumente la categoría del mecha y ganando la dote “copiloto”. Si se combinan 2 mechas de categoría 6, surge de forma temporal un mecha de categoría 7:\n| Categoría | Robustez | Maniobra táctica | Aguante | Salud | Puntos de inventario | Desplazamiento | Velocidad de crucero(km/h) | Tamaño (m) |\n| :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n| 7 | d12 | d4 | 24 | 50 | 200 | d4+1 | 200 | 60 |\nSi es de tamaños diferentes, el mecha de mayor tamaño gana bonifica 1 en todas las tiradas junto con la dote “copiloto”. También aumenta su aguante en 1.\nEn cualquier caso, el mecha resultante obtiene todas las armas de los mechas que lo componen pero cambiando la categoría de esta si procede. Si ambos mechas tenían una misma arma, las tiradas con esta arma ganan bonifica 2.\nEsta función requiere un drenaje voluntad por turno para ser mantenida la forma, pero al ser combinado, los puntos de vida se suman de los mechas componentes. Al disolverse, ambos mechas obtienen la mitad de puntos de vida restante. En cualquier caso, no puede volver a combinarse por 1 día.",
       "cost": 2,
       "costFormula": "2 x categoría",
       "requirements": "",
@@ -3135,7 +3146,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Coste en puntos de inventario: 6 x categoría.\n\nEres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas cac o maniobra de lucha del piloto pueden ser usadas en el mecha.",
+      "description": "Coste en puntos de inventario: 6 x categoría.\n\nEres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas CaC o maniobra de lucha del piloto pueden ser usadas en el mecha.",
       "cost": 6,
       "costFormula": "6 x categoría",
       "requirements": "",
@@ -3151,7 +3162,7 @@
          "brawl"
         ],
         "label": "Uno con la máquina",
-        "text": "Eres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas cac o maniobra de lucha del piloto pueden ser usadas en el mecha."
+        "text": "Eres uno con tu mecha y puedes moverte como si fuera tu propio cuerpo. Todas las dotes que influyan en combate con armas CaC o maniobra de lucha del piloto pueden ser usadas en el mecha."
        }
       ],
       "inventoryCost": "6 x categoría"
@@ -3196,7 +3207,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Coste en puntos de inventario: 3 x categoría.\n\nCuando eres golpeado con un arma cuerpo a cuerpo, puedes soltar una descarga mortal. Este arma especial funciona como el resto, escalando el Daño con la categoría del mecha. Este arma tiene una tirada siempre de 2d10 y tiene las propiedades: Daño 12, Tamaño 3, Batería (1), Ataque único.\nAl realizarse, esta habilidad no puede reutilizarse no te recarguen en el taller nuevos bornes para la descarga, ya que quedan completamente inutilizables.",
+      "description": "Coste en puntos de inventario: 3 x categoría.\n\nCuando eres golpeado con un arma cuerpo a cuerpo, puedes soltar una descarga mortal. Esta arma especial funciona como el resto, escalando el Daño con la categoría del mecha. Esta arma tiene una tirada siempre de 2d10 y tiene las propiedades: Daño 12, Tamaño 3, Batería (1), Ataque único.\nTras usarla, esta habilidad no puede reutilizarse hasta que un taller instale nuevos bornes para la descarga, ya que los anteriores quedan completamente inutilizados.",
       "cost": 3,
       "costFormula": "3 x categoría",
       "requirements": "",
@@ -3212,7 +3223,7 @@
          "mind"
         ],
         "label": "Voltaje vengativo",
-        "text": "Cuando eres golpeado con un arma cuerpo a cuerpo, puedes soltar una descarga mortal. Este arma especial funciona como el resto, escalando el Daño con la categoría del mecha. Este arma tiene una tirada siempre de 2d10 y tiene las propiedades: Daño 12, Tamaño 3, Batería (1), Ataque único.\nAl realizarse, esta habilidad no puede reutilizarse no te recarguen en el taller nuevos bornes para la descarga, ya que quedan completamente inutilizables."
+        "text": "Cuando eres golpeado con un arma cuerpo a cuerpo, puedes soltar una descarga mortal. Esta arma especial funciona como el resto, escalando el Daño con la categoría del mecha. Esta arma tiene una tirada siempre de 2d10 y tiene las propiedades: Daño 12, Tamaño 3, Batería (1), Ataque único.\nTras usarla, esta habilidad no puede reutilizarse hasta que un taller instale nuevos bornes para la descarga, ya que los anteriores quedan completamente inutilizados."
        }
       ],
       "inventoryCost": "3 x categoría"
@@ -3791,7 +3802,7 @@
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
-      "description": "Arma de mecha. Tirada: MCC +maniobra de lucha o combate con armas cac. Puntos de inventario: 0. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
+      "description": "Arma de mecha. Tirada: MCC +maniobra de lucha o combate con armas CaC. Puntos de inventario: 0. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
       "damage": 7,
       "skill": "brawl",
       "attribute": "dexterity",
@@ -3847,7 +3858,7 @@
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
-      "description": "Arma de mecha. Tirada: MCC + combate con armas cac. Puntos de inventario: 2+categoría. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
+      "description": "Arma de mecha. Tirada: MCC + combate con armas CaC. Puntos de inventario: 2+categoría. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
       "damage": 10,
       "skill": "melee",
       "attribute": "dexterity",
@@ -3875,7 +3886,7 @@
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
-      "description": "Arma de mecha. Tirada: MCC + combate con armas cac. Puntos de inventario: 5+categoría. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
+      "description": "Arma de mecha. Tirada: MCC + combate con armas CaC. Puntos de inventario: 5+categoría. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
       "damage": 13,
       "skill": "melee",
       "attribute": "dexterity",
@@ -4324,7 +4335,7 @@
      "type": "gear",
      "img": "systems/tdt/assets/icons/gear.svg",
      "system": {
-      "description": "Puntos de inventario: 4. Gran área, diámetro en torno a distancia muy larga, tarda en dispersarse 1 ronda. Cuando alcanza a seres vivos que respiren oxígeno, se debe tirar 2d10 por objetivo contra la fortaleza para quedarse dormidos. Si afecta a jugadores, la dificultad es 11. No afecta a personas cubiertas por un vehículo, mecha o edificio al no ser que se lance la granada de gas adormecedor dentro.",
+      "description": "Puntos de inventario: 4. Gran área, diámetro en torno a distancia muy larga, tarda en dispersarse 1 ronda. Cuando alcanza a seres vivos que respiren oxígeno, se debe tirar 2d10 por objetivo contra la fortaleza para quedarse dormidos. Si afecta a jugadores, la dificultad es 11. No afecta a personas cubiertas por un vehículo, mecha o edificio a no ser que se lance la granada de gas adormecedor dentro.",
       "category": "mecha",
       "module": "mecha",
       "inventoryCost": "4",
@@ -4343,7 +4354,7 @@
      "type": "gear",
      "img": "systems/tdt/assets/icons/gear.svg",
      "system": {
-      "description": "Puntos de inventario: 4. Daño 7, gran área, diámetro en torno a distancia muy larga, tarda en dispersarse 1 ronda. Cuando alcanza a seres vivos que respiren oxígeno, se debe tirar 2d8 por objetivo por ronda contra la fortaleza para infligir daño mientras esté activo . Si afecta a jugadores, la dificultad es 9. No afecta a personas cubiertas por un vehículo, mecha o edificio al no ser que se lance la granada de gas adormecedor dentro.",
+      "description": "Puntos de inventario: 4. Daño 7, gran área, diámetro en torno a distancia muy larga, tarda en dispersarse 1 ronda. Cuando alcanza a seres vivos que respiren oxígeno, se debe tirar 2d8 por objetivo por ronda contra la fortaleza para infligir daño mientras esté activo . Si afecta a jugadores, la dificultad es 9. No afecta a personas cubiertas por un vehículo, mecha o edificio a no ser que se lance la granada de gas adormecedor dentro.",
       "category": "mecha",
       "module": "mecha",
       "inventoryCost": "4",
@@ -4457,7 +4468,7 @@
      "type": "gear",
      "img": "systems/tdt/assets/icons/gear.svg",
      "system": {
-      "description": "Puntos de inventario: 2. Kit con materias primas y las herramientas básicas para reparar un mecha o dispositivo desde otro, la tirada es d6+ciencia, con dificultad 6 al no ser que el DJ especifique otra cosa. La cantidad de puntos de vida reparados son iguales a la diferencia entre el resultado y la dificultad de la tarea por 4. Este objeto tiene cargas de uso, en concreto 4 antes de tener que reponerlo. Necesitas gastar tu acción en tu turno para usarlo. Ejemplo: Saco un 9 en la tirada y la dificultad es 6, sería 3 la diferencia y por 4 restablecerá 12 puntos de vida.",
+      "description": "Puntos de inventario: 2. Kit con materias primas y las herramientas básicas para reparar un mecha o dispositivo desde otro, la tirada es d6+ciencia, con dificultad 6 a no ser que el DJ especifique otra cosa. La cantidad de puntos de vida reparados son iguales a la diferencia entre el resultado y la dificultad de la tarea por 4. Este objeto tiene cargas de uso, en concreto 4 antes de tener que reponerlo. Necesitas gastar tu acción en tu turno para usarlo. Ejemplo: Saco un 9 en la tirada y la dificultad es 6, sería 3 la diferencia y por 4 restablecerá 12 puntos de vida.",
       "category": "mecha",
       "module": "mecha",
       "inventoryCost": "2",
@@ -4476,7 +4487,7 @@
      "type": "gear",
      "img": "systems/tdt/assets/icons/gear.svg",
      "system": {
-      "description": "Puntos de inventario: 1. Suministros con armas para humanos almacenadas eficientemente dentro del robot. Deberían de caber varias armas y sus cargadores en un mismo “suministro armamentístico” pero queda a discreción del DJ. Si no está especificado por el DJ, la caja contiene: Cac ligera (generalmente un cuchillo militar) Distancia mecanizada ligera (generalmente pistola) con tres cargadores Distancia mecanizada media( generalmente rifle) con tres cargadores Explosivo lanzable (generalmente granadas) x3",
+      "description": "Puntos de inventario: 1. Suministros con armas para humanos almacenadas eficientemente dentro del robot. Deberían de caber varias armas y sus cargadores en un mismo “suministro armamentístico” pero queda a discreción del DJ. Si no está especificado por el DJ, la caja contiene: CaC ligera (generalmente un cuchillo militar) Distancia mecanizada ligera (generalmente pistola) con tres cargadores Distancia mecanizada media( generalmente rifle) con tres cargadores Explosivo lanzable (generalmente granadas) x3",
       "category": "mecha",
       "module": "mecha",
       "inventoryCost": "1",
@@ -4514,7 +4525,7 @@
      "type": "gear",
      "img": "systems/tdt/assets/icons/gear.svg",
      "system": {
-      "description": "Puntos de inventario: 2categoría. Puedes almacenar un vehículo en tu mecha, solo puedes seleccionar el máximo de tu mecha, al no ser que estés fabricándolo en el momento. Para la categoría 1 sería un monopatín eléctrico con capacidad de un pasajero, para la categoría 2 sería una moto o quad de dos pasajeros, categoría 3 con un coche de 5 pasajeros , categoría 4 sería una furgoneta (10 pasajeros), categoría 5 un autobús (25 pasajeros) y categoría 6 un autobús largo (60 pasajeros). Obviamente los vehículos pueden ser cambiados a discreción del DJ, dependiendo del medio y sus cualidades, pero aquí dejo una estimación de los pasajeros por categoría.",
+      "description": "Puntos de inventario: 2categoría. Puedes almacenar un vehículo en tu mecha, solo puedes seleccionar el máximo de tu mecha, a no ser que estés fabricándolo en el momento. Para la categoría 1 sería un monopatín eléctrico con capacidad de un pasajero, para la categoría 2 sería una moto o quad de dos pasajeros, categoría 3 con un coche de 5 pasajeros , categoría 4 sería una furgoneta (10 pasajeros), categoría 5 un autobús (25 pasajeros) y categoría 6 un autobús largo (60 pasajeros). Obviamente los vehículos pueden ser cambiados a discreción del DJ, dependiendo del medio y sus cualidades, pero aquí dejo una estimación de los pasajeros por categoría.",
       "category": "mecha",
       "module": "mecha",
       "inventoryCost": "2 x categoría",
@@ -5193,7 +5204,7 @@
        "type": "feat",
        "img": "systems/tdt/assets/icons/feat.svg",
        "system": {
-        "description": "Coste en puntos de inventario: 2.\n\nPuedes detectar a tus aliados en un gran radio. A discreción del director de juego, el sensor podría detectar diferentes tipos de cosas. Si vuelves a adquirir este dote, puedes preguntarle al mecha para detectar algo a placer.",
+        "description": "Coste en puntos de inventario: 2.\n\nPuedes detectar a tus aliados en un gran radio. A discreción del DJ, el sensor puede detectar otros tipos de elementos. Si vuelves a adquirir esta dote, puedes configurar el mecha para detectar un tipo adicional.",
         "cost": 2,
         "costFormula": "",
         "requirements": "",
@@ -5277,7 +5288,7 @@
        "type": "weapon",
        "img": "systems/tdt/assets/icons/weapon.svg",
        "system": {
-        "description": "Arma de mecha. Tirada: MCC + combate con armas cac. Puntos de inventario: 2+categoría. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
+        "description": "Arma de mecha. Tirada: MCC + combate con armas CaC. Puntos de inventario: 2+categoría. El Daño indicado es el de categoría 1 y sube 2 por categoría (o el valor de Tamaño).",
         "damage": 10,
         "skill": "melee",
         "attribute": "dexterity",
@@ -5530,7 +5541,7 @@
        "type": "feat",
        "img": "systems/tdt/assets/icons/feat.svg",
        "system": {
-        "description": "Coste en puntos de inventario: 2.\n\nPuedes detectar a tus aliados en un gran radio. A discreción del director de juego, el sensor podría detectar diferentes tipos de cosas. Si vuelves a adquirir este dote, puedes preguntarle al mecha para detectar algo a placer.",
+        "description": "Coste en puntos de inventario: 2.\n\nPuedes detectar a tus aliados en un gran radio. A discreción del DJ, el sensor puede detectar otros tipos de elementos. Si vuelves a adquirir esta dote, puedes configurar el mecha para detectar un tipo adicional.",
         "cost": 2,
         "costFormula": "",
         "requirements": "",
@@ -5826,7 +5837,7 @@
        "type": "gear",
        "img": "systems/tdt/assets/icons/gear.svg",
        "system": {
-        "description": "Puntos de inventario: 2. Kit con materias primas y las herramientas básicas para reparar un mecha o dispositivo desde otro, la tirada es d6+ciencia, con dificultad 6 al no ser que el DJ especifique otra cosa. La cantidad de puntos de vida reparados son iguales a la diferencia entre el resultado y la dificultad de la tarea por 4. Este objeto tiene cargas de uso, en concreto 4 antes de tener que reponerlo. Necesitas gastar tu acción en tu turno para usarlo. Ejemplo: Saco un 9 en la tirada y la dificultad es 6, sería 3 la diferencia y por 4 restablecerá 12 puntos de vida.",
+        "description": "Puntos de inventario: 2. Kit con materias primas y las herramientas básicas para reparar un mecha o dispositivo desde otro, la tirada es d6+ciencia, con dificultad 6 a no ser que el DJ especifique otra cosa. La cantidad de puntos de vida reparados son iguales a la diferencia entre el resultado y la dificultad de la tarea por 4. Este objeto tiene cargas de uso, en concreto 4 antes de tener que reponerlo. Necesitas gastar tu acción en tu turno para usarlo. Ejemplo: Saco un 9 en la tirada y la dificultad es 6, sería 3 la diferencia y por 4 restablecerá 12 puntos de vida.",
         "category": "mecha",
         "module": "mecha",
         "inventoryCost": "2",
@@ -5845,7 +5856,7 @@
        "type": "gear",
        "img": "systems/tdt/assets/icons/gear.svg",
        "system": {
-        "description": "Puntos de inventario: 1. Suministros con armas para humanos almacenadas eficientemente dentro del robot. Deberían de caber varias armas y sus cargadores en un mismo “suministro armamentístico” pero queda a discreción del DJ. Si no está especificado por el DJ, la caja contiene: Cac ligera (generalmente un cuchillo militar) Distancia mecanizada ligera (generalmente pistola) con tres cargadores Distancia mecanizada media( generalmente rifle) con tres cargadores Explosivo lanzable (generalmente granadas) x3",
+        "description": "Puntos de inventario: 1. Suministros con armas para humanos almacenadas eficientemente dentro del robot. Deberían de caber varias armas y sus cargadores en un mismo “suministro armamentístico” pero queda a discreción del DJ. Si no está especificado por el DJ, la caja contiene: CaC ligera (generalmente un cuchillo militar) Distancia mecanizada ligera (generalmente pistola) con tres cargadores Distancia mecanizada media( generalmente rifle) con tres cargadores Explosivo lanzable (generalmente granadas) x3",
         "category": "mecha",
         "module": "mecha",
         "inventoryCost": "1",
@@ -6172,7 +6183,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Usas tu superpoder para tener más fuerza que una hormiga de tamaño humano. Todas las pruebas que requieran de fuerza bajan su dificultad en 5 más la sobrecarga aplicada.\nY tus golpes desarmados o con armas cac aumentan su Daño en 4 más tu sobrecarga. Ten en cuenta que la mayor parte de armas se podrían romper con tu fuerza, a discreción del DJ.\nLa sobrecarga puede ser aplicada después de saber el resultado.\nPor ejemplo, si no consigues pasar una prueba de fuerza por 2, puedes gastar 2 de energía para pasar la prueba sin tener que tirar. O, una vez impactado a un enemigo, gastar la energía que desees.",
+      "description": "Usas tu superpoder para tener más fuerza que una hormiga de tamaño humano. Todas las pruebas que requieran de fuerza bajan su dificultad en 5 más la sobrecarga aplicada.\nY tus golpes desarmados o con armas CaC aumentan su Daño en 4 más tu sobrecarga. Ten en cuenta que la mayor parte de armas se podrían romper con tu fuerza, a discreción del DJ.\nLa sobrecarga puede ser aplicada después de saber el resultado.\nPor ejemplo, si no consigues pasar una prueba de fuerza por 2, puedes gastar 2 de energía para pasar la prueba sin tener que tirar. O, una vez impactado a un enemigo, gastar la energía que desees.",
       "module": "powers",
       "branch": "General",
       "complexity": "simple",
@@ -6336,7 +6347,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Disparas un contínuo rayo láser desde tus ojos. Este ataque tiene un rango medio-largo y Daño 8.",
+      "description": "Disparas un continuo rayo láser desde tus ojos. Este ataque tiene un rango medio-largo y Daño 8.",
       "module": "powers",
       "branch": "General",
       "complexity": "complex",
@@ -6448,7 +6459,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Tiras un proyectil gélido que explota al impactar, en un rango de contacto, puedes tirar maniobra de lucha o combate cac y añadir el Daño del ataque al del orbe gélido. Este ataque tiene un rango medio y Daño 3.\nCuando impacta contra el suelo. genera una pequeña área congelada. Todas las criaturas que entren al círculo o estén en el círculo hacen una prueba de acrobacias dificultad 5 más la sobrecarga aplicada para no caerse. Caerse en el hielo implica que no pueden moverse a no ser que gasten su turno entero en intentar levantarse, haciendo otra prueba de acrobacias.",
+      "description": "Tiras un proyectil gélido que explota al impactar, en un rango de contacto, puedes tirar maniobra de lucha o combate CaC y añadir el Daño del ataque al del orbe gélido. Este ataque tiene un rango medio y Daño 3.\nCuando impacta contra el suelo. genera una pequeña área congelada. Todas las criaturas que entren al círculo o estén en el círculo hacen una prueba de acrobacias dificultad 5 más la sobrecarga aplicada para no caerse. Caerse en el hielo implica que no pueden moverse a no ser que gasten su turno entero en intentar levantarse, haciendo otra prueba de acrobacias.",
       "module": "powers",
       "branch": "Frío",
       "complexity": "simple",
@@ -6687,7 +6698,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Tiras un proyectil ígneo que explota al impactar, en un rango de contacto, puedes tirar maniobra de lucha o combate cac y añadir el Daño del ataque al del orbe ígneo. Este ataque tiene un rango medio y Daño 3. Cuando impacta contra seres vivos, la propiedad “Daño” se duplica.",
+      "description": "Tiras un proyectil ígneo que explota al impactar, en un rango de contacto, puedes tirar maniobra de lucha o combate CaC y añadir el Daño del ataque al del orbe ígneo. Este ataque tiene un rango medio y Daño 3. Cuando impacta contra seres vivos, la propiedad “Daño” se duplica.",
       "module": "powers",
       "branch": "Llama",
       "complexity": "simple",
@@ -6771,7 +6782,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Un volcán cercano se activa y lanza masas piroclásticas en el cielo. Ahora y en el comienzo de cada uno de los turnos, todo el mundo debe hacer una salvación para esquivar los fragmentos que caen del cielo, incluido tu. El magma tiene Daño 12.",
+      "description": "Un volcán cercano se activa y lanza masas piroclásticas al cielo. En ese momento y al comienzo de cada turno, todo el mundo, incluido tú, debe hacer una salvación para esquivar los fragmentos. El magma tiene Daño 12.",
       "module": "powers",
       "branch": "Llama",
       "complexity": "complex",
@@ -6827,7 +6838,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Combinas fácilmente materias de alrededor para hacer un objeto en concreto, como una ballesta, unas pinzas, etc. Esta acción consume todo tu turno al no ser que pagues el coste adicional de sobrecarga, en cuyo caso la acción es instantánea. Dependiendo de tu DJ, te podría permitir hacer una tirada de superpoder o construir para hacer objetos complejos.",
+      "description": "Combinas fácilmente materias de alrededor para hacer un objeto en concreto, como una ballesta, unas pinzas, etc. Esta acción consume todo tu turno a no ser que pagues el coste adicional de sobrecarga, en cuyo caso la acción es instantánea. Dependiendo de tu DJ, te podría permitir hacer una tirada de superpoder o construir para hacer objetos complejos.",
       "module": "powers",
       "branch": "Mando",
       "complexity": "simple",
@@ -6883,7 +6894,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Cuando infringes al menos 1 punto de daño a los puntos de vida de un enemigo, su Daño disminuye en 2 para ti permanentemente, no es acumulable. Si gastas tu turno en concentrarte contra un objeto o criatura, su aguante disminuye en 6 para tu próximo ataque.",
+      "description": "Cuando infliges al menos 1 punto de daño a los puntos de vida de un enemigo, su Daño disminuye en 2 para ti permanentemente, no es acumulable. Si gastas tu turno en concentrarte contra un objeto o criatura, su aguante disminuye en 6 para tu próximo ataque.",
       "module": "powers",
       "branch": "Mando",
       "complexity": "simple",
@@ -6939,7 +6950,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Con una acción (un chasquido,una palmada, un sonido en concreto) intercambias la posición de tu cuerpo con el de un objeto u otro ser vivo. Esto puede ser usado:\n· Como esquiva, lanzando un objeto y teletransportandote a este objeto, obtienes bonifica 3 para la tirada de esquiva.\n· Como distracción, intercambiandote con algo para atacar en un punto ciego, siendo 4 puntos más fácil de golpear.\n· Como protección, puedes intercambiarte con alguien justo antes de ser golpeado, recibiendo tu el daño que sufriría el otro.",
+      "description": "Con una acción (un chasquido,una palmada, un sonido en concreto) intercambias la posición de tu cuerpo con el de un objeto u otro ser vivo. Esto puede ser usado:\n· Como esquiva, lanzando un objeto y teletransportandote a este objeto, obtienes bonifica 3 para la tirada de esquiva.\n· Como distracción, intercambiandote con algo para atacar en un punto ciego, siendo 4 puntos más fácil de golpear.\n· Como protección, puedes intercambiarte con alguien justo antes de que reciba un golpe; tú recibes el daño en su lugar.",
       "module": "powers",
       "branch": "Mando",
       "complexity": "complex",
@@ -7088,7 +7099,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Infringes una marca a elegir por cada ataque que aciertes a tu objetivo. Tras impactar tu decides si quieres marcarlo o no, pagando la energía y los puntos de vida. Una vez las 3 marcas han sido puestas, se consumen e infringen 30 puntos de daño con Daño 0.",
+      "description": "Infliges una marca a elegir por cada ataque que aciertes a tu objetivo. Tras impactar, tú decides si quieres marcarlo y pagar el coste de energía y puntos de vida. Una vez colocadas las tres marcas, se consumen e infligen 30 puntos de daño con Daño 0.",
       "module": "powers",
       "branch": "Marca",
       "complexity": "complex",
@@ -7116,7 +7127,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Maldices tu arma a cuerpo a cuerpo o alguna extremidad con la que ataques. Si impactas, cambias el estado de la materia en una zona, provocando uno de los siguientes efectos aparte de los narrativos:\n· Reduce su aguante permanentemente en 2.\n· Tras hacer los cálculos, infringe 5 puntos de vida adicionales.\nEsta maldición es bastante poderosa, puede usarse para convertir una pared en líquido y que te deje pasar o golpear al aire para hacer una pequeña superficie sólida que te de cobertura.",
+      "description": "Maldices tu arma a cuerpo a cuerpo o alguna extremidad con la que ataques. Si impactas, cambias el estado de la materia en una zona, provocando uno de los siguientes efectos aparte de los narrativos:\n· Reduce su aguante permanentemente en 2.\n· Tras hacer los cálculos, inflige 5 puntos de vida adicionales.\nEsta maldición es bastante poderosa, puede usarse para convertir una pared en líquido y que te deje pasar o golpear al aire para hacer una pequeña superficie sólida que te de cobertura.",
       "module": "powers",
       "branch": "Marca",
       "complexity": "complex",
@@ -7192,7 +7203,7 @@
      "type": "power",
      "img": "systems/tdt/assets/icons/power.svg",
      "system": {
-      "description": "Hasta el principio de tu siguiente turno, puedes combinar la teoría de los mundos paralelos, un clon tuyo diverge de ti mismo y hace una acción separada de la tuya propia. Cuando comience tu siguiente turno, tu decides cual destino es el original, es decir, que clon se que queda y cual desaparece.",
+      "description": "Hasta el principio de tu siguiente turno, un clon procedente de un mundo paralelo diverge de ti y realiza una acción diferente. Cuando comience tu siguiente turno, decides qué destino es el original: qué versión permanece y cuál desaparece.",
       "module": "powers",
       "branch": "Tiempo",
       "complexity": "simple",
@@ -7886,7 +7897,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Requisitos: Construir D6.\n\nCuando construyas algo para defenderse o hacer trampas para zombies, bonifica en 2 la tirada.",
+      "description": "Requisitos: Construir D6.\n\nCuando construyas algo para defenderse o hacer trampas para zombis, bonifica en 2 la tirada.",
       "cost": 6,
       "costFormula": "",
       "requirements": "Construir D6",
@@ -7907,10 +7918,10 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Requisitos: Tu personaje lleva tiempo viviendo en el apocalipsis zombie.\n\nEspecial: Esta dote puede escogerse varias veces.\nEstudias a un zombie especial, como el zombie explosivo por ejemplo, las habilidades únicas de este zombie tienen una dificultad reducida en 1. Por ejemplo la explosión al morir del zombie explosivo.",
+      "description": "Requisitos: Tu personaje lleva tiempo viviendo en el apocalipsis zombi.\n\nEspecial: Esta dote puede escogerse varias veces.\nEstudias a un zombi especial, como el zombi explosivo por ejemplo, las habilidades únicas de este zombi tienen una dificultad reducida en 1. Por ejemplo la explosión al morir del zombi explosivo.",
       "cost": 5,
       "costFormula": "",
-      "requirements": "Tu personaje lleva tiempo viviendo en el apocalipsis zombie",
+      "requirements": "Tu personaje lleva tiempo viviendo en el apocalipsis zombi",
       "category": "advantage",
       "tags": [],
       "module": "zombie",
@@ -7969,7 +7980,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Puedes tirar interpretación para camuflarse entre los zombies, la dificultad es muy difícil si no tapas tu olor y normal si lo haces, a discreción del DJ la categoría de la dificultad. Si estás zombificado 1 o más, la tirada es muy fácil.",
+      "description": "Puedes tirar interpretación para camuflarse entre los zombis, la dificultad es muy difícil si no tapas tu olor y normal si lo haces, a discreción del DJ la categoría de la dificultad. Si estás zombificado 1 o más, la tirada es muy fácil.",
       "cost": 4,
       "costFormula": "",
       "requirements": "",
@@ -7984,7 +7995,7 @@
          "performance"
         ],
         "label": "Mimetismo con muertos vivientes",
-        "text": "Puedes tirar interpretación para camuflarse entre los zombies, la dificultad es muy difícil si no tapas tu olor y normal si lo haces, a discreción del DJ la categoría de la dificultad. Si estás zombificado 1 o más, la tirada es muy fácil."
+        "text": "Puedes tirar interpretación para camuflarse entre los zombis, la dificultad es muy difícil si no tapas tu olor y normal si lo haces, a discreción del DJ la categoría de la dificultad. Si estás zombificado 1 o más, la tirada es muy fácil."
        }
       ]
      }
@@ -7994,7 +8005,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Tu piel es especialmente resistente contra el ácido. Tu aguante aumenta en 1 contra cualquier ataque de ácido, como la explosión del zombie explosivo o el proyectil del zombie escupidor.",
+      "description": "Tu piel es especialmente resistente contra el ácido. Tu aguante aumenta en 1 contra cualquier ataque de ácido, como la explosión del zombi explosivo o el proyectil del zombi escupidor.",
       "cost": 6,
       "costFormula": "",
       "requirements": "",
@@ -8039,7 +8050,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "El límite de daño para los grupos de zombies es el doble para ti. Por defecto, pasa de 5 a 10. Adicionalmente,aumenta en 3 el daño de los ataques con la propiedad área.",
+      "description": "El límite de daño para los grupos de zombis es el doble para ti. Por defecto, pasa de 5 a 10. Adicionalmente,aumenta en 3 el daño de los ataques con la propiedad área.",
       "cost": 5,
       "costFormula": "",
       "requirements": "",
@@ -8136,11 +8147,11 @@
      }
     },
     {
-     "name": "Sigilo zombie",
+     "name": "Sigilo zombi",
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Requisitos: Sigilo 1d8.\n\nBonifica en 1 las tiradas de sigilo para evitar que los zombies te detecten. Puedes hacer señas a alguien más para que también tenga bonifica en 1 en su tirada.",
+      "description": "Requisitos: Sigilo 1d8.\n\nBonifica en 1 las tiradas de sigilo para evitar que los zombis te detecten. Puedes hacer señas a alguien más para que también tenga bonifica en 1 en su tirada.",
       "cost": 8,
       "costFormula": "",
       "requirements": "Sigilo 1d8",
@@ -8154,8 +8165,8 @@
         "scopes": [
          "stealth"
         ],
-        "label": "Sigilo zombie",
-        "text": "Bonifica en 1 las tiradas de sigilo para evitar que los zombies te detecten. Puedes hacer señas a alguien más para que también tenga bonifica en 1 en su tirada."
+        "label": "Sigilo zombi",
+        "text": "Bonifica en 1 las tiradas de sigilo para evitar que los zombis te detecten. Puedes hacer señas a alguien más para que también tenga bonifica en 1 en su tirada."
        },
        {
         "type": "bonus",
@@ -8163,21 +8174,21 @@
         "scopes": [
          "stealth"
         ],
-        "label": "Sigilo zombie (contra zombis)",
+        "label": "Sigilo zombi (contra zombis)",
         "optional": true
        }
       ]
      }
     },
     {
-     "name": "Sigilo zombie supremo",
+     "name": "Sigilo zombi supremo",
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
      "system": {
-      "description": "Requisitos: Sigilo zombie, sigilo 1d10.\n\nBonifica en 3 las tiradas de sigilo para evitar que los zombies te detecten. Puedes hacer señas a tu grupo para que tengan bonifica en 2 en su tirada.",
+      "description": "Requisitos: Sigilo zombi, sigilo 1d10.\n\nBonifica en 3 las tiradas de sigilo para evitar que los zombis te detecten. Puedes hacer señas a tu grupo para que tengan bonifica en 2 en su tirada.",
       "cost": 12,
       "costFormula": "",
-      "requirements": "Sigilo zombie, sigilo 1d10",
+      "requirements": "Sigilo zombi, sigilo 1d10",
       "category": "advantage",
       "tags": [],
       "module": "zombie",
@@ -8188,8 +8199,8 @@
         "scopes": [
          "stealth"
         ],
-        "label": "Sigilo zombie supremo",
-        "text": "Bonifica en 3 las tiradas de sigilo para evitar que los zombies te detecten. Puedes hacer señas a tu grupo para que tengan bonifica en 2 en su tirada."
+        "label": "Sigilo zombi supremo",
+        "text": "Bonifica en 3 las tiradas de sigilo para evitar que los zombis te detecten. Puedes hacer señas a tu grupo para que tengan bonifica en 2 en su tirada."
        },
        {
         "type": "bonus",
@@ -8197,7 +8208,7 @@
         "scopes": [
          "stealth"
         ],
-        "label": "Sigilo zombie supremo (contra zombis)",
+        "label": "Sigilo zombi supremo (contra zombis)",
         "optional": true
        }
       ]
@@ -8357,7 +8368,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/disadvantage.svg",
      "system": {
-      "description": "Los zombies lo tienen 1 punto más fácil para detectarse bajo cualquier circunstancia.",
+      "description": "Los zombis lo tienen 1 punto más fácil para detectarse bajo cualquier circunstancia.",
       "cost": -3,
       "costFormula": "",
       "requirements": "",
@@ -8385,11 +8396,11 @@
      }
     },
     {
-     "name": "Miedo por los zombies",
+     "name": "Miedo por los zombis",
      "type": "feat",
      "img": "systems/tdt/assets/icons/disadvantage.svg",
      "system": {
-      "description": "El primer ataque que efectúes en un combate contra un zombie tiene penaliza en 3.",
+      "description": "El primer ataque que efectúes en un combate contra un zombi tiene penaliza en 3.",
       "cost": -6,
       "costFormula": "",
       "requirements": "",
@@ -8403,8 +8414,8 @@
         "scopes": [
          "attack"
         ],
-        "label": "Miedo por los zombies",
-        "text": "El primer ataque que efectúes en un combate contra un zombie tiene penaliza en 3."
+        "label": "Miedo por los zombis",
+        "text": "El primer ataque que efectúes en un combate contra un zombi tiene penaliza en 3."
        },
        {
         "type": "penalty",
@@ -8448,7 +8459,7 @@
      "type": "feat",
      "img": "systems/tdt/assets/icons/disadvantage.svg",
      "system": {
-      "description": "Eres usuario promedio de la red social X/Twitter. Tu aguante disminuye en 1 contra cualquier ataque de ácido, como la explosión del zombie explosivo o el proyectil del zombie escupidor.",
+      "description": "Eres usuario promedio de la red social X/Twitter. Tu aguante disminuye en 1 contra cualquier ataque de ácido, como la explosión del zombi explosivo o el proyectil del zombi escupidor.",
       "cost": -6,
       "costFormula": "",
       "requirements": "",
@@ -8529,12 +8540,12 @@
   },
   {
    "name": "zombie-enemies",
-   "label": "TDT Zombis · Zombies",
+   "label": "TDT Zombis · Zombis",
    "type": "Actor",
    "module": "zombie",
    "documents": [
     {
-     "name": "Zombie básico",
+     "name": "Zombi básico",
      "type": "npc",
      "system": {
       "description": "Habilidades: Atletismo 5, Maniobra de lucha 6.",
@@ -8552,7 +8563,7 @@
        "will": 0,
        "perception": 5,
        "traits": "Esta criatura es especialmente lenta, sus tiradas de atletismo para correr siempre es 2. Se guía por el oído y por el olor, aunque puede ver vagamente. Si ataca a una persona agarrada, la dificultad de su mordisco pasa a ser 8.",
-       "variants": "Zombie fresco: PV 7, Aguante 2, Esquiva 4. Zombie podrido: PV 3, Aguante 1. Zombie con casco: Aguante 4 contra ataques a la cabeza.",
+       "variants": "Zombi fresco: PV 7, Aguante 2, Esquiva 4. Zombi podrido: PV 3, Aguante 1. Zombi con casco: Aguante 4 contra ataques a la cabeza.",
        "skills": "Atletismo 5, Maniobra de lucha 6",
        "hacking": 4,
        "hackEndurance": "",
@@ -8591,7 +8602,7 @@
      "img": "systems/tdt/assets/icons/zombie.svg"
     },
     {
-     "name": "Zombie explosivo",
+     "name": "Zombi explosivo",
      "type": "npc",
      "system": {
       "description": "",
@@ -8608,7 +8619,7 @@
        "fortitude": 3,
        "will": 0,
        "perception": 6,
-       "traits": "Tiene las propiedades de un zombie básico pero explota al morir, haciendo un ataque de ácido (7, Área 3). Este ácido no transmite la enfermedad, pero hace daño a todos a su alrededor. Si alguien lo ha derrotado cuerpo a cuerpo, esa persona tiene un penaliza en 2 en su salvación de fortaleza.",
+       "traits": "Tiene las propiedades de un zombi básico pero explota al morir, haciendo un ataque de ácido (7, Área 3). Este ácido no transmite la enfermedad, pero hace daño a todos a su alrededor. Si alguien lo ha derrotado cuerpo a cuerpo, esa persona tiene un penaliza en 2 en su salvación de fortaleza.",
        "variants": "Explosivo inestable: explota también con una pifia al atacarle a distancia. Explosivo grande: Área 5 y PV 7.",
        "skills": "",
        "hacking": 4,
@@ -8648,7 +8659,7 @@
      "img": "systems/tdt/assets/icons/zombie.svg"
     },
     {
-     "name": "Zombie escupidor",
+     "name": "Zombi escupidor",
      "type": "npc",
      "system": {
       "description": "",
@@ -8665,7 +8676,7 @@
        "fortitude": 4,
        "will": 0,
        "perception": 7,
-       "traits": "Tiene las propiedades de un zombie básico pero también puede escupir ácido. El ácido tiene muy pocas posibilidades de hacer que obtengas la enfermedad. Si impacta e infringe puntos de daño con el disparo ácido, la salvación para no ser zombificado es 4 en lugar de 10.",
+       "traits": "Tiene las propiedades de un zombi básico pero también puede escupir ácido. El ácido tiene muy pocas posibilidades de hacer que obtengas la enfermedad. Si impacta e inflige puntos de daño con el disparo ácido, la salvación para no ser zombificado es 4 en lugar de 10.",
        "variants": "Escupidor débil: Aguante 2, Disparo ácido(6, Daño 4). Escupidor alfa: Aguante 4, Disparo ácido(8, Daño 5).",
        "skills": "",
        "hacking": 4,
@@ -8725,7 +8736,7 @@
      "img": "systems/tdt/assets/icons/zombie.svg"
     },
     {
-     "name": "Zombie rey/reina de la horda",
+     "name": "Zombi rey/reina de la horda",
      "type": "npc",
      "system": {
       "description": "",
@@ -8742,8 +8753,8 @@
        "fortitude": 8,
        "will": 0,
        "perception": 9,
-       "traits": "Tiene las propiedades de un zombie básico. De forma general está calmado y expresando una emoción sonora, bien risa, bien llanto, bien gimiendo o bien chillando aleatoriamente. Cuando descubre personas vivas, emite una feromona que atrae 2d4 zombies (o impuesto por el DJ).",
-       "variants": "Reina latente: Esquiva 5, no atrae zombies hasta recibir daño. Rey de horda: PV 12, Aguante 5, atrae 3d4 zombies.",
+       "traits": "Tiene las propiedades de un zombi básico. De forma general está calmado y expresando una emoción sonora, bien risa, bien llanto, bien gimiendo o bien chillando aleatoriamente. Cuando descubre personas vivas, emite una feromona que atrae 2d4 zombis (o impuesto por el DJ).",
+       "variants": "Reina latente: Esquiva 5, no atrae zombis hasta recibir daño. Rey de horda: PV 12, Aguante 5, atrae 3d4 zombis.",
        "skills": "",
        "hacking": 4,
        "hackEndurance": "",
@@ -8782,7 +8793,7 @@
      "img": "systems/tdt/assets/icons/zombie.svg"
     },
     {
-     "name": "Grupo de zombies básicos (4)",
+     "name": "Grupo de zombis básicos (4)",
      "type": "npc",
      "system": {
       "description": "Habilidades: Atletismo 5, Maniobra de lucha 6.",
@@ -8799,8 +8810,8 @@
        "fortitude": 3,
        "will": 0,
        "perception": 5,
-       "traits": "Grupo de 2 a 6 zombies básicos: cambia el número del grupo y ajusta la vida (5 por zombi). Esta criatura es especialmente lenta, sus tiradas de atletismo para correr siempre es 2. Se guía por el oído y por el olor, aunque puede ver vagamente. Si ataca a una persona agarrada, la dificultad de su mordisco pasa a ser 8.",
-       "variants": "Zombie fresco: PV 7, Aguante 2, Esquiva 4. Zombie podrido: PV 3, Aguante 1. Zombie con casco: Aguante 4 contra ataques a la cabeza.",
+       "traits": "Grupo de 2 a 6 zombis básicos: cambia el número del grupo y ajusta la vida (5 por zombi). Esta criatura es especialmente lenta, sus tiradas de atletismo para correr siempre es 2. Se guía por el oído y por el olor, aunque puede ver vagamente. Si ataca a una persona agarrada, la dificultad de su mordisco pasa a ser 8.",
+       "variants": "Zombi fresco: PV 7, Aguante 2, Esquiva 4. Zombi podrido: PV 3, Aguante 1. Zombi con casco: Aguante 4 contra ataques a la cabeza.",
        "skills": "Atletismo 5, Maniobra de lucha 6",
        "hacking": 4,
        "hackEndurance": "",
@@ -10073,7 +10084,7 @@
         "key": "armas ocultas",
         "cc": 4,
         "installed": false,
-        "description": "El brazo esconde un arma que no tienes que desenfundar. Elige cuál al instalarla: un arma Cac ligera o Distancia mecanizada ligera (+4 CC), o un arma Cac media o Distancia mecanizada media (+6 CC). Usa las estadísticas de la tabla de armas del módulo básico. Desplegar o replegar el arma es gratis. Las armas ligeras salen del antebrazo, así que puedes atacar con ellas mientras sujetas una herramienta u otra arma con esa misma mano. Las medias transforman el brazo entero: mientras estén desplegadas, no tienes esa mano. Encontrarla en un cacheo es una tirada de Percepción difícil para un profesional (9).",
+        "description": "El brazo esconde un arma que no tienes que desenfundar. Elige cuál al instalarla: un arma CaC ligera o Distancia mecanizada ligera (+4 CC), o un arma CaC media o Distancia mecanizada media (+6 CC). Usa las estadísticas de la tabla de armas del módulo básico. Desplegar o replegar el arma es gratis. Las armas ligeras salen del antebrazo, así que puedes atacar con ellas mientras sujetas una herramienta u otra arma con esa misma mano. Las medias transforman el brazo entero: mientras estén desplegadas, no tienes esa mano. Encontrarla en un cacheo es una tirada de Percepción difícil para un profesional (9).",
         "modifiers": [],
         "rules": []
        },
@@ -11135,7 +11146,7 @@
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
-      "description": "Cac media. Mejora general: Pesada o Residual.",
+      "description": "CaC media. Mejora general: Pesada o Residual.",
       "damage": 5,
       "skill": "melee",
       "attribute": "power",
@@ -11162,7 +11173,7 @@
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
-      "description": "Cac ligera. Mejora general: Pesada o Residual.",
+      "description": "CaC ligera. Mejora general: Pesada o Residual.",
       "damage": 3,
       "skill": "melee",
       "attribute": "dexterity",
@@ -11189,7 +11200,7 @@
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
-      "description": "Cac media. Mejora general: Pesada o Residual.",
+      "description": "CaC media. Mejora general: Pesada o Residual.",
       "damage": 4,
       "skill": "melee",
       "attribute": "power",
@@ -11216,7 +11227,7 @@
      "type": "weapon",
      "img": "systems/tdt/assets/icons/weapon.svg",
      "system": {
-      "description": "Cac pesada. Mejora general: Pesada o Residual.",
+      "description": "CaC pesada. Mejora general: Pesada o Residual.",
       "damage": 6,
       "skill": "melee",
       "attribute": "power",
@@ -11254,6 +11265,7 @@
       "description": "Ligera. Parece ropa normal. Nadie se da cuenta de que la llevas sin tocarla.",
       "endurance": 1,
       "evasionPenalty": 0,
+      "evasionReduction": 0,
       "powerRequired": 0,
       "shotEndurance": 0,
       "pristine": false,
@@ -11271,6 +11283,7 @@
       "description": "Ligera. Aguante 3 contra disparos.",
       "endurance": 1,
       "evasionPenalty": 0,
+      "evasionReduction": 0,
       "powerRequired": 0,
       "shotEndurance": 3,
       "pristine": false,
@@ -11287,7 +11300,8 @@
      "system": {
       "description": "Mediana. Aguante 4 contra disparos.",
       "endurance": 2,
-      "evasionPenalty": 1,
+      "evasionPenalty": 0,
+      "evasionReduction": 1,
       "powerRequired": 6,
       "shotEndurance": 4,
       "pristine": false,
@@ -11304,7 +11318,8 @@
      "system": {
       "description": "Mediana. Las armas eléctricas, como la porra eléctrica, no pueden aturdirte.",
       "endurance": 2,
-      "evasionPenalty": 1,
+      "evasionPenalty": 0,
+      "evasionReduction": 1,
       "powerRequired": 6,
       "shotEndurance": 0,
       "pristine": false,
@@ -11321,8 +11336,9 @@
      "system": {
       "description": "Pesada.",
       "endurance": 4,
-      "evasionPenalty": 2,
-      "powerRequired": 8,
+      "evasionPenalty": 0,
+      "evasionReduction": 1,
+      "powerRequired": 10,
       "shotEndurance": 0,
       "pristine": false,
       "damage": 0,
@@ -11515,7 +11531,7 @@
      "type": "gear",
      "img": "systems/tdt/assets/icons/chip.svg",
      "system": {
-      "description": "Chip de Puntería, Combate con armas cac, Maniobra de lucha o Hacking. Elige la habilidad en la ficha del chip. Ocupa una ranura del AVS, pero no cuenta para los usos de hacks. Cargarlo en combate gasta el turno entero.",
+      "description": "Chip de Puntería, Combate con armas CaC, Maniobra de lucha o Hacking. Elige la habilidad en la ficha del chip. Ocupa una ranura del AVS, pero no cuenta para los usos de hacks. Cargarlo en combate gasta el turno entero.",
       "category": "skillChip",
       "chipKind": "combat",
       "chipTarget": "",
@@ -12825,7 +12841,7 @@
        "name": "Conducir (coche)",
        "type": "feat",
        "system": {
-        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces.",
+        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces.",
         "cost": 2,
         "requirements": "",
         "category": "advantage",
@@ -12834,7 +12850,7 @@
           "type": "reminder",
           "scopes": [],
           "label": "Conducir",
-          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces."
+          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces."
          }
         ]
        }
@@ -13031,6 +13047,7 @@
         "description": "Ligera. Aguante 3 contra disparos.",
         "endurance": 1,
         "evasionPenalty": 0,
+        "evasionReduction": 0,
         "powerRequired": 0,
         "shotEndurance": 3,
         "pristine": false,
@@ -13048,7 +13065,7 @@
      "type": "character",
      "img": "systems/tdt/assets/icons/npc.svg",
      "system": {
-      "description": "Kira, mercenaria cromada. Personaje de ejemplo del módulo cyberpunk.\n\nCaracterísticas: Potencia d8, Destreza d6, Mente d4, Social d6\nSecundarias: Vida 10, Percepción 2d4, Aguante 4 (Mastodonte), Esquiva d8, Fortaleza d6, Voluntad d4, CC 20\nHabilidades: Combate con armas cac d8, Atletismo d8, Maniobra de lucha d8, Puntería d6, Intimidación d6, Acrobacias d4, Supervivencia d4, Sigilo d4\nDotes: Entrenado en un arma (hoja vibrante), Mastodonte, Posición ofensiva, Posición defensiva, Deuda con una corporación\nImplantes (16 de 20 CC): brazo robótico con armas ocultas (cuchilla), piernas cibernéticas, médula ósea acelerada\nEquipo: hoja vibrante, escopeta\nCoste aproximado: 115.000 €",
+      "description": "Kira, mercenaria cromada. Personaje de ejemplo del módulo cyberpunk.\n\nCaracterísticas: Potencia d8, Destreza d6, Mente d4, Social d6\nSecundarias: Vida 10, Percepción 2d4, Aguante 4 (Mastodonte), Esquiva d8, Fortaleza d6, Voluntad d4, CC 20\nHabilidades: Combate con armas CaC d8, Atletismo d8, Maniobra de lucha d8, Puntería d6, Intimidación d6, Acrobacias d4, Supervivencia d4, Sigilo d4\nDotes: Entrenado en un arma (hoja vibrante), Mastodonte, Posición ofensiva, Posición defensiva, Deuda con una corporación\nImplantes (16 de 20 CC): brazo robótico con armas ocultas (cuchilla), piernas cibernéticas, médula ósea acelerada\nEquipo: hoja vibrante, escopeta\nCoste aproximado: 115.000 €",
       "health": {
        "value": 10,
        "max": 10
@@ -13111,7 +13128,7 @@
        "name": "Entrenado en un arma (hoja vibrante)",
        "type": "feat",
        "system": {
-        "description": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas cac o puntería.",
+        "description": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas CaC o puntería.",
         "cost": 4,
         "requirements": "",
         "category": "advantage",
@@ -13123,7 +13140,7 @@
            "ranged"
           ],
           "label": "Entrenado en un arma",
-          "text": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas cac o puntería."
+          "text": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas CaC o puntería."
          },
          {
           "type": "bonus",
@@ -13302,7 +13319,7 @@
           "key": "armas ocultas",
           "cc": 4,
           "installed": true,
-          "description": "El brazo esconde un arma que no tienes que desenfundar. Elige cuál al instalarla: un arma Cac ligera o Distancia mecanizada ligera (+4 CC), o un arma Cac media o Distancia mecanizada media (+6 CC). Usa las estadísticas de la tabla de armas del módulo básico. Desplegar o replegar el arma es gratis. Las armas ligeras salen del antebrazo, así que puedes atacar con ellas mientras sujetas una herramienta u otra arma con esa misma mano. Las medias transforman el brazo entero: mientras estén desplegadas, no tienes esa mano. Encontrarla en un cacheo es una tirada de Percepción difícil para un profesional (9).",
+          "description": "El brazo esconde un arma que no tienes que desenfundar. Elige cuál al instalarla: un arma CaC ligera o Distancia mecanizada ligera (+4 CC), o un arma CaC media o Distancia mecanizada media (+6 CC). Usa las estadísticas de la tabla de armas del módulo básico. Desplegar o replegar el arma es gratis. Las armas ligeras salen del antebrazo, así que puedes atacar con ellas mientras sujetas una herramienta u otra arma con esa misma mano. Las medias transforman el brazo entero: mientras estén desplegadas, no tienes esa mano. Encontrarla en un cacheo es una tirada de Percepción difícil para un profesional (9).",
           "modifiers": [],
           "rules": []
          },
@@ -13510,7 +13527,7 @@
        "type": "weapon",
        "img": "systems/tdt/assets/icons/weapon.svg",
        "system": {
-        "description": "Cac media. Mejora general: Pesada o Residual.",
+        "description": "CaC media. Mejora general: Pesada o Residual.",
         "damage": 4,
         "skill": "melee",
         "attribute": "power",
@@ -13562,7 +13579,7 @@
        }
       },
       {
-       "name": "Cac ligera",
+       "name": "CaC ligera",
        "type": "weapon",
        "img": "systems/tdt/assets/icons/weapon.svg",
        "system": {
@@ -13658,7 +13675,7 @@
        "name": "Primeros auxilios",
        "type": "feat",
        "system": {
-        "description": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida, si se produce una pifia, infringe 1 de daño a la vida ignorando el aguante.",
+        "description": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida. Si se produce una pifia, inflige 1 punto de daño que ignora el Aguante.",
         "cost": 4,
         "requirements": "Medicina 1d4",
         "category": "advantage",
@@ -13671,7 +13688,7 @@
            "mind"
           ],
           "label": "Primeros auxilios",
-          "text": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida, si se produce una pifia, infringe 1 de daño a la vida ignorando el aguante."
+          "text": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida. Si se produce una pifia, inflige 1 punto de daño que ignora el Aguante."
          }
         ]
        }
@@ -13752,7 +13769,7 @@
        "name": "Conducir (coche)",
        "type": "feat",
        "system": {
-        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces.",
+        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces.",
         "cost": 2,
         "requirements": "",
         "category": "advantage",
@@ -13761,7 +13778,7 @@
           "type": "reminder",
           "scopes": [],
           "label": "Conducir",
-          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces."
+          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces."
          }
         ]
        }
@@ -13966,6 +13983,7 @@
         "description": "Ligera. Parece ropa normal. Nadie se da cuenta de que la llevas sin tocarla.",
         "endurance": 1,
         "evasionPenalty": 0,
+        "evasionReduction": 0,
         "powerRequired": 0,
         "shotEndurance": 0,
         "pristine": false,
@@ -13983,7 +14001,7 @@
      "type": "character",
      "img": "systems/tdt/assets/icons/npc.svg",
      "system": {
-      "description": "Teo, piloto del yermo. Personaje de ejemplo del módulo cyberpunk.\n\nCaracterísticas: Potencia d6, Destreza d8, Mente d6, Social d4\nSecundarias: Vida 10, Percepción 2d4, Aguante 2, Esquiva d8, Fortaleza d6, Voluntad d4, CC 15\nHabilidades: Puntería d8, Supervivencia d8, Construir d6, Atletismo d6, Sigilo d4, Combate con armas cac d4, Intimidación d4, Ciencia d4, Acrobacias d4\nDotes: Conducir (coche), Kansei Dorifto (coche), Conducir (moto), Guía, Rastreador, Apuntado concentrado, Animal\nImplantes (5 de 15 CC): compresores pulmonares con filtro tóxico\nEquipo: fusil de asalto, chaleco de placas. El buggy del yermo, si el DJ lo permite, es su gran sueño o su gran deuda.\nCoste aproximado: 55.000 € (sin el buggy)",
+      "description": "Teo, piloto del yermo. Personaje de ejemplo del módulo cyberpunk.\n\nCaracterísticas: Potencia d6, Destreza d8, Mente d6, Social d4\nSecundarias: Vida 10, Percepción 2d4, Aguante 2, Esquiva d8, Fortaleza d6, Voluntad d4, CC 15\nHabilidades: Puntería d8, Supervivencia d8, Construir d6, Atletismo d6, Sigilo d4, Combate con armas CaC d4, Intimidación d4, Ciencia d4, Acrobacias d4\nDotes: Conducir (coche), Kansei Dorifto (coche), Conducir (moto), Guía, Rastreador, Apuntado concentrado, Animal\nImplantes (5 de 15 CC): compresores pulmonares con filtro tóxico\nEquipo: fusil de asalto, chaleco de placas. El buggy del yermo, si el DJ lo permite, es su gran sueño o su gran deuda.\nCoste aproximado: 55.000 € (sin el buggy)",
       "health": {
        "value": 10,
        "max": 10
@@ -14049,7 +14067,7 @@
        "name": "Conducir (coche)",
        "type": "feat",
        "system": {
-        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces.",
+        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces.",
         "cost": 2,
         "requirements": "",
         "category": "advantage",
@@ -14058,7 +14076,7 @@
           "type": "reminder",
           "scopes": [],
           "label": "Conducir",
-          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces."
+          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces."
          }
         ]
        }
@@ -14087,7 +14105,7 @@
        "name": "Conducir (moto)",
        "type": "feat",
        "system": {
-        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces.",
+        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces.",
         "cost": 2,
         "requirements": "",
         "category": "advantage",
@@ -14096,7 +14114,7 @@
           "type": "reminder",
           "scopes": [],
           "label": "Conducir",
-          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces."
+          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces."
          }
         ]
        }
@@ -14292,7 +14310,8 @@
        "system": {
         "description": "Mediana. Aguante 4 contra disparos.",
         "endurance": 2,
-        "evasionPenalty": 1,
+        "evasionPenalty": 0,
+        "evasionReduction": 1,
         "powerRequired": 6,
         "shotEndurance": 4,
         "pristine": false,
@@ -14376,7 +14395,7 @@
        "name": "Yo conozco a uno…",
        "type": "feat",
        "system": {
-        "description": "Requisitos: Sociedad 1d4 Cada vez que intentes hacer una tirada de sociedad para buscar a alguien que pueda ser útil para un tema en concreto,bonifica en 2 la tirada de sociedad y quedate con el mayor.",
+        "description": "Requisitos: Sociedad 1d4 Cada vez que hagas una tirada de Sociedad para buscar a alguien que pueda ser útil para un tema concreto, bonifica en 2 la tirada.",
         "cost": 4,
         "requirements": "Sociedad 1d4",
         "category": "advantage",
@@ -14387,7 +14406,7 @@
            "society"
           ],
           "label": "Yo conozco a uno…",
-          "text": "Requisitos: Sociedad 1d4 Cada vez que intentes hacer una tirada de sociedad para buscar a alguien que pueda ser útil para un tema en concreto,bonifica en 2 la tirada de sociedad y quedate con el mayor."
+          "text": "Requisitos: Sociedad 1d4 Cada vez que hagas una tirada de Sociedad para buscar a alguien que pueda ser útil para un tema concreto, bonifica en 2 la tirada."
          },
          {
           "type": "bonus",
@@ -14490,7 +14509,7 @@
        "name": "Conducir (coche)",
        "type": "feat",
        "system": {
-        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces.",
+        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces.",
         "cost": 2,
         "requirements": "",
         "category": "advantage",
@@ -14499,7 +14518,7 @@
           "type": "reminder",
           "scopes": [],
           "label": "Conducir",
-          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces."
+          "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces."
          }
         ]
        }
@@ -14645,6 +14664,7 @@
         "description": "Ligera. Parece ropa normal. Nadie se da cuenta de que la llevas sin tocarla.",
         "endurance": 1,
         "evasionPenalty": 0,
+        "evasionReduction": 0,
         "powerRequired": 0,
         "shotEndurance": 0,
         "pristine": false,

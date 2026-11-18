@@ -73,7 +73,9 @@ function evaluateAlternative(actor, source) {
 /** Comprueba requisitos mecánicos; las condiciones narrativas quedan expresamente en manos del DJ. */
 export function checkItemRequirements(actor, itemData) {
   const requirements = String(itemData.system?.requirements ?? "").trim();
-  const clauses = requirements ? requirements.split(/\s*,\s*|\s+\by\b\s+/i).filter(Boolean) : [];
+  const statAlternatives = requirements.split(/\s*,\s*|\s+\bo\b\s+/i).filter(Boolean);
+  const allStatAlternatives = statAlternatives.length > 1 && statAlternatives.every(part => /^.+?\s+(?:1)?d(?:4|6|8|10|12)$/i.test(normalizeRequirement(part)));
+  const clauses = requirements ? (allStatAlternatives ? [statAlternatives.join(" o ")] : requirements.split(/\s*,\s*|\s+\by\b\s+/i).filter(Boolean)) : [];
   const missing = [];
   const manual = [];
   for (const clause of clauses) {

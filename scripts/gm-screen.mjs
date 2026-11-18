@@ -28,10 +28,10 @@ const capitalize = text => text.charAt(0).toLocaleUpperCase("es") + text.slice(1
 export function referenceSections() {
   const core = [
     { title: "Dificultades", icon: "fa-gauge", table: table(["Perfil", "Muy fácil", "Fácil", "Normal", "Difícil", "Muy difícil"], [
-      ["Persona común", 2, 3, 4, 6, 8],
-      ["Profesional", 4, 6, 7, 9, 11],
-      ["Experto", 7, 9, 11, 13, 15],
-      ["Élite mundial", 11, 12, 14, 16, 18]
+      ["Persona común", "—", 3, 5, 7, 9],
+      ["Profesional", 3, 5, 7, 9, 11],
+      ["Experto", 5, 7, 9, 11, 13],
+      ["Élite mundial", 7, 9, 11, 13, 15]
     ]) },
     { title: "Tiradas", icon: "fa-dice", table: table(["Situación", "Regla"], [
       ["Tirada", "Característica + habilidad. Sin dado de habilidad, suma 1."],
@@ -45,7 +45,7 @@ export function referenceSections() {
       ["Iniciativa", "Tira el mejor del grupo; cada aliado bonifica 1 (máx. 3). Enemigos: dificultad fija +1 por enemigo extra (máx. +3)."],
       ["Atacar", "Contra Esquiva, Fortaleza o Voluntad. Igualar basta: el agresor gana los empates."],
       ["Daño", "Entrante (exceso) + Daño del arma − Aguante. Pifia al defenderse: ignora el aguante."],
-      ["Ataque múltiple", `Jugadores: la habilidad baja un paso por ataque extra (hasta d4). Enemigos: −${Number(rule("enemyMultiAttack")) || 2} de dificultad por ataque, no por debajo de 3.`],
+      ["Ataque múltiple", `Jugadores: la habilidad baja un paso por ataque extra (hasta d4); reparten Bonifica entre los ataques y aplican Penaliza completo a todos. Enemigos: −${Number(rule("enemyMultiAttack")) || 2} de dificultad por ataque, no por debajo de 3.`],
       ["Caído", "A 0 PV, el daño sobrante es la dificultad. Fortaleza cada turno: éxito −2, fallo +2. 0–1 estable, 10–11 muerte."],
       ["Ayudar", "Tarea sencilla: bonifica 1. Compleja: el ayudante tira a −4; éxito bonifica 1, fallo penaliza 1."],
       ["Cobertura", "Reduce la dificultad de Esquiva o Fortaleza: ligera 1, mediana 3, total 5. Si el cubierto es un enemigo, su Esquiva o Fortaleza sube lo mismo."],

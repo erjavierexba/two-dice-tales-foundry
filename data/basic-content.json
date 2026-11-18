@@ -5,7 +5,7 @@
       "name": "Alergia",
       "type": "feat",
       "system": {
-        "description": "Tienes uno o varios elementos a los que eres muy alérgico. Si estás en presencia de este elemento, a todas tus tiradas añadele un 1d4 y quédate con los peores resultados ya que no puedes parar de estornudar.",
+        "description": "Tienes uno o varios elementos a los que eres muy alérgico. Si estás en presencia de este elemento, a todas tus tiradas añádele un 1d4 y quédate con los peores resultados ya que no puedes parar de estornudar.",
         "cost": -3,
         "requirements": "",
         "category": "disadvantage",
@@ -14,7 +14,7 @@
             "type": "reminder",
             "scopes": [],
             "label": "Alergia",
-            "text": "Tienes uno o varios elementos a los que eres muy alérgico. Si estás en presencia de este elemento, a todas tus tiradas añadele un 1d4 y quédate con los peores resultados ya que no puedes parar de estornudar."
+            "text": "Tienes uno o varios elementos a los que eres muy alérgico. Si estás en presencia de este elemento, a todas tus tiradas añádele un 1d4 y quédate con los peores resultados ya que no puedes parar de estornudar."
           },
           {
             "type": "worseDie",
@@ -30,7 +30,7 @@
       "name": "Cabeza hueca",
       "type": "feat",
       "system": {
-        "description": "Nunca se te ha dado bien eso de pensar. Cada vez que tires algo con la característica mente, tira dos veces el dado de mente y quedate con el peor resultado.",
+        "description": "Nunca se te ha dado bien eso de pensar. Cada vez que tires algo con la característica mente, tira dos veces el dado de mente y quédate con el peor resultado.",
         "cost": -4,
         "requirements": "",
         "category": "disadvantage",
@@ -41,7 +41,7 @@
               "mind"
             ],
             "label": "Cabeza hueca",
-            "text": "Nunca se te ha dado bien eso de pensar. Cada vez que tires algo con la característica mente, tira dos veces el dado de mente y quedate con el peor resultado."
+            "text": "Nunca se te ha dado bien eso de pensar. Cada vez que tires algo con la característica mente, tira dos veces el dado de mente y quédate con el peor resultado."
           },
           {
             "type": "disadvantage",
@@ -622,7 +622,7 @@
       "name": "Anestesista",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Medicina 1d6, Ciencia 1d4 Sabes como crear, reconocer y administrar todo tipo de sedantes en el cuerpo humano. Aumenta en 2 la dificultad para que tu objetivo resista cualquier sedación creada por tí.",
+        "description": "Requisitos: Medicina 1d6, Ciencia 1d4 Sabes cómo crear, reconocer y administrar todo tipo de sedantes en el cuerpo humano. Aumenta en 2 la dificultad para que tu objetivo resista cualquier sedación creada por ti.",
         "cost": 4,
         "requirements": "Medicina 1d6, Ciencia 1d4",
         "category": "advantage",
@@ -634,7 +634,7 @@
               "science"
             ],
             "label": "Anestesista",
-            "text": "Requisitos: Medicina 1d6, Ciencia 1d4 Sabes como crear, reconocer y administrar todo tipo de sedantes en el cuerpo humano. Aumenta en 2 la dificultad para que tu objetivo resista cualquier sedación creada por tí."
+            "text": "Requisitos: Medicina 1d6, Ciencia 1d4 Sabes cómo crear, reconocer y administrar todo tipo de sedantes en el cuerpo humano. Aumenta en 2 la dificultad para que tu objetivo resista cualquier sedación creada por ti."
           }
         ]
       }
@@ -681,7 +681,7 @@
       "name": "Conducir",
       "type": "feat",
       "system": {
-        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces.",
+        "description": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces.",
         "cost": 2,
         "requirements": "",
         "category": "advantage",
@@ -690,7 +690,7 @@
             "type": "reminder",
             "scopes": [],
             "label": "Conducir",
-            "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añadele 1d4. Puede escogerse varias veces."
+            "text": "Sabes conducir un tipo de vehículo de forma correcta. Si por un casual deberías hacer maniobras difíciles de ejecutar (un derrape con un coche, conducir bajo una tormenta, etc…), tira tu característica (DJ) y añádele 1d4. Puede escogerse varias veces."
           }
         ]
       }
@@ -1866,7 +1866,7 @@
       "name": "Primeros auxilios",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida, si se produce una pifia, infringe 1 de daño a la vida ignorando el aguante.",
+        "description": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida. Si se produce una pifia, inflige 1 punto de daño que ignora el Aguante.",
         "cost": 4,
         "requirements": "Medicina 1d4",
         "category": "advantage",
@@ -1879,7 +1879,7 @@
               "mind"
             ],
             "label": "Primeros auxilios",
-            "text": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida, si se produce una pifia, infringe 1 de daño a la vida ignorando el aguante."
+            "text": "Requisitos: Medicina 1d4 Puedes usar medicina y un botiquín o similar para tratar heridas producidas recientemente. Haz una tirada de medicina con mente o con destreza dificultad 4. Si lo consigues, cura 1 punto de vida. Si se produce una pifia, inflige 1 punto de daño que ignora el Aguante."
           }
         ]
       }
@@ -1958,7 +1958,7 @@
       "name": "Puntero",
       "type": "feat",
       "system": {
-        "description": "Elige una habilidad no combativa (ni maniobra de combate, ni combate con armas cac, ni puntería). Para esta habilidad selecciona una acción que harías con esa habilidad y obtén bonifica en 1 para esa acción. Pero elige otra acción de esa misma habilidad con la que tendrás un penaliza en 2 a partir de ahora. Ejemplo: *En atletismo,el bonifica para correr y el penaliza para nadar.*",
+        "description": "Elige una habilidad no combativa (ni maniobra de combate, ni combate con armas CaC, ni puntería). Para esta habilidad selecciona una acción que harías con esa habilidad y obtén bonifica en 1 para esa acción. Pero elige otra acción de esa misma habilidad con la que tendrás un penaliza en 2 a partir de ahora. Ejemplo: *En atletismo,el bonifica para correr y el penaliza para nadar.*",
         "cost": 4,
         "requirements": "",
         "category": "advantage",
@@ -1967,7 +1967,7 @@
             "type": "reminder",
             "scopes": [],
             "label": "Puntero",
-            "text": "Elige una habilidad no combativa (ni maniobra de combate, ni combate con armas cac, ni puntería). Para esta habilidad selecciona una acción que harías con esa habilidad y obtén bonifica en 1 para esa acción. Pero elige otra acción de esa misma habilidad con la que tendrás un penaliza en 2 a partir de ahora. Ejemplo: *En atletismo,el bonifica para correr y el penaliza para nadar.*"
+            "text": "Elige una habilidad no combativa (ni maniobra de combate, ni combate con armas CaC, ni puntería). Para esta habilidad selecciona una acción que harías con esa habilidad y obtén bonifica en 1 para esa acción. Pero elige otra acción de esa misma habilidad con la que tendrás un penaliza en 2 a partir de ahora. Ejemplo: *En atletismo,el bonifica para correr y el penaliza para nadar.*"
           },
           {
             "type": "bonus",
@@ -2031,7 +2031,7 @@
       "name": "Retaco",
       "type": "feat",
       "system": {
-        "description": "Prohibido en caso de coger Mastodonte. Te acercas más a un enano de fantasía que a un humano normal, la gente lo tiene más difícil para darte de ostias, tu dado de esquiva aumenta de forma permanente, pero cada vez que quieres intimidar a alguien más alto que tú, reduce tu dado de intimidación y tu aguante reduce en 1.",
+        "description": "Prohibido en caso de coger Mastodonte. Te acercas más a un enano de fantasía que a un humano normal. Tu dado de Esquiva aumenta de forma permanente, pero tu Aguante disminuye en 1 y, cuando quieras intimidar a alguien más alto que tú, reduce tu dado de Intimidación.",
         "cost": 5,
         "requirements": "",
         "category": "advantage",
@@ -2042,7 +2042,7 @@
               "intimidation"
             ],
             "label": "Retaco",
-            "text": "Prohibido en caso de coger Mastodonte. Te acercas más a un enano de fantasía que a un humano normal, la gente lo tiene más difícil para darte de ostias, tu dado de esquiva aumenta de forma permanente, pero cada vez que quieres intimidar a alguien más alto que tú, reduce tu dado de intimidación y tu aguante reduce en 1."
+            "text": "Prohibido en caso de coger Mastodonte. Te acercas más a un enano de fantasía que a un humano normal. Tu dado de Esquiva aumenta de forma permanente, pero tu Aguante disminuye en 1 y, cuando quieras intimidar a alguien más alto que tú, reduce tu dado de Intimidación."
           },
           {
             "type": "dieStep",
@@ -2253,7 +2253,7 @@
       "name": "Yo conozco a uno…",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Sociedad 1d4 Cada vez que intentes hacer una tirada de sociedad para buscar a alguien que pueda ser útil para un tema en concreto,bonifica en 2 la tirada de sociedad y quedate con el mayor.",
+        "description": "Requisitos: Sociedad 1d4 Cada vez que hagas una tirada de Sociedad para buscar a alguien que pueda ser útil para un tema concreto, bonifica en 2 la tirada.",
         "cost": 4,
         "requirements": "Sociedad 1d4",
         "category": "advantage",
@@ -2264,7 +2264,7 @@
               "society"
             ],
             "label": "Yo conozco a uno…",
-            "text": "Requisitos: Sociedad 1d4 Cada vez que intentes hacer una tirada de sociedad para buscar a alguien que pueda ser útil para un tema en concreto,bonifica en 2 la tirada de sociedad y quedate con el mayor."
+            "text": "Requisitos: Sociedad 1d4 Cada vez que hagas una tirada de Sociedad para buscar a alguien que pueda ser útil para un tema concreto, bonifica en 2 la tirada."
           },
           {
             "type": "bonus",
@@ -2407,7 +2407,7 @@
       "name": "Armas lanzables",
       "type": "feat",
       "system": {
-        "description": "Si lanzas un arma cac habilitada para ser lanzada, puedes usar tu habilidad de combate con armas cac en lugar de puntería para esta tirada.",
+        "description": "Si lanzas un arma CaC habilitada para ser lanzada, puedes usar tu habilidad de combate con armas CaC en lugar de puntería para esta tirada.",
         "cost": 2,
         "requirements": "",
         "category": "advantage",
@@ -2419,7 +2419,7 @@
               "ranged"
             ],
             "label": "Armas lanzables",
-            "text": "Si lanzas un arma cac habilitada para ser lanzada, puedes usar tu habilidad de combate con armas cac en lugar de puntería para esta tirada."
+            "text": "Si lanzas un arma CaC habilitada para ser lanzada, puedes usar tu habilidad de combate con armas CaC en lugar de puntería para esta tirada."
           }
         ]
       }
@@ -2535,7 +2535,7 @@
       "name": "Entrenado en un arma",
       "type": "feat",
       "system": {
-        "description": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas cac o puntería.",
+        "description": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas CaC o puntería.",
         "cost": 4,
         "requirements": "",
         "category": "advantage",
@@ -2547,7 +2547,7 @@
               "ranged"
             ],
             "label": "Entrenado en un arma",
-            "text": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas cac o puntería."
+            "text": "Cuando usas un arma en concreto, se bonifica en 1 la tirada de combate con armas CaC o puntería."
           },
           {
             "type": "bonus",
@@ -2613,9 +2613,9 @@
       "name": "Golpe vital",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Puntería 1d12 o maniobra de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16.",
+        "description": "Requisitos: Puntería 1d12 o maniobra de lucha 1d12 o combate CaC 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con esta dote pasa a ser 4+4+4+4=16.",
         "cost": 8,
-        "requirements": "Puntería 1d12 o maniobra de lucha 1d12 o combate cac 1d12",
+        "requirements": "Puntería 1d12 o maniobra de lucha 1d12 o combate CaC 1d12",
         "category": "advantage",
         "rules": [
           {
@@ -2624,7 +2624,7 @@
               "attack"
             ],
             "label": "Golpe vital",
-            "text": "Requisitos: Puntería 1d12 o maniobra de lucha 1d12 o combate cac 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con este dote pasa a ser 4+4+4+4=16."
+            "text": "Requisitos: Puntería 1d12 o maniobra de lucha 1d12 o combate CaC 1d12 Si golpeas con un crítico, añade una vez más la cantidad del crítico. Por ejemplo, si es un crítico de 4, originalmente sería 4+4+4=12, con esta dote pasa a ser 4+4+4+4=16."
           },
           {
             "type": "critical",
@@ -2641,9 +2641,9 @@
       "name": "Guerrero",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Maniobra de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles.",
+        "description": "Requisitos: Maniobra de lucha 1d8, combate con armas CaC 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles.",
         "cost": 12,
-        "requirements": "Maniobra de lucha 1d8, combate con armas cac 1d8, puntería 1d8",
+        "requirements": "Maniobra de lucha 1d8, combate con armas CaC 1d8, puntería 1d8",
         "category": "advantage",
         "rules": [
           {
@@ -2652,7 +2652,7 @@
               "attack"
             ],
             "label": "Guerrero",
-            "text": "Requisitos: Maniobra de lucha 1d8, combate con armas cac 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles."
+            "text": "Requisitos: Maniobra de lucha 1d8, combate con armas CaC 1d8, puntería 1d8 Eres un guerrero en cuerpo y alma, ignora 1 punto de aguante de los enemigos y aumenta el tuyo en 1. Si sacas una pifia con una tirada de ataque, tira otra vez todos los dados y quédate con este nuevo resultado, incluso si es otra pifia, pero pierdes todas las bonificaciones posibles."
           }
         ],
         "modifiers": [
@@ -2673,7 +2673,7 @@
       "system": {
         "description": "Requisitos: Dual, disparar dos armas a distancia con la etiqueta “dual” al mismo objetivo. No puedes separar este ataque, realiza un único ataque (en lugar de 2 como sería normal) contra un objetivo con bonifica en 1. Si aciertas el ataque, suma el Daño de ambas armas para este ataque. *Ejemplo: Tienes dos pistolas con Daño 3 y la etiqueta “dual”, pues si usas esta habilidad y aciertas, es un único ataque con Daño 6.*",
         "cost": 8,
-        "requirements": "Dual, disparar dos armas a distancia con la etiqueta “dual” al mismo objetivo.",
+        "requirements": "Dual, disparar dos armas a distancia con la etiqueta “dual” al mismo objetivo",
         "category": "advantage",
         "rules": [
           {
@@ -2700,7 +2700,7 @@
       "name": "Parry",
       "type": "feat",
       "system": {
-        "description": "Si esquivas un golpe a corta distancia por 5 o más y tienes un arma cac o tienes las manos libres para hacer una maniobra de lucha puedes realizar un contraataque brutal, realiza una tirada de ataque con bonificación 3.",
+        "description": "Si esquivas un golpe a corta distancia por 5 o más y tienes un arma CaC o tienes las manos libres para hacer una maniobra de lucha puedes realizar un contraataque brutal, realiza una tirada de ataque con bonificación 3.",
         "cost": 4,
         "requirements": "",
         "category": "advantage",
@@ -2712,7 +2712,7 @@
               "attack"
             ],
             "label": "Parry",
-            "text": "Si esquivas un golpe a corta distancia por 5 o más y tienes un arma cac o tienes las manos libres para hacer una maniobra de lucha puedes realizar un contraataque brutal, realiza una tirada de ataque con bonificación 3."
+            "text": "Si esquivas un golpe a corta distancia por 5 o más y tienes un arma CaC o tienes las manos libres para hacer una maniobra de lucha puedes realizar un contraataque brutal, realiza una tirada de ataque con bonificación 3."
           },
           {
             "type": "bonus",
@@ -2903,18 +2903,18 @@
       "name": "Sed de sangre",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Una criatura enemiga muere por un ataque tuyo. La adrenalina invade tu torrente sanguíneo y reaccionas rápido para hacer otro ataque más (exactamente igual que el que mató al enemigo original) o puedes recargar directamente. Solo se puede activar una vez por turno. Si la habilidad de ataque es 1d12, puede activarse dos veces.",
+        "description": "Requisitos: Puntería d10, Combate con armas CaC d10 o Maniobra de lucha d10. La adrenalina invade tu torrente sanguíneo y reaccionas rápido para hacer otro ataque más (exactamente igual que el que mató al enemigo original) o puedes recargar directamente. Solo se puede activar una vez por turno. Si la habilidad de ataque es 1d12, puede activarse dos veces.",
         "cost": 14,
-        "requirements": "Una criatura enemiga muere por un ataque tuyo.",
+        "requirements": "Puntería d10, Combate con armas CaC d10 o Maniobra de lucha d10",
         "category": "advantage",
         "rules": [
           {
             "type": "reminder",
             "scopes": [
-              "mind"
+              "attack"
             ],
             "label": "Sed de sangre",
-            "text": "Requisitos: Una criatura enemiga muere por un ataque tuyo. La adrenalina invade tu torrente sanguíneo y reaccionas rápido para hacer otro ataque más (exactamente igual que el que mató al enemigo original) o puedes recargar directamente. Solo se puede activar una vez por turno. Si la habilidad de ataque es 1d12, puede activarse dos veces."
+            "text": "Requisitos: Puntería d10, Combate con armas CaC d10 o Maniobra de lucha d10. La adrenalina invade tu torrente sanguíneo y reaccionas rápido para hacer otro ataque más (exactamente igual que el que mató al enemigo original) o puedes recargar directamente. Solo se puede activar una vez por turno. Si la habilidad de ataque es 1d12, puede activarse dos veces."
           }
         ]
       }
@@ -2923,7 +2923,7 @@
       "name": "Tiro perforador",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Puntería 1d12, Entrenado en un arma Disparas como nadie este arma. Si sacas un crítico y haces al menos un punto de daño, puedes atacar a un objetivo a discreción del director de juego con ese mismo tiro, pero tendrá el dado de puntería reducido y no podrá bonificarse. Además tendrá una penalización en 1.",
+        "description": "Requisitos: Puntería 1d12, Entrenado en un arma Disparas como nadie esta arma. Si sacas un crítico y haces al menos un punto de daño, puedes atacar a otro objetivo a discreción del DJ con ese mismo tiro, pero tendrá el dado de Puntería reducido y no podrá bonificarse. Además, tendrá Penaliza 1.",
         "cost": 6,
         "requirements": "Puntería 1d12, Entrenado en un arma",
         "category": "advantage",
@@ -2934,7 +2934,15 @@
               "ranged"
             ],
             "label": "Tiro perforador",
-            "text": "Requisitos: Puntería 1d12, Entrenado en un arma Disparas como nadie este arma. Si sacas un crítico y haces al menos un punto de daño, puedes atacar a un objetivo a discreción del director de juego con ese mismo tiro, pero tendrá el dado de puntería reducido y no podrá bonificarse. Además tendrá una penalización en 1."
+            "text": "Requisitos: Puntería 1d12, Entrenado en un arma Disparas como nadie esta arma. Si sacas un crítico y haces al menos un punto de daño, puedes atacar a otro objetivo a discreción del DJ con ese mismo tiro, pero tendrá el dado de Puntería reducido y no podrá bonificarse. Además, tendrá Penaliza 1."
+          },
+          {
+            "type": "penalty",
+            "scopes": [
+              "ranged"
+            ],
+            "value": 1,
+            "label": "Tiro perforador"
           }
         ]
       }
@@ -2943,9 +2951,9 @@
       "name": "Sangrado",
       "type": "feat",
       "system": {
-        "description": "Requisitos: Combate con armas cac 1d8 Sabes dar en los puntos clave del cuerpo, bien sangrado interno o externo. Cuando hagas un crítico e infliges daño a los puntos de vida, tu enemigo empieza a sangrar durante 1d4 rondas. Cada vez que le toque, pierde 1 punto de vida ignorando su aguante.",
+        "description": "Requisitos: Combate con armas CaC 1d8 Sabes golpear los puntos clave del cuerpo y provocar sangrado interno o externo. Cuando obtengas un crítico e inflijas daño a los puntos de vida, el enemigo empieza a sangrar durante 1d4 rondas. En cada uno de sus turnos pierde 1 punto de vida que ignora su Aguante.",
         "cost": 8,
-        "requirements": "Combate con armas cac 1d8",
+        "requirements": "Combate con armas CaC 1d8",
         "category": "advantage",
         "rules": [
           {
@@ -2954,7 +2962,7 @@
               "melee"
             ],
             "label": "Sangrado",
-            "text": "Requisitos: Combate con armas cac 1d8 Sabes dar en los puntos clave del cuerpo, bien sangrado interno o externo. Cuando hagas un crítico e infliges daño a los puntos de vida, tu enemigo empieza a sangrar durante 1d4 rondas. Cada vez que le toque, pierde 1 punto de vida ignorando su aguante."
+            "text": "Requisitos: Combate con armas CaC 1d8 Sabes golpear los puntos clave del cuerpo y provocar sangrado interno o externo. Cuando obtengas un crítico e inflijas daño a los puntos de vida, el enemigo empieza a sangrar durante 1d4 rondas. En cada uno de sus turnos pierde 1 punto de vida que ignora su Aguante."
           }
         ]
       }
@@ -3308,6 +3316,7 @@
         "description": "Potencia necesaria: Ninguna",
         "endurance": 1,
         "evasionPenalty": 0,
+        "evasionReduction": 0,
         "powerRequired": 0,
         "quantity": 1,
         "equipped": false
@@ -3317,9 +3326,10 @@
       "name": "Armadura mediana",
       "type": "armor",
       "system": {
-        "description": "Potencia necesaria: 1d6",
+        "description": "Potencia necesaria: d6",
         "endurance": 2,
         "evasionPenalty": 0,
+        "evasionReduction": 1,
         "powerRequired": 6,
         "quantity": 1,
         "equipped": false
@@ -3329,10 +3339,11 @@
       "name": "Armadura pesada",
       "type": "armor",
       "system": {
-        "description": "Potencia necesaria: 1d8",
+        "description": "Potencia necesaria: d10",
         "endurance": 4,
         "evasionPenalty": 0,
-        "powerRequired": 8,
+        "evasionReduction": 1,
+        "powerRequired": 10,
         "quantity": 1,
         "equipped": false
       }
@@ -3371,7 +3382,7 @@
       "name": "Arpón con cuerda",
       "type": "gear",
       "system": {
-        "description": "Cuenta como un ataque” Cac media” pero tiene la propiedad “arrojadizo” y solo puede lanzarse. Si acierta e inflige daño, puedes tirar de él, haciendo una prueba de potencia y atletismo. Si lo consigues, disminuye la distancia del enemigo hacia a ti .El rango máximo de ataque es “medio”. De “medio” pasa a “corta”, si estuviese en “corta”, pasa a “contacto”. El enemigo puede quitarse el arpón gastando su ataque. Por otro lado, puedes gastar tu ataque para recoger el arpón en caso de haber sido soltado o volver a tirar del enemigo si sigue conectado a este.",
+        "description": "Cuenta como un ataque” CaC media” pero tiene la propiedad “arrojadizo” y solo puede lanzarse. Si acierta e inflige daño, puedes tirar de él, haciendo una prueba de potencia y atletismo. Si lo consigues, disminuye la distancia del enemigo hacia a ti .El rango máximo de ataque es “medio”. De “medio” pasa a “corta”, si estuviese en “corta”, pasa a “contacto”. El enemigo puede quitarse el arpón gastando su ataque. Por otro lado, puedes gastar tu ataque para recoger el arpón en caso de haber sido soltado o volver a tirar del enemigo si sigue conectado a este.",
         "category": "misc",
         "quantity": 1,
         "equipped": false
@@ -3752,7 +3763,7 @@
           "fortitude": 4,
           "will": 4,
           "perception": 6,
-          "traits": "Al infringir al menos 1 punto de daño, infecta con veneno de serpiente. Leer el objeto “veneno” para más información. El veneno de serpiente tiene una dificultad 8 e inflige 1 punto de daño por hora durante 8 horas. Para curarse necesita pasar una prueba de medicina dificultad 8.",
+          "traits": "Al infligir al menos 1 punto de daño, infecta con veneno de serpiente. Leer el objeto “veneno” para más información. El veneno de serpiente tiene una dificultad 8 e inflige 1 punto de daño por hora durante 8 horas. Para curarse necesita pasar una prueba de medicina dificultad 8.",
           "variants": "Serpiente pequeña: PV 3, Esquiva 9, Mordisco(4, Daño 0\\). Serpiente letal: la dificultad del veneno pasa a ser 10."
         }
       },

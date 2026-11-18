@@ -37,6 +37,26 @@ export function dieIncrements(value, from = 4) {
   return Math.max(0, DIE_SIZES.indexOf(die) - Math.max(-1, DIE_SIZES.indexOf(normalizeDie(from))));
 }
 
+/** Default spread for a shared multiattack bonus pool: one point per attack, then start again. */
+export function defaultAttackBonusAllocation(total, attacks) {
+  const count = Math.max(1, Math.trunc(Number(attacks) || 1));
+  const points = Math.max(0, Math.trunc(Number(total) || 0));
+  const allocation = Array(count).fill(0);
+  for (let point = 0; point < points; point++) allocation[point % count]++;
+  return allocation;
+}
+
+/** Clamps a chosen multiattack allocation so it can never spend more than the shared pool. */
+export function normalizeAttackBonusAllocation(values, total, attacks) {
+  const count = Math.max(1, Math.trunc(Number(attacks) || 1));
+  let remaining = Math.max(0, Math.trunc(Number(total) || 0));
+  return Array.from({ length: count }, (_, index) => {
+    const value = Math.min(remaining, Math.max(0, Math.trunc(Number(values?.[index]) || 0)));
+    remaining -= value;
+    return value;
+  });
+}
+
 export function applyBonus(results, faces, allocations) {
   return results.map((result, index) => {
     if (!faces[index] || result === 1) return result;

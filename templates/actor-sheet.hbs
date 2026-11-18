@@ -154,7 +154,7 @@
         <article class="tdt-stat-card">
           <button type="button" class="tdt-roll-label" data-action="roll-defense" data-defense="{{defense.key}}"><i class="fas fa-shield-halved"></i> {{defense.label}}</button>
           {{#if ../creation.active}}<select name="system.defenses.{{defense.key}}.die">{{selectOptions ../config.rolledDieChoices selected=defense.die}}</select>{{else}}<div class="tdt-locked-die"><strong>d{{defense.die}}</strong>{{> improveButton improve=defense.improve}}</div>{{/if}}
-          {{#if defense.stepped}}<small class="tdt-stepped">Efectivo d{{defense.value}}{{#if defense.source}} por {{defense.source}}{{/if}}</small>{{/if}}
+          {{#if defense.stepped}}<small class="tdt-stepped">Efectivo {{#if defense.value}}d{{defense.value}}{{else}}1{{/if}}{{#if defense.source}} por {{defense.source}}{{/if}}</small>{{/if}}
           {{#if defense.armorPenalty}}<small>Armadura: −{{defense.armorPenalty}}</small>{{/if}}
         </article>
         {{/each}}

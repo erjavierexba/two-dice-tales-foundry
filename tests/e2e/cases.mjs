@@ -54,7 +54,7 @@ export const cases = [
         }
       }
       T.eq(broken, [], "documentos rotos");
-      T.eq(total, 559, "documentos totales");
+      T.eq(total, 584, "documentos totales");
     })
   },
   {
@@ -191,6 +191,19 @@ export const cases = [
     })
   },
   {
+    name: "La armadura mediana reduce un paso el dado de Esquiva, hasta 1 fijo",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero({ defenses: { evasion: { die: 4 } } }));
+      await T.give(actor, "basic-armor", "Armadura mediana", { "system.equipped": true });
+      T.eq(actor.system.defenses.evasion.value, 0, "d4 reducido a 1 fijo");
+      T.eq(actor.system.defenses.evasion.armorReduction, 1, "una reducción por armadura");
+      T.dice([6, 4]);
+      const { value } = await T.roll(() => actor.rollDefense("evasion"));
+      T.diceDone();
+      T.eq(value.total, 5, "Destreza d6 + 1 fijo");
+    })
+  },
+  {
     name: "Tirada básica y crítico (dobles suman otra vez)",
     run: async ({ gm }) => gm.evaluate(async () => {
       const actor = await T.actor("character", T.hero({ skills: { athletics: { die: 6 } } }));
@@ -280,6 +293,23 @@ export const cases = [
       const { value } = await T.roll(() => actor.rollWeapon(weapon));
       T.diceDone();
       T.eq(value.total, 16, "4 + 4 + 4 + 4");
+    })
+  },
+  {
+    name: "Ataque múltiple reparte Bonifica y aplica todo Penaliza a cada ataque",
+    run: async ({ gm }) => gm.evaluate(async () => {
+      const actor = await T.actor("character", T.hero({ skills: { ranged: { die: 6 } } }));
+      const weapon = await T.give(actor, "basic-weapons", "Pistola", { "system.equipped": true });
+      T.dice([6, 2], [4, 4], [6, 2], [4, 4]);
+      const seen = T.openDialogIds();
+      const rolling = actor.rollWeapon(weapon);
+      await T.answer({ seen, fields: { attacks: 2, bonus: 3, penalty: 2 } });
+      await T.answer({ fields: { attackBonus0: 2, attackBonus1: 1 } });
+      await rolling;
+      T.diceDone();
+      const messages = game.messages.contents.slice(-2).map(T.messageText);
+      T.ok(/Ataque 1\/2/.test(messages[0]) && /Bono repartido automáticamente: \+2/.test(messages[0]) && /Penalizador: −2/.test(messages[0]), `primer ataque: ${messages[0]}`);
+      T.ok(/Ataque 2\/2/.test(messages[1]) && /Bono repartido automáticamente: \+1/.test(messages[1]) && /Penalizador: −2/.test(messages[1]), `segundo ataque: ${messages[1]}`);
     })
   },
   {
@@ -951,6 +981,8 @@ export const cases = [
       await T.sleep(300);
       const screen = foundry.applications.instances.get("tdt-gm-screen");
       T.ok(screen?.rendered && /Persona común/.test(screen.element.textContent), "tabla de dificultades");
+      const difficulties = referenceSections().core.find(section => section.title === "Dificultades").table.rows;
+      T.eq(difficulties[0], ["Persona común", "—", 3, 5, 7, 9], "una acción muy fácil y común no se tira");
       const seen = T.openDialogIds();
       const giving = screen._giveXp(hero.uuid);
       await T.answer({ seen, fields: { value: 5 } });

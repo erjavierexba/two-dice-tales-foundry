@@ -155,6 +155,7 @@ export const BASIC_FEAT_OVERRIDES = {
   "Kansei Dorifto": { rules: [], reminderScopes: ["driving"] },
   "Parry": { rules: [r("bonus", 3, ["attack"], { ...O, label: "Parry (contraataque tras esquivar por 5 o más)" })], reminderScopes: ["evasion", "attack"] },
   "Practicante marcial": { rules: [r("bonus", 2, ["evasion"], { ...O, label: "Practicante marcial (te atacan con maniobra de lucha)" })] },
+  "Sed de sangre": { rules: [], reminderScopes: ["attack"] },
   "Posición defensiva": {
     toggle: true,
     modifiers: [mod("endurance", 1)],

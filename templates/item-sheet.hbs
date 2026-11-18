@@ -74,7 +74,8 @@
 
         {{#if is.armor}}
           <label>Bono de aguante <input type="number" name="system.endurance" min="0" value="{{system.endurance}}"></label>
-          <label>Penalizador de esquiva <input type="number" name="system.evasionPenalty" min="0" value="{{system.evasionPenalty}}"></label>
+          <label>Reducciones del dado de Esquiva <input type="number" name="system.evasionReduction" min="0" value="{{system.evasionReduction}}"></label>
+          <label>Penalizador plano de Esquiva <input type="number" name="system.evasionPenalty" min="0" value="{{system.evasionPenalty}}"></label>
           <label>Potencia necesaria <select name="system.powerRequired">{{selectOptions config.dieChoices selected=system.powerRequired}}</select></label>
           {{#if modules.cyber}}
           <label>Aguante contra disparos <input type="number" min="0" name="system.shotEndurance" value="{{system.shotEndurance}}"></label>

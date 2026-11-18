@@ -450,6 +450,7 @@ export const ITEM_TYPES = {
     "data": {
       "endurance": 1,
       "evasionPenalty": 0,
+      "evasionReduction": 0,
       "powerRequired": 0,
       "shotEndurance": 0,
       "pristine": false,

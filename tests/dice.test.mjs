@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { applyBonus, chooseAutomaticBonus, dieScore, resolveTdtRoll, stepDie, stepDieToOne } from "../scripts/dice.mjs";
+import { applyBonus, chooseAutomaticBonus, defaultAttackBonusAllocation, dieScore, normalizeAttackBonusAllocation, resolveTdtRoll, stepDie, stepDieToOne } from "../scripts/dice.mjs";
 
 assert.equal(dieScore(4), 1);
 assert.equal(dieScore(12), 5);
@@ -56,3 +56,7 @@ assert.equal(stepDieToOne(8, 1), 10);
 assert.equal(resolveTdtRoll({ rawResults: [4, 4], faces: [6, 6] }).total, 12);
 assert.equal(resolveTdtRoll({ rawResults: [4, 4], faces: [6, 6], criticalExtra: 1 }).total, 16);
 assert.equal(resolveTdtRoll({ rawResults: [3, 4], faces: [6, 6], criticalExtra: 1 }).total, 7);
+
+assert.deepEqual(defaultAttackBonusAllocation(3, 3), [1, 1, 1], "el reparto rápido distribuye la reserva");
+assert.deepEqual(defaultAttackBonusAllocation(3, 2), [2, 1], "el sobrante vuelve al primer ataque");
+assert.deepEqual(normalizeAttackBonusAllocation([2, 2, 2], 3, 3), [2, 1, 0], "no se puede gastar más reserva de la disponible");

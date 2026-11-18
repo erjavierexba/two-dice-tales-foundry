@@ -556,9 +556,9 @@ const zombieAnnotations = {
   "Metabolismo eficiente": { modifiers: [mod("foodNeed", -2)], rules: [] },
   "Glotón": { modifiers: [mod("foodNeed", 2)], rules: [] },
   "Escándaloso/a": { rules: [rule("penalty", 1, ["stealth"], "Escandaloso/a")] },
-  "Sigilo zombie": { rules: [rule("bonus", 1, ["stealth"], "Sigilo zombie (contra zombis)", { optional: true })] },
-  "Sigilo zombie supremo": { rules: [rule("bonus", 3, ["stealth"], "Sigilo zombie supremo (contra zombis)", { optional: true })] },
-  "Miedo por los zombies": { rules: [rule("penalty", 3, ["attack"], "Miedo por los zombis (primer ataque del combate contra un zombi)", { optional: true })] },
+  "Sigilo zombi": { rules: [rule("bonus", 1, ["stealth"], "Sigilo zombi (contra zombis)", { optional: true })] },
+  "Sigilo zombi supremo": { rules: [rule("bonus", 3, ["stealth"], "Sigilo zombi supremo (contra zombis)", { optional: true })] },
+  "Miedo por los zombis": { rules: [rule("penalty", 3, ["attack"], "Miedo por los zombis (primer ataque del combate contra un zombi)", { optional: true })] },
   "Venganza sobre este mundo podrido": {
     rules: [
       rule("bonus", 2, [], "Venganza (murió una persona querida)", { optional: true }),
@@ -570,7 +570,7 @@ const zombieAnnotations = {
   "Piel dura": { rules: [rule("reminder", 0, [], "Piel dura", { text: "Aguante +1 contra ataques de ácido." })] },
   "Piel fina": { rules: [rule("reminder", 0, [], "Piel fina", { text: "Aguante −1 contra ataques de ácido." })] }
 };
-const zombieFeats = parseFeats(section(zombieMd, "## Dotes del módulo zombie", "## Compendio de zombies")).map(feat => featItem(feat, "zombie", zombieAnnotations));
+const zombieFeats = parseFeats(section(zombieMd, "## Dotes del módulo zombi", "## Compendio de zombis")).map(feat => featItem(feat, "zombie", zombieAnnotations));
 addPack("zombie-feats", "TDT Zombis · Dotes", "Item", "zombie", zombieFeats);
 
 const zombieGear = [
@@ -581,21 +581,21 @@ const zombieGear = [
 ];
 addPack("zombie-gear", "TDT Zombis · Objetos", "Item", "zombie", zombieGear);
 
-const zombies = parseEnemies(section(zombieMd, "## Compendio de zombies"), 5);
+const zombies = parseEnemies(section(zombieMd, "## Compendio de zombis"), 5);
 for (const zombie of zombies) {
   zombie.img = IMG.zombie;
   zombie.system.npcStats.group = 1;
 }
-const basicZombie = zombies.find(zombie => zombie.name === "Zombie básico");
+const basicZombie = zombies.find(zombie => zombie.name === "Zombi básico");
 if (basicZombie) {
   const group = structuredClone(basicZombie);
-  group.name = "Grupo de zombies básicos (4)";
+  group.name = "Grupo de zombis básicos (4)";
   group.system.health = { value: 20, max: 20 };
   group.system.npcStats.group = 4;
-  group.system.npcStats.traits = `Grupo de 2 a 6 zombies básicos: cambia el número del grupo y ajusta la vida (5 por zombi). ${basicZombie.system.npcStats.traits}`;
+  group.system.npcStats.traits = `Grupo de 2 a 6 zombis básicos: cambia el número del grupo y ajusta la vida (5 por zombi). ${basicZombie.system.npcStats.traits}`;
   zombies.push(group);
 }
-addPack("zombie-enemies", "TDT Zombis · Zombies", "Actor", "zombie", zombies);
+addPack("zombie-enemies", "TDT Zombis · Zombis", "Actor", "zombie", zombies);
 
 const rewardRows = parseTable(section(zombieMd, "### **Recompensas**", "### Deterioro de armas"), "Recompensa");
 addPack("zombie-tables", "TDT Zombis · Tablas", "RollTable", "zombie", [{
@@ -832,14 +832,15 @@ const meleeWeapons = parseTable(section(cyberMd, "### Armas cuerpo a cuerpo", "*
 }));
 addPack("cyber-weapons", "TDT Cyberpunk · Armas", "Item", "cyber", [...firearms, ...meleeWeapons]);
 
-const cyberArmor = parseTable(section(cyberMd, "## Armaduras", "## Objetos"), "Armadura").map(([name, kind, endurance, penalty, power, special]) => ({
+const cyberArmor = parseTable(section(cyberMd, "## Armaduras", "## Objetos"), "Armadura").map(([name, kind, endurance, evasionEffect, power, special]) => ({
   name,
   type: "armor",
   img: IMG.armor,
   system: {
     description: `${kind}. ${special === "—" ? "" : special}`.trim(),
     endurance: Number(endurance),
-    evasionPenalty: Math.abs(Number(penalty) || 0),
+    evasionPenalty: 0,
+    evasionReduction: /reduce/i.test(evasionEffect) ? 1 : 0,
     powerRequired: Number(power.match(/d(\d+)/)?.[1] ?? 0),
     shotEndurance: Number(special.match(/Aguante\s*(\d+)\s*contra disparos/i)?.[1] ?? 0),
     pristine: false,
@@ -865,7 +866,7 @@ const cyberObjects = parseTable(section(cyberMd, "## Objetos", "## Construcción
 }));
 const chips = [
   ["Chip de habilidad", "skill", 4000, "Sube un paso el dado de una habilidad mientras está cargado (sin habilidad: d4; con d12: bonifica 1). Elige la habilidad en la ficha del chip."],
-  ["Chip de combate", "combat", 8000, "Chip de Puntería, Combate con armas cac, Maniobra de lucha o Hacking. Elige la habilidad en la ficha del chip."],
+  ["Chip de combate", "combat", 8000, "Chip de Puntería, Combate con armas CaC, Maniobra de lucha o Hacking. Elige la habilidad en la ficha del chip."],
   ["Chip de defensa", "defense", 12000, "Sube un paso Esquiva, Fortaleza o Voluntad mientras está cargado. Elige la defensa en la ficha del chip."]
 ].map(([name, chipKind, price, description]) => ({ name, type: "gear", img: IMG.chip, system: { description: `${description} Ocupa una ranura del AVS, pero no cuenta para los usos de hacks. Cargarlo en combate gasta el turno entero.`, category: "skillChip", chipKind, chipTarget: "", loaded: false, module: "cyber", quantity: 1, price } }));
 const vehicles = parseTable(section(cyberMd, "## Vehículos", "**·Analógico"), "Vehículo").map(([name, drive, passengers, driving, health, endurance, special]) => ({
@@ -946,7 +947,7 @@ const pregenerated = {
   },
   "Kira, mercenaria cromada": {
     implants: [["Brazo robótico", { upgrades: ["Armas ocultas"] }], ["Piernas cibernéticas", {}], ["Médula ósea acelerada", {}]],
-    equipment: [["cyber-weapons", "Hoja vibrante"], ["cyber-weapons", "Escopeta"], ["generic", "Cac ligera"]]
+    equipment: [["cyber-weapons", "Hoja vibrante"], ["cyber-weapons", "Escopeta"], ["generic", "CaC ligera"]]
   },
   "Nuria, cibermédica": {
     implants: [["Ojos cibernéticos", {}], ["AVS (Advanced VirtualSelf)", { upgrades: ["Cableado"] }]],

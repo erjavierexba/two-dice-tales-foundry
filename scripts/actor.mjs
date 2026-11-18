@@ -1,5 +1,5 @@
 import { TDT } from "./config.mjs";
-import { chooseAutomaticBonus, dieScore, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepDieToOne, stepRolledDie } from "./dice.mjs";
+import { chooseAutomaticBonus, defaultAttackBonusAllocation, dieScore, normalizeAttackBonusAllocation, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepDieToOne, stepRolledDie } from "./dice.mjs";
 import { collectModifiers, hasItemNamed, itemNameSet, modifierValue } from "./modifiers.mjs";
 import { moduleActive, rule } from "./settings.mjs";
 import { automaticDifficultyText, warnIfAllImmune, finalDamage, isMachineTarget, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
@@ -100,6 +100,15 @@ export class TDTActor extends Actor {
     system.perception.faces = stepRolledDie(4, perceptionBase);
 
     const armor = this.items.filter(item => item.type === "armor" && item.system.equipped);
+    const evasionReduction = Math.max(0, ...armor.map(item => Number(item.system.evasionReduction || 0)));
+    if (evasionReduction) {
+      system.defenses.evasion.value = stepDieToOne(system.defenses.evasion.value, -evasionReduction);
+      system.defenses.evasion.armorReduction = evasionReduction;
+      system.defenses.evasion.armorSource = armor.filter(item => Number(item.system.evasionReduction)).map(item => item.name).join(", ");
+    } else {
+      system.defenses.evasion.armorReduction = 0;
+      system.defenses.evasion.armorSource = "";
+    }
     const cyberOn = moduleActive("cyber");
     let armorEndurance = 0;
     let shotArmor = 0;
@@ -608,6 +617,8 @@ export class TDTActor extends Actor {
     const rollOptions = options.preset ?? await this._rollOptionsDialog(baseCheck);
     if (!rollOptions) return null;
     const attacks = Math.max(1, Math.min(maxAttacks, Number(rollOptions.extra?.attacks || 1)));
+    const attackBonuses = await this._multiAttackBonusAllocation(rollOptions.bonus, attacks, options.preset);
+    if (!attackBonuses) return null;
     let lastResult = null;
     for (let attack = 0; attack < attacks; attack++) {
       if (!options.preset && tracksAmmo && Number(item.system.ammo.value) <= 0) {
@@ -617,11 +628,12 @@ export class TDTActor extends Actor {
       const followUp = attack > 0;
       const attackOptions = {
         ...rollOptions,
+        bonus: attackBonuses[attack] ?? 0,
         secondStep: rollOptions.secondStep - (attacks - 1),
         consumed: followUp ? [] : rollOptions.consumed,
         heroPoint: followUp ? false : rollOptions.heroPoint,
         consumeSatr: followUp ? false : rollOptions.consumeSatr,
-        ...(followUp ? { bonus: rollOptions.followUpBonus ?? rollOptions.bonus, rerollOnes: Boolean(rollOptions.followUpRerollOnes) } : {})
+        ...(followUp ? { rerollOnes: Boolean(rollOptions.followUpRerollOnes) } : {})
       };
       const check = {
         ...baseCheck,
@@ -638,6 +650,36 @@ export class TDTActor extends Actor {
       }
     }
     return lastResult;
+  }
+
+  async _multiAttackBonusAllocation(total, attacks, preset) {
+    const pool = Math.max(0, Math.trunc(Number(total) || 0));
+    if (attacks <= 1) return [pool];
+    const supplied = preset?.attackBonuses ?? preset?.extra?.attackBonuses;
+    if (Array.isArray(supplied)) return normalizeAttackBonusAllocation(supplied, pool, attacks);
+    const defaults = defaultAttackBonusAllocation(pool, attacks);
+    if (!pool || this._tdtFast || preset) return defaults;
+    const fields = defaults.map((value, index) => `<label>Ataque ${index + 1}<input type="number" name="attackBonus${index}" min="0" max="${pool}" value="${value}"></label>`).join("");
+    return tdtDialog({
+      title: "Repartir bonificación del ataque múltiple",
+      content: `<p>Dispones de <strong>Bonifica ${pool}</strong>. Reparte esos puntos entre los ${attacks} ataques; los penalizadores se aplicarán completos a todos.</p><div class="tdt-form-grid">${fields}</div><p class="hint" data-bonus-remaining></p>`,
+      buttons: [
+        { action: "apply", label: "Atacar", icon: "fas fa-crosshairs", default: true, callback: form => normalizeAttackBonusAllocation(defaults.map((_, index) => form.elements[`attackBonus${index}`].value), pool, attacks) },
+        { action: "cancel", label: "Cancelar" }
+      ],
+      render: (form, dialog) => {
+        const inputs = [...form.querySelectorAll('input[name^="attackBonus"]')];
+        const remaining = form.querySelector("[data-bonus-remaining]");
+        const submit = dialog.element.querySelector('[data-action="apply"]');
+        const update = () => {
+          const spent = inputs.reduce((sum, input) => sum + Math.max(0, Number(input.value) || 0), 0);
+          remaining.textContent = spent <= pool ? `Quedan ${pool - spent} puntos sin asignar.` : `Has asignado ${spent - pool} puntos de más.`;
+          submit.disabled = spent > pool;
+        };
+        for (const input of inputs) input.addEventListener("input", update);
+        update();
+      }
+    });
   }
 
   /** Weapons of "Potencia o Destreza" let the player choose (no question when both dice are equal). */
@@ -1267,8 +1309,7 @@ function readRollForm(form, check, mechanicalRules) {
     if (entry.sense && entry.sense !== options.extra?.perceptionSense) continue;
     applyRuleToOptions(entry, options, check);
   }
-  // Hero point and SATR only affect the first roll; later attacks of a multiple attack use followUpBonus.
-  options.followUpBonus = options.noBonus ? 0 : Math.min(3, Math.max(0, options.bonus - Number(options.satrBonus || 0)));
+  // The final bonus is a shared pool when this check becomes a multiple attack.
   options.bonus = options.noBonus ? 0 : Math.min(3, options.bonus) + (options.heroPoint ? 2 : 0);
   if (options.difficulty) options.difficulty = Math.max(0, options.difficulty - options.difficultyMod);
   return options;

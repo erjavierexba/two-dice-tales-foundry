@@ -74,6 +74,7 @@ function itemSummary(item, actor) {
       const shotBase = Number(system.shotEndurance || 0);
       const effectiveShot = (shotBase ? Math.max(0, shotBase - damage) : base) + pristine;
       const parts = [`Aguante +${effective}`];
+      if (Number(system.evasionReduction)) parts.push(`Esquiva −${system.evasionReduction} dado${Number(system.evasionReduction) === 1 ? "" : "s"}`);
       if (shotBase && effectiveShot !== effective) parts.push(`disparos +${effectiveShot}`);
       if (pristine) parts.push("Impoluta");
       if (!effective && Number(system.endurance || 0) > 0) parts.push("Rota");
@@ -293,7 +294,7 @@ export class TDTActorSheet extends TDTSheetMixin(ActorSheetV2) {
       .filter(([key]) => skillVisible(key))
       .map(([key, skill]) => ({ key, ...skill, dieLabel: dieLabel(skill.die), improve: improveOf("skill", key), stepped: Number(skill.value) !== Number(skill.die), source: sourceText(modifierSources(`step.skill.${key}`), chipSources(key)) }));
     context.attributes = Object.entries(system.attributes).map(([key, attribute]) => ({ key, ...attribute, improve: improveOf("attribute", key), stepped: Number(attribute.value) !== Number(attribute.die), source: sourceText(modifierSources(`step.attribute.${key}`)) }));
-    context.defenses = Object.entries(system.defenses).map(([key, defense]) => ({ key, ...defense, improve: improveOf("defense", key), stepped: Number(defense.value) !== Number(defense.die), source: sourceText(modifierSources(`step.defense.${key}`), chipSources(key)) }));
+    context.defenses = Object.entries(system.defenses).map(([key, defense]) => ({ key, ...defense, improve: improveOf("defense", key), stepped: Number(defense.value) !== Number(defense.die), source: sourceText(modifierSources(`step.defense.${key}`), chipSources(key), defense.armorSource) }));
     const decorate = item => ({ id: item.id, name: item.name, img: item.img, type: item.type, system: item.system, summary: itemSummary(item, actor), active: item.system.equipped || item.system.loaded || item.system.installed || item.system.active });
     const ofType = type => actor.items.filter(item => item.type === type).sort((a, b) => (a.sort || 0) - (b.sort || 0)).map(decorate);
     const sections = [
@@ -631,7 +632,8 @@ export class TDTActorSheet extends TDTSheetMixin(ActorSheetV2) {
     if (item.type === "armor" && !item.system.equipped) {
       const required = Number(item.system.powerRequired || 0);
       const power = Number(this.actor.system.attributes.power.value || this.actor.system.attributes.power.die || 0);
-      if (required && power < required && !this.actor.tdtFlags.has("servomotors")) ui.notifications.warn(`${item.name} requiere Potencia d${required}. Se equipará, pero aplica la penalización que determine el DJ.`);
+      const effectivePower = Math.max(power, this.actor.tdtFlags.has("servomotors") ? 8 : 0);
+      if (required && effectivePower < required) ui.notifications.warn(`${item.name} requiere Potencia d${required}. Se equipará, pero aplica la penalización que determine el DJ.`);
     }
     await item.update({ "system.equipped": !item.system.equipped });
   }

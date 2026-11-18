@@ -37,6 +37,7 @@ assert.ok(system.relationships?.recommends?.some(entry => entry.id === "dice-so-
 assert.equal(template.Item.implant.installed, false, "los implantes del inventario no empiezan instalados");
 assert.equal(template.Item.weapon.condition, "normal", "las armas nuevas empiezan en estado normal");
 assert.equal(template.Item.armor.pristine, false, "las armaduras nuevas no empiezan impolutas");
+assert.equal(template.Item.armor.evasionReduction, 0, "las armaduras pueden reducir el dado de Esquiva");
 assert.equal(template.Item.weapon.mecha.repairRequired, false);
 assert.equal(template.Item.weapon.mecha.destroyed, false);
 for (const path of [...system.esmodules, ...system.styles]) assert.ok(await exists(path), `Falta ${path}`);
@@ -108,6 +109,7 @@ console.log(`TDT system checks: OK (${relative(process.cwd(), root)})`);
     }
   }
   const byName = name => feats.find(feat => feat.name === name);
+  assert.equal(byName("Sed de sangre").system.requirements, "Puntería d10, Combate con armas CaC d10 o Maniobra de lucha d10");
   assert.ok(byName("Cálculo de tiro").system.rules.every(entry => entry.type === "reminder"), "Cálculo de tiro solo amplía el alcance");
   assert.ok(byName("Kansei Dorifto").system.rules.every(entry => entry.type === "reminder"), "Kansei ya lo aplica la tirada de conducir");
   assert.deepEqual(byName("Retaco").system.modifiers.find(entry => entry.target === "step.defense.evasion")?.value, 1);
@@ -134,4 +136,7 @@ console.log(`TDT system checks: OK (${relative(process.cwd(), root)})`);
   const armor = modules.packs.flatMap(pack => pack.documents).filter(item => item.type === "armor");
   assert.ok(weapons.every(item => (item.system.condition ?? "normal") === "normal"), "las armas de los módulos empiezan normales");
   assert.ok(armor.every(item => (item.system.pristine ?? false) === false), "las armaduras de los módulos no empiezan impolutas");
+  const cyberArmor = name => modules.packs.find(pack => pack.name === "cyber-armor").documents.find(item => item.name === name);
+  assert.deepEqual([cyberArmor("Chaleco de placas").system.evasionReduction, cyberArmor("Armadura de asalto").system.evasionReduction], [1, 1]);
+  assert.equal(cyberArmor("Armadura de asalto").system.powerRequired, 10);
 }

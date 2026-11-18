@@ -15,6 +15,8 @@ const actor = (items = [], system = {}) => ({
 
 assert.equal(checkItemRequirements(actor(), item("Análisis", { requirements: "Ciencia 1d4, Investigación 1d6" })).ok, true);
 assert.deepEqual(checkItemRequirements(actor(), item("Disparo", { requirements: "Puntería 1d12 o combate cac 1d12" })).missing, ["Puntería 1d12 o combate cac 1d12"]);
+assert.equal(checkItemRequirements(actor([], { skills: { science: { die: 4 }, investigation: { die: 6 }, ranged: { die: 8 }, melee: { die: 10 }, brawl: { die: 4 }, arcana: { die: 8 } } }), item("Sed de sangre", { requirements: "Puntería d10, Combate con armas CaC d10 o Maniobra de lucha d10" })).ok, true);
+assert.deepEqual(checkItemRequirements(actor(), item("Sed de sangre", { requirements: "Puntería d10, Combate con armas CaC d10 o Maniobra de lucha d10" })).missing, ["Puntería d10 o Combate con armas CaC d10 o Maniobra de lucha d10"]);
 assert.equal(checkItemRequirements(actor([item("Oído fino")]), item("Murciélago", { requirements: "Oído fino" })).ok, true);
 assert.equal(checkItemRequirements(actor(), item("Murciélago", { requirements: "Oído fino" })).ok, false);
 assert.equal(checkItemRequirements(actor([item("Cegato")]), item("Vista de cazador", { description: "Prohibido en caso de coger Cegato. Mejora la vista." })).ok, false);
