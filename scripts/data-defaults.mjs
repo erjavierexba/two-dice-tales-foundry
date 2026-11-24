@@ -455,7 +455,9 @@ export const ITEM_TYPES = {
       "shotEndurance": 0,
       "pristine": false,
       "damage": 0,
-      "noStun": false
+      "noStun": false,
+      "shield": false,
+      "condition": "normal"
     }
   },
   "gear": {

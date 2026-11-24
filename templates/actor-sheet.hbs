@@ -144,7 +144,7 @@
       <section class="tdt-section tdt-secondary-grid">
         <article class="tdt-stat-card tdt-endurance-card">
           <span><i class="fas fa-shield-halved"></i> Aguante</span><strong>{{system.endurance.value}}</strong>
-          <small>Natural {{system.endurance.natural}} + armadura {{system.endurance.armor}}{{#if modules.cyber}} · disparos {{system.endurance.vsShots}}{{/if}}</small>
+          <small>Natural {{system.endurance.natural}} + armadura {{system.endurance.armor}}{{#if modules.cyber}} · disparos {{system.endurance.vsShots}}{{/if}}{{#if shieldBlock}} · bloqueando +{{shieldBlock.endurance}}{{/if}}</small>
         </article>
         <article class="tdt-stat-card">
           <button type="button" class="tdt-roll-label" data-action="roll-perception"><i class="fas fa-eye"></i> Percepción</button>

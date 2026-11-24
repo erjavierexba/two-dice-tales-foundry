@@ -49,6 +49,7 @@ export function referenceSections() {
       ["Caído", "A 0 PV, el daño sobrante es la dificultad. Fortaleza cada turno: éxito −2, fallo +2. 0–1 estable, 10–11 muerte."],
       ["Ayudar", "Tarea sencilla: bonifica 1. Compleja: el ayudante tira a −4; éxito bonifica 1, fallo penaliza 1."],
       ["Cobertura", "Reduce la dificultad de Esquiva o Fortaleza: ligera 1, mediana 3, total 5. Si el cubierto es un enemigo, su Esquiva o Fortaleza sube lo mismo."],
+      ["Escudos", "Bloquear: Fortaleza en lugar de Esquiva y el Aguante del escudo (ligero +1, medio +2, pesado +3). Sin la Potencia que pide, penaliza 2. Pifia bloqueando: el escudo baja un estado. Enemigo con escudo: el DJ decide antes si bloquea."],
       ["Descanso", "Cura 1 PV; +1 si te tratan, +1 si quien trata tiene Manos sanadoras."]
     ]) },
     { title: "Distancias", icon: "fa-ruler", table: table(["Contacto", "Muy corta", "Corta", "Media", "Media-larga", "Larga", "Muy larga", "Extrema"], [["CaC", "3 m", "6 m", "12 m", "30 m", "60 m", "240 m", "2 km"]]) },

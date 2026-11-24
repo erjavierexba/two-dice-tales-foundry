@@ -2,7 +2,7 @@ import { TDT } from "./config.mjs";
 import { chooseAutomaticBonus, defaultAttackBonusAllocation, dieScore, normalizeAttackBonusAllocation, normalizeDie, perfectSuccess, resolveTdtRoll, stepDie, stepDieToOne, stepRolledDie } from "./dice.mjs";
 import { collectModifiers, hasItemNamed, itemNameSet, modifierValue } from "./modifiers.mjs";
 import { moduleActive, rule } from "./settings.mjs";
-import { automaticDifficultyText, warnIfAllImmune, finalDamage, isMachineTarget, parseWeaponProperties, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
+import { automaticDifficultyText, warnIfAllImmune, finalDamage, isMachineTarget, parseWeaponProperties, shieldBlock, shieldEndurance, targetDefense, targetEndurance, targetImmune, weaponProfile } from "./attack.mjs";
 import { esc, payload, requestDamage } from "./chat.mjs";
 import * as Fantasy from "./modules/fantasy.mjs";
 import * as Mecha from "./modules/mecha.mjs";
@@ -113,6 +113,8 @@ export class TDTActor extends Actor {
     let armorEndurance = 0;
     let shotArmor = 0;
     for (const item of armor) {
+      // El Aguante de un escudo solo cuenta al bloquear.
+      if (item.system.shield) continue;
       const base = Math.max(0, Number(item.system.endurance || 0) - Number(item.system.damage || 0));
       const pristine = cyberOn && item.system.pristine && base > 0 ? 1 : 0;
       const broken = Number(item.system.endurance || 0) > 0 && base <= 0;
@@ -399,7 +401,7 @@ export class TDTActor extends Actor {
       return !currentRule.scopes?.length || currentRule.scopes.some(scope => scopes.has(scope));
     };
     const featRules = this.items
-      .filter(item => ["feat", "race", "implant", "power"].includes(item.type) && (!item.system.toggle || item.system.active))
+      .filter(item => ["feat", "race", "implant", "power"].includes(item.type) ? (!item.system.toggle || item.system.active) : item.type === "armor" && item.system.equipped)
       .filter(item => item.type !== "implant" || (item.system.installed !== false && !item.system.offline))
       .flatMap(item => {
         const list = [...(item.system.rules ?? [])];
@@ -735,7 +737,14 @@ export class TDTActor extends Actor {
       if (!isMachine && profile.props.vsLiving) targetDamage = profile.props.vsLiving + delta;
       // Guerrero: ignora 1 punto de aguante de los enemigos.
       const endurance = Math.max(0, targetEndurance(target, { shot: profile.isFirearm }) - (this.tdtFlags.has("warrior") ? 1 : 0));
-      lines.push(this._targetLine(target, { total: result.total, difficultyMod: result.difficultyMod, defense, damage: targetDamage, endurance, minimum: profile.minimumDamage, defenseKey, isFumble: result.isFumble, options: { raw: true, area: Boolean(extra.area), stun: profile.props.stun, armorBreak: profile.props.armorBreaker, attackerFlags: [...this.tdtFlags] } }));
+      const lineOptions = { raw: true, area: Boolean(extra.area), stun: profile.props.stun, armorBreak: profile.props.armorBreaker, attackerFlags: [...this.tdtFlags] };
+      lines.push(this._targetLine(target, { total: result.total, difficultyMod: result.difficultyMod, defense, damage: targetDamage, endurance, minimum: profile.minimumDamage, defenseKey, isFumble: result.isFumble, options: lineOptions }));
+      // Enemigo con escudo: el DJ decide si bloquea; entonces va contra su Fortaleza con el Aguante del escudo.
+      const block = target.type === "npc" && defenseKey === "evasion" ? shieldBlock(target) : null;
+      if (block) {
+        const fortitude = targetDefense(target, "fortitude");
+        if (fortitude !== null) lines.push(this._targetLine(target, { total: result.total, difficultyMod: result.difficultyMod, defense: fortitude, damage: targetDamage, endurance: endurance + block.endurance, minimum: profile.minimumDamage, defenseKey: "fortitude", label: `si bloquea con ${block.item.name} (+${block.endurance})`, options: lineOptions }));
+      }
     }
     if (profile.props.stun) notes.push(`Aturdidora ${profile.props.stun}: si inflige ${profile.props.stun} o más, el objetivo pierde su próximo turno.`);
     if (profile.props.contusion) notes.push(`Contusión ${profile.props.contusion}: con ${profile.props.contusion} o más de daño, penalización severa (DJ).`);
@@ -875,7 +884,14 @@ export class TDTActor extends Actor {
     const rollOptions = { label: `Defensa contra ${data.weaponName ?? data.attackerName ?? "ataque"}${suffix}`, difficulty: Number(data.attackValue) + 1, scopes: isHack ? ["hack-defense"] : [] };
     if (["vehicle", "emplacement"].includes(this.type)) return this._machineDefendOnce(data, rollOptions);
     let result;
+    const block = await this._chooseBlock(defense, isHack);
+    if (block === false) return null;
+    if (block) {
+      rollOptions.label = `${rollOptions.label}: bloquea con ${block.item.name}`;
+      if (block.underpowered) rollOptions.extraRules = [{ type: "penalty", value: 2, label: `${block.item.name}: sin la Potencia necesaria` }];
+    }
     if (this.type === "mecha") result = await this.rollMechaStat(defense === "fortitude" ? "robustness" : "maneuver", rollOptions);
+    else if (block) result = await this.rollDefense("fortitude", rollOptions);
     else if (isHack) result = await this.rollHackDefense(defense, rollOptions);
     else if (defense === "perception") result = await this.rollPerception(rollOptions);
     else result = await this.rollDefense(defense, rollOptions);
@@ -883,19 +899,21 @@ export class TDTActor extends Actor {
     const attackValue = Number(data.attackValue);
     // Una regla que baja la dificultad de esquivar cuenta como sumar ese valor a la defensa.
     const defenseTotal = result.total + Number(result.difficultyMod || 0);
+    const shieldNote = block && result.isFumble ? await this._damageShield(block.item) : "";
     if (defenseTotal > attackValue && !result.isFumble) {
-      return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} se defiende</header><p>${defenseTotal} supera ${attackValue}: el ataque falla.</p></div>` });
+      return ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} ${block ? "bloquea" : "se defiende"}</header><p>${defenseTotal} supera ${attackValue}: el ataque falla.</p></div>` });
     }
     const incoming = Math.max(0, attackValue - defenseTotal);
-    // Pifia defendiendo: el daño ignora el aguante.
-    const endurance = result.isFumble ? 0 : targetEndurance(this, { hack: isHack, shot: options.shot });
+    // Pifia defendiendo: el daño ignora el aguante (también el del escudo).
+    const endurance = result.isFumble ? 0 : targetEndurance(this, { hack: isHack, shot: options.shot }) + (block ? block.endurance : 0);
     // Weapons with a special damage against living beings or machines (Hoja vibrante, Porra eléctrica…).
     const isMachine = isMachineTarget(this);
     let weaponDamage = Number(data.damage || 0);
     if (isMachine && Number(data.vsMachines)) weaponDamage = Number(data.vsMachines);
     if (!isMachine && Number(data.vsLiving)) weaponDamage = Number(data.vsLiving);
     const damage = Math.max(0, incoming + weaponDamage - endurance);
-    const lines = [`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${result.isFumble ? " (pifia defendiendo: ignora el aguante)" : ""} = <strong>${damage}</strong>`];
+    const lines = [`Entrante ${incoming} + Daño ${weaponDamage} − Aguante ${endurance}${block && !result.isFumble ? ` (escudo +${block.endurance})` : ""}${result.isFumble ? " (pifia defendiendo: ignora el aguante)" : ""} = <strong>${damage}</strong>`];
+    if (shieldNote) lines.push(shieldNote);
     if (options.stun && damage >= options.stun) {
       if (this.tdtFlags.has("noStun") || this.items.some(item => item.type === "armor" && item.system.equipped && item.system.noStun)) lines.push("El traje aislante evita el aturdimiento.");
       else {
@@ -921,6 +939,34 @@ export class TDTActor extends Actor {
     await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this }), content: `<div class="tdt-chat-card"><header>${esc(this.name)} recibe el golpe</header><p>${lines.join("<br>")}</p></div>` });
     if (damage > 0) await this.applyDamage(damage, { raw: true, fumble: result.isFumble });
     else if (result.isFumble && this.type === "mecha") await this._mechaDamageCheck(0, { fumble: true });
+  }
+
+  /**
+   * Against a physical attack that would be dodged, a character with an equipped shield chooses:
+   * dodge (Esquiva) or block (Fortaleza + the shield's Aguante). Returns the block, null to dodge, false if cancelled.
+   */
+  async _chooseBlock(defense, isHack) {
+    if (this.type !== "character" || isHack || defense !== "evasion") return null;
+    const block = shieldBlock(this);
+    if (!block) return null;
+    if (this._tdtFast) return null;
+    const choice = await choiceDialog("Defensa", `Llevas ${block.item.name}. ¿Esquivas o bloqueas?`, [
+      { id: "dodge", label: "Esquivar (Esquiva)" },
+      { id: "block", label: `Bloquear (Fortaleza, Aguante +${block.endurance}${block.underpowered ? ", penaliza 2 por Potencia" : ""})` }
+    ]);
+    if (!choice) return false;
+    return choice === "block" ? block : null;
+  }
+
+  /** A fumble while blocking damages the shield like a weapon: it drops one condition. */
+  async _damageShield(item) {
+    const order = TDT.weaponConditionOrder;
+    const current = item.system.condition || "normal";
+    const next = order[Math.max(0, order.indexOf(current) - 1)];
+    await item.update({ "system.condition": next });
+    return next === "broken"
+      ? `Pifia bloqueando: ${esc(item.name)} se rompe y no sirve para bloquear hasta que se repare.`
+      : `Pifia bloqueando: ${esc(item.name)} pasa a estar ${TDT.shieldConditions[next].toLocaleLowerCase("es")}.`;
   }
 
   /**

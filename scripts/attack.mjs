@@ -287,6 +287,35 @@ export function targetEndurance(actor, { hack = false, shot = false, ignoreHuman
   return Number(system.endurance?.value || 0);
 }
 
+/** Aguante que da un escudo al bloquear según su estado (impoluto +1, dañado −1, roto no bloquea). */
+export function shieldEndurance(item, mastery = false) {
+  const condition = item?.system?.condition || "normal";
+  if (condition === "broken") return null;
+  const step = { pristine: 1, damaged: -1 }[condition] ?? 0;
+  return Math.max(0, Number(item.system.endurance || 0) + step + (mastery ? 1 : 0));
+}
+
+/**
+ * Best equipped shield that can block: { item, endurance, underpowered }. Null when there is none.
+ * Dominio del escudo adds 1 and ignores the Potencia required.
+ */
+export function shieldBlock(actor) {
+  if (!actor?.items) return null;
+  const flags = actor.tdtFlags ?? actor._tdtFlags ?? new Set();
+  const mastery = flags.has("shieldMastery");
+  const power = Number(actor.system?.attributes?.power?.value ?? actor.system?.attributes?.power?.die ?? 0);
+  let best = null;
+  for (const item of actor.items) {
+    if (item.type !== "armor" || !item.system.shield || !item.system.equipped) continue;
+    const endurance = shieldEndurance(item, mastery);
+    if (endurance === null) continue;
+    const required = Number(item.system.powerRequired || 0);
+    const underpowered = !mastery && required > 0 && power < required;
+    if (!best || endurance > best.endurance) best = { item, endurance, underpowered };
+  }
+  return best;
+}
+
 /**
  * Final damage of a hit: incoming + Damage − Endurance (+ mecha extra hits after endurance).
  * Returns 0 when the attack misses.

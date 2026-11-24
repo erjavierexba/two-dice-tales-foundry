@@ -93,6 +93,12 @@ export const TDT = {
     broken: "Rota"
   },
   weaponConditionOrder: ["broken", "damaged", "normal", "pristine"],
+  shieldConditions: {
+    pristine: "Impoluto",
+    normal: "Normal",
+    damaged: "Dañado",
+    broken: "Roto"
+  },
   attackDefenses: {
     evasion: "Esquiva",
     fortitude: "Fortaleza",

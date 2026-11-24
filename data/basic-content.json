@@ -2514,6 +2514,32 @@
       }
     },
     {
+      "name": "Dominio del escudo",
+      "type": "feat",
+      "system": {
+        "description": "Cuando utilizas un escudo para bloquear un ataque, aumenta en 1 el Aguante que proporciona el escudo. Además, ignoras el requisito mínimo de Potencia de cualquier escudo. Esta dote no elimina los penalizadores propios del escudo ni las restricciones de armas a una mano.",
+        "cost": 4,
+        "requirements": "",
+        "category": "advantage",
+        "rules": [
+          {
+            "type": "reminder",
+            "scopes": [
+              "fortitude"
+            ],
+            "label": "Dominio del escudo",
+            "text": "Cuando utilizas un escudo para bloquear un ataque, aumenta en 1 el Aguante que proporciona el escudo. Además, ignoras el requisito mínimo de Potencia de cualquier escudo. Esta dote no elimina los penalizadores propios del escudo ni las restricciones de armas a una mano."
+          }
+        ],
+        "modifiers": [
+          {
+            "target": "flag.shieldMastery",
+            "value": 1
+          }
+        ]
+      }
+    },
+    {
       "name": "Dual",
       "type": "feat",
       "system": {
@@ -3349,6 +3375,75 @@
       }
     },
     {
+      "name": "Escudo ligero",
+      "type": "armor",
+      "system": {
+        "description": "Escudo. Ejemplos: Broquel, rodela, tapa de cubo de basura. Aguante al bloquear: +1. Potencia necesaria: Ninguna. Penalizadores: Ninguno.",
+        "shield": true,
+        "condition": "normal",
+        "endurance": 1,
+        "evasionPenalty": 0,
+        "evasionReduction": 0,
+        "powerRequired": 0,
+        "rules": [],
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Escudo medio",
+      "type": "armor",
+      "system": {
+        "description": "Escudo. Ejemplos: Escudo redondo, escudo de cometa, escudo antidisturbios. Aguante al bloquear: +2. Potencia necesaria: d6. Penalizadores: Penaliza en 1 Acrobacias y Sigilo.",
+        "shield": true,
+        "condition": "normal",
+        "endurance": 2,
+        "evasionPenalty": 0,
+        "evasionReduction": 0,
+        "powerRequired": 6,
+        "rules": [
+          {
+            "type": "penalty",
+            "value": 1,
+            "scopes": [
+              "acrobatics",
+              "stealth"
+            ],
+            "label": "Escudo medio"
+          }
+        ],
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
+      "name": "Escudo pesado",
+      "type": "armor",
+      "system": {
+        "description": "Escudo. Ejemplos: Pavés, escudo de torre, escudo balístico. Aguante al bloquear: +3. Potencia necesaria: d8. Penalizadores: Reduce el dado de Esquiva y penaliza en 1 Acrobacias, Atletismo y Sigilo.",
+        "shield": true,
+        "condition": "normal",
+        "endurance": 3,
+        "evasionPenalty": 0,
+        "evasionReduction": 1,
+        "powerRequired": 8,
+        "rules": [
+          {
+            "type": "penalty",
+            "value": 1,
+            "scopes": [
+              "acrobatics",
+              "athletics",
+              "stealth"
+            ],
+            "label": "Escudo pesado"
+          }
+        ],
+        "quantity": 1,
+        "equipped": false
+      }
+    },
+    {
       "name": "Bebidas alcohólicas",
       "type": "gear",
       "system": {
@@ -4034,7 +4129,7 @@
           "will": 5,
           "perception": 9,
           "traits": "Representa a un agente equipado, pero no militarizado.",
-          "variants": "Sin protección: Aguante 1. Con chaleco antibalas: Aguante 5 contra disparos y explosiones, Aguante 3 contra cuerpo a cuerpo. Antidisturbios: Aguante 5, Porra(7, Daño 3\\), escudo que bonifica en 1 su esquiva contra ataques frontales."
+          "variants": "Sin protección: Aguante 1. Con chaleco antibalas: Aguante 5 contra disparos y explosiones, Aguante 3 contra cuerpo a cuerpo. Antidisturbios: Aguante 5, Fortaleza 7, Porra(7, Daño 3\\), escudo antidisturbios (medio, Aguante +2 al bloquear)."
         }
       },
       "items": [

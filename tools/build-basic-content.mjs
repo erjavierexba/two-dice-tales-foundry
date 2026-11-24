@@ -133,6 +133,31 @@ const armors = armorRows.map(([name, endurance, evasionEffect, powerRequired]) =
   }
 }));
 
+// Escudos: armaduras con la casilla de escudo. Su Aguante solo cuenta al bloquear.
+const SHIELD_SCOPES = { acrobacias: "acrobatics", atletismo: "athletics", sigilo: "stealth" };
+const shieldRows = parseTable(section("#### Escudos", "### Objetos"), "Tipo de escudo");
+const shields = shieldRows.map(([type, examples, endurance, powerRequired, penalties]) => {
+  const penalty = Number(penalties.match(/penaliza en (\d+)/i)?.[1] ?? 0);
+  const scopes = Object.entries(SHIELD_SCOPES).filter(([term]) => penalties.toLocaleLowerCase("es").includes(term)).map(([, scope]) => scope);
+  const name = `Escudo ${type.toLocaleLowerCase("es")}`;
+  return {
+    name,
+    type: "armor",
+    system: {
+      description: `Escudo. Ejemplos: ${examples}. Aguante al bloquear: +${endurance}. Potencia necesaria: ${powerRequired}. Penalizadores: ${penalties}.`,
+      shield: true,
+      condition: "normal",
+      endurance: Number(endurance),
+      evasionPenalty: 0,
+      evasionReduction: /reduce el dado de esquiva/i.test(penalties) ? 1 : 0,
+      powerRequired: Number(powerRequired.match(/d(\d+)/)?.[1] ?? 0),
+      rules: penalty && scopes.length ? [{ type: "penalty", value: penalty, scopes, label: name }] : [],
+      quantity: 1,
+      equipped: false
+    }
+  };
+});
+
 const objectRows = parseTable(section("### Objetos", "### Vehículos"), "Objeto");
 const consumableNames = new Set(["Bebidas alcohólicas", "Droga estimulante", "Veneno"]);
 const gear = objectRows
@@ -202,7 +227,7 @@ for (const match of enemyMatches) {
 
 const output = {
   generatedFrom: "PorPartes/2 - Módulo básico.md",
-  items: [...feats, ...weapons, ...armors, ...gear],
+  items: [...feats, ...weapons, ...armors, ...shields, ...gear],
   actors
 };
 fs.mkdirSync(path.dirname(outputPath), { recursive: true });

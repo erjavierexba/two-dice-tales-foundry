@@ -1947,31 +1947,6 @@
      }
     },
     {
-     "name": "Dominio del escudo",
-     "type": "feat",
-     "img": "systems/tdt/assets/icons/feat.svg",
-     "system": {
-      "description": "Aprendes a usar el escudo apropiadamente, cada escudo aumenta tu aguante en X, determinado por el escudo que obtengas. Un escudo puede romperse al parar ataques muy potentes, a decidir por el DJ.",
-      "cost": 1,
-      "costFormula": "",
-      "requirements": "",
-      "category": "advantage",
-      "tags": [],
-      "module": "fantasy",
-      "modifiers": [],
-      "rules": [
-       {
-        "type": "reminder",
-        "scopes": [
-         "mind"
-        ],
-        "label": "Dominio del escudo",
-        "text": "Aprendes a usar el escudo apropiadamente, cada escudo aumenta tu aguante en X, determinado por el escudo que obtengas. Un escudo puede romperse al parar ataques muy potentes, a decidir por el DJ."
-       }
-      ]
-     }
-    },
-    {
      "name": "Furia",
      "type": "feat",
      "img": "systems/tdt/assets/icons/feat.svg",
@@ -11900,7 +11875,7 @@
        "will": 6,
        "perception": 9,
        "traits": "Lleva un lector de nuca. Si ve algo raro, pide refuerzos en lugar de arriesgarse.",
-       "variants": "Antidisturbios: Aguante 5, traje aislante, escudo que bonifica en 1 su Esquiva contra ataques frontales. Unidad de élite: exoesqueleto (Aguante 7), Fusil de asalto inteligente(10, Daño 5, munición 10), Voluntad 8.",
+       "variants": "Antidisturbios: Aguante 5, Fortaleza 7, traje aislante, escudo antidisturbios (medio, Aguante +2 al bloquear; ver Escudos en el básico). Unidad de élite: exoesqueleto (Aguante 7), Fusil de asalto inteligente(10, Daño 5, munición 10), Voluntad 8.",
        "skills": "Hacking 6, investigación 7",
        "hacking": 6,
        "hackEndurance": "",

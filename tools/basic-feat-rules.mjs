@@ -149,6 +149,7 @@ export const BASIC_FEAT_OVERRIDES = {
   "Cubrirte no te servirá": { rules: [], reminderScopes: ["ranged-attack"] },
   "Entrenado en un arma": { rules: [r("bonus", 1, ["melee", "ranged"], { ...O, label: "Entrenado en un arma (el arma elegida)" })] },
   "Ganador del torneo del puño de hierro": { modifiers: [mod("flag.ironFist", 1)], rules: [], reminderScopes: ["unarmed"] },
+  "Dominio del escudo": { modifiers: [mod("flag.shieldMastery", 1)], rules: [], reminderScopes: ["fortitude"] },
   "Guerrero": { modifiers: [mod("endurance", 1), mod("flag.warrior", 1)], rules: [], reminderScopes: ["attack"] },
   "Golpe vital": { rules: [r("critical", 1, ["attack"], { label: "Golpe vital (crítico al golpear)" })] },
   "Jackpot": { rules: [r("bonus", 1, ["ranged-attack"], { ...O, label: "Jackpot (ataque único con dos armas duales)" })] },

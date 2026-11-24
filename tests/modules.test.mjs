@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { resolveTdtRoll } from "../scripts/dice.mjs";
-import { parseWeaponProperties, finalDamage } from "../scripts/attack.mjs";
+import { parseWeaponProperties, finalDamage, shieldBlock, shieldEndurance } from "../scripts/attack.mjs";
 import * as Fantasy from "../scripts/modules/fantasy.mjs";
 import * as Mecha from "../scripts/modules/mecha.mjs";
 import * as Zombie from "../scripts/modules/zombie.mjs";
@@ -114,6 +114,19 @@ const blade = parseWeaponProperties("Daño 4, Contusión 7. Contra seres vivos, 
 assert.equal(blade.vsLiving, 8);
 const saw = parseWeaponProperties("Daño 6, Contusión 5, Rompearmaduras. **Penaliza en 2** tus tiradas de ataque con ella.");
 assert.deepEqual([saw.armorBreaker, saw.attackPenalty], [true, 2]);
+
+// Escudos: el estado cambia el Aguante al bloquear y Dominio del escudo suma 1 e ignora la Potencia.
+const shield = (endurance, condition = "normal", powerRequired = 0, equipped = true) => ({ type: "armor", system: { shield: true, equipped, endurance, condition, powerRequired } });
+assert.equal(shieldEndurance(shield(2)), 2);
+assert.equal(shieldEndurance(shield(2, "pristine")), 3);
+assert.equal(shieldEndurance(shield(2, "damaged")), 1);
+assert.equal(shieldEndurance(shield(1, "damaged")), 0);
+assert.equal(shieldEndurance(shield(3, "broken")), null);
+assert.equal(shieldEndurance(shield(2), true), 3);
+const weakActor = flags => ({ tdtFlags: new Set(flags), system: { attributes: { power: { value: 4 } } }, items: [shield(3, "normal", 8), shield(1, "broken"), shield(2, "normal", 0, false)] });
+assert.deepEqual((({ endurance, underpowered }) => ({ endurance, underpowered }))(shieldBlock(weakActor([]))), { endurance: 3, underpowered: true });
+assert.deepEqual((({ endurance, underpowered }) => ({ endurance, underpowered }))(shieldBlock(weakActor(["shieldMastery"]))), { endurance: 4, underpowered: false });
+assert.equal(shieldBlock({ tdtFlags: new Set(), system: {}, items: [shield(2, "broken")] }), null);
 
 console.log("Pruebas de módulos superadas.");
 

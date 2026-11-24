@@ -1,6 +1,6 @@
 # Two Dice Tales para Foundry VTT
 
-Sistema de juego de TDT para Foundry VTT 13 (versión 0.5.1): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
+Sistema de juego de TDT para Foundry VTT 13 (versión 0.5.2): el módulo básico, sus reglas opcionales y los cinco módulos del manual.
 
 Incluye identidad visual propia para Foundry: arte panorámico del sistema, logotipo, monograma y una familia de iconos para actores, objetos y compendios. Los originales editables están en `assets/branding/` y `assets/icons/`.
 
@@ -18,6 +18,7 @@ https://github.com/erjavierexba/two-dice-tales-foundry/raw/main/system.json
 - Características, habilidades, Percepción, defensas, vida, aguante, experiencia y punto de héroe.
 - Tiradas activas y reactivas con cambio de dado, reparto automático del bonificador, penalización, dificultad, críticos y pifias.
 - Ataques desde armas, aguante por Potencia y armaduras, aplicación de daño y ataque múltiple con reparto de la reserva de Bonifica.
+- Escudos: al defenderte de un ataque que se esquiva, eliges esquivar o bloquear (Fortaleza + el Aguante del escudo, con su penalización si no tienes la Potencia). Una pifia bloqueando baja el estado del escudo. Contra un enemigo con escudo, la tarjeta de ataque muestra también el resultado si bloquea. Dote Dominio del escudo.
 - Reglas contextuales de las dotes en el diálogo de tirada (bonifica, penaliza, cambios de dado, dificultad, recordatorios).
 - Villanos con fuente de villano, escape magistral y turno extra (se reinicia al empezar cada combate).
 - Experiencia: durante la creación los dados se eligen libremente; al pulsar *Terminar creación* quedan bloqueados y solo suben con *Mejorar* (por característica, dado defensivo o habilidad, o desde el menú general), que muestra el coste y no deja mejorar sin XP suficiente. El buscador de dotes tiene la casilla *Gastar experiencia*. Cada compra queda en el historial de la biografía y la última se puede deshacer.

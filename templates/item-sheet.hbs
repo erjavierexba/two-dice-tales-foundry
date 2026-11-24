@@ -73,11 +73,17 @@
         {{/if}}
 
         {{#if is.armor}}
+          <label title="Su Aguante solo cuenta al bloquear: te defiendes con Fortaleza en lugar de Esquiva.">Escudo <input type="checkbox" name="system.shield" {{checked system.shield}}></label>
+          {{#if system.shield}}
+          <label>Aguante al bloquear <input type="number" name="system.endurance" min="0" value="{{system.endurance}}"></label>
+          <label>Estado <select name="system.condition">{{selectOptions config.shieldConditions selected=system.condition}}</select></label>
+          {{else}}
           <label>Bono de aguante <input type="number" name="system.endurance" min="0" value="{{system.endurance}}"></label>
+          {{/if}}
           <label>Reducciones del dado de Esquiva <input type="number" name="system.evasionReduction" min="0" value="{{system.evasionReduction}}"></label>
           <label>Penalizador plano de Esquiva <input type="number" name="system.evasionPenalty" min="0" value="{{system.evasionPenalty}}"></label>
           <label>Potencia necesaria <select name="system.powerRequired">{{selectOptions config.dieChoices selected=system.powerRequired}}</select></label>
-          {{#if modules.cyber}}
+          {{#if (and modules.cyber (not system.shield))}}
           <label>Aguante contra disparos <input type="number" min="0" name="system.shotEndurance" value="{{system.shotEndurance}}"></label>
           <label>Impoluta (+1) <input type="checkbox" name="system.pristine" {{checked system.pristine}}></label>
           <label>Daño acumulado <input type="number" min="0" name="system.damage" value="{{system.damage}}"></label>
